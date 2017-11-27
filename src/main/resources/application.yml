@@ -1,6 +1,6 @@
 server:
   port: 8080
-  context-path: /curriculum
+#  context-path: /
 
 spring:
   datasource:
@@ -12,8 +12,16 @@ spring:
     console:
       enabled: true
 
-#liquibase:
-#  change-log: classpath:/db/changelog-master.xml
+thymeleaf:
+  cache: false
+  check-template: true
+  check-template-location: true
+  content-type: text/html
+  enabled: true
+  encoding: UTF-8
+  mode: HTML
+  prefix: classpath:/templates/
+  suffix: .html
 
 logging:
   level:

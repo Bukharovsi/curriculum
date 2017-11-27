@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Curriculum</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <h1>Добро пожаловать в Curriculum</h1>
+    <p>Приветсвенная страница. </p>
+    <ul>
+        <li><a href="/user" th:href="@{/admin}">Войти</a></li>
+    </ul>
+</div>
+</body>
+</html>
