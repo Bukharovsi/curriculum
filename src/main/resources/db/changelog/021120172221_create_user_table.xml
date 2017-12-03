@@ -16,6 +16,9 @@
             <column name="password" type="varchar(255)" >
                 <constraints nullable="false" />
             </column>
+            <column name="role_code" type="varchar(255)">
+                <constraints foreignKeyName="user_role_fk" references="role(code)"/>
+            </column>
         </createTable>
 
     </changeSet>

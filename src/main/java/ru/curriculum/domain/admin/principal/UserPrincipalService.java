@@ -1,10 +1,12 @@
-package ru.curriculum.domain.user;
+package ru.curriculum.domain.admin.principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.domain.admin.user.repository.UserRepository;
 
 
 @Component

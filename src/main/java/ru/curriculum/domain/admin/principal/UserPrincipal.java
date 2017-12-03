@@ -1,25 +1,25 @@
-package ru.curriculum.domain.user;
+package ru.curriculum.domain.admin.principal;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.curriculum.domain.admin.user.entity.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static ru.curriculum.domain.user.Roles.*;
-
 public class UserPrincipal implements UserDetails {
+    private AuthorityFactory authorityFactory;
     private User user;
 
     public UserPrincipal(User user) {
         this.user = user;
+        this.authorityFactory = new AuthorityFactory();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList();
-        authorities.add(new SimpleGrantedAuthority(ADMIN));
+        authorities.add(authorityFactory.create(user.role()));
 
         return authorities;
     }
@@ -41,6 +41,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
+        //TODO: в каких случая блочить пользователя
         return true;
     }
 

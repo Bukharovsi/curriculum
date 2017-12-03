@@ -32,3 +32,8 @@ logging:
 
 liquibase:
   change-log: classpath:/db/changelog-master.xml
+
+auth:
+  admin:
+    username: admin
+    password: 123
