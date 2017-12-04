@@ -12,8 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ru.curriculum.controllers.error.LoggingAccessDeniedHandler;
-import ru.curriculum.domain.admin.principal.UserPrincipalService;
+import ru.curriculum.web.error.LoggingAccessDeniedHandler;
+import ru.curriculum.application.auth.principal.UserPrincipalService;
 
 @Configuration
 @EnableWebSecurity

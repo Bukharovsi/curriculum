@@ -2,6 +2,7 @@ package ru.curriculum.domain.admin.user.entity;
 
 
 import lombok.NonNull;
+import ru.curriculum.service.UserDto;
 
 import javax.persistence.*;
 
@@ -13,6 +14,9 @@ public class User {
     private Integer id;
     private String username;
     private String password;
+    private String firstname;
+    private String surname;
+    private String lastname;
 
     // TODO: Либо много ролей,
     // TODO: либо роль определяетмя разрешениями,
@@ -30,6 +34,28 @@ public class User {
         this.password = password;
     }
 
+    public User(
+            String username,
+            String password,
+            String surname,
+            String firstname,
+            String lastname
+    ) {
+        this(username, password);
+        this.surname = surname;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
+    public User(UserDto userDto) {
+        this(
+                userDto.getUsername(),
+                userDto.getPassword(),
+                userDto.getFirstname(),
+                userDto.getSurname(),
+                userDto.getLastname());
+    }
+
     public Integer id() {
         return id;
     }
@@ -40,6 +66,18 @@ public class User {
 
     public String password() {
         return password;
+    }
+
+    public String firstName() {
+        return firstname;
+    }
+
+    public String surname() {
+        return surname;
+    }
+
+    public String lastName() {
+        return lastname;
     }
 
     public Role role() {

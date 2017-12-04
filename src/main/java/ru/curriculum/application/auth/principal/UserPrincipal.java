@@ -1,4 +1,4 @@
-package ru.curriculum.domain.admin.principal;
+package ru.curriculum.application.auth.principal;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

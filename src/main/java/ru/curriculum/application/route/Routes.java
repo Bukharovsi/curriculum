@@ -7,4 +7,6 @@ public class Routes {
     public static final String loginError = "/login-error";
     public static final String accessDenied = "/access-denied";
     public static final String users = "/admin/users";
+    public static final String userForm = "/admin/users/edit";
+    public static final String createUser = "/admin/users/create";
 }

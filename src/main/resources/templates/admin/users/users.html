@@ -6,6 +6,33 @@
 <body>
 <div>
     <h1>Пользователи</h1>
+    <div>
+        <a href="/admin/users/edit" th:href="@{/admin/users/edit}">Добавить</a>
+    </div>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Логин</th>
+            <th>Пароль</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.surname}">surname...</td>
+            <td th:text="${user.firstname}">firstname...</td>
+            <td th:text="${user.lastname}">lastname...</td>
+            <td th:text="${user.username}">username...</td>
+            <td th:text="${user.password}">password...</td>
+            <td>
+                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
     <p><a href="/admin" th:href="@{/admin}">Назад</a></p>
 </div>
 </body>
