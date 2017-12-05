@@ -7,7 +7,7 @@
 <div>
     <h1>Пользователи</h1>
     <div>
-        <a href="/admin/users/edit" th:href="@{/admin/users/edit}">Добавить</a>
+        <a href="/admin/users/new" th:href="@{/admin/users/new}">Добавить</a>
     </div>
     <table border="1">
         <thead>
@@ -28,6 +28,7 @@
             <td th:text="${user.password}">password...</td>
             <td>
                 <a th:href="@{/admin/users/delete/{id}(id=${user.id})}">Удалить</a>
+                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Редактировать</a>
             </td>
         </tr>
         </tbody>

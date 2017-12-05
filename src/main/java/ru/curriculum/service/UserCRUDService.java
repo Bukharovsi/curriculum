@@ -22,12 +22,19 @@ public class UserCRUDService {
         return userDtos;
     }
 
-    public void createUser(UserDto userDto) {
+    public void saveUser(UserDto userDto) {
         User newUser = new User(userDto);
         userRepository.save(newUser);
     }
 
     public void deleteUser(Integer userId) {
         userRepository.delete(userId);
+    }
+
+    public UserDto getUser(Integer userId) {
+        // TODO: либо применять get, либо проверять на null
+        User user = userRepository.findOne(userId);
+
+        return new UserDto(user);
     }
 }

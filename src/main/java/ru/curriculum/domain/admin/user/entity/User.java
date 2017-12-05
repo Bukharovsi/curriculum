@@ -54,6 +54,7 @@ public class User {
                 userDto.getFirstname(),
                 userDto.getSurname(),
                 userDto.getLastname());
+        this.id = userDto.getId();
     }
 
     public Integer id() {
