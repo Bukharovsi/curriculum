@@ -11,10 +11,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
 @AutoConfigureMockMvc
-public class IntegrationWebBoot {
+public abstract class IntegrationWebBoot extends IntegrationBoot {
     @Autowired
     private WebApplicationContext context;
     protected MockMvc mockMvc;

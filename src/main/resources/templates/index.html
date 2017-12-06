@@ -3,14 +3,20 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Curriculum</title>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
     <h1>Добро пожаловать в Curriculum</h1>
-    <p>Приветсвенная страница. </p>
+    <p>Приветсвенная страница.</p>
     <ul>
         <li><a href="/user" th:href="@{/admin}">Войти</a></li>
     </ul>
+    <div class="btn-group">
+        <button type="button" class="btn btn-success">Тест bootstrap</button>
+        <button type="button" class="btn btn-warning">Тест bootstrap</button>
+        <button type="button" class="btn btn-danger">Тест bootstrap</button>
+    </div>
 </div>
 </body>
 </html>
