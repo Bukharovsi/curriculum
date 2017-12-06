@@ -9,8 +9,8 @@ deploy:
   secret_access_key:
     secure: "$SECRETACCESSKEY"
   region: "us-east-2"
-  app: "Default-Environment"
-  env: "n9cttxxx8p"
+  app: "n9cttxxx8p"
+  env: "Default-Environment"
   bucket_name: "elasticbeanstalk-us-east-2-523799450750"
   on:
     branch: master
