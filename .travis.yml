@@ -9,7 +9,7 @@ deploy:
   secret_access_key:
     secure: "$SECRETACCESSKEY"
   region: "us-east-2"
-  app: "n9cttxxx8p"
+  app: "My First Elastic Beanstalk Application"
   env: "Default-Environment"
   bucket_name: "elasticbeanstalk-us-east-2-523799450750"
   on:
