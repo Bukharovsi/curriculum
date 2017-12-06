@@ -33,4 +33,8 @@ public class UserDto implements Serializable {
         this.surname = user.surname();
         this.lastname = user.lastName();
     }
+
+    public boolean passwordIsPresent() {
+        return null != password;
+    }
 }

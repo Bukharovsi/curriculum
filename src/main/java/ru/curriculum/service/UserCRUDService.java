@@ -27,6 +27,11 @@ public class UserCRUDService {
         userRepository.save(newUser);
     }
 
+    public void udpateUser(UserDto userDto) {
+        User user = userRepository.findOne(userDto.getId());
+        user.updatePrincipal(userDto);
+    }
+
     public void deleteUser(Integer userId) {
         userRepository.delete(userId);
     }

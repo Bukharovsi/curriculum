@@ -2,6 +2,7 @@ package ru.curriculum.domain.admin.user.entity;
 
 
 import lombok.NonNull;
+import org.hibernate.annotations.Target;
 import ru.curriculum.service.UserDto;
 
 import javax.persistence.*;
@@ -13,7 +14,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
-    private String password;
+    @Embedded
+    @AttributeOverride(column = @Column(name = "password"), name = "password")
+    @Target(Password.class)
+    private Password password;
     private String firstname;
     private String surname;
     private String lastname;
@@ -27,11 +31,10 @@ public class User {
     public User() {
     }
 
-    // TODO: проверки на корректность логина и пароля
     public User(@NonNull String username, @NonNull String password) {
         this();
         this.username = username;
-        this.password = password;
+        this.password = new Password(password);
     }
 
     public User(
@@ -65,7 +68,7 @@ public class User {
         return username;
     }
 
-    public String password() {
+    public Password password() {
         return password;
     }
 
@@ -87,5 +90,15 @@ public class User {
 
     public void assignRole(Role role) {
         this.role = role;
+    }
+
+    public void updatePrincipal(UserDto userDto) {
+        this.username = userDto.getUsername();
+        this.firstname = userDto.getFirstname();
+        this.lastname = userDto.getLastname();
+        this.surname = userDto.getSurname();
+        if(userDto.passwordIsPresent()) {
+            this.password = new Password(userDto.getPassword());
+        }
     }
 }
