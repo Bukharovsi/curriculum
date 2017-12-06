@@ -22,17 +22,17 @@ public class UserCRUDService {
         return userDtos;
     }
 
-    public void saveUser(UserDto userDto) {
+    public void create(UserDto userDto) {
         User newUser = new User(userDto);
         userRepository.save(newUser);
     }
 
-    public void udpateUser(UserDto userDto) {
+    public void update(UserDto userDto) {
         User user = userRepository.findOne(userDto.getId());
         user.updatePrincipal(userDto);
     }
 
-    public void deleteUser(Integer userId) {
+    public void delete(Integer userId) {
         userRepository.delete(userId);
     }
 

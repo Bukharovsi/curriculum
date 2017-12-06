@@ -21,11 +21,11 @@
         </thead>
         <tbody>
         <tr th:each="user : ${users}">
-            <td th:text="${user.surname}">surname...</td>
-            <td th:text="${user.firstname}">firstname...</td>
-            <td th:text="${user.lastname}">lastname...</td>
-            <td th:text="${user.username}">username...</td>
-            <td th:text="${user.password}">password...</td>
+            <td th:text="${user.surname}"></td>
+            <td th:text="${user.firstname}"></td>
+            <td th:text="${user.lastname}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.password}"></td>
             <td>
                 <a th:href="@{/admin/users/delete/{id}(id=${user.id})}">Удалить</a>
                 <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Редактировать</a>

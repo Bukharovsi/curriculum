@@ -32,4 +32,6 @@ public class UserTest {
 
         assertEquals(testRole, user.role());
     }
+
+    //TODO: updateUserPrincipal and changePassword
 }

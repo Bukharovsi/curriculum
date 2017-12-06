@@ -101,4 +101,8 @@ public class User {
             this.password = new Password(userDto.getPassword());
         }
     }
+
+    public void changePassword(String password) {
+        this.password = new Password(password);
+    }
 }

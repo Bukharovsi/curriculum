@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.service.validation.PasswordConstraint;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -14,7 +15,6 @@ public class UserDto implements Serializable {
     private Integer id;
     @Size(min = 3, max = 25)
     private String username;
-    @Size(min = 3, max = 12)
     private String password;
     @NotEmpty
     private String surname;

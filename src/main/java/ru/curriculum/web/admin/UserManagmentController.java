@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
+import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.service.UserCRUDService;
 import ru.curriculum.service.UserDto;
 import ru.curriculum.web.View;
@@ -45,11 +46,21 @@ public class UserManagmentController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user") @Valid UserDto userDto, BindingResult errors) {
+    public String createUser(@ModelAttribute("user") @Valid UserDto userDto, BindingResult errors) {
         if(errors.hasErrors()) {
             return View.USER_FORM;
         }
-        userCRUDService.saveUser(userDto);
+        userCRUDService.create(userDto);
+
+        return redirectTo(Routes.users);
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String updateUser(@ModelAttribute("user") @Valid UserDto userDto, BindingResult errors) {
+        if(errors.hasErrors()) {
+            return View.USER_FORM;
+        }
+        userCRUDService.update(userDto);
 
         return redirectTo(Routes.users);
     }
@@ -57,7 +68,7 @@ public class UserManagmentController {
     //TODO: брать нормальный роут
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteUser(@PathVariable("id") Integer id) {
-        userCRUDService.deleteUser(id);
+        userCRUDService.delete(id);
 
         return redirectTo(Routes.users);
     }

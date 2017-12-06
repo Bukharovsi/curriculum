@@ -38,7 +38,7 @@ public class AdminAuthenticationIfnoInitializationService implements Application
             return;
         }
 
-        User user = new User(username, passwordEncoder.encode(password));
+        User user = new User(username, password);
         Role roleAdmin = roleRepository.findOne("admin");
         user.assignRole(roleAdmin);
         userRepository.save(user);
