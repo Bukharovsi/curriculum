@@ -11,6 +11,6 @@ deploy:
   region: "us-east-2"
   app: "n9cttxxx8p"
   env: "Default-Environment"
-  bucket_name: "need to find out"
+  bucket_name: "elasticbeanstalk-us-east-2-523799450750"
   on:
     branch: master
