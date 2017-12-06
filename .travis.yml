@@ -1,3 +1,16 @@
 language: java
 jdk:
  - oraclejdk8
+
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $ACCESSKEYID
+  secret_access_key:
+    secure: "$SECRETACCESSKEY"
+  region: "us-east-2"
+  app: "n9cttxxx8p"
+  env: "Default-Environment"
+  bucket_name: "need to find out"
+  on:
+    branch: master
