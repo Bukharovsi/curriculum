@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
-import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.service.UserCRUDService;
-import ru.curriculum.service.UserDto;
+import ru.curriculum.service.UserDTO;
 import ru.curriculum.web.View;
 
 import javax.validation.Valid;
@@ -33,7 +32,7 @@ public class UserManagmentController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String getNewUserForm(Model model) {
-        model.addAttribute("user", new UserDto());
+        model.addAttribute("user", new UserDTO());
 
         return View.USER_FORM;
     }
@@ -46,21 +45,21 @@ public class UserManagmentController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createUser(@ModelAttribute("user") @Valid UserDto userDto, BindingResult errors) {
+    public String createUser(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult errors) {
         if(errors.hasErrors()) {
             return View.USER_FORM;
         }
-        userCRUDService.create(userDto);
+        userCRUDService.create(userDTO);
 
         return redirectTo(Routes.users);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String updateUser(@ModelAttribute("user") @Valid UserDto userDto, BindingResult errors) {
+    public String updateUser(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult errors) {
         if(errors.hasErrors()) {
             return View.USER_FORM;
         }
-        userCRUDService.update(userDto);
+        userCRUDService.update(userDTO);
 
         return redirectTo(Routes.users);
     }

@@ -11,7 +11,8 @@ import java.io.Serializable;
 
 @Setter
 @Getter
-public class UserDto implements Serializable {
+@PasswordConstraint
+public class UserDTO implements Serializable {
     private Integer id;
     @Size(min = 3, max = 25)
     private String username;
@@ -22,13 +23,12 @@ public class UserDto implements Serializable {
     private String firstname;
     private String lastname;
 
-    public UserDto() {
+    public UserDTO() {
     }
 
-    public UserDto(User user) {
+    public UserDTO(User user) {
         this.id = user.id();
         this.username = user.username();
-//        this.password = user.password();
         this.firstname = user.firstName();
         this.surname = user.surname();
         this.lastname = user.lastName();

@@ -3,7 +3,7 @@ package ru.curriculum.domain.admin.user.entity;
 
 import lombok.NonNull;
 import org.hibernate.annotations.Target;
-import ru.curriculum.service.UserDto;
+import ru.curriculum.service.UserDTO;
 
 import javax.persistence.*;
 
@@ -50,14 +50,14 @@ public class User {
         this.lastname = lastname;
     }
 
-    public User(UserDto userDto) {
+    public User(UserDTO userDTO) {
         this(
-                userDto.getUsername(),
-                userDto.getPassword(),
-                userDto.getFirstname(),
-                userDto.getSurname(),
-                userDto.getLastname());
-        this.id = userDto.getId();
+                userDTO.getUsername(),
+                userDTO.getPassword(),
+                userDTO.getFirstname(),
+                userDTO.getSurname(),
+                userDTO.getLastname());
+        this.id = userDTO.getId();
     }
 
     public Integer id() {
@@ -92,13 +92,13 @@ public class User {
         this.role = role;
     }
 
-    public void updatePrincipal(UserDto userDto) {
-        this.username = userDto.getUsername();
-        this.firstname = userDto.getFirstname();
-        this.lastname = userDto.getLastname();
-        this.surname = userDto.getSurname();
-        if(userDto.passwordIsPresent()) {
-            this.password = new Password(userDto.getPassword());
+    public void updatePrincipal(UserDTO userDTO) {
+        this.username = userDTO.getUsername();
+        this.firstname = userDTO.getFirstname();
+        this.lastname = userDTO.getLastname();
+        this.surname = userDTO.getSurname();
+        if(userDTO.passwordIsPresent()) {
+            this.password = new Password(userDTO.getPassword());
         }
     }
 
