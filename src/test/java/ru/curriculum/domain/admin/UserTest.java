@@ -1,19 +1,29 @@
 package ru.curriculum.domain.admin;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.curriculum.domain.admin.user.entity.Role;
 import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.service.validation.PasswordValidator;
 
 import static org.junit.Assert.*;
 
 public class UserTest {
+    private PasswordEncoder encoder;
+
+    @Before
+    public void setUp() {
+        encoder = new BCryptPasswordEncoder(11);
+    }
 
     @Test
     public void createUser() {
         User user = new User("test", "123");
 
         assertEquals("test", user.username());
-        assertEquals("123", user.password());
+        assertTrue(encoder.matches("123", user.password().hash()));
     }
 
     @Test
