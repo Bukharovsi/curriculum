@@ -3,10 +3,7 @@ package ru.curriculum.domain.admin.service;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.Errors;
 import ru.curriculum.service.UserDTO;
-import ru.curriculum.service.validation.PasswordValidator;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
