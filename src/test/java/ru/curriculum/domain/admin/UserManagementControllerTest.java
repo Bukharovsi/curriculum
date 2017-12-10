@@ -1,6 +1,6 @@
 package ru.curriculum.domain.admin;
 
-import boot.WebIntegrationBoot;
+import boot.IntegrationWebBoot;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class UserManagementControllerTest extends WebIntegrationBoot {
+public class UserManagementControllerTest extends IntegrationWebBoot {
     @Autowired
     private UserRepository userRepository;
     @Autowired
