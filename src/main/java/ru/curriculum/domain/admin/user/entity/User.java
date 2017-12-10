@@ -31,20 +31,15 @@ public class User {
     public User() {
     }
 
-    public User(@NonNull String username, @NonNull String password) {
-        this();
-        this.username = username;
-        this.password = new Password(password);
-    }
-
     public User(
-            String username,
+            @NonNull String username,
             String password,
             String surname,
             String firstname,
             String lastname
     ) {
-        this(username, password);
+        this.username = username;
+        this.password = new Password(password);
         this.surname = surname;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -54,10 +49,9 @@ public class User {
         this(
                 userDTO.getUsername(),
                 userDTO.getPassword(),
-                userDTO.getFirstname(),
                 userDTO.getSurname(),
+                userDTO.getFirstname(),
                 userDTO.getLastname());
-        this.id = userDTO.getId();
     }
 
     public Integer id() {
@@ -93,7 +87,6 @@ public class User {
     }
 
     public void updatePrincipal(UserDTO userDTO) {
-        this.username = userDTO.getUsername();
         this.firstname = userDTO.getFirstname();
         this.lastname = userDTO.getLastname();
         this.surname = userDTO.getSurname();

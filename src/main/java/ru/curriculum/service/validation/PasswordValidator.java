@@ -6,14 +6,23 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class PasswordValidator implements ConstraintValidator<PasswordConstraint, UserDTO> {
-   public void initialize(PasswordConstraint constraint) {
-   }
 
-   public boolean isValid(UserDTO userDTO, ConstraintValidatorContext context) {
-       if(null == userDTO.getId() && (null == userDTO.getPassword() ||  3 > userDTO.getPassword().length())) {
-           return false;
-       }
+    public void initialize(PasswordConstraint constraint) {
+    }
 
-      return true;
-   }
+    public boolean isValid(UserDTO userDTO, ConstraintValidatorContext context) {
+        if (isNewUser(userDTO)) {
+            return null != userDTO.getPassword() && passwordIsValid(userDTO);
+        } else {
+            return null == userDTO.getPassword() || userDTO.getPassword().isEmpty() || passwordIsValid(userDTO);
+        }
+    }
+
+    private boolean isNewUser(UserDTO userDTO) {
+        return null == userDTO.getId();
+    }
+
+    private boolean passwordIsValid(UserDTO userDTO) {
+        return 3 <= userDTO.getPassword().length();
+    }
 }

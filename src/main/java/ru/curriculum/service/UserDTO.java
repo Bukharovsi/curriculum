@@ -2,6 +2,7 @@ package ru.curriculum.service;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.service.validation.PasswordConstraint;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Setter
 @Getter
 @PasswordConstraint
+@ToString
 public class UserDTO implements Serializable {
     private Integer id;
     @Size(min = 3, max = 25)
@@ -35,6 +37,6 @@ public class UserDTO implements Serializable {
     }
 
     public boolean passwordIsPresent() {
-        return null != password;
+        return null != password && !password.isEmpty();
     }
 }

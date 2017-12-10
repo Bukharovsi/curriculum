@@ -30,6 +30,7 @@ public class UserCRUDService {
     public void update(UserDTO userDTO) {
         User user = userRepository.findOne(userDTO.getId());
         user.updatePrincipal(userDTO);
+        userRepository.save(user);
     }
 
     public void delete(Integer userId) {

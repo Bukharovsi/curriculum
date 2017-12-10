@@ -18,13 +18,11 @@ import javax.transaction.Transactional;
  * При первом старте приложения создаем пользователя с ролью "администратор".
  */
 @Component
-public class AdminAuthenticationIfnoInitializationService implements ApplicationListener<ContextRefreshedEvent> {
+public class AdminAuthenticationInfoInitializationService implements ApplicationListener<ContextRefreshedEvent> {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
     @Value("${auth.admin.username}")
     private String username;
     @Value("${auth.admin.password}")
@@ -38,20 +36,28 @@ public class AdminAuthenticationIfnoInitializationService implements Application
             return;
         }
 
-        User user = new User(username, password);
+        User user = new User(
+                username,
+                password,
+                "Администратор",
+                "Администратор",
+                null);
         Role roleAdmin = roleRepository.findOne("admin");
         user.assignRole(roleAdmin);
         userRepository.save(user);
 
         User ivan = new User(
                 "Balalaika",
-                passwordEncoder.encode("123"),
+                "123",
                 "Софья",
                 "Павловна",
                 "Ириновская");
         User revy = new User(
                 "Двурукая",
-                passwordEncoder.encode("123"));
+                "124",
+                null,
+                null,
+                null);
         userRepository.save(ivan);
         userRepository.save(revy);
 

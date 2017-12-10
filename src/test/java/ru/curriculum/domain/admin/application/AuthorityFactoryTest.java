@@ -1,4 +1,4 @@
-package ru.curriculum.domain.admin;
+package ru.curriculum.domain.admin.application;
 
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;

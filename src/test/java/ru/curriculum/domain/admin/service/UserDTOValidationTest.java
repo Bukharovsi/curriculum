@@ -11,7 +11,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
 
-public class ValidationUserDTOTest {
+public class UserDTOValidationTest {
     private Validator validator;
     private ValidatorFactory validatorFactory;
 
@@ -20,8 +20,9 @@ public class ValidationUserDTOTest {
         validatorFactory= Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
     }
+
     @Test
-    public void userDTOWithIdAndWithPasswordGraterThan3Character_validationSuccess() {
+    public void userDTOWithIdAndPasswordGraterThan3Character_validationSuccess() {
         UserDTO dto = new UserDTO();
         dto.setId(3);
         dto.setPassword("123");
@@ -35,11 +36,37 @@ public class ValidationUserDTOTest {
     }
 
     @Test
-    public void userDTOWithIdAndPasswordLessThan3Character_validationSuccess() {
+    public void userDTOWithIdAndPasswordLessThan3Character_validationFailed() {
         UserDTO dto = new UserDTO();
         dto.setId(3);
         dto.setPassword("12");
         dto.setUsername("jhon");
+        dto.setFirstname("Mikola");
+        dto.setSurname("Salo");
+
+        Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
+
+        Assert.assertEquals(1, violation.size());
+    }
+
+    @Test
+    public void userDTOWithIdAndNoPassword_validationFailed() {
+        UserDTO dto = new UserDTO();
+        dto.setUsername("jhon");
+        dto.setFirstname("Mikola");
+        dto.setSurname("Salo");
+
+        Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
+
+        Assert.assertEquals(1, violation.size());
+    }
+
+    @Test
+    public void userDTOWIthIdAndPasswordIsEmptyString_validationSuccess() {
+        UserDTO dto = new UserDTO();
+        dto.setId(3);
+        dto.setUsername("jhon");
+        dto.setPassword("");
         dto.setFirstname("Mikola");
         dto.setSurname("Salo");
 
@@ -72,5 +99,31 @@ public class ValidationUserDTOTest {
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
 
         Assert.assertEquals(1, violation.size());
+    }
+
+    @Test
+    public void userDTOWithUsernameLessThan3Character_validationFailed() {
+        UserDTO dto = new UserDTO();
+        dto.setPassword("123");
+        dto.setUsername("j");
+        dto.setFirstname("Mikola");
+        dto.setSurname("Salo");
+
+        Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
+
+        Assert.assertEquals(1, violation.size());
+    }
+
+    @Test
+    public void userDTOWithEmptyFirstNameAndSurname_validationFailed() {
+        UserDTO dto = new UserDTO();
+        dto.setPassword("123");
+        dto.setUsername("jhon");
+        dto.setFirstname("");
+        dto.setSurname("");
+
+        Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
+
+        Assert.assertEquals(2, violation.size());
     }
 }

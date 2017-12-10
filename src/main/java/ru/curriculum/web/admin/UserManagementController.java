@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.UserCRUDService;
 import ru.curriculum.service.UserDTO;
+import ru.curriculum.service.validation.UniquerUsernameValidator;
 import ru.curriculum.web.View;
 
 import javax.validation.Valid;
@@ -19,9 +20,11 @@ import static ru.curriculum.web.Redirect.redirectTo;
 
 @Controller
 @RequestMapping(path = Routes.users)
-public class UserManagmentController {
+public class UserManagementController {
     @Autowired
     private UserCRUDService userCRUDService;
+    @Autowired
+    private UniquerUsernameValidator uniquerUsernameValidator;
 
     @RequestMapping(method = RequestMethod.GET)
     public String usersList(Model model) {
@@ -46,6 +49,7 @@ public class UserManagmentController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String createUser(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult errors) {
+        uniquerUsernameValidator.validate(userDTO, errors);
         if(errors.hasErrors()) {
             return View.USER_FORM;
         }
@@ -54,7 +58,7 @@ public class UserManagmentController {
         return redirectTo(Routes.users);
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.PUT)
     public String updateUser(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult errors) {
         if(errors.hasErrors()) {
             return View.USER_FORM;

@@ -1,4 +1,4 @@
-package ru.curriculum.domain.admin;
+package ru.curriculum.domain.admin.domain;
 
 
 import org.junit.Assert;
