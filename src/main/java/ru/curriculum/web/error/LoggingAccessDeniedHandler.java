@@ -1,4 +1,4 @@
-package ru.curriculum.controllers.error;
+package ru.curriculum.web.error;
 
 
 import org.springframework.security.access.AccessDeniedException;
@@ -18,7 +18,6 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
                        HttpServletResponse response,
                        AccessDeniedException ex
     ) throws IOException, ServletException {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         response.sendRedirect(request.getContextPath() + "/access-denied");
 
     }

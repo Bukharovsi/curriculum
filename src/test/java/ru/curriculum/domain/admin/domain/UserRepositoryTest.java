@@ -1,4 +1,4 @@
-package ru.curriculum.domain.admin.repository;
+package ru.curriculum.domain.admin.domain;
 
 
 import boot.IntegrationBoot;
@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import ru.curriculum.domain.admin.user.entity.Role;
 import ru.curriculum.domain.admin.user.entity.User;
@@ -24,7 +23,7 @@ public class UserRepositoryTest extends IntegrationBoot {
 
     @Test
     public void createAndSavedUser() {
-        User user = new User("test", "test");
+        User user = new User("test", "test", "Иванов", "Иван","Иванович");
         User savedUser = userRepository.save(user);
 
         Assert.assertTrue(null != savedUser.id());
@@ -35,7 +34,7 @@ public class UserRepositoryTest extends IntegrationBoot {
     @Test
     public void assignRoleForUserAndSave_mustBeSaveWithRole() {
         Role role = new Role("admin", "Администратор");
-        User user = new User("test", "123");
+        User user = new User("test", "123", "Иванов", "Иван","Иванович");
         user.assignRole(role);
 
         User savedUser = userRepository.save(user);
@@ -45,7 +44,7 @@ public class UserRepositoryTest extends IntegrationBoot {
 
     @Test(expected = InvalidDataAccessApiUsageException.class)
     public void tryToSaveUserWithNoneExistenceRole_mustBeException() {
-        User user = new User("test", "123");
+        User user = new User("test", "123", "Иванов", "Иван","Иванович");
         user.assignRole(new Role("none", "Не существующая роль"));
 
         userRepository.save(user);

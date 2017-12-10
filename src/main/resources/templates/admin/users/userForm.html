@@ -1,0 +1,44 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Управление пользователями</title>
+</head>
+<body>
+<div>
+    <div th:if="${user.id}">
+        <h1>Редактирование <span th:text="${user.username}"></span></h1>
+    </div>
+    <div th:unless="${user.id}">
+        <h1>Создание пользователя</h1>
+    </div>
+    <form th:action="@{/admin/users}" th:object="${user}" modelAttribute="user" th:method="${user.id != null ? 'put' : 'post'}">
+
+        <ul>
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
+        </ul>
+
+        <div>
+            <input th:hidden="true" type="number" th:field="*{id}"/>
+        </div>
+        <div>
+            <label>Логин <input th:disabled="${user.id != null ? true: false}" type="text" th:field="*{username}"/></label>
+        </div>
+        <div>
+            <label>Пароль <input type="text" th:field="*{password}"/></label>
+        </div>
+        <div>
+            <label>Фамилия </label><input type="text" th:field="*{surname}"/>
+        </div>
+        <div>
+            <label>Имя <input type="text" th:field="*{firstname}"/></label>
+        </div>
+        <div>
+            <label>Отчество <input type="text" th:field="*{lastname}"/></label>
+        </div>
+        <input type="submit" th:value="Сохранить"/>
+    </form>
+
+    <p><a href="/admin/users" th:href="@{/admin/users}">Назад</a></p>
+</div>
+</body>
+</html>
