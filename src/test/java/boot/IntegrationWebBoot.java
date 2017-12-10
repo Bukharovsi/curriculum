@@ -9,7 +9,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 
 @AutoConfigureMockMvc
-
 public abstract class IntegrationWebBoot extends IntegrationBoot {
     @Autowired
     private WebApplicationContext context;
