@@ -1,0 +1,55 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Преподователи</title>
+</head>
+<body>
+<div>
+    <div>
+        <h1>Создание преподователя</h1>
+    </div>
+
+    <form th:action="@{/admin/teachers}" th:object="${teacher}" modelAttribute="user" th:method="${teacher.id != null ? 'put' : 'post'}">
+
+        <ul>
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
+        </ul>
+
+        <div>
+            <input th:hidden="true" type="number" th:field="*{id}"/>
+        </div>
+        <div>
+            <label>Фамилия </label><input type="text" th:field="*{surname}"/>
+        </div>
+        <div>
+            <label>Имя <input type="text" th:field="*{firstname}"/></label>
+        </div>
+        <div>
+            <label>Отчество <input type="text" th:field="*{lastname}"/></label>
+        </div>
+        <div>
+            <label>
+                Академическая степень
+                <select th:field="*{academicDegree}">
+                    <option value=""></option>
+                    <option th:each="degree : ${academicDegrees}"
+                            th:value="${degree.getCode()}"
+                            th:text="${degree.getName()}"
+                    ></option>
+                </select>
+            </label>
+        </div>
+        <div>
+            <label>Место работы <input type="text" th:field="*{placeOfWork}"/></label>
+        </div>
+        <div>
+            <label>Занимаемая должность <input type="text" th:field="*{position}"/></label>
+        </div>
+
+        <input type="submit" th:value="Сохранить"/>
+    </form>
+
+    <p><a th:href="@{/admin/teachers}">Назад</a></p>
+</div>
+</body>
+</html>

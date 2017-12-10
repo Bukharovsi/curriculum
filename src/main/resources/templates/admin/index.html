@@ -7,7 +7,8 @@
 <body>
 <div layout:fragment="content" th:remove="tag">
     <h1>Личный кабинет</h1>
-    <p><a href="/admin/users" th:href="@{/admin/users}">Управление пользователями</a></p>
+    <p><a th:href="@{/admin/users}">Управление пользователями</a></p>
+    <p><a th:href="@{/admin/teachers}">Управление преподователями</a></p>
 </div>
 </body>
 </html>
