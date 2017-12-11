@@ -11,7 +11,8 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
 
-public class UserDTOValidationTest {
+
+public class UserDTOValidationTest extends Assert {
     private Validator validator;
     private ValidatorFactory validatorFactory;
 
@@ -32,7 +33,7 @@ public class UserDTOValidationTest {
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
 
-        Assert.assertEquals(0, violation.size());
+        assertEquals(0, violation.size());
     }
 
     @Test
@@ -46,7 +47,7 @@ public class UserDTOValidationTest {
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
 
-        Assert.assertEquals(1, violation.size());
+        assertEquals(1, violation.size());
     }
 
     @Test
@@ -58,7 +59,7 @@ public class UserDTOValidationTest {
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
 
-        Assert.assertEquals(1, violation.size());
+        assertEquals(1, violation.size());
     }
 
     @Test
@@ -72,7 +73,7 @@ public class UserDTOValidationTest {
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
 
-        Assert.assertEquals(0, violation.size());
+        assertEquals(0, violation.size());
     }
 
     @Test
@@ -85,7 +86,7 @@ public class UserDTOValidationTest {
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
 
-        Assert.assertEquals(0, violation.size());
+        assertEquals(0, violation.size());
     }
 
     @Test
@@ -98,7 +99,7 @@ public class UserDTOValidationTest {
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
 
-        Assert.assertEquals(1, violation.size());
+        assertEquals(1, violation.size());
     }
 
     @Test
@@ -111,7 +112,7 @@ public class UserDTOValidationTest {
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
 
-        Assert.assertEquals(1, violation.size());
+        assertEquals(1, violation.size());
     }
 
     @Test
@@ -124,6 +125,6 @@ public class UserDTOValidationTest {
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
 
-        Assert.assertEquals(2, violation.size());
+        assertEquals(2, violation.size());
     }
 }

@@ -21,7 +21,7 @@
         </insert>
 
         <insert tableName="academic_degree">
-            <column name="code" value="proffesor"></column>
+            <column name="code" value="professor"></column>
             <column name="name" value="Профессор"></column>
         </insert>
 

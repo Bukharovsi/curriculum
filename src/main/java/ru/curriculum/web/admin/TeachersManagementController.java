@@ -13,6 +13,9 @@ import ru.curriculum.service.teacher.TeacherCRUDService;
 import ru.curriculum.service.teacher.TeacherDTO;
 import ru.curriculum.web.View;
 
+import javax.validation.Valid;
+
+
 import static ru.curriculum.web.Redirect.*;
 
 @Controller
@@ -33,7 +36,7 @@ public class TeachersManagementController {
         model.addAttribute("teacher", new TeacherDTO());
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
 
-        return View.TEACHER_FROM;
+        return View.TEACHER_FORM;
     }
 
     @RequestMapping(value = "/newFromUser", method = RequestMethod.GET)
@@ -42,13 +45,27 @@ public class TeachersManagementController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createTeacher(@ModelAttribute("teacher") TeacherDTO teacherDTO, Model model, BindingResult errors) {
-        if(errors.hasErrors()) {
-            return View.TEACHER_FROM;
+    public String createTeacher(
+            @ModelAttribute("teacher") @Valid TeacherDTO teacherDTO,
+            BindingResult teacherBindingResult,
+            Model model
+    ) {
+        if(teacherBindingResult.hasErrors()) {
+            model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+
+            return View.TEACHER_FORM;
         }
         teacherCRUDService.create(teacherDTO);
 
         return redirectTo(Routes.teachers);
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String getEditUserForm(@PathVariable Integer id, Model model) {
+        model.addAttribute("teacher", teacherCRUDService.get(id));
+        model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+
+        return View.TEACHER_FORM;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)

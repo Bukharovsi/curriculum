@@ -21,9 +21,15 @@ public class AcademicDegree {
     public AcademicDegree() {
     }
 
+    public AcademicDegree(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
     public AcademicDegree(AcademicDegreeDTO academicDegree) {
-        this.code = academicDegree.getCode();
-        this.name = academicDegree.getName();
+        this(
+                academicDegree.getCode(),
+                academicDegree.getName());
     }
 
     public String code() {

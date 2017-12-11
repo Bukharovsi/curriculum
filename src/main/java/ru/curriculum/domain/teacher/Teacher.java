@@ -1,10 +1,11 @@
 package ru.curriculum.domain.teacher;
 
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.service.teacher.TeacherDTO;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "teacher")
@@ -13,10 +14,10 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String firstname;
     private String surname;
+    private String firstname;
     private String lastname;
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.PERSIST})
+    @OneToOne(fetch = FetchType.EAGER)
     private AcademicDegree academicDegree;
     private String placeOfWork;
     private String position;
@@ -24,27 +25,28 @@ public class Teacher {
     private User user;
 
     public Teacher() {
+        this.placeOfWork = "ГАОУ ДПО Институт Развития Образования РТ";
     }
 
     public Teacher(
-            String firstname,
-            String surname,
-            String lastname,
-            AcademicDegree academicDegree) {
-        this.firstname = firstname;
+            Integer id,
+            @NonNull String surname,
+            @NonNull String firstname,
+            @NotNull String lastname,
+            @NonNull AcademicDegree academicDegree,
+            String placeOfWork,
+            String position
+    ) {
+        this();
+        this.id = id;
         this.surname = surname;
+        this.firstname = firstname;
         this.lastname = lastname;
         this.academicDegree = academicDegree;
-    }
-
-    public Teacher(TeacherDTO teacherDTO) {
-        this.surname = teacherDTO.getSurname();
-        this.firstname = teacherDTO.getFirstname();
-        this.lastname = teacherDTO.getLastname();
-//        this.academicDegree = new AcademicDegree(teacherDTO.getAcademicDegreeDTO());
-        this.academicDegree = teacherDTO.getAcademicDegree();
-        this.placeOfWork = teacherDTO.getPlaceOfWork();
-        this.position = teacherDTO.getPosition();
+        if(null != placeOfWork) {
+            this.placeOfWork = placeOfWork;
+        }
+        this.position = position;
     }
 
     public Integer id() {

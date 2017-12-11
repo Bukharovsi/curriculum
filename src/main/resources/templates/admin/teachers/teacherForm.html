@@ -9,7 +9,8 @@
         <h1>Создание преподователя</h1>
     </div>
 
-    <form th:action="@{/admin/teachers}" th:object="${teacher}" modelAttribute="user" th:method="${teacher.id != null ? 'put' : 'post'}">
+    <!--<form th:action="@{/admin/teachers}" th:object="${teacher}" modelAttribute="user" th:method="${teacher.id != null ? 'put' : 'post'}">-->
+    <form th:action="@{/admin/teachers}" th:object="${teacher}" modelAttribute="user" method="post">
 
         <ul>
             <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
@@ -30,11 +31,11 @@
         <div>
             <label>
                 Академическая степень
-                <select th:field="*{academicDegree}">
+                <select th:field="*{academicDegreeCode}">
                     <option value=""></option>
                     <option th:each="degree : ${academicDegrees}"
-                            th:value="${degree.getCode()}"
-                            th:text="${degree.getName()}"
+                            th:value="${degree.code}"
+                            th:text="${degree.name}"
                     ></option>
                 </select>
             </label>

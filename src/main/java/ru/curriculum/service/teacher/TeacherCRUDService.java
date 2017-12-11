@@ -16,6 +16,8 @@ public class TeacherCRUDService {
     private TeacherRepository teacherRepository;
     @Autowired
     private AcademicDegreeRepository academicDegreeRepository;
+    @Autowired
+    private TeacherFactory teacherFactory;
 
     public Collection<TeacherDTO> findAll() {
         Collection<TeacherDTO> dtos = new ArrayList<>();
@@ -31,7 +33,7 @@ public class TeacherCRUDService {
     }
 
     public void create(TeacherDTO teacherDTO) {
-        Teacher teacher = new Teacher(teacherDTO);
+        Teacher teacher = teacherFactory.create(teacherDTO);
         teacherRepository.save(teacher);
     }
 
