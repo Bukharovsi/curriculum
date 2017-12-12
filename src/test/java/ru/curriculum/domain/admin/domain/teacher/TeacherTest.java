@@ -2,6 +2,7 @@ package ru.curriculum.domain.admin.domain.teacher;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.teacher.AcademicDegree;
 import ru.curriculum.domain.teacher.Teacher;
 
@@ -25,6 +26,7 @@ public class TeacherTest extends Assert {
         assertEquals(new AcademicDegree("ph_d", "Доктор наук"), teacher.academicDegree());
         assertEquals("Макдоналдс", teacher.placeOfWork());
         assertEquals("Жарщик котлет", teacher.position());
+        assertFalse("For default teacher don't has account", teacher.hasUserAccount());
     }
 
     @Test
@@ -39,6 +41,24 @@ public class TeacherTest extends Assert {
                 "Жарщик котлет");
 
         assertEquals("ГАОУ ДПО Институт Развития Образования РТ", teacher.placeOfWork());
+    }
+
+
+    @Test
+    public void assignAccountForUser() {
+        Teacher teacher = new Teacher(
+                1,
+                "Иванов",
+                "Иван",
+                "Иванович",
+                new AcademicDegree("ph_d", "Доктор наук"),
+                "Макдоналдс",
+                "Жарщик котлет");
+
+        teacher.assignUserAccount(new User());
+
+        assertTrue(teacher.hasUserAccount());
+        assertNotNull(teacher.userAccount());
     }
 
     // TODO: чтобы не писать разные тесты для каждого случаия null, попробовать использовать в таких случаях TestNG

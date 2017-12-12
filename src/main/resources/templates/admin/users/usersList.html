@@ -7,7 +7,7 @@
 <div>
     <h1>Пользователи</h1>
     <div>
-        <a href="/admin/users/new" th:href="@{/admin/users/new}">Добавить</a>
+        <a th:href="@{/admin/users/new}">Добавить</a>
     </div>
     <table border="1">
         <thead>
@@ -25,8 +25,11 @@
             <td th:text="${user.lastname}"></td>
             <td th:text="${user.username}"></td>
             <td>
+                <!--TODO при удалении если есть акк препода просто удалим акк, не задумыаясь-->
                 <a th:href="@{/admin/users/delete/{id}(id=${user.id})}">Удалить</a>
                 <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Редактировать</a>
+                <a th:unless="${user.isTeacher}" th:href="@{/admin/teachers/newFromUser/{id}(id=${user.id})}">Сделать преподователем</a>
+
             </td>
         </tr>
         </tbody>

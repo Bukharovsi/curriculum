@@ -3,7 +3,7 @@ package ru.curriculum.domain.admin.service;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ru.curriculum.service.UserDTO;
+import ru.curriculum.service.user.UserDTO;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

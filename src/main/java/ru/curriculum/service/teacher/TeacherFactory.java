@@ -2,6 +2,8 @@ package ru.curriculum.service.teacher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.domain.admin.user.repository.UserRepository;
 import ru.curriculum.domain.teacher.AcademicDegree;
 import ru.curriculum.domain.teacher.AcademicDegreeRepository;
 import ru.curriculum.domain.teacher.Teacher;
@@ -12,6 +14,8 @@ import javax.persistence.EntityNotFoundException;
 public class TeacherFactory {
     @Autowired
     private AcademicDegreeRepository academicDegreeRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public Teacher create(TeacherDTO teacherDTO) {
         AcademicDegree academicDegree = academicDegreeRepository.findOne(teacherDTO.getAcademicDegreeCode());
@@ -29,6 +33,10 @@ public class TeacherFactory {
                 academicDegree,
                 teacherDTO.getPlaceOfWork(),
                 teacherDTO.getPosition());
+        if(null != teacherDTO.getUserId()) {
+            User user = userRepository.findOne(teacherDTO.getUserId());
+            teacher.assignUserAccount(user);
+        }
 
         return teacher;
     }

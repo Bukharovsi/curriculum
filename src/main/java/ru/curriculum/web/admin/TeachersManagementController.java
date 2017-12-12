@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.teacher.TeacherCRUDService;
 import ru.curriculum.service.teacher.TeacherDTO;
+import ru.curriculum.service.teacher.TeacherDTOFactory;
 import ru.curriculum.web.View;
 
 import javax.validation.Valid;
@@ -23,7 +24,10 @@ import static ru.curriculum.web.Redirect.*;
 public class TeachersManagementController {
     @Autowired
     private TeacherCRUDService teacherCRUDService;
+    @Autowired
+    private TeacherDTOFactory teacherDTOFactory;
 
+    // TODO: может перейти на new ModelAndView можно будет выделить отдельный класс для построения этой херни
     @RequestMapping(method = RequestMethod.GET)
     public String getAll(Model model) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
@@ -39,9 +43,12 @@ public class TeachersManagementController {
         return View.TEACHER_FORM;
     }
 
-    @RequestMapping(value = "/newFromUser", method = RequestMethod.GET)
-    public String getNewTeacherFromUserForm() {
-        return View.TEACHER_FROM_USER_FROM;
+    @RequestMapping(value = "/newFromUser/{userId}", method = RequestMethod.GET)
+    public String getNewTeacherFromUserForm(@PathVariable("userId") Integer userId, Model model) {
+        model.addAttribute("teacher", teacherDTOFactory.createTeacherDTOBasedOnUser(userId));
+        model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+
+        return View.TEACHER_FROM_USER_FORM;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -53,12 +60,28 @@ public class TeachersManagementController {
         if(teacherBindingResult.hasErrors()) {
             model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
 
-            return View.TEACHER_FORM;
+            return null == teacherDTO.getUserId() ? View.TEACHER_FORM : View.TEACHER_FROM_USER_FORM;
         }
         teacherCRUDService.create(teacherDTO);
 
         return redirectTo(Routes.teachers);
     }
+
+//    @RequestMapping(value = "/newFromUser", method = RequestMethod.POST)
+//    public String createTeacherBasedOnUser(
+//            @ModelAttribute("teacher") @Valid TeacherDTO teacherDTO,
+//            BindingResult bindingResult,
+//            Model model
+//    ) {
+//        if(bindingResult.hasErrors()) {
+//            model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+//
+//            return View.TEACHER_FROM_USER_FORM;
+//        }
+//        teacherCRUDService.create(teacherDTO);
+//
+//        return redirectTo(Routes.teachers);
+//    }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String getEditUserForm(@PathVariable Integer id, Model model) {

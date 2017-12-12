@@ -1,11 +1,11 @@
-package ru.curriculum.service;
+package ru.curriculum.service.user;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.service.validation.PasswordConstraint;
+import ru.curriculum.service.user.validation.PasswordConstraint;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -24,8 +24,10 @@ public class UserDTO implements Serializable {
     @NotEmpty
     private String firstname;
     private String lastname;
+    private Boolean isTeacher;
 
     public UserDTO() {
+        this.isTeacher = false;
     }
 
     public UserDTO(User user) {
@@ -34,6 +36,7 @@ public class UserDTO implements Serializable {
         this.firstname = user.firstName();
         this.surname = user.surname();
         this.lastname = user.lastName();
+        this.isTeacher = user.isTeacher();
     }
 
     public boolean passwordIsPresent() {

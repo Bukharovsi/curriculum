@@ -2,7 +2,6 @@ package ru.curriculum.service.teacher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.curriculum.domain.teacher.AcademicDegree;
 import ru.curriculum.domain.teacher.AcademicDegreeRepository;
 import ru.curriculum.domain.teacher.Teacher;
 import ru.curriculum.domain.teacher.TeacherRepository;
@@ -37,10 +36,7 @@ public class TeacherCRUDService {
         teacherRepository.save(teacher);
     }
 
-    public void createTeacherBasedOnUser() {
-
-    }
-
+    // TODO: кешировать на бесконечное время, если справочник не станет пользовательским
     public Collection<AcademicDegreeDTO> getAcademicDegrees() {
         Collection<AcademicDegreeDTO> dtos = new ArrayList<>();
         academicDegreeRepository.findAll().forEach(academicDegree ->

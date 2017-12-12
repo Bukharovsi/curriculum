@@ -3,7 +3,8 @@ package ru.curriculum.domain.admin.user.entity;
 
 import lombok.NonNull;
 import org.hibernate.annotations.Target;
-import ru.curriculum.service.UserDTO;
+import ru.curriculum.domain.teacher.Teacher;
+import ru.curriculum.service.user.UserDTO;
 
 import javax.persistence.*;
 
@@ -27,6 +28,9 @@ public class User {
     // TODO: либо ограничимя одной ролью
     @ManyToOne(targetEntity = Role.class)
     private Role role;
+
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user")
+    private Teacher teacher;
 
     public User() {
     }
@@ -97,5 +101,9 @@ public class User {
 
     public void changePassword(String password) {
         this.password = new Password(password);
+    }
+
+    public boolean isTeacher() {
+        return null != teacher;
     }
 }

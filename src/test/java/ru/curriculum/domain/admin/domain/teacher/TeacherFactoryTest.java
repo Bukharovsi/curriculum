@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.domain.admin.user.repository.UserRepository;
 import ru.curriculum.domain.teacher.AcademicDegree;
 import ru.curriculum.domain.teacher.AcademicDegreeRepository;
 import ru.curriculum.domain.teacher.Teacher;
@@ -21,6 +23,8 @@ import javax.persistence.EntityNotFoundException;
 public class TeacherFactoryTest extends Assert {
     @Mock
     private AcademicDegreeRepository academicDegreeRepository;
+    @Mock
+    private UserRepository userRepository;
     @InjectMocks
     private TeacherFactory teacherFactory;
 
@@ -32,6 +36,9 @@ public class TeacherFactoryTest extends Assert {
         Mockito
                 .when(academicDegreeRepository.findOne("none"))
                 .thenReturn(null);
+        Mockito
+                .when(userRepository.findOne(1))
+                .thenReturn(new User());
     }
 
     @Test
@@ -60,6 +67,15 @@ public class TeacherFactoryTest extends Assert {
         TeacherDTO dto = getTeacherDTO();
         dto.setSurname(null);
         teacherFactory.create(dto);
+    }
+
+    @Test
+    public void createUserFromUserDTOWhereDefineUserId_mustBeCreateTeacherWithUserAccount() {
+        TeacherDTO dto = getTeacherDTO();
+        dto.setUserId(1);
+        Teacher teacher = teacherFactory.create(dto);
+
+        assertTrue(teacher.hasUserAccount());
     }
 
     public TeacherDTO getTeacherDTO() {

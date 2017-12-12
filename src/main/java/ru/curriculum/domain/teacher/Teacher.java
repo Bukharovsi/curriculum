@@ -21,7 +21,8 @@ public class Teacher {
     private AcademicDegree academicDegree;
     private String placeOfWork;
     private String position;
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.PERSIST})
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Teacher() {
@@ -77,11 +78,15 @@ public class Teacher {
         return position;
     }
 
-    public User user() {
+    public User userAccount() {
         return user;
     }
 
-    public boolean isUser() {
+    public void assignUserAccount(User user) {
+        this.user = user;
+    }
+
+    public boolean hasUserAccount() {
         return null != user;
     }
 }

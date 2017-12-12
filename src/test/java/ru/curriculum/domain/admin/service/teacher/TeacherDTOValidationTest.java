@@ -1,10 +1,8 @@
-package ru.curriculum.domain.admin.service;
+package ru.curriculum.domain.admin.service.teacher;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ru.curriculum.domain.teacher.Teacher;
-import ru.curriculum.service.UserDTO;
 import ru.curriculum.service.teacher.TeacherDTO;
 
 import javax.validation.ConstraintViolation;

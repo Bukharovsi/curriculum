@@ -22,6 +22,7 @@ public class TeacherDTO {
     private String academicDegreeName;
     private String placeOfWork;
     private String position;
+    private String username;
     private Integer userId;
 
     public TeacherDTO() {
@@ -37,6 +38,6 @@ public class TeacherDTO {
         this.academicDegreeName = teacher.academicDegree().name();
         this.placeOfWork = teacher.placeOfWork();
         this.position = teacher.position();
-        this.userId = teacher.isUser() ? teacher.user().id() : null;
+        this.userId = teacher.hasUserAccount() ? teacher.userAccount().id() : null;
     }
 }

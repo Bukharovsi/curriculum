@@ -1,6 +1,6 @@
-package ru.curriculum.service.validation;
+package ru.curriculum.service.user.validation;
 
-import ru.curriculum.service.UserDTO;
+import ru.curriculum.service.user.UserDTO;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

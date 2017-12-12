@@ -46,7 +46,9 @@
         <div>
             <label>Занимаемая должность <input type="text" th:field="*{position}"/></label>
         </div>
-
+        <div th:hidden="${null != teacher.userId ? false : true}">
+            <a th:href="@{/admin/users/edit/{id}(id=${teacher.userId})}" th:target="_blank">Аккаунт</a>
+        </div>
         <input type="submit" th:value="Сохранить"/>
     </form>
 
