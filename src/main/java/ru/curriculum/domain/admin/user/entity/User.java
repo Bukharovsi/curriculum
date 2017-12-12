@@ -1,7 +1,9 @@
 package ru.curriculum.domain.admin.user.entity;
 
 
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.Target;
 import ru.curriculum.domain.teacher.Teacher;
 import ru.curriculum.service.user.UserDTO;
@@ -10,6 +12,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Accessors(fluent = true)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,34 +60,6 @@ public class User {
                 userDTO.getSurname(),
                 userDTO.getFirstname(),
                 userDTO.getLastname());
-    }
-
-    public Integer id() {
-        return id;
-    }
-
-    public String username() {
-        return username;
-    }
-
-    public Password password() {
-        return password;
-    }
-
-    public String firstName() {
-        return firstname;
-    }
-
-    public String surname() {
-        return surname;
-    }
-
-    public String lastName() {
-        return lastname;
-    }
-
-    public Role role() {
-        return role;
     }
 
     public void assignRole(Role role) {

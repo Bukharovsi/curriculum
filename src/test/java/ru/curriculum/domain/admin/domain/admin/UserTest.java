@@ -25,8 +25,8 @@ public class UserTest {
         assertEquals("test", user.username());
         assertTrue(encoder.matches("123", user.password().hash()));
         assertEquals("Иванов", user.surname());
-        assertEquals("Иван", user.firstName());
-        assertEquals("Иванович", user.lastName());
+        assertEquals("Иван", user.firstname());
+        assertEquals("Иванович", user.lastname());
     }
 
     @Test
@@ -37,9 +37,9 @@ public class UserTest {
         assertNull("Id is not created because only system generate id", user.id());
         assertEquals(user.username(), dto.getUsername());
         assertTrue(encoder.matches("3333", user.password().hash()));
-        assertEquals(user.firstName(), dto.getFirstname());
+        assertEquals(user.firstname(), dto.getFirstname());
         assertEquals(user.surname(), dto.getSurname());
-        assertEquals(user.lastName(), dto.getLastname());
+        assertEquals(user.lastname(), dto.getLastname());
     }
 
     @Test
@@ -50,9 +50,9 @@ public class UserTest {
         user.updatePrincipal(dto);
 
         assertNotEquals("Username immutable", user.username(), dto.getUsername());
-        assertEquals(user.firstName(), dto.getFirstname());
+        assertEquals(user.firstname(), dto.getFirstname());
         assertEquals(user.surname(), dto.getSurname());
-        assertEquals(user.lastName(), dto.getLastname());
+        assertEquals(user.lastname(), dto.getLastname());
         assertTrue(encoder.matches(dto.getPassword(), user.password().hash()));
     }
 

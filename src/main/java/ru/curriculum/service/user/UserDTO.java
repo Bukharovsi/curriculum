@@ -3,6 +3,7 @@ package ru.curriculum.service.user;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.service.user.validation.PasswordConstraint;
@@ -33,9 +34,9 @@ public class UserDTO implements Serializable {
     public UserDTO(User user) {
         this.id = user.id();
         this.username = user.username();
-        this.firstname = user.firstName();
+        this.firstname = user.firstname();
         this.surname = user.surname();
-        this.lastname = user.lastName();
+        this.lastname = user.lastname();
         this.isTeacher = user.isTeacher();
     }
 

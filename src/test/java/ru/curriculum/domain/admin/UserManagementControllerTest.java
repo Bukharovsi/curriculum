@@ -95,7 +95,7 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
         mockMvc.perform(put("/admin/users")
                 .accept(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", users.get(0).id().toString())
-                .param("firstname", users.get(0).firstName())
+                .param("firstname", users.get(0).firstname())
                 .param("surname", users.get(0).surname())
                 .param("lastname", "Васильевич"))
                 .andExpect(status().is3xxRedirection())
@@ -103,7 +103,7 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
                 .andDo(print());
         User user = userRepository.findOne(users.get(0).id());
 
-        assertEquals("Васильевич", user.lastName());
+        assertEquals("Васильевич", user.lastname());
         assertTrue(
                 "When editing user and no change password the password remains the same",
                 passwordEncoder.matches( "123", user.password().hash()));
@@ -116,11 +116,11 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
                 .param("id", users.get(0).id().toString())
                 .param("username", users.get(0).username())
                 .param("password", "444")
-                .param("firstname", users.get(0).firstName())
+                .param("firstname", users.get(0).firstname())
                 .param("surname", users.get(0).surname())
-                .param("lastname", users.get(0).lastName()))
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/admin/users"))
+                .param("lastname", users.get(0).lastname()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/admin/users"))
                 .andDo(print());
         User user = userRepository.findOne(users.get(0).id());
 

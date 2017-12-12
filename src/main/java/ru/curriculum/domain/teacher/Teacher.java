@@ -1,7 +1,9 @@
 package ru.curriculum.domain.teacher;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.experimental.Accessors;
 import ru.curriculum.domain.admin.user.entity.User;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "teacher")
 @EqualsAndHashCode(of = {"id"})
+@Getter
+@Accessors(fluent = true)
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,34 +52,6 @@ public class Teacher {
             this.placeOfWork = placeOfWork;
         }
         this.position = position;
-    }
-
-    public Integer id() {
-        return id;
-    }
-
-    public String firstname() {
-        return firstname;
-    }
-
-    public String surname() {
-        return surname;
-    }
-
-    public String lastname() {
-        return lastname;
-    }
-
-    public AcademicDegree academicDegree() {
-        return academicDegree;
-    }
-
-    public String placeOfWork() {
-        return placeOfWork;
-    }
-
-    public String position() {
-        return position;
     }
 
     public User userAccount() {
