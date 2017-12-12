@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.user.UserCRUDService;
-import ru.curriculum.service.user.UserDTO;
+import ru.curriculum.service.user.dto.UserDTO;
 import ru.curriculum.service.user.validation.UniquerUsernameValidator;
 import ru.curriculum.web.View;
 

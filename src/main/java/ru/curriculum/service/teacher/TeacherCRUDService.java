@@ -2,9 +2,12 @@ package ru.curriculum.service.teacher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.curriculum.domain.teacher.AcademicDegreeRepository;
-import ru.curriculum.domain.teacher.Teacher;
-import ru.curriculum.domain.teacher.TeacherRepository;
+import ru.curriculum.domain.teacher.factory.TeacherFactory;
+import ru.curriculum.domain.teacher.repository.AcademicDegreeRepository;
+import ru.curriculum.domain.teacher.entity.Teacher;
+import ru.curriculum.domain.teacher.repository.TeacherRepository;
+import ru.curriculum.service.teacher.dto.AcademicDegreeDTO;
+import ru.curriculum.service.teacher.dto.TeacherDTO;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package ru.curriculum.domain.teacher;
+package ru.curriculum.domain.teacher.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -64,5 +64,9 @@ public class Teacher {
 
     public boolean hasUserAccount() {
         return null != user;
+    }
+
+    public void deleteUserAccount() {
+        this.user = null;
     }
 }

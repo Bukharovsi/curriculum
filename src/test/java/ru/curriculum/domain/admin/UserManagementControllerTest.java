@@ -34,7 +34,6 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
 
     @After
     public void tearDown() {
-//        userRepository.delete(users);
         userRepository.deleteAll();
     }
 

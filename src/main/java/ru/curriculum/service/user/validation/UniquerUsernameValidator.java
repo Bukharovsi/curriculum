@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import ru.curriculum.domain.admin.user.repository.UserRepository;
-import ru.curriculum.service.user.UserDTO;
+import ru.curriculum.service.user.dto.UserDTO;
 
 // TODO: запихать в одно место с валидацией формы UserDTO
 @Component

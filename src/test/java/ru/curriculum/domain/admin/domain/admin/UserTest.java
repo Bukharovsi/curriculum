@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.curriculum.domain.admin.user.entity.Role;
 import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.service.user.UserDTO;
+import ru.curriculum.service.user.dto.UserDTO;
 
 import static org.junit.Assert.*;
 

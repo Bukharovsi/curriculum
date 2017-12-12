@@ -1,11 +1,9 @@
-package ru.curriculum.domain.teacher;
+package ru.curriculum.domain.teacher.entity;
 
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 import lombok.experimental.Accessors;
-import ru.curriculum.service.teacher.AcademicDegreeDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.teacher.TeacherCRUDService;
-import ru.curriculum.service.teacher.TeacherDTO;
-import ru.curriculum.service.teacher.TeacherDTOFactory;
+import ru.curriculum.service.teacher.dto.TeacherDTO;
+import ru.curriculum.service.teacher.factory.TeacherDTOFactory;
+import ru.curriculum.service.user.UserCRUDService;
 import ru.curriculum.web.View;
 
 import javax.validation.Valid;
@@ -24,6 +25,8 @@ import static ru.curriculum.web.Redirect.*;
 public class TeachersManagementController {
     @Autowired
     private TeacherCRUDService teacherCRUDService;
+    @Autowired
+    private UserCRUDService userCRUDService;
     @Autowired
     private TeacherDTOFactory teacherDTOFactory;
 
@@ -39,6 +42,7 @@ public class TeachersManagementController {
     public String getNewTeacherForm(Model model) {
         model.addAttribute("teacher", new TeacherDTO());
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+        model.addAttribute("userAccounts", userCRUDService.getFreeAccounts());
 
         return View.TEACHER_FORM;
     }
@@ -47,6 +51,7 @@ public class TeachersManagementController {
     public String getNewTeacherFromUserForm(@PathVariable("userId") Integer userId, Model model) {
         model.addAttribute("teacher", teacherDTOFactory.createTeacherDTOBasedOnUser(userId));
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+        model.addAttribute("userAccounts", userCRUDService.getFreeAccounts());
 
         return View.TEACHER_FROM_USER_FORM;
     }
@@ -59,6 +64,7 @@ public class TeachersManagementController {
     ) {
         if(teacherBindingResult.hasErrors()) {
             model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+            model.addAttribute("userAccounts", userCRUDService.getFreeAccounts());
 
             return null == teacherDTO.getUserId() ? View.TEACHER_FORM : View.TEACHER_FROM_USER_FORM;
         }
@@ -67,26 +73,11 @@ public class TeachersManagementController {
         return redirectTo(Routes.teachers);
     }
 
-//    @RequestMapping(value = "/newFromUser", method = RequestMethod.POST)
-//    public String createTeacherBasedOnUser(
-//            @ModelAttribute("teacher") @Valid TeacherDTO teacherDTO,
-//            BindingResult bindingResult,
-//            Model model
-//    ) {
-//        if(bindingResult.hasErrors()) {
-//            model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
-//
-//            return View.TEACHER_FROM_USER_FORM;
-//        }
-//        teacherCRUDService.create(teacherDTO);
-//
-//        return redirectTo(Routes.teachers);
-//    }
-
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String getEditUserForm(@PathVariable Integer id, Model model) {
         model.addAttribute("teacher", teacherCRUDService.get(id));
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+        model.addAttribute("userAccounts", userCRUDService.getFreeAccounts());
 
         return View.TEACHER_FORM;
     }

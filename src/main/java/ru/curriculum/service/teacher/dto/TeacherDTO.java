@@ -1,10 +1,10 @@
-package ru.curriculum.service.teacher;
+package ru.curriculum.service.teacher.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
-import ru.curriculum.domain.teacher.Teacher;
+import ru.curriculum.domain.teacher.entity.Teacher;
 
 @Getter
 @Setter
@@ -13,7 +13,7 @@ public class TeacherDTO {
     private Integer id;
     @NotEmpty
     private String surname;
-    @NotEmpty
+    @NotEmpty(message = "{errors.notEmpty}")
     private String firstname;
     @NotEmpty
     private String lastname;
@@ -24,9 +24,11 @@ public class TeacherDTO {
     private String position;
     private String username;
     private Integer userId;
+    private boolean hasAccount;
 
     public TeacherDTO() {
         this.placeOfWork = "ГАОУ ДПО Институт Развития Образования РТ";
+        this.hasAccount = false;
     }
 
     public TeacherDTO(Teacher teacher) {
@@ -39,5 +41,6 @@ public class TeacherDTO {
         this.placeOfWork = teacher.placeOfWork();
         this.position = teacher.position();
         this.userId = teacher.hasUserAccount() ? teacher.userAccount().id() : null;
+        this.username = teacher.hasUserAccount() ? teacher.user().username() : "";
     }
 }

@@ -1,8 +1,8 @@
-package ru.curriculum.service.teacher;
+package ru.curriculum.service.teacher.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.curriculum.domain.teacher.AcademicDegree;
+import ru.curriculum.domain.teacher.entity.AcademicDegree;
 
 
 @Getter

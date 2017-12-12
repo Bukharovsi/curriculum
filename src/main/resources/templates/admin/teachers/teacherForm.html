@@ -9,7 +9,6 @@
         <h1>Создание преподователя</h1>
     </div>
 
-    <!--<form th:action="@{/admin/teachers}" th:object="${teacher}" modelAttribute="user" th:method="${teacher.id != null ? 'put' : 'post'}">-->
     <form th:action="@{/admin/teachers}" th:object="${teacher}" modelAttribute="user" method="post">
 
         <ul>
@@ -46,8 +45,25 @@
         <div>
             <label>Занимаемая должность <input type="text" th:field="*{position}"/></label>
         </div>
-        <div th:hidden="${null != teacher.userId ? false : true}">
-            <a th:href="@{/admin/users/edit/{id}(id=${teacher.userId})}" th:target="_blank">Аккаунт</a>
+
+        <!--TODO: добавить onChange на удаление аккаунта пользователя-->
+        <div th:if="!${teacher.userId}">
+            <label>
+                Сделать пользователем системы
+                <select th:field="*{userId}">
+                    <option value=""></option>
+                    <option th:each="account : ${userAccounts}"
+                            th:value="${account.id}"
+                            th:text="${account.username}">
+                    </option>
+                </select>
+            </label>
+        </div>
+
+        <div th:hidden="!${teacher.userId}">
+            <a th:href="@{/admin/users/edit/{id}(id=${teacher.userId})}" th:target="_blank">
+                <label>Аккаунт <span th:text="${teacher.username}"/></label>
+            </a>
         </div>
         <input type="submit" th:value="Сохранить"/>
     </form>

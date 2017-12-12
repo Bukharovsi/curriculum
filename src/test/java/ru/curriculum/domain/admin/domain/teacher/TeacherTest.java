@@ -3,8 +3,8 @@ package ru.curriculum.domain.admin.domain.teacher;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.domain.teacher.AcademicDegree;
-import ru.curriculum.domain.teacher.Teacher;
+import ru.curriculum.domain.teacher.entity.AcademicDegree;
+import ru.curriculum.domain.teacher.entity.Teacher;
 
 public class TeacherTest extends Assert {
 

@@ -9,9 +9,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.curriculum.service.user.UserCRUDService;
-import ru.curriculum.service.user.UserDTO;
-import ru.curriculum.service.teacher.TeacherDTO;
-import ru.curriculum.service.teacher.TeacherDTOFactory;
+import ru.curriculum.service.user.dto.UserDTO;
+import ru.curriculum.service.teacher.dto.TeacherDTO;
+import ru.curriculum.service.teacher.factory.TeacherDTOFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TeacherDTOFactoryTest extends Assert {

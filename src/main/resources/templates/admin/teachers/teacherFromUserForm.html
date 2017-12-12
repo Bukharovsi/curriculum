@@ -38,8 +38,8 @@
                     <option value=""></option>
                     <option th:each="degree : ${academicDegrees}"
                             th:value="${degree.code}"
-                            th:text="${degree.name}"
-                    ></option>
+                            th:text="${degree.name}">
+                    </option>
                 </select>
             </label>
         </div>
@@ -50,6 +50,18 @@
             <label>Занимаемая должность <input type="text" th:field="*{position}"/></label>
         </div>
 
+        <div>
+            <label>
+                Сделать пользователем системы
+                <select th:field="*{userId}">
+                    <option value=""></option>
+                    <option th:each="account : ${userAccounts}"
+                            th:value="${account.id}"
+                            th:text="${account.username}">
+                    </option>
+                </select>
+            </label>
+        </div>
         <input type="submit" th:value="Сохранить"/>
     </form>
 

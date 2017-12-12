@@ -1,4 +1,4 @@
-package ru.curriculum.service.user;
+package ru.curriculum.service.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,12 +1,13 @@
-package ru.curriculum.service.teacher;
+package ru.curriculum.domain.teacher.factory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.admin.user.repository.UserRepository;
-import ru.curriculum.domain.teacher.AcademicDegree;
-import ru.curriculum.domain.teacher.AcademicDegreeRepository;
-import ru.curriculum.domain.teacher.Teacher;
+import ru.curriculum.domain.teacher.entity.AcademicDegree;
+import ru.curriculum.domain.teacher.repository.AcademicDegreeRepository;
+import ru.curriculum.domain.teacher.entity.Teacher;
+import ru.curriculum.service.teacher.dto.TeacherDTO;
 
 import javax.persistence.EntityNotFoundException;
 

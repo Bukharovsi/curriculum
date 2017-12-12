@@ -1,17 +1,19 @@
 package ru.curriculum.domain.admin.user.entity;
 
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Target;
-import ru.curriculum.domain.teacher.Teacher;
-import ru.curriculum.service.user.UserDTO;
+import ru.curriculum.domain.teacher.entity.Teacher;
+import ru.curriculum.service.user.dto.UserDTO;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(of = { "id", "username" })
 @Getter
 @Accessors(fluent = true)
 public class User {
