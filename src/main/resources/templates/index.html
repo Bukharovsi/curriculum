@@ -2,21 +2,13 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Curriculum</title>
-    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <title>Личный кабинет</title>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <h1>Добро пожаловать в Curriculum</h1>
-    <p>Приветсвенная страница.</p>
-    <ul>
-        <li><a href="/user" th:href="@{/admin}">Войти</a></li>
-    </ul>
-    <div class="btn-group">
-        <button type="button" class="btn btn-success">Тест bootstrap</button>
-        <button type="button" class="btn btn-warning">Тест bootstrap</button>
-        <button type="button" class="btn btn-danger">Тест bootstrap</button>
-    </div>
+    <h1>Личный кабинет</h1>
+    <p><a th:href="@{/admin/users}">Управление пользователями</a></p>
+    <p><a th:href="@{/admin/teachers}">Управление преподователями</a></p>
 </div>
 </body>
 </html>
