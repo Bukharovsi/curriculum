@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/sidebar}">
 <head>
-    <title>Личный кабинет</title>
-</head>
 <body>
-<div layout:fragment="content" th:remove="tag">
-    <h1>Личный кабинет</h1>
-    <p><a th:href="@{/admin/users}">Управление пользователями</a></p>
-    <p><a th:href="@{/admin/teachers}">Управление преподователями</a></p>
-</div>
+    <div th:replace="fragments/sidebar" th:remove="tag"></div>
 </body>
 </html>

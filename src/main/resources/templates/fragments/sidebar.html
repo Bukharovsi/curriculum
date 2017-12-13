@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Система сопровождения учебных планов</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</head>
+
+<body>
+<div th:fragment="sidebar">
+
+    <div id="throbber" style="display:none; min-height:120px;"></div>
+    <div id="noty-holder"></div>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">СИСТЕМА СОПРОВОЖДЕНИЯ УЧЕБНЫХ ПЛАНОВ</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <!--<li>-->
+                <!--<a th:href="@{/}" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i></a>-->
+                <!--</li>-->
+                <!--<li class="dropdown">-->
+                <!--<a href="/" class="dropdown-toggle" data-toggle="dropdown">Admin User <b class="fa fa-angle-down"></b></a>-->
+                <!--<ul class="dropdown-menu">-->
+                <!--<li><a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>-->
+                <!--<li><a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>-->
+                <!--<li class="divider"></li>-->
+                <!--<li><a href="#"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>-->
+                <!--</ul>-->
+                <!--</li>-->
+
+                <li >
+                    <a href="/">Admin User</a>
+                </li>
+                <li >
+                    <a href="/login?logout"><i class="fa fa-fw fa-power-off"></i></a>
+                </li>
+
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a th:href="@{/admin/users}" data-toggle="collapse" data-target="#submenu-1"> Пользователи </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/admin/teachers}" data-toggle="collapse" data-target="#submenu-2"> Преподователи </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/}"> УТП</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <!--<div id="page-wrapper">-->
+        <!--<div class="container-fluid">-->
+        <!--&lt;!&ndash; Page Heading &ndash;&gt;-->
+        <!--<div class="row" id="main" >-->
+        <!--<div class="col-sm-12 col-md-12 well" id="content">-->
+        <!--<h1>Добро пожаловать в Curriculum!</h1>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; /.row &ndash;&gt;-->
+        <!--</div>-->
+        <!--&lt;!&ndash; /.container-fluid &ndash;&gt;-->
+        <!--</div>-->
+        <!-- /#page-wrapper -->
+    </div><!-- /#wrapper -->
+</div>
+</body>
+</html>

@@ -4,7 +4,10 @@
     <title>Преподователи</title>
 </head>
 <body>
-<div>
+
+<div th:replace="fragments/sidebar" th:remove="tag"></div>
+
+<div class="container">
     <h1>Преподователи</h1>
 
     <p><a th:href="@{/admin/teachers/new}">Добавить</a></p>
