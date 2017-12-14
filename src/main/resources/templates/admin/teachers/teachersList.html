@@ -9,11 +9,13 @@
 
 <div class="container">
     <h1>Преподователи</h1>
+    <hr/>
+    <div class="btn-group-horizontal">
+        <a class="btn btn-default" th:href="@{/admin/teachers/new}">Добавить</a>
+        <a class="btn btn-default" th:href="@{/admin/users}">Создать преподователя из пользователей системы</a>
+    </div>
 
-    <p><a th:href="@{/admin/teachers/new}">Добавить</a></p>
-    <p><a th:href="@{/admin/users}">Создать преподователя из пользователей системы</a></p>
-
-    <table border="1">
+    <table class="table">
         <thead>
         <tr>
             <th>Фамилия</th>
@@ -40,7 +42,7 @@
         </tbody>
     </table>
 
-    <p><a th:href="@{/}">Назад</a></p>
+    <!--<p><a th:href="@{/}">Назад</a></p>-->
 </div>
 </body>
 </html>

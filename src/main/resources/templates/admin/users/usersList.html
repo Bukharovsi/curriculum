@@ -9,10 +9,11 @@
 
 <div class="container">
     <h1>Пользователи</h1>
+    <hr/>
     <div>
-        <a th:href="@{/admin/users/new}">Добавить</a>
+        <a class="btn btn-default" th:href="@{/admin/users/new}">Добавить</a>
     </div>
-    <table border="1">
+    <table class="table">
         <thead>
         <tr>
             <th>Фамилия</th>
@@ -23,10 +24,10 @@
         </thead>
         <tbody>
         <tr th:each="user : ${users}">
+            <td th:text="${user.username}"></td>
             <td th:text="${user.surname}"></td>
             <td th:text="${user.firstname}"></td>
             <td th:text="${user.lastname}"></td>
-            <td th:text="${user.username}"></td>
             <td>
                 <!--TODO при удалении если есть акк препода просто удалим акк, не задумыаясь-->
                 <a th:href="@{/admin/users/delete/{id}(id=${user.id})}">Удалить</a>
@@ -38,7 +39,7 @@
         </tbody>
     </table>
 
-    <p><a th:href="@{/}">Назад</a></p>
+    <!--<p><a th:href="@{/}">Назад</a></p>-->
 </div>
 </body>
 </html>

@@ -4,7 +4,10 @@
     <title>Преподователи</title>
 </head>
 <body>
-<div>
+
+<div th:replace="fragments/sidebar" th:remove="tag"></div>
+
+<div class="container">
     <div>
         <h1>Сделать преподователем пользователя <span th:text="${teacher.username}"></span></h1>
     </div>
