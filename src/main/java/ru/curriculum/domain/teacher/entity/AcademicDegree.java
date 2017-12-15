@@ -1,8 +1,8 @@
-package ru.curriculum.domain.admin.user.entity;
+package ru.curriculum.domain.teacher.entity;
+
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
@@ -10,18 +10,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "role")
-@EqualsAndHashCode
+@Table(name = "academic_degree")
+@EqualsAndHashCode(of = "code")
 @Getter
 @Accessors(fluent = true)
-public class Role {
+public class AcademicDegree {
     @Id
     private String code;
     private String name;
 
-    public Role() {}
+    public AcademicDegree() {
+    }
 
-    public Role(@NonNull String code, @NonNull String name) {
+    public AcademicDegree(String code, String name) {
         this.code = code;
         this.name = name;
     }

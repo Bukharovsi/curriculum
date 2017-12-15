@@ -1,0 +1,43 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Преподователи</title>
+</head>
+<body>
+<div>
+    <h1>Преподователи</h1>
+
+    <p><a th:href="@{/admin/teachers/new}">Добавить</a></p>
+    <p><a th:href="@{/admin/users}">Создать преподователя из пользователей системы</a></p>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Академическая степень</th>
+            <th>Место работы</th>
+            <th>Занимаемая должность</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="teacher : ${teachers}">
+            <td th:text="${teacher.surname}"></td>
+            <td th:text="${teacher.firstname}"></td>
+            <td th:text="${teacher.lastname}"></td>
+            <td th:text="${teacher.academicDegreeName}"></td>
+            <td th:text="${teacher.placeOfWork}"></td>
+            <td th:text="${teacher.position}"></td>
+            <td>
+                <a th:href="@{/admin/teachers/delete/{id}(id=${teacher.id})}">Удалить</a>
+                <a th:href="@{/admin/teachers/edit/{id}(id=${teacher.id})}">Редактировать</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p><a th:href="@{/admin}">Назад</a></p>
+</div>
+</body>
+</html>

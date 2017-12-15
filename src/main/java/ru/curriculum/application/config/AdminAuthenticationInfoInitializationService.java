@@ -1,11 +1,11 @@
 package ru.curriculum.application.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.admin.user.entity.Role;
 import ru.curriculum.domain.admin.user.repository.RoleRepository;
@@ -27,7 +27,9 @@ public class AdminAuthenticationInfoInitializationService implements Application
     private String username;
     @Value("${auth.admin.password}")
     private String password;
-    boolean alreadySetup = false;
+    private boolean alreadySetup = false;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     @Transactional

@@ -1,4 +1,4 @@
-package ru.curriculum.service.validation;
+package ru.curriculum.service.user.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

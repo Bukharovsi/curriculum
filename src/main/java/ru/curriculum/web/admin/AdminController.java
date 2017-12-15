@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
-import ru.curriculum.service.UserCRUDService;
+import ru.curriculum.service.user.UserCRUDService;
 import ru.curriculum.web.View;
 
 

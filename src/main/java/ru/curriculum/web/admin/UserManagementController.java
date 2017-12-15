@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
-import ru.curriculum.service.UserCRUDService;
-import ru.curriculum.service.UserDTO;
-import ru.curriculum.service.validation.UniquerUsernameValidator;
+import ru.curriculum.service.user.UserCRUDService;
+import ru.curriculum.service.user.dto.UserDTO;
+import ru.curriculum.service.user.validation.UniquerUsernameValidator;
 import ru.curriculum.web.View;
 
 import javax.validation.Valid;
@@ -49,6 +49,7 @@ public class UserManagementController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String createUser(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult errors) {
+        //TODO перехватывать исключение не уникальности логина добавлять в errors и возрващать вью
         uniquerUsernameValidator.validate(userDTO, errors);
         if(errors.hasErrors()) {
             return View.USER_FORM;
