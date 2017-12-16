@@ -7,13 +7,15 @@
 
 <div th:replace="fragments/sidebar" th:remove="tag"></div>
 
-<div class="container">
-    <h1>Пользователи</h1>
-    <hr/>
+<div class="container" style="width: 80%; margin-right: 5%">
+    <div>
+        <h1>Пользователи</h1>
+        <hr/>
+    </div>
     <div>
         <a class="btn btn-default" th:href="@{/admin/users/new}">Добавить</a>
     </div>
-    <table class="table">
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Фамилия</th>
@@ -28,18 +30,19 @@
             <td th:text="${user.surname}"></td>
             <td th:text="${user.firstname}"></td>
             <td th:text="${user.lastname}"></td>
-            <td>
-                <!--TODO при удалении если есть акк препода просто удалим акк, не задумыаясь-->
-                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}">Удалить</a>
-                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Редактировать</a>
-                <a th:unless="${user.isTeacher}" th:href="@{/admin/teachers/newFromUser/{id}(id=${user.id})}">Сделать преподователем</a>
+            <td align="right">
+                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" data-toggle="tooltip" title="Редактировать">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}" data-toggle="tooltip" title="Удалить">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <a th:unless="${user.isTeacher}" th:href="@{/admin/teachers/newFromUser/{id}(id=${user.id})}" class="btn btn-default">Сделать преподователем</a>
 
             </td>
         </tr>
         </tbody>
     </table>
-
-    <!--<p><a th:href="@{/}">Назад</a></p>-->
 </div>
 </body>
 </html>

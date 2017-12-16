@@ -39,6 +39,7 @@ public class User {
     private Teacher teacher;
 
     public User() {
+        this.role = new Role("user", "Пользователь");
     }
 
     public User(
@@ -48,6 +49,7 @@ public class User {
             String firstname,
             String lastname
     ) {
+        this();
         this.username = username;
         this.password = new Password(password);
         this.surname = surname;

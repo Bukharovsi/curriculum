@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="formValidationError">
+    <div th:if="${#fields.hasErrors()}"  class="alert alert-danger col-sm-offset-2 col-sm-10">
+        <div>Необходимо исправить следующие ошибки: </div>
+        <ul>
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
+        </ul>
+    </div>
+</div>
+</body>
+</html>
