@@ -3,8 +3,11 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
 <head>
+    <title>Учебно-тематический план</title>
 </head>
 <body>
-    <div th:replace="fragments/sidebar"></div>
+<div layout:fragment="content" th:remove="tag">
+    <h1>УЧЕБНО-ТЕМАТИЧЕСКИЙ ПЛАН</h1>
+</div>
 </body>
 </html>

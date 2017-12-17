@@ -22,6 +22,6 @@ public class AuthController {
 
     @RequestMapping(Routes.accessDenied)
     public String accessDenied() {
-        return "/error/access-denied";
+        return "/error/accessDenied";
     }
 }

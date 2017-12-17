@@ -1,15 +1,12 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
 <head>
     <title>Пользователи</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-
 </head>
 <body>
 
-<div th:replace="fragments/sidebar" th:remove="tag"></div>
-
-<div class="container">
+<div layout:fragment="content">
     <div class="form-group col-sm-offset-2 col-sm-10">
         <div th:if="${user.id}" style="align-items: center;">
             <h1>Редактирование <span th:text="${user.username}"></span></h1>

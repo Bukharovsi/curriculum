@@ -11,13 +11,13 @@ import ru.curriculum.domain.teacher.entity.Teacher;
 @EqualsAndHashCode(of = {"id"})
 public class TeacherDTO {
     private Integer id;
-    @NotEmpty
+    @NotEmpty(message = "Необходимо заполнить поле \"Фамилия\"")
     private String surname;
-    @NotEmpty(message = "{errors.notEmpty}")
+    @NotEmpty(message = "Необходимо заполнить поле \"Имя\"")
     private String firstname;
-    @NotEmpty
+    @NotEmpty(message = "Необходимо заполнить поле \"Отчество\"")
     private String lastname;
-    @NotEmpty
+    @NotEmpty(message = "Необходимо заполнить поле \"Академическая степень\"")
     private String academicDegreeCode;
     private String academicDegreeName;
     private String placeOfWork;

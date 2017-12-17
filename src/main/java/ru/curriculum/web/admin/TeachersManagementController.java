@@ -53,7 +53,7 @@ public class TeachersManagementController {
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
         model.addAttribute("userAccounts", userCRUDService.getFreeAccounts());
 
-        return View.TEACHER_FROM_USER_FORM;
+        return View.TEACHER_FORM;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -66,7 +66,7 @@ public class TeachersManagementController {
             model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
             model.addAttribute("userAccounts", userCRUDService.getFreeAccounts());
 
-            return null == teacherDTO.getUserId() ? View.TEACHER_FORM : View.TEACHER_FROM_USER_FORM;
+            return View.TEACHER_FORM;
         }
         teacherCRUDService.create(teacherDTO);
 
