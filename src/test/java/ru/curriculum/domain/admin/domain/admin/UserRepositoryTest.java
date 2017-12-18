@@ -2,8 +2,8 @@ package ru.curriculum.domain.admin.domain.admin;
 
 
 import boot.IntegrationBoot;
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -16,7 +16,7 @@ public class UserRepositoryTest extends IntegrationBoot {
     @Autowired
     private UserRepository userRepository;
 
-    @Before
+    @After
     public void tearDown() {
         userRepository.deleteAll();
     }
@@ -33,8 +33,8 @@ public class UserRepositoryTest extends IntegrationBoot {
 
     @Test
     public void assignRoleForUserAndSave_mustBeSaveWithRole() {
-        Role role = new Role("admin", "Администратор");
-        User user = new User("test", "123", "Иванов", "Иван","Иванович");
+        Role role = new Role("user", "Пользователь");
+        User user = new User("testUser", "123", "Иванов", "Иван","Иванович");
         user.assignRole(role);
 
         User savedUser = userRepository.save(user);

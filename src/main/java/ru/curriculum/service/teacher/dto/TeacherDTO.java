@@ -24,11 +24,9 @@ public class TeacherDTO {
     private String position;
     private String username;
     private Integer userId;
-    private boolean hasAccount;
 
     public TeacherDTO() {
         this.placeOfWork = "ГАОУ ДПО Институт Развития Образования РТ";
-        this.hasAccount = false;
     }
 
     public TeacherDTO(Teacher teacher) {

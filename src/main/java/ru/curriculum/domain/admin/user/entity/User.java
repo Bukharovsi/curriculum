@@ -4,6 +4,7 @@ package ru.curriculum.domain.admin.user.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Target;
 import ru.curriculum.domain.teacher.entity.Teacher;
@@ -16,6 +17,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(of = { "id", "username" })
 @Getter
 @Accessors(fluent = true)
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
