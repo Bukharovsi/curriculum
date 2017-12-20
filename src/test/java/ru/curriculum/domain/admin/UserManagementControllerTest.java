@@ -63,7 +63,7 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
     public void getUser() throws Exception {
         String url = "/admin/users/edit/" + users.get(0).id();
         mockMvc.perform(get(url))
-                .andExpect(view().name("/admin/users/userForm"))
+                .andExpect(view().name("admin/users/userForm"))
                 .andExpect(model().attributeDoesNotExist("password"))
                 .andDo(print());
     }
@@ -71,7 +71,7 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
     @Test
     public void getUserCreatingForm() throws Exception {
         mockMvc.perform(get("/admin/users/new"))
-                .andExpect(view().name("/admin/users/userForm"));
+                .andExpect(view().name("admin/users/userForm"));
     }
 
     @Test
@@ -140,7 +140,7 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
                 .param("password", "123")
                 .param("firstname", "test")
                 .param("surname", "test"))
-                .andExpect(view().name("/admin/users/userForm"))
+                .andExpect(view().name("admin/users/userForm"))
                 .andExpect(model().errorCount(1))
                 .andDo(print());
     }

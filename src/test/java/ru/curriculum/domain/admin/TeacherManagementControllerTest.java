@@ -47,7 +47,7 @@ public class TeacherManagementControllerTest extends IntegrationWebBoot {
     @Test
     public void getTeacherForm() throws Exception {
         mockMvc.perform(get("/admin/teachers/new"))
-                .andExpect(view().name("/admin/teachers/teacherForm"));
+                .andExpect(view().name("admin/teachers/teacherForm"));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class TeacherManagementControllerTest extends IntegrationWebBoot {
     public void getNewTeacherFromUserForm() throws Exception {
         mockMvc.perform(get("/admin/teachers/newFromUser/{id}", user.id())
                 .accept(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(view().name("/admin/teachers/teacherForm"))
+                .andExpect(view().name("admin/teachers/teacherForm"))
                 .andExpect(model().attributeExists("teacher"))
                 .andExpect(model().attributeExists("academicDegrees"))
                 .andExpect(model().attributeExists("userAccounts"));

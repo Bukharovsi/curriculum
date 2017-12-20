@@ -13,6 +13,6 @@ public class ErrorHandlerController extends ResponseEntityExceptionHandler {
     protected String handleConflict(Model model, RuntimeException ex, WebRequest request) {
         model.addAttribute("exception", ex);
 
-        return "/error/errorPage";
+        return "error/errorPage";
     }
 }
