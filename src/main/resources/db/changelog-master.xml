@@ -4,5 +4,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <include file="/db/changelog/261020172020_create_hello_table.xml"/>
+    <include file="/db/changelog/021120172200_create_role_table.xml"/>
+    <include file="/db/changelog/021120172221_create_user_table.xml"/>
+    <include file="/db/changelog/021220171919_create_academic_degree_table.xml"/>
+    <include file="/db/changelog/091220171920_create_teacher_table.xml"/>
 </databaseChangeLog>

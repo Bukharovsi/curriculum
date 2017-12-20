@@ -6,7 +6,10 @@
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <h1>Что-то случилось</h1>
+    <h1>Возникла непредвиденная ошибка</h1>
+    <div>
+        <div th:text="${exception.toString()}"></div>
+    </div>
     <p><a href="/" th:href="@{/}">Перейти на домашнюю страницу</a></p>
 </div>
 </body>

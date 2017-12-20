@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+      <!--xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="inputField(label, name, value, type, isDisabled)">
+    <div class="form-group">
+        <label class="control-label col-sm-2" th:text="${label} + ':'"></label>
+        <div class="col-sm-10">
+            <input class="form-control"
+                   th:name="${name}"
+                   th:value="${value}"
+                   th:type="${type}"
+                   th:disabled="${isDisabled}"
+            />
+        </div>
+    </div>
+</div>
+</body>
+</html>

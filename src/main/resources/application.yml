@@ -1,6 +1,5 @@
 server:
-  port: 8080
-#  context-path: /
+  port: 5000
 
 spring:
   datasource:
@@ -32,3 +31,8 @@ logging:
 
 liquibase:
   change-log: classpath:/db/changelog-master.xml
+
+auth:
+  admin:
+    username: admin
+    password: 123
