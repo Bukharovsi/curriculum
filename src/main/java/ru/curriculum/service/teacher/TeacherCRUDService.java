@@ -39,7 +39,6 @@ public class TeacherCRUDService {
         teacherRepository.save(teacher);
     }
 
-    // TODO: кешировать на бесконечное время, если справочник не станет пользовательским
     public Collection<AcademicDegreeDTO> getAcademicDegrees() {
         Collection<AcademicDegreeDTO> dtos = new ArrayList<>();
         academicDegreeRepository.findAll().forEach(academicDegree ->

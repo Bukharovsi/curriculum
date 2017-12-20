@@ -17,12 +17,12 @@ import java.io.Serializable;
 @ToString
 public class UserDTO implements Serializable {
     private Integer id;
-    @Size(min = 3, max = 25)
+    @Size(min = 3, max = 25, message = "Длина должна быть меньше {max} и меньше {min}")
     private String username;
     private String password;
-    @NotEmpty
+    @NotEmpty(message = "Необходимо заполнить поле \"Фамилия\"")
     private String surname;
-    @NotEmpty
+    @NotEmpty(message = "Необходимо заполнить поле \"Имя\"")
     private String firstname;
     private String lastname;
     private Boolean isTeacher;

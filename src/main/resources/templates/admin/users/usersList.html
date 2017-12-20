@@ -1,41 +1,55 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
 <head>
     <title>Пользователи</title>
 </head>
 <body>
-<div>
-    <h1>Пользователи</h1>
+
+<div layout:fragment="content">
     <div>
-        <a th:href="@{/admin/users/new}">Добавить</a>
+        <h1>Пользователи</h1>
+        <hr/>
     </div>
-    <table border="1">
+    <div>
+        <a class="btn btn-default" th:href="@{/admin/users/new}">Добавить</a>
+    </div>
+    &nbsp;
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Фамилия</th>
             <th>Имя</th>
             <th>Отчество</th>
             <th>Логин</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="user : ${users}">
+            <td th:text="${user.username}"></td>
             <td th:text="${user.surname}"></td>
             <td th:text="${user.firstname}"></td>
             <td th:text="${user.lastname}"></td>
-            <td th:text="${user.username}"></td>
+            <td align="right">
+                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" data-toggle="tooltip" title="Редактировать">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}" data-toggle="tooltip" title="Удалить">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </td>
             <td>
-                <!--TODO при удалении если есть акк препода просто удалим акк, не задумыаясь-->
-                <a th:href="@{/admin/users/delete/{id}(id=${user.id})}">Удалить</a>
-                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Редактировать</a>
-                <a th:unless="${user.isTeacher}" th:href="@{/admin/teachers/newFromUser/{id}(id=${user.id})}">Сделать преподователем</a>
-
+                <div th:if="!${user.isTeacher}">
+                    <a th:href="@{/admin/teachers/newFromUser/{id}(id=${user.id})}" class="btn btn-default">
+                        Сделать преподователем
+                    </a>
+                </div>
             </td>
         </tr>
         </tbody>
     </table>
-
-    <p><a href="/admin" th:href="@{/admin}">Назад</a></p>
 </div>
 </body>
 </html>

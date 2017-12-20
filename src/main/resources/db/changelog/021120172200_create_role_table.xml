@@ -19,6 +19,10 @@
             <column name="code" value="admin"></column>
             <column name="name" value="Администратор"></column>
         </insert>
+        <insert tableName="role">
+            <column name="code" value="user"></column>
+            <column name="name" value="Пользователь"></column>
+        </insert>
 
     </changeSet>
 </databaseChangeLog>

@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.admin.user.repository.UserRepository;
 import ru.curriculum.domain.teacher.entity.AcademicDegree;
@@ -21,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static ru.curriculum.domain.teacher.entity.AcademicDegreeCode.*;
 
+@WithMockUser
 public class TeacherManagementControllerTest extends IntegrationWebBoot {
     @Autowired
     private TeacherRepository teacherRepository;
@@ -43,7 +45,7 @@ public class TeacherManagementControllerTest extends IntegrationWebBoot {
     }
 
     @Test
-    public void getTeacherCreatingForm() throws Exception {
+    public void getTeacherForm() throws Exception {
         mockMvc.perform(get("/admin/teachers/new"))
                 .andExpect(view().name("/admin/teachers/teacherForm"));
     }
@@ -95,7 +97,7 @@ public class TeacherManagementControllerTest extends IntegrationWebBoot {
     public void getNewTeacherFromUserForm() throws Exception {
         mockMvc.perform(get("/admin/teachers/newFromUser/{id}", user.id())
                 .accept(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(view().name("/admin/teachers/teacherFromUserForm"))
+                .andExpect(view().name("/admin/teachers/teacherForm"))
                 .andExpect(model().attributeExists("teacher"))
                 .andExpect(model().attributeExists("academicDegrees"))
                 .andExpect(model().attributeExists("userAccounts"));

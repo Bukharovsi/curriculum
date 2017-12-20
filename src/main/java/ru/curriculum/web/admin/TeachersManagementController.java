@@ -12,11 +12,13 @@ import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.teacher.TeacherCRUDService;
 import ru.curriculum.service.teacher.dto.TeacherDTO;
 import ru.curriculum.service.teacher.factory.TeacherDTOFactory;
-import ru.curriculum.service.user.UserCRUDService;
+import ru.curriculum.service.user.AccountService;
 import ru.curriculum.web.View;
 
 import javax.validation.Valid;
 
+
+import java.util.Collection;
 
 import static ru.curriculum.web.Redirect.*;
 
@@ -26,7 +28,7 @@ public class TeachersManagementController {
     @Autowired
     private TeacherCRUDService teacherCRUDService;
     @Autowired
-    private UserCRUDService userCRUDService;
+    private AccountService accountService;
     @Autowired
     private TeacherDTOFactory teacherDTOFactory;
 
@@ -42,7 +44,7 @@ public class TeachersManagementController {
     public String getNewTeacherForm(Model model) {
         model.addAttribute("teacher", new TeacherDTO());
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
-        model.addAttribute("userAccounts", userCRUDService.getFreeAccounts());
+        model.addAttribute("userAccounts", accountService.getFreeAccounts());
 
         return View.TEACHER_FORM;
     }
@@ -51,9 +53,9 @@ public class TeachersManagementController {
     public String getNewTeacherFromUserForm(@PathVariable("userId") Integer userId, Model model) {
         model.addAttribute("teacher", teacherDTOFactory.createTeacherDTOBasedOnUser(userId));
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
-        model.addAttribute("userAccounts", userCRUDService.getFreeAccounts());
+        model.addAttribute("userAccounts", accountService.getFreeAccounts());
 
-        return View.TEACHER_FROM_USER_FORM;
+        return View.TEACHER_FORM;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -64,9 +66,9 @@ public class TeachersManagementController {
     ) {
         if(teacherBindingResult.hasErrors()) {
             model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
-            model.addAttribute("userAccounts", userCRUDService.getFreeAccounts());
+            model.addAttribute("userAccounts", accountService.getFreeAccounts());
 
-            return null == teacherDTO.getUserId() ? View.TEACHER_FORM : View.TEACHER_FROM_USER_FORM;
+            return View.TEACHER_FORM;
         }
         teacherCRUDService.create(teacherDTO);
 
@@ -75,9 +77,10 @@ public class TeachersManagementController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String getEditUserForm(@PathVariable Integer id, Model model) {
-        model.addAttribute("teacher", teacherCRUDService.get(id));
+        TeacherDTO teacherDTO = teacherCRUDService.get(id);
+        model.addAttribute("teacher", teacherDTO);
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
-        model.addAttribute("userAccounts", userCRUDService.getFreeAccounts());
+        model.addAttribute("userAccounts", accountService.getFreeAccountsAndTeacherAccount(teacherDTO));
 
         return View.TEACHER_FORM;
     }

@@ -53,12 +53,4 @@ public class UserCRUDService {
         }
         userRepository.delete(userId);
     }
-
-    public Object getFreeAccounts() {
-        Collection<UserDTO> userDTOs = new ArrayList<>();
-        userRepository.findAllByTeacherIsNull().forEach(user ->
-                userDTOs.add(new UserDTO(user)));
-
-        return userDTOs;
-    }
 }

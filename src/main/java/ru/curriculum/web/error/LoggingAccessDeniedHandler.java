@@ -18,7 +18,7 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
                        HttpServletResponse response,
                        AccessDeniedException ex
     ) throws IOException, ServletException {
-        response.sendRedirect(request.getContextPath() + "/access-denied");
+        response.sendRedirect(request.getContextPath() + "/accessDenied");
 
     }
 }
