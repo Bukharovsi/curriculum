@@ -11,8 +11,8 @@
 
     <script>
         $(document).ready(function () {
-            var table = $('#table_etp').DataTable();
-            table({"autoWidth": true});
+            // var table = $('#table_etp').DataTable().columns().adjust();
+            // table({"autoWidth": true});
         });
     </script>
 </head>
@@ -20,13 +20,14 @@
 <div layout:fragment="content" th:remove="tag">
     <h1>УЧЕБНО-ТЕМАТИЧЕСКИЙ ПЛАН</h1>
     &nbsp;
-    <div style="margin-left: 10%;">
+    <div>
+        <a id="button" class="btn btn-default" th:href="@{/etp/new}">Сохранить</a>
+    </div>
+    &nbsp;
+    <div>
         <h2>Учебно-методическая деятельность</h2>
-        <div>
-            <a id="button" class="btn btn-default" th:href="@{/etp/new}">Сохранить</a>
-        </div>
-        &nbsp;
-        <table id="table_etp" class="display compact" cellspacing="0" width="75%">
+        <div class="table-responsive">
+        <table id="table_etp" class="table">
             <thead>
             <tr>
                 <th></th>
@@ -45,125 +46,126 @@
             <tbody>
             <tr>
                 <td>Разработка (модификация) ДПП ПК*</td>
-                <td><input type="number" name="row-1-age" value="61"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><select size="1" name="row-1-office">
+                <td><input type="number" size="2" name="lectures" value="61"></td>
+                <td><input type="number" class="form-control" size="12" name="practices" value="1"></td>
+                <td><input type="number" class="form-control" size="12" name="independentWork" value="1"></td>
+                <td><input type="number" class="form-control" size="12" name="consultations" value="1"></td>
+                <td><input type="number" class="form-control" size="12" name="peerReview" value="1"></td>
+                <td><input type="number" class="form-control" size="12" name="credit" value="1"></td>
+                <td><input type="number" class="form-control" size="12" name="other" value="1"></td>
+                <td><input type="number" class="form-control" size="12" name="standard" value="1"></td>
+                <td><input type="number" class="form-control" size="12" name="totalHours" value="1"></td>
+                <td><select size="1" class="form-control" name="row-1-office">
                     <option value="Edinburgh" selected="selected">
                         Пердователь
                     </option>
                 </select></td>
             </tr>
-            <tr>
-                <td>Разработка содержания (контента) дистанционного модуля ДПП ПК*</td>
-                <td><input type="number" name="row-1-age" value="61"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><select size="1" name="row-1-office">
-                    <option value="Edinburgh" selected="selected">
-                        Пердователь
-                    </option>
-                </select></td>
-            </tr>
-            <tr>
-                <td>Разработка содержания новых занятий (лекций, семинаров, практикумов, тренингов и т.д.)*</td>
-                <td><input type="number" name="row-1-age" value="61"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><select size="1" name="row-1-office">
-                    <option value="Edinburgh" selected="selected">
-                        Пердователь
-                    </option>
-                </select></td>
-            </tr>
-            <tr>
-                <td>Подготовка презентаций с использованием ИКТ*</td>
-                <td><input type="number" name="row-1-age" value="61"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><select size="1" name="row-1-office">
-                    <option value="Edinburgh" selected="selected">
-                        Пердователь
-                    </option>
-                </select></td>
-            </tr>
-            <tr>
-                <td>Руководство стажировкой слушателей</td>
-                <td><input type="number" name="row-1-age" value="61"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><select size="1" name="row-1-office">
-                    <option value="Edinburgh" selected="selected">
-                        Пердователь
-                    </option>
-                </select></td>
-            </tr>
-            <tr>
-                <td>Научное руководство программой (проектом)*</td>
-                <td><input type="number" name="row-1-age" value="61"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><select size="1" name="row-1-office">
-                    <option value="Edinburgh" selected="selected">
-                        Пердователь
-                    </option>
-                </select></td>
-            </tr>
-            <tr>
-                <td>Подготовка содержания раздаточных материалов (методические рекомендации, тезисы и т.д.)*</td>
-                <td><input type="number" name="row-1-age" value="61"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><input type="number" name="row-1-position" value="System Architect"></td>
-                <td><select size="1" name="row-1-office">
-                    <option value="Edinburgh" selected="selected">
-                        Пердователь
-                    </option>
-                </select></td>
-            </tr>
+            <!--<tr>-->
+                <!--<td>Разработка содержания (контента) дистанционного модуля ДПП ПК*</td>-->
+                <!--<td><input type="number" name="row-1-age" value="61"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><select size="1" name="row-1-office">-->
+                    <!--<option value="Edinburgh" selected="selected">-->
+                        <!--Пердователь-->
+                    <!--</option>-->
+                <!--</select></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>Разработка содержания новых занятий (лекций, семинаров, практикумов, тренингов и т.д.)*</td>-->
+                <!--<td><input type="number" name="row-1-age" value="61"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><select size="1" name="row-1-office">-->
+                    <!--<option value="Edinburgh" selected="selected">-->
+                        <!--Пердователь-->
+                    <!--</option>-->
+                <!--</select></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>Подготовка презентаций с использованием ИКТ*</td>-->
+                <!--<td><input type="number" name="row-1-age" value="61"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><select size="1" name="row-1-office">-->
+                    <!--<option value="Edinburgh" selected="selected">-->
+                        <!--Пердователь-->
+                    <!--</option>-->
+                <!--</select></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>Руководство стажировкой слушателей</td>-->
+                <!--<td><input type="number" name="row-1-age" value="61"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><select size="1" name="row-1-office">-->
+                    <!--<option value="Edinburgh" selected="selected">-->
+                        <!--Пердователь-->
+                    <!--</option>-->
+                <!--</select></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>Научное руководство программой (проектом)*</td>-->
+                <!--<td><input type="number" name="row-1-age" value="61"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><select size="1" name="row-1-office">-->
+                    <!--<option value="Edinburgh" selected="selected">-->
+                        <!--Пердователь-->
+                    <!--</option>-->
+                <!--</select></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>Подготовка содержания раздаточных материалов (методические рекомендации, тезисы и т.д.)*</td>-->
+                <!--<td><input type="number" name="row-1-age" value="61"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><input type="number" name="row-1-position" value="System Architect"></td>-->
+                <!--<td><select size="1" name="row-1-office">-->
+                    <!--<option value="Edinburgh" selected="selected">-->
+                        <!--Пердователь-->
+                    <!--</option>-->
+                <!--</select></td>-->
+            <!--</tr>-->
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 </body>
