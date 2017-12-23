@@ -12,7 +12,7 @@ public class AuthController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(Routes.index)
     public String index() {
-        return "/index";
+        return "index";
     }
 
     @RequestMapping(Routes.login)
@@ -22,6 +22,6 @@ public class AuthController {
 
     @RequestMapping(Routes.accessDenied)
     public String accessDenied() {
-        return "/error/accessDenied";
+        return "error/accessDenied";
     }
 }

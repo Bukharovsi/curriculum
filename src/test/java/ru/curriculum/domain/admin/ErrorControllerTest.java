@@ -22,6 +22,6 @@ public class ErrorControllerTest extends IntegrationWebBoot {
     @Test
     public void tryToGetNonExistentUser_mustReturnErrorPage() throws Exception {
         mockMvc.perform(get("/admin/users/edit/19999"))
-                .andExpect(view().name("/error/errorPage"));
+                .andExpect(view().name("error/errorPage"));
     }
 }
