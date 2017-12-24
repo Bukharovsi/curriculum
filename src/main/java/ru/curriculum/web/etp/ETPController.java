@@ -1,77 +1,95 @@
 package ru.curriculum.web.etp;
 
-import org.h2.result.Row;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import ru.curriculum.service.etp.ETP_DTO;
-import ru.curriculum.service.etp.ModuleDTO;
-import ru.curriculum.service.etp.SectionDTO;
-import ru.curriculum.web.View;
+import org.springframework.web.bind.annotation.*;
+import ru.curriculum.application.route.Routes;
+import ru.curriculum.service.etp.ETP_CRUDService;
+import ru.curriculum.service.etp.dto.ETP_DTO;
+import ru.curriculum.service.etp.dto.EducationActivityModuleDTO;
+import ru.curriculum.service.etp.dto.EducationActivitySectionDTO;
+import ru.curriculum.service.teacher.TeacherCRUDService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
+import javax.validation.Valid;
+
+import static ru.curriculum.web.Redirect.*;
+import static ru.curriculum.web.View.*;
 
 @Controller
-@RequestMapping(path = "/etp")
+@RequestMapping(path = Routes.etp)
 public class ETPController {
+    @Autowired
+    private ETP_CRUDService etpCRUDService;
+    @Autowired
+    private TeacherCRUDService teacherCRUDService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String index(Model model) {
-        ETP_DTO etp = new ETP_DTO();
-        etp.setId(1);
-        etp.setName("Модуль");
-        ModuleDTO moduleDTO = new ModuleDTO();
-        moduleDTO.setTitle("Название раздела");
-        etp.getModules().add(moduleDTO);
-        model.addAttribute("etp", etp);
+    public String getAll(Model model) {
+        model.addAttribute("etps", etpCRUDService.getAll());
 
-        return "etp/index";
+        return ETP_LIST;
     }
 
-    @RequestMapping(params={"addModule"}, method = RequestMethod.POST)
-    public String addModule(final @ModelAttribute("etp") ETP_DTO etp_dto, final BindingResult bindingResult) {
-        etp_dto.getModules().add(new ModuleDTO());
+    @RequestMapping(path = "/new", method = RequestMethod.GET)
+    public String getETPForm(Model model) {
+        model.addAttribute("etp", new ETP_DTO());
+        model.addAttribute("teachers", teacherCRUDService.findAll());
 
-        return "etp/index";
+        return ETP_FORM;
     }
 
-    @RequestMapping(params = {"removeModule"}, method = RequestMethod.POST)
-    public String removeModule(
-            final @ModelAttribute("etp") ETP_DTO etp,
+    @RequestMapping(params={"addModule"}, method = {RequestMethod.POST, RequestMethod.PUT})
+    public String addModule(
+            final @ModelAttribute("etp") @Valid ETP_DTO etp_dto,
             final BindingResult bindingResult,
+            Model model
+    ) {
+        model.addAttribute("teachers", teacherCRUDService.findAll());
+        etp_dto.getModules().add(new EducationActivityModuleDTO());
+
+        return ETP_FORM;
+    }
+
+    @RequestMapping(params = {"removeModule"}, method = {RequestMethod.POST, RequestMethod.PUT})
+    public String removeModule(
+            final @ModelAttribute("etp") @Valid ETP_DTO etp,
+            final BindingResult bindingResult,
+            Model model,
             final HttpServletRequest req
     ) {
+        model.addAttribute("teachers", teacherCRUDService.findAll());
         Integer indexOfModule = Integer.valueOf(req.getParameter("removeModule"));
         etp.getModules().remove(indexOfModule.intValue());
 
-        return "etp/index";
+        return ETP_FORM;
     }
 
-    @RequestMapping(params = {"addSection"}, method = RequestMethod.POST)
+    @RequestMapping(params = {"addSection"}, method = {RequestMethod.POST, RequestMethod.PUT})
     public String addSectionToModule(
-            final @ModelAttribute("etp") ETP_DTO etp,
+            final @ModelAttribute("etp") @Valid ETP_DTO etp,
             final BindingResult bindingResult,
+            Model model,
             final HttpServletRequest req
     ) {
+        model.addAttribute("teachers", teacherCRUDService.findAll());
         Integer indexOfSectionInModule = Integer.valueOf(req.getParameter("addSection"));
-        ModuleDTO moduleDTO = etp.getModules().get(indexOfSectionInModule.intValue());
-        moduleDTO.getSections().add(new SectionDTO());
+        EducationActivityModuleDTO moduleDTO = etp.getModules().get(indexOfSectionInModule.intValue());
+        moduleDTO.getSections().add(new EducationActivitySectionDTO());
 
-        return "etp/index";
+        return ETP_FORM;
     }
 
-    @RequestMapping(params = {"removeSection"}, method = RequestMethod.POST)
+    @RequestMapping(params = {"removeSection"}, method = {RequestMethod.POST, RequestMethod.PUT})
     public String removeSection(
-            final @ModelAttribute("etp") ETP_DTO etp,
+            final @ModelAttribute("etp") @Valid ETP_DTO etp,
             final BindingResult bindingResult,
+            Model model,
             final HttpServletRequest req
     ) {
+        model.addAttribute("teachers", teacherCRUDService.findAll());
         String indexOfSectionInModuleAsString = req.getParameter("removeSection");
         String[] indexOfSectionInModule = indexOfSectionInModuleAsString.split("\\.");
         Integer indexOfModule = Integer.valueOf(indexOfSectionInModule[0]);
@@ -79,12 +97,53 @@ public class ETPController {
 
         etp.getModules().get(indexOfModule.intValue()).getSections().remove(indexOfSection.intValue());
 
-        return "etp/index";
+        return ETP_FORM;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String create(@RequestParam ETP_DTO etp) {
+    public String create(
+            @ModelAttribute("etp") @Valid ETP_DTO etp,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("teachers", teacherCRUDService.findAll());
 
-        return View.INDEX;
+            return ETP_FORM;
+        }
+        etpCRUDService.create(etp);
+
+        return redirectTo(Routes.etp);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public String update(
+            @ModelAttribute("etp") @Valid ETP_DTO etp,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("teachers", teacherCRUDService.findAll());
+
+            return ETP_FORM;
+        }
+        etpCRUDService.update(etp);
+
+        return redirectTo(Routes.etp);
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String update(@PathVariable("id") Integer etpId, Model model) {
+        model.addAttribute("etp", etpCRUDService.get(etpId));
+        model.addAttribute("teachers", teacherCRUDService.findAll());
+
+        return ETP_FORM;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Integer eptId) {
+        etpCRUDService.delete(eptId);
+
+        return redirectTo(Routes.etp);
     }
 }

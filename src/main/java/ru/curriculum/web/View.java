@@ -7,4 +7,6 @@ public class View {
     public static final String TEACHERS_LIST = "admin/teachers/teachersList";
     public static final String TEACHER_FORM = "admin/teachers/teacherForm";
     public static final String TEACHER_FROM_USER_FORM = "admin/teachers/teacherFromUserForm";
+    public static final String ETP_FORM = "etp/etpForm";
+    public static final String ETP_LIST = "etp/etpList";
 }
