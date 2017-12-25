@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.curriculum.domain.admin.user.entity.IllegalPassword;
-import ru.curriculum.domain.admin.user.entity.Password;
+import ru.curriculum.domain.admin.user.exceptions.Password;
 
 public class PasswordTest {
     private PasswordEncoder encoder;

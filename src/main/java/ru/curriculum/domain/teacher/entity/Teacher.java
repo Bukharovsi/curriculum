@@ -54,6 +54,18 @@ public class Teacher {
         this.position = position;
     }
 
+//    public Teacher(TeacherDTO teacher) {
+//        this(
+//                teacher.getId(),
+//                teacher.getSurname(),
+//                teacher.getFirstname(),
+//                teacher.getLastname(),
+//                new AcademicDegree(teacher.getAcademicDegreeCode(), teacher.getAcademicDegreeName()),
+//                teacher.getPlaceOfWork(),
+//                teacher.getPosition());
+//        this.user = teacher.get
+//    }
+
     public User userAccount() {
         return user;
     }

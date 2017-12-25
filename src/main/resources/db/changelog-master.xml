@@ -8,4 +8,7 @@
     <include file="/db/changelog/021120172221_create_user_table.xml"/>
     <include file="/db/changelog/021220171919_create_academic_degree_table.xml"/>
     <include file="/db/changelog/091220171920_create_teacher_table.xml"/>
+    <include file="/db/changelog/231220171500_create_etp_table.xml"/>
+    <include file="/db/changelog/231220171501_create_etp_plan_table.xml"/>
+    <include file="/db/changelog/231220171502_create_education_activity_module_table.xml"/>
 </databaseChangeLog>

@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 
 import static ru.curriculum.web.Redirect.*;
+import static ru.curriculum.web.View.*;
 
 @Controller
 @RequestMapping(path = Routes.teachers)
@@ -37,7 +38,7 @@ public class TeachersManagementController {
     public String getAll(Model model) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
 
-        return View.TEACHERS_LIST;
+        return TEACHERS_LIST;
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -46,7 +47,7 @@ public class TeachersManagementController {
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
         model.addAttribute("userAccounts", accountService.getFreeAccounts());
 
-        return View.TEACHER_FORM;
+        return TEACHER_FORM;
     }
 
     @RequestMapping(value = "/newFromUser/{userId}", method = RequestMethod.GET)
@@ -55,7 +56,7 @@ public class TeachersManagementController {
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
         model.addAttribute("userAccounts", accountService.getFreeAccounts());
 
-        return View.TEACHER_FORM;
+        return TEACHER_FORM;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -68,7 +69,7 @@ public class TeachersManagementController {
             model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
             model.addAttribute("userAccounts", accountService.getFreeAccounts());
 
-            return View.TEACHER_FORM;
+            return TEACHER_FORM;
         }
         teacherCRUDService.create(teacherDTO);
 
@@ -82,7 +83,7 @@ public class TeachersManagementController {
         model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
         model.addAttribute("userAccounts", accountService.getFreeAccountsAndTeacherAccount(teacherDTO));
 
-        return View.TEACHER_FORM;
+        return TEACHER_FORM;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)

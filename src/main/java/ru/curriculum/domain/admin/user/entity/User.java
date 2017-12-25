@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Target;
+import ru.curriculum.domain.admin.user.exceptions.Password;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.service.user.dto.UserDTO;
 

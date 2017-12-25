@@ -25,6 +25,16 @@
     }
 }
 
+#content {
+    width: 100%;
+    margin-left: 13%;
+    margin-top: 5%;
+}
+
+.container-fluid {
+    margin-left: 13%;
+}
+
 /* Top Navigation */
 
 .top-nav {
