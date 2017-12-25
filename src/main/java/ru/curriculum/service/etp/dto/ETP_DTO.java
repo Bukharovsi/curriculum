@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.etp.entity.ETP;
+import ru.curriculum.presentation.dto.EducationMethodicalSectionDTO;
+import ru.curriculum.presentation.dto.OrganizationallyMethodicalSectionDTO;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,9 +43,12 @@ public class ETP_DTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fullTimeLearningEndDate;
     private List<EducationActivityModuleDTO> modules;
+    private List<EducationMethodicalSectionDTO> edMetSec;
+    private List<OrganizationallyMethodicalSectionDTO> orgMetSect;
 
     public ETP_DTO() {
         this.modules = new ArrayList<>();
+        this.edMetSec = new ArrayList<>();
     }
 
     public ETP_DTO(ETP etp) {
@@ -59,6 +64,18 @@ public class ETP_DTO {
                         .stream()
                         .map(EducationActivityModuleDTO::new)
                         .sorted(Comparator.comparing(EducationActivityModuleDTO::getId))
+                        .collect(toList());
+        this.edMetSec =
+                etp.educationMethodicalSections()
+                        .stream()
+                        .map(EducationMethodicalSectionDTO::new)
+                        .sorted(Comparator.comparing(EducationMethodicalSectionDTO::getId))
+                        .collect(toList());
+        this.orgMetSect =
+                etp.organizationallyMethodicalSections()
+                        .stream()
+                        .map(OrganizationallyMethodicalSectionDTO::new)
+                        .sorted(Comparator.comparing(OrganizationallyMethodicalSectionDTO::getId))
                         .collect(toList());
     }
 }

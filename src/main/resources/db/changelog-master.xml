@@ -11,4 +11,6 @@
     <include file="/db/changelog/231220171500_create_etp_table.xml"/>
     <include file="/db/changelog/231220171501_create_etp_plan_table.xml"/>
     <include file="/db/changelog/231220171502_create_education_activity_module_table.xml"/>
+    <include file="/db/changelog/251220172200_create_education_methodical_module_tables.xml"/>
+    <include file="/db/changelog/251220172201_create_organizationally_methodical_module_tables.xml"/>
 </databaseChangeLog>

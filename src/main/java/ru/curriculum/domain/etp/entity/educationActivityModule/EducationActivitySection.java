@@ -1,12 +1,16 @@
-package ru.curriculum.domain.etp.entity;
+package ru.curriculum.domain.etp.entity.educationActivityModule;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ru.curriculum.domain.etp.entity.Plan;
 import ru.curriculum.service.etp.dto.EducationActivitySectionDTO;
 
 import javax.persistence.*;
 
+/*
+ * Раздел модуля УТП "Учебная деятельность". Характеризуется планом.
+ */
 @Entity
 @Table(name = "education_activity_section")
 @Getter
@@ -22,9 +26,9 @@ public class EducationActivitySection {
             cascade = CascadeType.ALL)
     @JoinColumn(name = "etp_plan_id")
     private Plan plan;
+    @Setter
     @ManyToOne
     @JoinColumn(name = "education_activity_module_id")
-    @Setter
     private EducationActivityModule educationActivityModule;
 
     public EducationActivitySection() {

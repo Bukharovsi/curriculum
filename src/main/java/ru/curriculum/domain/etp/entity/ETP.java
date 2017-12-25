@@ -3,6 +3,9 @@ package ru.curriculum.domain.etp.entity;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
+import ru.curriculum.domain.etp.entity.educationMethodicalSection.EducationMethodicalSection;
+import ru.curriculum.domain.etp.entity.organizationallyMethodicalSection.OrganizationallyMethodicalSection;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivityModule;
 import ru.curriculum.service.etp.dto.ETP_DTO;
 import ru.curriculum.service.etp.dto.EducationActivityModuleDTO;
 
@@ -28,8 +31,6 @@ public class ETP {
     private Date distanceLearningEndDate;
     private Date fullTimeLearningBeginDate;
     private Date fullTimeLearningEndDate;
-    //    private OrganizationalAndMethodicalActivity organizationalAndMethodicalActivity;
-//    private EducationMethodicalActivity educationMethodicalActivity;
     @OneToMany(
             mappedBy = "etp",
             targetEntity = EducationActivityModule.class,
@@ -37,9 +38,25 @@ public class ETP {
             orphanRemoval = true,
             cascade = CascadeType.ALL)
     private Set<EducationActivityModule> educationActivityModules;
+    @OneToMany(
+            mappedBy = "etp",
+            targetEntity = EducationMethodicalSection.class,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    private Set<EducationMethodicalSection> educationMethodicalSections;
+    @OneToMany(
+            mappedBy = "etp",
+            targetEntity = OrganizationallyMethodicalSection.class,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    private Set<OrganizationallyMethodicalSection> organizationallyMethodicalSections;
 
     public ETP() {
         this.educationActivityModules = new HashSet<>();
+        this.educationMethodicalSections = new HashSet<>();
+        this.organizationallyMethodicalSections = new HashSet<>();
     }
 
     public ETP(

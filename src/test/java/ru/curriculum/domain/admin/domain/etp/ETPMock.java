@@ -1,8 +1,8 @@
 package ru.curriculum.domain.admin.domain.etp;
 
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.domain.etp.entity.EducationActivityModule;
-import ru.curriculum.domain.etp.entity.EducationActivitySection;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivityModule;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivitySection;
 import ru.curriculum.domain.etp.entity.Plan;
 import ru.curriculum.service.etp.dto.ETP_DTO;
 

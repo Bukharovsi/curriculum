@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.curriculum.application.route.Routes;
+import ru.curriculum.presentation.ETP_DTOFactory;
 import ru.curriculum.service.etp.ETP_CRUDService;
 import ru.curriculum.service.etp.dto.ETP_DTO;
 import ru.curriculum.service.etp.dto.EducationActivityModuleDTO;
@@ -25,6 +26,8 @@ public class ETPController {
     private ETP_CRUDService etpCRUDService;
     @Autowired
     private TeacherCRUDService teacherCRUDService;
+    @Autowired
+    private ETP_DTOFactory dtoFactory;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getAll(Model model) {
@@ -35,7 +38,7 @@ public class ETPController {
 
     @RequestMapping(path = "/new", method = RequestMethod.GET)
     public String getETPForm(Model model) {
-        model.addAttribute("etp", new ETP_DTO());
+        model.addAttribute("etp", dtoFactory.createEmptyETP_DTO());
         model.addAttribute("teachers", teacherCRUDService.findAll());
 
         return ETP_FORM;
@@ -43,12 +46,12 @@ public class ETPController {
 
     @RequestMapping(params={"addModule"}, method = {RequestMethod.POST, RequestMethod.PUT})
     public String addModule(
-            final @ModelAttribute("etp") @Valid ETP_DTO etp_dto,
+            final @ModelAttribute("etp") @Valid ETP_DTO etp,
             final BindingResult bindingResult,
             Model model
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
-        etp_dto.getModules().add(new EducationActivityModuleDTO());
+        etp.getModules().add(new EducationActivityModuleDTO());
 
         return ETP_FORM;
     }

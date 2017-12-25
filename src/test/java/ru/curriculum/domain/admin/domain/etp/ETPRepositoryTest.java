@@ -6,11 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.domain.etp.entity.EducationActivityModule;
-import ru.curriculum.domain.etp.entity.EducationActivitySection;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivityModule;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivitySection;
 import ru.curriculum.domain.etp.repository.ETPRepository;
-
-import java.util.Date;
 
 public class ETPRepositoryTest extends IntegrationBoot {
     @Autowired

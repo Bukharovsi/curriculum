@@ -1,0 +1,74 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="251220172200" author="Vlad">
+
+        <createTable tableName="education_methodical_section_info">
+            <column name="id" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="code" type="varchar(50)">
+                <constraints unique="true" nullable="false"></constraints>
+            </column>
+            <column name="name" type="varchar(500)">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+        
+        <insert tableName="education_methodical_section_info">
+            <column name="id" value="1"></column>
+            <column name="code" value="dvp_dpp_pc"></column>
+            <column name="name" value="Разработка (модификация) ДПП ПК*"></column>
+        </insert>
+        <insert tableName="education_methodical_section_info">
+            <column name="id" value="2"></column>
+            <column name="code" value="dvp_distance_content_dpp_pc"></column>
+            <column name="name" value="Разработка содержания (контента) дистанционного модуля ДПП ПК*"></column>
+        </insert>
+        <insert tableName="education_methodical_section_info">
+            <column name="id" value="3"></column>
+            <column name="code" value="dvp_content_new_occupation"></column>
+            <column name="name" value="Разработка содержания новых занятий (лекций, семинаров, практикумов, тренингов и т.д.)*"></column>
+        </insert>
+        <insert tableName="education_methodical_section_info">
+            <column name="id" value="4"></column>
+            <column name="code" value="preparation_presents_iсt"></column>
+            <column name="name" value="Подготовка презентаций с использованием ИКТ*"></column>
+        </insert>
+        <insert tableName="education_methodical_section_info">
+            <column name="id" value="5"></column>
+            <column name="code" value=""></column>
+            <column name="name" value="guide_traineeship_listeners"></column>
+        </insert>
+        <insert tableName="education_methodical_section_info">
+            <column name="id" value="6"></column>
+            <column name="code" value="scientific_management_of_program"></column>
+            <column name="name" value="Научное руководство программой (проектом)*"></column>
+        </insert>
+        <insert tableName="education_methodical_section_info">
+            <column name="id" value="7"></column>
+            <column name="code" value="preparation_content_of_handouts"></column>
+            <column name="name" value="Подготовка содержания раздаточных материалов (методические рекомендации, тезисы и т.д.)*"></column>
+        </insert>
+
+
+        <createTable tableName="education_methodical_section">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="info_id" type="int">
+                <constraints foreignKeyName="educational_methodical_section_info_fk" references="education_methodical_section_info(id)"></constraints>
+            </column>
+            <column name="etp_plan_id" type="int">
+                <constraints foreignKeyName="education_methodical_section_etp_plan_fk" references="etp_plan(id)"/>
+            </column>
+            <column name="etp_id" type="int">
+                <constraints foreignKeyName="education_methodical_section_etp_fk" references="etp_plan(id)"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

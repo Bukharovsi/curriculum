@@ -3,8 +3,8 @@ package ru.curriculum.service.etp.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
-import ru.curriculum.domain.etp.entity.EducationActivityModule;
-import ru.curriculum.domain.etp.entity.EducationActivitySection;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivityModule;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivitySection;
 
 import java.util.ArrayList;
 import java.util.Comparator;

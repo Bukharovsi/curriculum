@@ -1,10 +1,11 @@
-package ru.curriculum.domain.etp.entity;
+package ru.curriculum.domain.etp.entity.educationActivityModule;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.service.etp.dto.EducationActivityModuleDTO;
 
 import javax.persistence.*;
@@ -13,6 +14,9 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 
+/*
+ * Модуль УТП - "Учебная деятельность". Может содержать неограниченное кол-во разделов.
+ */
 @Entity
 @Table(name = "education_activity_module")
 @Getter

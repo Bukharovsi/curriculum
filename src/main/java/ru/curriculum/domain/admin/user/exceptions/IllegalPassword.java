@@ -1,4 +1,4 @@
-package ru.curriculum.domain.admin.user.entity;
+package ru.curriculum.domain.admin.user.exceptions;
 
 public class IllegalPassword extends RuntimeException {
     public IllegalPassword() {
