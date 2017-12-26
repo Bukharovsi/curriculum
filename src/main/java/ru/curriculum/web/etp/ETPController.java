@@ -9,8 +9,8 @@ import ru.curriculum.application.route.Routes;
 import ru.curriculum.presentation.ETP_DTOFactory;
 import ru.curriculum.service.etp.ETP_CRUDService;
 import ru.curriculum.service.etp.dto.ETP_DTO;
-import ru.curriculum.service.etp.dto.EducationActivityModuleDTO;
-import ru.curriculum.service.etp.dto.EducationActivitySectionDTO;
+import ru.curriculum.service.etp.dto.EAModuleDTO;
+import ru.curriculum.service.etp.dto.EASectionDTO;
 import ru.curriculum.service.teacher.TeacherCRUDService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +51,7 @@ public class ETPController {
             Model model
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
-        etp.getModules().add(new EducationActivityModuleDTO());
+        etp.getEaModules().add(new EAModuleDTO());
 
         return ETP_FORM;
     }
@@ -65,7 +65,7 @@ public class ETPController {
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
         Integer indexOfModule = Integer.valueOf(req.getParameter("removeModule"));
-        etp.getModules().remove(indexOfModule.intValue());
+        etp.getEaModules().remove(indexOfModule.intValue());
 
         return ETP_FORM;
     }
@@ -79,8 +79,8 @@ public class ETPController {
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
         Integer indexOfSectionInModule = Integer.valueOf(req.getParameter("addSection"));
-        EducationActivityModuleDTO moduleDTO = etp.getModules().get(indexOfSectionInModule.intValue());
-        moduleDTO.getSections().add(new EducationActivitySectionDTO());
+        EAModuleDTO moduleDTO = etp.getEaModules().get(indexOfSectionInModule.intValue());
+        moduleDTO.getSections().add(new EASectionDTO());
 
         return ETP_FORM;
     }
@@ -98,7 +98,7 @@ public class ETPController {
         Integer indexOfModule = Integer.valueOf(indexOfSectionInModule[0]);
         Integer indexOfSection = Integer.valueOf(indexOfSectionInModule[1]);
 
-        etp.getModules().get(indexOfModule.intValue()).getSections().remove(indexOfSection.intValue());
+        etp.getEaModules().get(indexOfModule.intValue()).getSections().remove(indexOfSection.intValue());
 
         return ETP_FORM;
     }

@@ -7,16 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/*
+ * OMASectionInfo - organizationally methodical activity section.
+ * Справочная информация по разделам организационно-методической деятельности.
+ */
 @Entity
 @Table(name = "organizationally_methodical_section_info")
 @Getter
 @Accessors(fluent = true)
-public class OrganizationallyMethodicalSectionInfo {
+public class OMASectionInfo {
     @Id
     private Integer id;
     private String code;
     private String name;
 
-    public OrganizationallyMethodicalSectionInfo() {
+    public OMASectionInfo() {
     }
 }

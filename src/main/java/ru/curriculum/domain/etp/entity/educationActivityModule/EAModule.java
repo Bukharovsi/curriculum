@@ -6,7 +6,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.service.etp.dto.EducationActivityModuleDTO;
+import ru.curriculum.service.etp.dto.EAModuleDTO;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -15,6 +15,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toSet;
 
 /*
+ * EAModule - Education Activity.
  * Модуль УТП - "Учебная деятельность". Может содержать неограниченное кол-во разделов.
  */
 @Entity
@@ -22,45 +23,50 @@ import static java.util.stream.Collectors.toSet;
 @Getter
 @Accessors(fluent = true)
 @EqualsAndHashCode(exclude = {"educationActivitySections"})
-public class EducationActivityModule {
+public class EAModule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     @OneToMany(
-            mappedBy = "educationActivityModule",
-            targetEntity = EducationActivitySection.class,
+            mappedBy = "eaModule",
+            targetEntity = EASection.class,
             fetch = FetchType.EAGER,
             orphanRemoval = true,
             cascade = CascadeType.ALL)
-    private Set<EducationActivitySection> educationActivitySections;
+    private Set<EASection> eaSections;
     @ManyToOne
     @JoinColumn(name = "etp_id")
     @Setter
     private ETP etp;
 
-    public EducationActivityModule() {
-        this.educationActivitySections = new HashSet<>();
+    public EAModule() {
+        this.eaSections = new HashSet<>();
     }
 
-    public EducationActivityModule(String name, Set<EducationActivitySection> educationActivitySections) {
+    public EAModule(String name, Set<EASection> eaSections) {
         this();
         this.name = name;
-        this.educationActivitySections = bindWithThisModule(educationActivitySections);
+        this.eaSections = bindWithThisModule(eaSections);
     }
 
-    public EducationActivityModule(EducationActivityModuleDTO moduleDTO) {
+    public EAModule(Integer id, String name, Set<EASection> sectionDTOs) {
+        this(name, sectionDTOs);
+        this.id = id;
+    }
+
+    public EAModule(EAModuleDTO moduleDTO) {
         this(
                 moduleDTO.getName(),
                 moduleDTO.getSections()
                         .stream()
-                        .map(EducationActivitySection::new)
+                        .map(EASection::new)
                         .collect(toSet()));
         this.id = moduleDTO.getId();
     }
 
-    private Set<EducationActivitySection> bindWithThisModule(@NonNull Set<EducationActivitySection> sections) {
-        sections.forEach(section -> section.educationActivityModule(this));
+    private Set<EASection> bindWithThisModule(@NonNull Set<EASection> sections) {
+        sections.forEach(section -> section.eaModule(this));
 
         return sections;
     }

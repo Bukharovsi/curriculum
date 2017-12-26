@@ -1,8 +1,8 @@
 package ru.curriculum.domain.admin.domain.etp;
 
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivityModule;
-import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivitySection;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EAModule;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EASection;
 import ru.curriculum.domain.etp.entity.Plan;
 import ru.curriculum.service.etp.dto.ETP_DTO;
 
@@ -21,26 +21,26 @@ public class ETPMock {
                 new Date());
     }
 
-    public EducationActivityModule getEducationModule() {
-        EducationActivityModule module = new EducationActivityModule("Модуль", new HashSet<>());
+    public EAModule getEducationModule() {
+        EAModule module = new EAModule("Модуль", new HashSet<>());
 
         return module;
     }
 
-    public EducationActivityModule getFullEducationModule() {
-        return new EducationActivityModule(
+    public EAModule getFullEducationModule() {
+        return new EAModule(
                 "Модуль",
-                new HashSet<EducationActivitySection>(){{add(getSection());}});
+                new HashSet<EASection>(){{add(getSection());}});
     }
 
-    public EducationActivitySection getSection() {
-        EducationActivitySection section = new EducationActivitySection("Раздел", getPlan());
+    public EASection getSection() {
+        EASection section = new EASection("Раздел", getPlan());
 
         return section;
     }
 
     public Plan getPlan() {
-        return new Plan(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 6.0,7.0);
+        return new Plan(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 6.0, 7.0, null);
 
     }
 

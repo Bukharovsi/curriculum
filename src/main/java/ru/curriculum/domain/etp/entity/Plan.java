@@ -46,7 +46,8 @@ public class Plan {
             Double credits,
             Double others,
             Double standard,
-            Double totalHours
+            Double totalHours,
+            Teacher teacher
     ) {
         this.lectures = lectures;
         this.practices = practices;
@@ -57,10 +58,39 @@ public class Plan {
         this.others = others;
         this.standard = standard;
         this.totalHours = totalHours;
+        this.teacher = teacher;
+    }
+
+    public Plan(
+            Integer id,
+            Double lectures,
+            Double practices,
+            Double independentWorks,
+            Double consultations,
+            Double peerReviews,
+            Double credits,
+            Double others,
+            Double standard,
+            Double totalHours,
+            Teacher teacher
+    ) {
+        this(
+                lectures,
+                practices,
+                independentWorks,
+                consultations,
+                peerReviews,
+                credits,
+                others,
+                standard,
+                totalHours,
+                teacher);
+        this.id = id;
     }
 
     public Plan(PlanDTO plan) {
         this(
+                plan.getId(),
                 plan.getLectures(),
                 plan.getPractices(),
                 plan.getIndependentWorks(),
@@ -69,7 +99,8 @@ public class Plan {
                 plan.getCredits(),
                 plan.getOthers(),
                 plan.getStandard(),
-                plan.getTotalHours());
+                plan.getTotalHours(),
+                null); // TODO выпилим когда создавать будем не из дто
         this.id = plan.getId();
         this.teacher = null != plan.getDomainTeacher() ? plan.getDomainTeacher() : null;
     }

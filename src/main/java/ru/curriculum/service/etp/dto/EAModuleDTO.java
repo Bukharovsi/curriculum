@@ -3,8 +3,8 @@ package ru.curriculum.service.etp.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
-import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivityModule;
-import ru.curriculum.domain.etp.entity.educationActivityModule.EducationActivitySection;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EAModule;
+import ru.curriculum.domain.etp.entity.educationActivityModule.EASection;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,25 +14,25 @@ import static java.util.stream.Collectors.toList;
 
 @Setter
 @Getter
-public class EducationActivityModuleDTO {
+public class EAModuleDTO {
     private Integer id;
     @NotEmpty(message = "Необходимо заполнить поле \"Название модуля\"")
     private String name;
-    private List<EducationActivitySectionDTO> sections;
+    private List<EASectionDTO> sections;
 
-    public EducationActivityModuleDTO() {
+    public EAModuleDTO() {
         sections = new ArrayList<>();
     }
 
-    public EducationActivityModuleDTO(EducationActivityModule module) {
+    public EAModuleDTO(EAModule module) {
         this.id = module.id();
         this.name = module.name();
         this.sections =
                 module
-                        .educationActivitySections()
+                        .eaSections()
                         .stream()
-                        .sorted(Comparator.comparing(EducationActivitySection::id))
-                        .map(EducationActivitySectionDTO::new)
+                        .sorted(Comparator.comparing(EASection::id))
+                        .map(EASectionDTO::new)
                         .collect(toList());
     }
 }

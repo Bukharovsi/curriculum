@@ -325,13 +325,13 @@
                         <button type="submit" name="addModule">Добавить модуль</button>
                     </td>
                 </tr>
-                <div th:each="module, rowModuleStat : ${etp.modules}">
+                <div th:each="module, rowModuleStat : ${etp.eaModules}">
                     <div>
-                        <input hidden="true" th:field="${etp.modules[__${rowModuleStat.index}__].id}">
+                        <input hidden="true" th:field="${etp.eaModules[__${rowModuleStat.index}__].id}">
                     </div>
                     <tr>
                         <td colspan="10">
-                            <input type="text" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
+                            <input type="text" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
                         </td>
                         <td>
                             <button type="submit" th:value="${rowModuleStat.index}" name="addSection">Добавить Раздел </button>
@@ -341,24 +341,24 @@
                         </td>
                     </tr>
 
-                    <div th:each="section, rowSectionStat : ${etp.modules[__${rowModuleStat.index}__].sections}">
+                    <div th:each="section, rowSectionStat : ${etp.eaModules[__${rowModuleStat.index}__].sections}">
                         <tr>
                             <div>
-                                <input hidden="true" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].id}">
+                                <input hidden="true" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].id}">
                             </div>
                             <td>
-                                <input type="text" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].name}" placeholder="Название раздела">
+                                <input type="text" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].name}" placeholder="Название раздела">
                             </td>
-                            <td><input type="number" min="0" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.lectures}"></td>
-                            <td><input type="number" min="0" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.practices}"></td>
-                            <td><input type="number" min="0" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.independentWorks}"></td>
-                            <td><input type="number" min="0" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.consultations}"></td>
-                            <td><input type="number" min="0" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.peerReviews}"></td>
-                            <td><input type="number" min="0" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.credits}"></td>
-                            <td><input type="number" min="0" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.others}"></td>
-                            <td><input type="number" min="0" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.standard}"></td>
-                            <td><input type="number" min="0" class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.totalHours}"></td>
-                            <td><select class="form-control" th:field="${etp.modules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.teacherId}">
+                            <td><input type="number" min="0" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.lectures}"></td>
+                            <td><input type="number" min="0" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.practices}"></td>
+                            <td><input type="number" min="0" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.independentWorks}"></td>
+                            <td><input type="number" min="0" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.consultations}"></td>
+                            <td><input type="number" min="0" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.peerReviews}"></td>
+                            <td><input type="number" min="0" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.credits}"></td>
+                            <td><input type="number" min="0" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.others}"></td>
+                            <td><input type="number" min="0" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.standard}"></td>
+                            <td><input type="number" min="0" class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.totalHours}"></td>
+                            <td><select class="form-control" th:field="${etp.eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.teacherId}">
                                 <option value=""></option>
                                 <!--TODO: ПЕРЕНЕСТИ ФОРМИРОВАНИЕ ФАМИЛИ ПРЕПОДА В ДТО-->
                                 <option th:each="teacher : ${teachers}"

@@ -55,7 +55,7 @@
                 <constraints foreignKeyName="organizationally_methodical_section_etp_plan_fk" references="etp_plan(id)"/>
             </column>
             <column name="etp_id" type="int">
-                <constraints foreignKeyName="organizationally_methodical_section_etp_fk" references="etp_plan(id)"/>
+                <constraints foreignKeyName="organizationally_methodical_section_etp_fk" references="etp(id)"/>
             </column>
         </createTable>
 
