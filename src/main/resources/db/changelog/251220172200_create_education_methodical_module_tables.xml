@@ -40,8 +40,8 @@
         </insert>
         <insert tableName="education_methodical_section_info">
             <column name="id" value="5"></column>
-            <column name="code" value=""></column>
-            <column name="name" value="guide_traineeship_listeners"></column>
+            <column name="code" value="guide_traineeship_listeners"></column>
+            <column name="name" value="Руководство стажировкой слушателей"></column>
         </insert>
         <insert tableName="education_methodical_section_info">
             <column name="id" value="6"></column>

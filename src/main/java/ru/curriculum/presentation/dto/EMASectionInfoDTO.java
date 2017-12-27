@@ -11,6 +11,8 @@ public class EMASectionInfoDTO {
     private String code;
     private String name;
 
+    public EMASectionInfoDTO() {}
+
     public EMASectionInfoDTO(EMSectionInfo info) {
         this.id = info.id();
         this.code = info.code();

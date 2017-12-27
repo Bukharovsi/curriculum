@@ -15,7 +15,7 @@ public class PlanFactory {
     //TODO: пока не извезстно препод обязательное поле
     public Plan create(PlanDTO planDTO) {
         Teacher teacher = null;
-        if(null != planDTO.getId()) {
+        if(null != planDTO.getTeacherId()) {
             teacher = teacherRepository.findOne(planDTO.getTeacherId());
         }
         Plan plan = new Plan(

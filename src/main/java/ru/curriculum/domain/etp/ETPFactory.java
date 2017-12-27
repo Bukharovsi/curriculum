@@ -51,7 +51,7 @@ public class ETPFactory {
             EMASection section = new EMASection(
                     sectionDTO.getId(),
                     emaSectionInfoRepository.findOne(sectionDTO.getInfo().getId()),
-                    new Plan(sectionDTO.getPlan()));
+                    planFactory.create(sectionDTO.getPlan()));
             sections.add(section);
         });
 
@@ -79,7 +79,7 @@ public class ETPFactory {
                     EASection section = new EASection(
                             sectionDTO.getId(),
                             sectionDTO.getName(),
-                            new Plan(sectionDTO.getPlan()));
+                            planFactory.create(sectionDTO.getPlan()));
                     sectionDTOs.add(section);
             });
             EAModule module = new EAModule(moduleDTO.getId(), moduleDTO.getName(), sectionDTOs);
