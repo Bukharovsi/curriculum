@@ -3,7 +3,6 @@ package ru.curriculum.domain.etp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.domain.etp.entity.Plan;
 import ru.curriculum.domain.etp.entity.educationActivityModule.EAModule;
 import ru.curriculum.domain.etp.entity.educationActivityModule.EASection;
 import ru.curriculum.domain.etp.entity.educationMethodicalSection.EMASection;
@@ -45,9 +44,9 @@ public class ETPFactory {
         return etp;
     }
 
-    private Set<EMASection> createEMASections(List<EMASectionDTO> edMetSec) {
+    private Set<EMASection> createEMASections(List<EMASectionDTO> emaSectionDTOs) {
         Set<EMASection> sections = new HashSet<>();
-        edMetSec.forEach(sectionDTO -> {
+        emaSectionDTOs.forEach(sectionDTO -> {
             EMASection section = new EMASection(
                     sectionDTO.getId(),
                     emaSectionInfoRepository.findOne(sectionDTO.getInfo().getId()),
@@ -58,9 +57,9 @@ public class ETPFactory {
         return sections;
     }
 
-    private Set<OMASection> createOMASections(List<OMASectionDTO> orgMetSec) {
+    private Set<OMASection> createOMASections(List<OMASectionDTO> omaSectionDTOs) {
         Set<OMASection> sections = new HashSet<>();
-        orgMetSec.forEach(sectionDTO -> {
+        omaSectionDTOs.forEach(sectionDTO -> {
             OMASection section = new OMASection(
                     sectionDTO.getId(),
                     omaSectionInfoRepository.findOne(sectionDTO.getInfo().getId()),
@@ -71,9 +70,9 @@ public class ETPFactory {
         return sections;
     }
 
-    private Set<EAModule> createEAModules(List<EAModuleDTO> moduleDTOs) {
+    private Set<EAModule> createEAModules(List<EAModuleDTO> eaModuleDTOs) {
         Set<EAModule> modules = new HashSet<>();
-        moduleDTOs.forEach(moduleDTO -> {
+        eaModuleDTOs.forEach(moduleDTO -> {
             Set<EASection> sectionDTOs = new HashSet<>();
             moduleDTO.getSections().forEach(sectionDTO-> {
                     EASection section = new EASection(

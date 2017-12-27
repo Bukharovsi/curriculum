@@ -15,8 +15,6 @@ import java.util.List;
 public class ETP_CRUDService {
     @Autowired
     private ETPRepository etpRepository;
-//    @Autowired
-//    private TeacherRepository teacherRepository;
     @Autowired
     private ETPFactory etpFactory;
 
@@ -34,7 +32,6 @@ public class ETP_CRUDService {
     }
 
     public void create(ETP_DTO etpDTO) {
-//        bindTeacherWithPlan(etpDTO);
         ETP etp = etpFactory.create(etpDTO);
         etpRepository.save(etp);
     }
@@ -51,17 +48,5 @@ public class ETP_CRUDService {
     public void delete(Integer etpId) {
         etpRepository.delete(etpId);
     }
-
-//    private void bindTeacherWithPlan(ETP_DTO etpDTO) {
-//        // TODO: пока что быстрое решение потом переделать как-нибудь получше
-//        etpDTO.getEaModules().forEach(module -> {
-//            module.getSections().forEach(section -> {
-//                if(null != section.getPlan().getTeacherId()) {
-//                    Teacher teacher = teacherRepository.findOne(section.getPlan().getTeacherId());
-//                    section.getPlan().setDomainTeacher(teacher);
-//                }
-//            });
-//        });
-//    }
 }
 

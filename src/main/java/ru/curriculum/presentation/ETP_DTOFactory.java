@@ -22,13 +22,13 @@ public class ETP_DTOFactory {
 
     public ETP_DTO createEmptyETP_DTO() {
         ETP_DTO dto = new ETP_DTO();
-        dto.setEmaSections(createEmptyMethodicalSectionsInfo());
-        dto.setOmaSections(createEmptyOrganizationallyMethodicalSections());
+        dto.setEmaSections(createEmptyEMASectionsInfo());
+        dto.setOmaSections(createEmptyOMASections());
 
         return dto;
     }
 
-    private List<OMASectionDTO> createEmptyOrganizationallyMethodicalSections() {
+    private List<OMASectionDTO> createEmptyOMASections() {
         List<OMASectionDTO> sections = new ArrayList<>();
         omaSectionInfoRepository.findAllByOrderById()
                 .forEach(info -> {
@@ -40,7 +40,7 @@ public class ETP_DTOFactory {
         return sections;
     }
 
-    private List<EMASectionDTO> createEmptyMethodicalSectionsInfo() {
+    private List<EMASectionDTO> createEmptyEMASectionsInfo() {
         List<EMASectionDTO> sections = new ArrayList<>();
         emaSectionInfoRepository.findAllByOrderById()
                 .forEach(info -> {
