@@ -1,17 +1,22 @@
-package ru.curriculum.domain.etp.entity;
+package ru.curriculum.domain.etp.entity.educationActivityModule;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import ru.curriculum.service.etp.dto.EducationActivitySectionDTO;
+import ru.curriculum.domain.etp.entity.Plan;
+import ru.curriculum.service.etp.dto.EASectionDTO;
 
 import javax.persistence.*;
 
+/*
+ * EASection - educational activity section.
+ * Раздел модуля УТП "Учебная деятельность". Характеризуется планом.
+ */
 @Entity
 @Table(name = "education_activity_section")
 @Getter
 @Accessors(fluent = true)
-public class EducationActivitySection {
+public class EASection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,20 +27,25 @@ public class EducationActivitySection {
             cascade = CascadeType.ALL)
     @JoinColumn(name = "etp_plan_id")
     private Plan plan;
+    @Setter
     @ManyToOne
     @JoinColumn(name = "education_activity_module_id")
-    @Setter
-    private EducationActivityModule educationActivityModule;
+    private EAModule eaModule;
 
-    public EducationActivitySection() {
+    public EASection() {
     }
 
-    public EducationActivitySection(String name, Plan plan) {
+    public EASection(String name, Plan plan) {
         this.name = name;
         this.plan = plan;
     }
 
-    public EducationActivitySection(EducationActivitySectionDTO sectionDTO) {
+    public EASection(Integer id, String name, Plan plan) {
+        this(name, plan);
+        this.id = id;
+    }
+
+    public EASection(EASectionDTO sectionDTO) {
         this(
                 sectionDTO.getName(),
                 new Plan(sectionDTO.getPlan()));

@@ -6,10 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.curriculum.application.route.Routes;
+import ru.curriculum.presentation.ETP_DTOFactory;
 import ru.curriculum.service.etp.ETP_CRUDService;
 import ru.curriculum.service.etp.dto.ETP_DTO;
-import ru.curriculum.service.etp.dto.EducationActivityModuleDTO;
-import ru.curriculum.service.etp.dto.EducationActivitySectionDTO;
+import ru.curriculum.service.etp.dto.EAModuleDTO;
+import ru.curriculum.service.etp.dto.EASectionDTO;
 import ru.curriculum.service.teacher.TeacherCRUDService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,8 @@ public class ETPController {
     private ETP_CRUDService etpCRUDService;
     @Autowired
     private TeacherCRUDService teacherCRUDService;
+    @Autowired
+    private ETP_DTOFactory dtoFactory;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getAll(Model model) {
@@ -35,7 +38,7 @@ public class ETPController {
 
     @RequestMapping(path = "/new", method = RequestMethod.GET)
     public String getETPForm(Model model) {
-        model.addAttribute("etp", new ETP_DTO());
+        model.addAttribute("etp", dtoFactory.createEmptyETP_DTO());
         model.addAttribute("teachers", teacherCRUDService.findAll());
 
         return ETP_FORM;
@@ -43,12 +46,12 @@ public class ETPController {
 
     @RequestMapping(params={"addModule"}, method = {RequestMethod.POST, RequestMethod.PUT})
     public String addModule(
-            final @ModelAttribute("etp") @Valid ETP_DTO etp_dto,
+            final @ModelAttribute("etp") @Valid ETP_DTO etp,
             final BindingResult bindingResult,
             Model model
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
-        etp_dto.getModules().add(new EducationActivityModuleDTO());
+        etp.getEaModules().add(new EAModuleDTO());
 
         return ETP_FORM;
     }
@@ -62,7 +65,7 @@ public class ETPController {
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
         Integer indexOfModule = Integer.valueOf(req.getParameter("removeModule"));
-        etp.getModules().remove(indexOfModule.intValue());
+        etp.getEaModules().remove(indexOfModule.intValue());
 
         return ETP_FORM;
     }
@@ -76,8 +79,8 @@ public class ETPController {
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
         Integer indexOfSectionInModule = Integer.valueOf(req.getParameter("addSection"));
-        EducationActivityModuleDTO moduleDTO = etp.getModules().get(indexOfSectionInModule.intValue());
-        moduleDTO.getSections().add(new EducationActivitySectionDTO());
+        EAModuleDTO moduleDTO = etp.getEaModules().get(indexOfSectionInModule.intValue());
+        moduleDTO.getSections().add(new EASectionDTO());
 
         return ETP_FORM;
     }
@@ -95,7 +98,7 @@ public class ETPController {
         Integer indexOfModule = Integer.valueOf(indexOfSectionInModule[0]);
         Integer indexOfSection = Integer.valueOf(indexOfSectionInModule[1]);
 
-        etp.getModules().get(indexOfModule.intValue()).getSections().remove(indexOfSection.intValue());
+        etp.getEaModules().get(indexOfModule.intValue()).getSections().remove(indexOfSection.intValue());
 
         return ETP_FORM;
     }

@@ -1,10 +1,10 @@
-package ru.curriculum.domain.admin.user.exceptions;
+package ru.curriculum.domain.admin.user.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.curriculum.domain.admin.user.entity.IllegalPassword;
+import ru.curriculum.domain.admin.user.exceptions.IllegalPassword;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
