@@ -48,8 +48,8 @@
             </column>
             <column name="curator_id" type="int" >
                 <constraints nullable="false"
-                             foreignKeyName="curator_fk"
-                             referencedTableName="teacher"
+                             foreignKeyName="user_fk"
+                             referencedTableName="users"
                              referencedColumnNames="id"
                 />
             </column>

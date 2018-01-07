@@ -1,8 +1,8 @@
 package ru.curriculum.domain.stateSchedule.entity;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.Accessors;
+import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.teacher.entity.Teacher;
 
 import javax.persistence.*;
@@ -16,6 +16,9 @@ import java.util.Date;
 @Data
 @Accessors(fluent = true)
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class StateProgram {
 
     @Id
@@ -45,8 +48,8 @@ public class StateProgram {
     @Column(length = 1024)
     private String responsibleDepartment;
 
-    @OneToOne(targetEntity = Teacher.class, fetch = FetchType.EAGER)
-    private Teacher curator;
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    private User curator;
 
     private String address;
 }

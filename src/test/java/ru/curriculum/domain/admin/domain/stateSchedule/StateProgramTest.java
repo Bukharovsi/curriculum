@@ -6,6 +6,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.domain.admin.user.repository.UserRepository;
+import ru.curriculum.domain.helper.UserTestFactory;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 import ru.curriculum.domain.stateSchedule.repository.ImplementationFormRepository;
 import ru.curriculum.domain.stateSchedule.repository.StateProgramRepository;
@@ -14,7 +17,6 @@ import ru.curriculum.domain.teacher.repository.TeacherRepository;
 
 import java.util.Date;
 
-@Ignore
 public class StateProgramTest extends IntegrationBoot {
 
     @Autowired
@@ -24,7 +26,7 @@ public class StateProgramTest extends IntegrationBoot {
     private ImplementationFormRepository implementationFormRepository;
 
     @Autowired
-    private TeacherRepository teacherRepository;
+    private UserTestFactory userTestFactory;
 
     @Autowired
     private StateProgramRepository stateProgramRepository;
@@ -34,12 +36,12 @@ public class StateProgramTest extends IntegrationBoot {
         StateProgram stateProgram = StateProgram.builder()
             .targetAudience("English teachers")
             .name("ABC")
-            .mode(studyModeRepository.findOne("fullTime"))
+            .mode(studyModeRepository.findOne("fulltime"))
             .implementationForm(implementationFormRepository.findOne("modular"))
             .lernerCount(20)
             .groupCount(1)
             .countOfHoursPerLerner(100)
-            .curator(teacherRepository.findByUserId(1))
+            .curator(userTestFactory.createAndSaveRandomUser())
             .dateStart(new Date())
             .dateFinish(new Date())
             .address("Kazan, main street, 1")

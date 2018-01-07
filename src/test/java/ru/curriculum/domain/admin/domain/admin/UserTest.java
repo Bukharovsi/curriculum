@@ -1,17 +1,25 @@
 package ru.curriculum.domain.admin.domain.admin;
 
+import boot.IntegrationBoot;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.curriculum.domain.admin.user.entity.Role;
 import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.domain.helper.UserTestFactory;
 import ru.curriculum.service.user.dto.UserDTO;
 
 import static org.junit.Assert.*;
 
-public class UserTest {
+public class UserTest extends IntegrationBoot {
+
     private PasswordEncoder encoder;
+
+    @Autowired
+    private UserTestFactory userTestFactory;
 
     @Before
     public void setUp() {
@@ -20,7 +28,7 @@ public class UserTest {
 
     @Test
     public void createUser() {
-        User user = getUser();
+        User user = userTestFactory.createTestUser();
 
         assertEquals("test", user.username());
         assertTrue(encoder.matches("123", user.password().hash()));
@@ -45,7 +53,7 @@ public class UserTest {
     @Test
     public void updateUserPrincipalInfo() {
         UserDTO dto = getUserDTO();
-        User user = getUser();
+        User user = userTestFactory.createTestUser();
 
         user.updatePrincipal(dto);
 
@@ -60,7 +68,7 @@ public class UserTest {
     public void updateUserPrincipalInfoFromDTOWhereNoPassword_passwordRemainsTheSame() {
         UserDTO dto = getUserDTO();
         dto.setPassword(null);
-        User user = getUser();
+        User user = userTestFactory.createTestUser();
 
         user.updatePrincipal(dto);
 
@@ -71,7 +79,7 @@ public class UserTest {
     public void updateUserPrincipalInfoFromDTOWherePasswordIsEmtpyString_passwordRemainsTheSame() {
         UserDTO dto = getUserDTO();
         dto.setPassword("");
-        User user = getUser();
+        User user = userTestFactory.createTestUser();
 
         user.updatePrincipal(dto);
 
@@ -89,7 +97,7 @@ public class UserTest {
     @Test
     public void assignRoleForUser() {
         Role testRole = new Role("test", "Тестовая роль");
-        User user = getUser();
+        User user = userTestFactory.createTestUser();
         user.assignRole(testRole);
 
         assertEquals(testRole, user.role());
@@ -107,14 +115,7 @@ public class UserTest {
         return dto;
     }
 
-    private User getUser() {
-        return new User(
-                "test",
-                "123",
-                "Иванов",
-                "Иван",
-                "Иванович");
-    }
+
 
     //TODO: updateUserPrincipal and changePassword
 }
