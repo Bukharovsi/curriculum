@@ -1,15 +1,54 @@
 package ru.curriculum.domain.admin.domain.stateSchedule;
 
+import boot.IntegrationBoot;
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
+import ru.curriculum.domain.stateSchedule.repository.ImplementationFormRepository;
+import ru.curriculum.domain.stateSchedule.repository.StateProgramRepository;
+import ru.curriculum.domain.stateSchedule.repository.StudyModeRepository;
+import ru.curriculum.domain.teacher.repository.TeacherRepository;
 
-public class StateProgramTest {
+import java.util.Date;
+
+@Ignore
+public class StateProgramTest extends IntegrationBoot {
+
+    @Autowired
+    private StudyModeRepository studyModeRepository;
+
+    @Autowired
+    private ImplementationFormRepository implementationFormRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
+
+    @Autowired
+    private StateProgramRepository stateProgramRepository;
 
     @Test
     public void afterSavingAndGettingStateProgramsAreEquals() throws Exception {
         StateProgram stateProgram = StateProgram.builder()
             .targetAudience("English teachers")
             .name("ABC")
-            .mode()
+            .mode(studyModeRepository.findOne("fullTime"))
+            .implementationForm(implementationFormRepository.findOne("modular"))
+            .lernerCount(20)
+            .groupCount(1)
+            .countOfHoursPerLerner(100)
+            .curator(teacherRepository.findByUserId(1))
+            .dateStart(new Date())
+            .dateFinish(new Date())
+            .address("Kazan, main street, 1")
+            .responsibleDepartment("Main department")
+            .build();
+
+        stateProgramRepository.save(stateProgram);
+
+        StateProgram storedStateProgram = stateProgramRepository.findOne(stateProgram.id());
+        Assert.assertEquals(stateProgram, storedStateProgram);
     }
 }

@@ -2,6 +2,7 @@ package ru.curriculum.domain.stateSchedule.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import ru.curriculum.domain.teacher.entity.Teacher;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name = "state_program")
 @Data
+@Accessors(fluent = true)
 @Builder
 public class StateProgram {
 
