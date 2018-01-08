@@ -4,6 +4,8 @@ import boot.IntegrationBoot;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.domain.helper.UserTestFactory;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 import ru.curriculum.service.stateSchedule.converter.DtoToStateScheduleConverter;
 import ru.curriculum.service.stateSchedule.converter.StateScheduleEntityToDtoConverter;
@@ -20,12 +22,17 @@ public class StateScheduleConvertersTest extends IntegrationBoot{
     @Autowired
     private StateScheduleEntityToDtoConverter stateScheduleEntityToDtoConverter;
 
+    @Autowired
+    private UserTestFactory userTestFactory;
+
     @Test
     public void whenDtoConvertsToEntityAndToDtoThenDTOsTheSame() throws Exception {
+        User curator = userTestFactory.createAndSaveRandomUser();
+
         StateProgramCreationDto newStateProgram = StateProgramCreationDto.builder()
             .address("Kazan, main street 1")
             .countOfHoursPerLerner(10)
-            .curatorId(1)
+            .curatorId(curator.id())
             .dateStart(new Date())
             .dateFinish(new Date())
             .groupCount(2)
