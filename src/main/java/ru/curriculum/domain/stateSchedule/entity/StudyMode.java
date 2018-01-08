@@ -1,9 +1,7 @@
 package ru.curriculum.domain.stateSchedule.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
@@ -16,6 +14,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Getter
+@Accessors(fluent = true)
 public class StudyMode {
 
     @Id

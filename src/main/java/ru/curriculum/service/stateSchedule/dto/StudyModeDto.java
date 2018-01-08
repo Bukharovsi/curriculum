@@ -1,4 +1,4 @@
-package ru.curriculum.domain.stateSchedule.entity;
+package ru.curriculum.service.stateSchedule.dto;
 
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -9,21 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Форма реализации - модульная, к примеру.
+ * Форма обучения - очная, заочная и пр
  */
-@Entity
-@Table(name = "implementation_form")
 @EqualsAndHashCode
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
 @Accessors(fluent = true)
-public class ImplementationForm {
+public class StudyModeDto {
 
-    @Id
     private String id;
 
-    @Column(insertable = false, updatable = false)
     private String name;
 }
