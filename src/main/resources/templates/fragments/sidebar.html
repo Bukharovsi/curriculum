@@ -13,6 +13,9 @@
             <li th:class="${uri.contains('/admin/teachers') ? 'active':''}">
                 <a th:href="@{/admin/teachers}" data-toggle="collapse" data-target="#submenu-2"> Преподователи </a>
             </li>
+            <li th:class="${uri.contains('/stateSchedule') ? 'active':''}">
+                <a th:href="@{/stateSchedule}"> План-график </a>
+            </li>
             <li th:class="${uri.contains('/etp') ? 'active':''}">
                 <a th:href="@{/etp}"> УТП </a>
             </li>

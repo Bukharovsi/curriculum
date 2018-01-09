@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
-public class StateSchedultCRUDService {
+public class StateScheduleCRUDService {
 
     @Autowired
     private StateProgramRepository stateProgramRepository;

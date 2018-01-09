@@ -9,4 +9,5 @@ public class View {
     public static final String TEACHER_FROM_USER_FORM = "admin/teachers/teacherFromUserForm";
     public static final String ETP_FORM = "etp/etpForm";
     public static final String ETP_LIST = "etp/etpList";
+    public static final String STATE_SCHEDULE_LIST = "stateSchedule/stateScheduleList";
 }

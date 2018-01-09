@@ -34,19 +34,25 @@
         </tr>
         </thead>
         <tbody>
-        <!--/*@thymesVar id="stateProgram" type="ru.curriculum.domain.stateSchedule.entity.StateProgram"*/-->
+        <!--/*@thymesVar id="stateProgram" type="ru.curriculum.service.stateSchedule.dto.StateProgramViewDto"*/-->
         <tr th:each="stateProgram : ${stateSchedule}">
             <td th:text="${stateProgram.targetAudience()}"></td>
             <td th:text="${stateProgram.name()}"></td>
-            <td th:text="${stateProgram.mode()}"></td>
-            <td th:text="${stateProgram.implementationForm()}"></td>
-            <td th:text="${stateProgram.placeOfWork}"></td>
-            <td th:text="${stateProgram.position}"></td>
+            <td th:text="${stateProgram.mode().name()}"></td>
+            <td th:text="${stateProgram.implementationForm().name()}"></td>
+            <td th:text="${stateProgram.lernerCount()}"></td>
+            <td th:text="${stateProgram.groupCount()}"></td>
+            <td th:text="${stateProgram.countOfHoursPerLerner()}"></td>
+            <td th:text="${stateProgram.dateStart()}"></td>
+            <td th:text="${stateProgram.dateFinish()}"></td>
+            <td th:text="${stateProgram.responsibleDepartment()}"></td>
+            <td th:text="${stateProgram.curator().fio()}"></td>
+            <td th:text="${stateProgram.address()}"></td>
             <td align="right">
-                <a th:href="@{/admin/teachers/edit/{id}(id=${stateProgram.id})}" data-toggle="tooltip" title="Редактировать">
+                <a th:href="@{/stateSchedule/edit/{id}(id=${stateProgram.id})}" data-toggle="tooltip" title="Редактировать">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <a th:href="@{/admin/teachers/delete/{id}(id=${stateProgram.id})}" data-toggle="tooltip" title="Удалить">
+                <a th:href="@{/stateSchedule/delete/{id}(id=${stateProgram.id})}" data-toggle="tooltip" title="Удалить">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
             </td>
