@@ -2,24 +2,31 @@ package ru.curriculum.service.etp.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
-import ru.curriculum.domain.etp.entity.educationActivityModule.EASection;
+import ru.curriculum.domain.etp.entity.educationActivity.EASection;
+import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 public class EASectionDTO {
     private Integer id;
-    @NotEmpty(message = "Необходими заполнить поле \"Дата начала дистанционного обучения\"")
     private String name;
-    private PlanDTO plan;
+    private List<EATopicDTO> topics;
 
     public EASectionDTO() {
-        this.plan = new PlanDTO();
+        this.topics = new ArrayList<>();
     }
 
     public EASectionDTO(EASection section) {
+        this();
         this.id = section.id();
         this.name = section.name();
-        this.plan = new PlanDTO(section.plan());
+        this.topics = section.topics()
+                .stream()
+                .sorted(Comparator.comparing(EATopic::id))
+                .map(EATopicDTO::new)
+                .collect(Collectors.toList());
     }
 }

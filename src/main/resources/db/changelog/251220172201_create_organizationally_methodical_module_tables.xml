@@ -6,56 +6,30 @@
 
     <changeSet id="251220172201" author="Vlad">
 
-        <createTable tableName="organizationally_methodical_section_info">
-            <column name="id" type="int">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="code" type="varchar(50)">
-                <constraints unique="true" nullable="false"></constraints>
-            </column>
-            <column name="name" type="varchar(500)">
-                <constraints nullable="false"></constraints>
-            </column>
-        </createTable>
-
-        <insert tableName="organizationally_methodical_section_info">
-            <column name="id" value="1"></column>
-            <column name="code" value="organization_republican_conferences"></column>
-            <column name="name" value="Организация Республиканских конференции, семинаров в рамках реализации ДПП ПК*"></column>
-        </insert>
-        <insert tableName="organizationally_methodical_section_info">
-            <column name="id" value="2"></column>
-            <column name="code" value="organization_methodical_support"></column>
-            <column name="name" value="Организационно-методическое сопровождение (разработка новых учебно-тематических планов по программам обучения; работа по набору и комплектованию учебных групп; подготовка выездных занятий, в т. ч. в других муниципальных районах (городских округах), обработка заявок, формирование содержания)*"></column>
-        </insert>
-        <insert tableName="organizationally_methodical_section_info">
-            <column name="id" value="3"></column>
-            <column name="code" value="questioning"></column>
-            <column name="name" value="Анкетирование (вход/выход). Обработка и анализ"></column>
-        </insert>
-        <insert tableName="organizationally_methodical_section_info">
-            <column name="id" value="4"></column>
-            <column name="code" value="distance_learning_supervision"></column>
-            <column name="name" value="Кураторство дистанционного обучения"></column>
-        </insert>
-        <insert tableName="organizationally_methodical_section_info">
-            <column name="id" value="5"></column>
-            <column name="code" value="full_time_learning_supervision"></column>
-            <column name="name" value="Кураторство очного обучения"></column>
-        </insert>
-
-        <createTable tableName="organizationally_methodical_section">
+        <createTable tableName="organization_methodical_module">
             <column name="id" type="int" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="info_id" type="int">
-                <constraints foreignKeyName="organizationally_methodical_section_info_fk" references="organizationally_methodical_section_info(id)"></constraints>
-            </column>
-            <column name="etp_plan_id" type="int">
-                <constraints foreignKeyName="organizationally_methodical_section_etp_plan_fk" references="etp_plan(id)"/>
+            <column name="name" type="varchar(500)" >
+                <constraints nullable="false"></constraints>
             </column>
             <column name="etp_id" type="int">
-                <constraints foreignKeyName="organizationally_methodical_section_etp_fk" references="etp(id)"/>
+                <constraints foreignKeyName="organization_methodical_module_to_etp_fk" references="etp(id)"></constraints>
+            </column>
+        </createTable>
+
+        <createTable tableName="organization_methodical_section">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(500)" >
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="etp_plan_id" type="int">
+                <constraints foreignKeyName="organization_methodical_section_to_etp_plan_fk" references="etp_plan(id)"/>
+            </column>
+            <column name="organization_methodical_module_id" type="int">
+                <constraints foreignKeyName="organization_methodical_section_to_module_fk" references="organization_methodical_module(id)"/>
             </column>
         </createTable>
 

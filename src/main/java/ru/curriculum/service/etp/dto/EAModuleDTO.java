@@ -3,8 +3,8 @@ package ru.curriculum.service.etp.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
-import ru.curriculum.domain.etp.entity.educationActivityModule.EAModule;
-import ru.curriculum.domain.etp.entity.educationActivityModule.EASection;
+import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
+import ru.curriculum.domain.etp.entity.educationActivity.EASection;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,7 +29,7 @@ public class EAModuleDTO {
         this.name = module.name();
         this.sections =
                 module
-                        .eaSections()
+                        .sections()
                         .stream()
                         .sorted(Comparator.comparing(EASection::id))
                         .map(EASectionDTO::new)

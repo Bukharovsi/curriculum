@@ -5,8 +5,8 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.presentation.dto.EMASectionDTO;
-import ru.curriculum.presentation.dto.OMASectionDTO;
+import ru.curriculum.presentation.dto.EMAModuleDTO;
+import ru.curriculum.presentation.dto.OMAModuleDTO;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,12 +43,13 @@ public class ETP_DTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fullTimeLearningEndDate;
     private List<EAModuleDTO> eaModules;
-    private List<EMASectionDTO> emaSections;
-    private List<OMASectionDTO> omaSections;
+    private List<EMAModuleDTO> emaModules;
+    private List<OMAModuleDTO> omaModules;
 
     public ETP_DTO() {
         this.eaModules = new ArrayList<>();
-        this.emaSections = new ArrayList<>();
+        this.emaModules = new ArrayList<>();
+        this.omaModules = new ArrayList<>();
     }
 
     public ETP_DTO(ETP etp) {
@@ -65,17 +66,17 @@ public class ETP_DTO {
                         .map(EAModuleDTO::new)
                         .sorted(Comparator.comparing(EAModuleDTO::getId))
                         .collect(toList());
-        this.emaSections =
-                etp.emaSections()
+        this.emaModules =
+                etp.emaModules()
                         .stream()
-                        .map(EMASectionDTO::new)
-                        .sorted(Comparator.comparing(EMASectionDTO::getId))
+                        .map(EMAModuleDTO::new)
+                        .sorted(Comparator.comparing(EMAModuleDTO::getId))
                         .collect(toList());
-        this.omaSections =
-                etp.omaSections()
+        this.omaModules =
+                etp.omaModules()
                         .stream()
-                        .map(OMASectionDTO::new)
-                        .sorted(Comparator.comparing(OMASectionDTO::getId))
+                        .map(OMAModuleDTO::new)
+                        .sorted(Comparator.comparing(OMAModuleDTO::getId))
                         .collect(toList());
     }
 }

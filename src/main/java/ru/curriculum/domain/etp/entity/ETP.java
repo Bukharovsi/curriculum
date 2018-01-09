@@ -3,9 +3,9 @@ package ru.curriculum.domain.etp.entity;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import ru.curriculum.domain.etp.entity.educationMethodicalSection.EMASection;
-import ru.curriculum.domain.etp.entity.organizationallyMethodicalSection.OMASection;
-import ru.curriculum.domain.etp.entity.educationActivityModule.EAModule;
+import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
+import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
+import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
 import ru.curriculum.service.etp.dto.ETP_DTO;
 import ru.curriculum.service.etp.dto.EAModuleDTO;
 
@@ -40,23 +40,23 @@ public class ETP {
     private Set<EAModule> eaModules;
     @OneToMany(
             mappedBy = "etp",
-            targetEntity = EMASection.class,
+            targetEntity = EMAModule.class,
             fetch = FetchType.EAGER,
             orphanRemoval = true,
             cascade = CascadeType.ALL)
-    private Set<EMASection> emaSections;
+    private Set<EMAModule> emaModules;
     @OneToMany(
             mappedBy = "etp",
-            targetEntity = OMASection.class,
+            targetEntity = OMAModule.class,
             fetch = FetchType.EAGER,
             orphanRemoval = true,
             cascade = CascadeType.ALL)
-    private Set<OMASection> omaSections;
+    private Set<OMAModule> omaModules;
 
     public ETP() {
         this.eaModules = new HashSet<>();
-        this.emaSections = new HashSet<>();
-        this.omaSections = new HashSet<>();
+        this.emaModules = new HashSet<>();
+        this.omaModules = new HashSet<>();
     }
 
     public ETP(
@@ -84,87 +84,33 @@ public class ETP {
             Date fullTimeLearningBeginDate,
             Date fullTimeLearningEndDate,
             Set<EAModule> eaModules,
-            Set<EMASection> emaSections,
-            Set<OMASection> omaSections
+            Set<EMAModule> emaModules,
+            Set<OMAModule> omaModules
     ) {
+        this();
         this.title = title;
         this.target = target;
         this.distanceLearningBeginDate = distanceLearningBeginDate;
         this.distanceLearningEndDate = distanceLearningEndDate;
         this.fullTimeLearningBeginDate = fullTimeLearningBeginDate;
         this.fullTimeLearningEndDate = fullTimeLearningEndDate;
-        addEducationActivityModule(eaModules);
-        addEducationMethodicalSections(emaSections);
-        addOrganizationallyMethodicalSections(omaSections);
+        this.addEAModules(eaModules);
+        this.addEMAModules(emaModules);
+        this.addOMAModules(omaModules);
     }
 
-    public ETP(ETP_DTO etpDTO) {
-        this(
-                etpDTO.getTitle(),
-                etpDTO.getTarget(),
-                etpDTO.getDistanceLearningBeginDate(),
-                etpDTO.getDistanceLearningEndDate(),
-                etpDTO.getFullTimeLearningBeginDate(),
-                etpDTO.getFullTimeLearningEndDate());
-        this.id = etpDTO.getId();
-        this.eaModules = bindWithThisModule(etpDTO.getEaModules());
+    private void addEAModules(Set<EAModule> eaModules) {
+        eaModules.forEach(eaModule -> eaModule.etp(this));
+        this.eaModules = eaModules;
     }
 
-    public ETP(
-            Integer id,
-            String title,
-            String target,
-            Date distanceLearningBeginDate,
-            Date distanceLearningEndDate,
-            Date fullTimeLearningBeginDate,
-            Date fullTimeLearningEndDate,
-            Set<EAModule> eaModules,
-            Set<EMASection> emaSections,
-            Set<OMASection> omaSections
-    ) {
-        this(
-                title,
-                target,
-                distanceLearningBeginDate,
-                distanceLearningEndDate,
-                fullTimeLearningBeginDate,
-                fullTimeLearningEndDate,
-                eaModules,
-                emaSections,
-                omaSections);
-        this.id = id;
+    private void addEMAModules(Set<EMAModule> emaModules) {
+        emaModules.forEach(emaModule -> emaModule.etp(this));
+        this.emaModules = emaModules;
     }
 
-    private void addEducationActivityModule(Set<EAModule> modules) {
-        modules.forEach(module -> module.etp(this));
-        this.eaModules = modules;
-    }
-
-    public void addEducationMethodicalSections(Set<EMASection> sections) {
-        sections.forEach(section -> section.etp(this));
-        this.emaSections = sections;
-    }
-
-    public void addOrganizationallyMethodicalSections(Set<OMASection> sections) {
-        sections.forEach(section -> section.etp(this));
-        this.omaSections = sections;
-    }
-
-    //TODO: объекты нижнего уровня ничего не должны знать про объекты вернхнего!!!
-    public Set<EAModule> bindWithThisModule(
-            @NonNull Collection<EAModuleDTO> moduleDTOs
-    ) {
-        Set<EAModule> modules = moduleDTOs
-                .stream()
-                .map(EAModule::new)
-                .collect(toSet());
-        modules.forEach(module -> module.etp(this));
-
-        return modules;
-    }
-
-    public void addModule(@NonNull EAModule module) {
-        module.etp(this);
-        this.eaModules.add(module);
+    private void addOMAModules(Set<OMAModule> omaModules) {
+        omaModules.forEach(omaModule -> omaModule.etp(this));
+        this.omaModules = omaModules;
     }
 }

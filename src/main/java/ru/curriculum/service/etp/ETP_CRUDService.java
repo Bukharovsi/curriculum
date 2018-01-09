@@ -2,7 +2,6 @@ package ru.curriculum.service.etp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.curriculum.domain.etp.ETPFactory;
 import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.domain.etp.repository.ETPRepository;
 import ru.curriculum.service.etp.dto.ETP_DTO;
