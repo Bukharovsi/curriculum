@@ -29,7 +29,8 @@ public class PlanFactory {
                 planDTO.getOthers(),
                 planDTO.getStandard(),
                 planDTO.getTotalHours(),
-                teacher);
+                teacher
+        );
 
         return plan;
     }

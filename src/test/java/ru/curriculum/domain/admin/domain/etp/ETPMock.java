@@ -24,24 +24,12 @@ public class ETPMock {
                 new Date(2),
                 new Date(3),
                 new Date(4),
-                getEAModule(),
-                getEMAModule(),
-                getOMAModule()
+                getEAModules(),
+                getEMAModules(),
+                getOMAModules()
         );
 
         return etp;
-    }
-
-    public EAModule getFullEducationModule() {
-        return new EAModule(
-                "Модуль",
-                new HashSet<EASection>(){{add(getSection());}});
-    }
-
-    public EASection getSection() {
-        EASection section = new EASection("Раздел", getEATopics());
-
-        return section;
     }
 
     public Plan getPlan() {
@@ -49,7 +37,7 @@ public class ETPMock {
 
     }
 
-    public Set<EAModule> getEAModule() {
+    public Set<EAModule> getEAModules() {
         Set<EAModule> modules = new HashSet<>();
         EAModule eaModule = new EAModule("Модуль учебной деятельности", getEASections());
         modules.add(eaModule);
@@ -57,7 +45,7 @@ public class ETPMock {
         return modules;
     }
 
-    public Set<EMAModule> getEMAModule() {
+    public Set<EMAModule> getEMAModules() {
         Set<EMAModule> modules = new HashSet<>();
         EMAModule emaModule = new EMAModule("Модуль учебно-методической деятельности деятельности", getEMASections());
         modules.add(emaModule);
@@ -65,7 +53,7 @@ public class ETPMock {
         return modules;
     }
 
-    public Set<OMAModule> getOMAModule() {
+    public Set<OMAModule> getOMAModules() {
         Set<OMAModule> modules = new HashSet<>();
         OMAModule omaModule = new OMAModule("Модуль орагнизационно-методической деятельности", getOMASections());
         modules.add(omaModule);

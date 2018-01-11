@@ -1,9 +1,8 @@
-package ru.curriculum.presentation.dto;
+package ru.curriculum.service.etp.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
-import ru.curriculum.service.etp.dto.PlanDTO;
 
 import java.util.*;
 import java.util.stream.Collectors;

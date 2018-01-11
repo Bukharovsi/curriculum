@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.curriculum.application.route.Routes;
-import ru.curriculum.presentation.ETP_DTOFactory;
 import ru.curriculum.service.etp.ETP_CRUDService;
 import ru.curriculum.service.etp.dto.ETP_DTO;
 import ru.curriculum.service.etp.dto.EAModuleDTO;
@@ -26,8 +25,6 @@ public class ETPController {
     private ETP_CRUDService etpCRUDService;
     @Autowired
     private TeacherCRUDService teacherCRUDService;
-    @Autowired
-    private ETP_DTOFactory dtoFactory;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getAll(Model model) {
@@ -38,7 +35,7 @@ public class ETPController {
 
     @RequestMapping(path = "/new", method = RequestMethod.GET)
     public String getETPForm(Model model) {
-        model.addAttribute("etp", dtoFactory.createEmptyETP_DTO());
+        model.addAttribute("etp", new ETP_DTO());
         model.addAttribute("teachers", teacherCRUDService.findAll());
 
         return ETP_FORM;

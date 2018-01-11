@@ -1,10 +1,9 @@
-package ru.curriculum.presentation.dto;
+package ru.curriculum.service.etp.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMASection;
-import ru.curriculum.service.etp.dto.PlanDTO;
 
 import java.util.Comparator;
 import java.util.HashSet;

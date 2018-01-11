@@ -1,17 +1,12 @@
 package ru.curriculum.domain.admin.domain.etp;
 
 import boot.IntegrationBoot;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
-import ru.curriculum.domain.etp.entity.educationActivity.EASection;
-import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
-import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
-import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMASection;
-import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
-import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMASection;
 import ru.curriculum.domain.etp.repository.ETPRepository;
 
 public class ETPRepositoryTest extends IntegrationBoot {
@@ -22,6 +17,11 @@ public class ETPRepositoryTest extends IntegrationBoot {
     @Before
     public void setUp() {
         etpMock = new ETPMock();
+    }
+
+    @After
+    public void tearDown() {
+        etpRepository.deleteAll();
     }
 
     @Test
@@ -56,5 +56,17 @@ public class ETPRepositoryTest extends IntegrationBoot {
                 etp.omaModules().iterator().next().sections().size(),
                 savedETP.omaModules().iterator().next().sections().size()
         );
+    }
+
+    @Test
+    public void saveETPEntityThenDelete_mustDeletedAllChildEntities() {
+        ETP etp = etpMock.getETP();
+        Integer id = etpRepository.save(etp).id();
+
+        assertNotNull("ETP created", id);
+
+        etpRepository.delete(id);
+
+        assertNull("ETP deleted", etpRepository.findOne(id));
     }
 }

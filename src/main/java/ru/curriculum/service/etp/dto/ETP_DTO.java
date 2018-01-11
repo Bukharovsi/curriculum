@@ -5,8 +5,6 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.presentation.dto.EMAModuleDTO;
-import ru.curriculum.presentation.dto.OMAModuleDTO;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;

@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /*
- * EAModule - Education Activity.
+ * EAModule - Education Activity Module.
  * Модуль УТП - "Учебная деятельность". Может содержать неограниченное кол-во разделов.
  */
 @Entity
@@ -45,11 +45,6 @@ public class EAModule {
         this();
         this.name = name;
         this.addSections(sections);
-    }
-
-    public EAModule(Integer id, String name, Set<EASection> sectionDTOs) {
-        this(name, sectionDTOs);
-        this.id = id;
     }
 
     private void addSections(@NonNull Set<EASection> sections) {

@@ -1,4 +1,4 @@
-package ru.curriculum.presentation.dto;
+package ru.curriculum.service.etp.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -99,6 +99,30 @@ public class ETP {
         this.addOMAModules(omaModules);
     }
 
+    public ETP(
+            Integer id,
+            String title,
+            String target,
+            Date distanceLearningBeginDate,
+            Date distanceLearningEndDate,
+            Date fullTimeLearningBeginDate,
+            Date fullTimeLearningEndDate,
+            Set<EAModule> eaModules,
+            Set<EMAModule> emaModules,
+            Set<OMAModule> omaModules
+    ) {
+        this.id = id;
+        this.title = title;
+        this.target = target;
+        this.distanceLearningBeginDate = distanceLearningBeginDate;
+        this.distanceLearningEndDate = distanceLearningEndDate;
+        this.fullTimeLearningBeginDate = fullTimeLearningBeginDate;
+        this.fullTimeLearningEndDate = fullTimeLearningEndDate;
+        this.addEAModules(eaModules);
+        this.addEMAModules(emaModules);
+        this.addOMAModules(omaModules);
+    }
+
     private void addEAModules(Set<EAModule> eaModules) {
         eaModules.forEach(eaModule -> eaModule.etp(this));
         this.eaModules = eaModules;
