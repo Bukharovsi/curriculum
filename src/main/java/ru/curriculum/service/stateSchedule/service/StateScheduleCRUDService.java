@@ -8,6 +8,7 @@ import ru.curriculum.service.stateSchedule.converter.DtoToStateScheduleConverter
 import ru.curriculum.service.stateSchedule.converter.StateScheduleEntityToDtoConverter;
 import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
 import ru.curriculum.service.stateSchedule.dto.StateProgramViewDto;
+import ru.curriculum.service.stateSchedule.dto.StudyModeDto;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +24,12 @@ public class StateScheduleCRUDService {
 
     @Autowired
     private StateScheduleEntityToDtoConverter stateScheduleEntityToDtoConverter;
+
+    @Autowired
+    private ImplementationFormFindService implementationFormFindService;
+
+    @Autowired
+    private StudyModeFindService studyModeFindService;
 
     public void create(StateProgramCreationDto stateProgramCreationDto) {
         stateProgramRepository.save(dtoToStateScheduleConverter.createBasedOnDto(stateProgramCreationDto));

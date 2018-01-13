@@ -13,9 +13,9 @@ import java.util.Date;
  * Государственная программа, на основании которой формируется УТП
  */
 @Data
-@Accessors(fluent = true)
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class StateProgramCreationDto {
 

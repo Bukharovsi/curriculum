@@ -15,7 +15,6 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @ToString
 @Getter
-@Accessors(fluent = true)
 public class StudyModeDto {
 
     private String id;

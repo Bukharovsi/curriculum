@@ -47,21 +47,21 @@ public class StateScheduleConvertersTest extends IntegrationBoot{
         StateProgram stateProgramEntity = dtoToStateScheduleConverter.createBasedOnDto(newStateProgram);
 
         StateProgramViewDto viewDto = stateScheduleEntityToDtoConverter.makeDto(stateProgramEntity);
-        Assert.assertEquals(stateProgramEntity.id(), viewDto.id());
-        Assert.assertEquals(newStateProgram.address(), viewDto.address());
-        Assert.assertEquals(newStateProgram.countOfHoursPerLerner(), viewDto.countOfHoursPerLerner());
-        Assert.assertEquals(newStateProgram.curatorId(), viewDto.curator().getId());
-        Assert.assertEquals(stateProgramEntity.curator().username(), viewDto.curator().getUsername());
-        Assert.assertEquals(newStateProgram.dateStart(), viewDto.dateStart());
-        Assert.assertEquals(newStateProgram.dateFinish(), viewDto.dateFinish());
-        Assert.assertEquals(newStateProgram.groupCount(), viewDto.groupCount());
-        Assert.assertEquals(newStateProgram.implementationFormId(), viewDto.implementationForm().id());
-        Assert.assertEquals(stateProgramEntity.implementationForm().name(), viewDto.implementationForm().name());
-        Assert.assertEquals(newStateProgram.lernerCount(), viewDto.lernerCount());
-        Assert.assertEquals(newStateProgram.modeId(), viewDto.mode().id());
-        Assert.assertEquals(stateProgramEntity.mode().name(), viewDto.mode().name());
-        Assert.assertEquals(newStateProgram.name(), viewDto.name());
-        Assert.assertEquals(newStateProgram.responsibleDepartment(), viewDto.responsibleDepartment());
-        Assert.assertEquals(newStateProgram.targetAudience(), viewDto.targetAudience());
+        Assert.assertEquals(stateProgramEntity.id(), viewDto.getId());
+        Assert.assertEquals(newStateProgram.getAddress(), viewDto.getAddress());
+        Assert.assertEquals(newStateProgram.getCountOfHoursPerLerner(), viewDto.getCountOfHoursPerLerner());
+        Assert.assertEquals(newStateProgram.getCuratorId(), viewDto.getCurator().getId());
+        Assert.assertEquals(stateProgramEntity.curator().username(), viewDto.getCurator().getUsername());
+        Assert.assertEquals(newStateProgram.getDateStart(), viewDto.getDateStart());
+        Assert.assertEquals(newStateProgram.getDateFinish(), viewDto.getDateFinish());
+        Assert.assertEquals(newStateProgram.getGroupCount(), viewDto.getGroupCount());
+        Assert.assertEquals(newStateProgram.getImplementationFormId(), viewDto.getImplementationForm().getId());
+        Assert.assertEquals(stateProgramEntity.implementationForm().name(), viewDto.getImplementationForm().getName());
+        Assert.assertEquals(newStateProgram.getLernerCount(), viewDto.getLernerCount());
+        Assert.assertEquals(newStateProgram.getModeId(), viewDto.getMode().getId());
+        Assert.assertEquals(stateProgramEntity.mode().name(), viewDto.getMode().getName());
+        Assert.assertEquals(newStateProgram.getName(), viewDto.getName());
+        Assert.assertEquals(newStateProgram.getResponsibleDepartment(), viewDto.getResponsibleDepartment());
+        Assert.assertEquals(newStateProgram.getTargetAudience(), viewDto.getTargetAudience());
     }
 }

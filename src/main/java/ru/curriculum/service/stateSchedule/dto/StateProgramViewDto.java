@@ -1,9 +1,6 @@
 package ru.curriculum.service.stateSchedule.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.service.user.dto.UserDTO;
@@ -14,9 +11,9 @@ import java.util.Date;
  * Государственная программа, на основании которой формируется УТП
  */
 @Data
-@Accessors(fluent = true)
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class StateProgramViewDto {
 

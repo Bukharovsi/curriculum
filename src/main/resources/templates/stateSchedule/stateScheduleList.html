@@ -12,7 +12,7 @@
     <h1>План-график образовательной деятельности</h1>
     <hr/>
     <div class="btn-group-horizontal">
-        <a class="btn btn-default" th:href="@{/stateSchedule/new}">Добавить программу</a>
+        <a class="btn btn-default" th:href="@{/stateSchedule/newForm}">Добавить программу</a>
     </div>
     &nbsp;
     <table class="table table-hover">
@@ -36,18 +36,18 @@
         <tbody>
         <!--/*@thymesVar id="stateProgram" type="ru.curriculum.service.stateSchedule.dto.StateProgramViewDto"*/-->
         <tr th:each="stateProgram : ${stateSchedule}">
-            <td th:text="${stateProgram.targetAudience()}"></td>
-            <td th:text="${stateProgram.name()}"></td>
-            <td th:text="${stateProgram.mode().name()}"></td>
-            <td th:text="${stateProgram.implementationForm().name()}"></td>
-            <td th:text="${stateProgram.lernerCount()}"></td>
-            <td th:text="${stateProgram.groupCount()}"></td>
-            <td th:text="${stateProgram.countOfHoursPerLerner()}"></td>
-            <td th:text="${stateProgram.dateStart()}"></td>
-            <td th:text="${stateProgram.dateFinish()}"></td>
-            <td th:text="${stateProgram.responsibleDepartment()}"></td>
-            <td th:text="${stateProgram.curator().fio()}"></td>
-            <td th:text="${stateProgram.address()}"></td>
+            <td th:text="${stateProgram.targetAudience}"></td>
+            <td th:text="${stateProgram.name}"></td>
+            <td th:text="${stateProgram.mode.name()}"></td>
+            <td th:text="${stateProgram.implementationForm.name}"></td>
+            <td th:text="${stateProgram.lernerCount}"></td>
+            <td th:text="${stateProgram.groupCount}"></td>
+            <td th:text="${stateProgram.countOfHoursPerLerner}"></td>
+            <td th:text="${stateProgram.dateStart}"></td>
+            <td th:text="${stateProgram.dateFinish}"></td>
+            <td th:text="${stateProgram.responsibleDepartment}"></td>
+            <td th:text="${stateProgram.curator.fio}"></td>
+            <td th:text="${stateProgram.address}"></td>
             <td align="right">
                 <a th:href="@{/stateSchedule/edit/{id}(id=${stateProgram.id})}" data-toggle="tooltip" title="Редактировать">
                     <span class="glyphicon glyphicon-pencil"></span>

@@ -25,23 +25,23 @@ public class DtoToStateScheduleConverter {
 
     public StateProgram createBasedOnDto(StateProgramCreationDto stateProgramCreationDto) {
 
-        User curator = userRepository.findOne(stateProgramCreationDto.curatorId());
-        ImplementationForm implementationForm = implementationFormRepository.findOne(stateProgramCreationDto.implementationFormId());
-        StudyMode studyMode = studyModeRepository.findOne(stateProgramCreationDto.modeId());
+        User curator = userRepository.findOne(stateProgramCreationDto.getCuratorId());
+        ImplementationForm implementationForm = implementationFormRepository.findOne(stateProgramCreationDto.getImplementationFormId());
+        StudyMode studyMode = studyModeRepository.findOne(stateProgramCreationDto.getModeId());
 
         StateProgram newStateProgram = StateProgram.builder()
-            .name(stateProgramCreationDto.name())
+            .name(stateProgramCreationDto.getName())
             .curator(curator)
             .mode(studyMode)
             .implementationForm(implementationForm)
-            .dateStart(stateProgramCreationDto.dateStart())
-            .dateFinish(stateProgramCreationDto.dateFinish())
-            .lernerCount(stateProgramCreationDto.lernerCount())
-            .groupCount(stateProgramCreationDto.groupCount())
-            .countOfHoursPerLerner(stateProgramCreationDto.countOfHoursPerLerner())
-            .responsibleDepartment(stateProgramCreationDto.responsibleDepartment())
-            .address(stateProgramCreationDto.address())
-            .targetAudience(stateProgramCreationDto.targetAudience())
+            .dateStart(stateProgramCreationDto.getDateStart())
+            .dateFinish(stateProgramCreationDto.getDateFinish())
+            .lernerCount(stateProgramCreationDto.getLernerCount())
+            .groupCount(stateProgramCreationDto.getGroupCount())
+            .countOfHoursPerLerner(stateProgramCreationDto.getCountOfHoursPerLerner())
+            .responsibleDepartment(stateProgramCreationDto.getResponsibleDepartment())
+            .address(stateProgramCreationDto.getAddress())
+            .targetAudience(stateProgramCreationDto.getTargetAudience())
             .build();
 
         return newStateProgram;
