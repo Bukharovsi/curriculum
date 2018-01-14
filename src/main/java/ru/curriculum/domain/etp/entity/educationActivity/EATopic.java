@@ -35,4 +35,9 @@ public class EATopic {
         this.name = name;
         this.plan = plan;
     }
+
+    public EATopic(Integer id, String name, Plan plan) {
+        this(name, plan);
+        this.id = id;
+    }
 }

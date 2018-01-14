@@ -47,6 +47,11 @@ public class EAModule {
         this.addSections(sections);
     }
 
+    public EAModule(Integer id, String name, Set<EASection> sections) {
+        this(name, sections);
+        this.id = id;
+    }
+
     private void addSections(@NonNull Set<EASection> sections) {
         sections.forEach(section -> section.eaModule(this));
         this.sections = sections;

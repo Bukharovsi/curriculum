@@ -47,8 +47,8 @@ public class TeacherFactoryTest extends Assert {
         Teacher teacher = teacherFactory.create(dto);
 
         assertEquals(dto.getSurname(), teacher.surname());
-        assertEquals(dto.getFirstname(), teacher.firstname());
-        assertEquals(dto.getLastname(), teacher.lastname());
+        assertEquals(dto.getFirstName(), teacher.firstName());
+        assertEquals(dto.getPatronymic(), teacher.patronymic());
         assertEquals(dto.getAcademicDegreeCode(), teacher.academicDegree().code());
         assertEquals(dto.getAcademicDegreeName(), teacher.academicDegree().name());
         assertEquals(dto.getPlaceOfWork(), teacher.placeOfWork());
@@ -82,8 +82,8 @@ public class TeacherFactoryTest extends Assert {
         TeacherDTO teacherDTO = new TeacherDTO();
         teacherDTO.setId(1);
         teacherDTO.setSurname("Иванов");
-        teacherDTO.setFirstname("Иван");
-        teacherDTO.setLastname("Иванович");
+        teacherDTO.setFirstName("Иван");
+        teacherDTO.setPatronymic("Иванович");
         teacherDTO.setAcademicDegreeCode("ph_d");
         teacherDTO.setAcademicDegreeName("Доктор наук");
         teacherDTO.setPlaceOfWork("ИРОРТ");

@@ -4,28 +4,20 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 @Getter
 @Setter
 public class OMAModuleDTO {
     private Integer id;
     private String name;
-    private List<OMASectionDTO> sections;
+    private PlanDTO plan;
 
     public OMAModuleDTO() {
-        this.sections = new ArrayList<>();
+        this.plan = new PlanDTO();
     }
 
-    public OMAModuleDTO(OMAModule omaModule) {
-        this.id = omaModule.id();
-        this.name = omaModule.name();
-        this.sections =
-                omaModule.sections()
-                        .stream()
-                        .map(OMASectionDTO::new)
-                        .sorted(Comparator.comparing(OMASectionDTO::getId))
-                        .collect(Collectors.toList());
+    public OMAModuleDTO(OMAModule module) {
+        this.id = module.id();
+        this.name = module.name();
+        this.plan = new PlanDTO(module.plan());
     }
 }

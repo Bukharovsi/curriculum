@@ -6,9 +6,8 @@ import ru.curriculum.domain.etp.entity.educationActivity.EASection;
 import ru.curriculum.domain.etp.entity.Plan;
 import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
-import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMASection;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
-import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMASection;
+import ru.curriculum.service.etp.dto.ETP_DTO;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -47,7 +46,7 @@ public class ETPMock {
 
     public Set<EMAModule> getEMAModules() {
         Set<EMAModule> modules = new HashSet<>();
-        EMAModule emaModule = new EMAModule("Модуль учебно-методической деятельности деятельности", getEMASections());
+        EMAModule emaModule = new EMAModule("Модуль учебно-методической деятельности деятельности", getPlan());
         modules.add(emaModule);
 
         return modules;
@@ -55,7 +54,7 @@ public class ETPMock {
 
     public Set<OMAModule> getOMAModules() {
         Set<OMAModule> modules = new HashSet<>();
-        OMAModule omaModule = new OMAModule("Модуль орагнизационно-методической деятельности", getOMASections());
+        OMAModule omaModule = new OMAModule("Модуль орагнизационно-методической деятельности", getPlan());
         modules.add(omaModule);
 
         return modules;
@@ -77,19 +76,7 @@ public class ETPMock {
         return topics;
     }
 
-    public Set<EMASection> getEMASections() {
-        Set<EMASection> sections = new HashSet<>();
-        EMASection emaSection = new EMASection("Раздел учебно-методической деятельности", getPlan());
-        sections.add(emaSection);
-
-        return sections;
-    }
-
-    public Set<OMASection> getOMASections() {
-        Set<OMASection> sections = new HashSet<>();
-        OMASection emaSection = new OMASection("Раздел учебно-методической деятельности", getPlan());
-        sections.add(emaSection);
-
-        return sections;
+    public ETP_DTO getETP_DTO() {
+        return new ETP_DTO(getETP());
     }
 }

@@ -80,7 +80,7 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
                 .accept(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("username", "test")
                 .param("password", "123")
-                .param("firstname", "test")
+                .param("firstName", "test")
                 .param("surname", "test"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/admin/users"))
@@ -96,15 +96,15 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
         mockMvc.perform(put("/admin/users")
                 .accept(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", users.get(0).id().toString())
-                .param("firstname", users.get(0).firstname())
+                .param("firstName", users.get(0).firstName())
                 .param("surname", users.get(0).surname())
-                .param("lastname", "Васильевич"))
+                .param("patronymic", "Васильевич"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/admin/users"))
                 .andDo(print());
         User user = userRepository.findOne(users.get(0).id());
 
-        assertEquals("Васильевич", user.lastname());
+        assertEquals("Васильевич", user.patronymic());
         assertTrue(
                 "When editing user and no change password the password remains the same",
                 passwordEncoder.matches( "123", user.password().hash()));
@@ -117,9 +117,9 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
                 .param("id", users.get(0).id().toString())
                 .param("username", users.get(0).username())
                 .param("password", "444")
-                .param("firstname", users.get(0).firstname())
+                .param("firstName", users.get(0).firstName())
                 .param("surname", users.get(0).surname())
-                .param("lastname", users.get(0).lastname()))
+                .param("patronymic", users.get(0).patronymic()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/admin/users"))
                 .andDo(print());
@@ -138,7 +138,7 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
                 .accept(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("username", users.get(0).username())
                 .param("password", "123")
-                .param("firstname", "test")
+                .param("firstName", "test")
                 .param("surname", "test"))
                 .andExpect(view().name("admin/users/userForm"))
                 .andExpect(model().errorCount(1))

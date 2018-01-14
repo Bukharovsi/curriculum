@@ -13,23 +13,11 @@
             <column name="name" type="varchar(500)" >
                 <constraints nullable="false"></constraints>
             </column>
+            <column name="etp_plan_id" type="int">
+                <constraints foreignKeyName="organization_methodical_module_to_etp_plan_fk" references="etp_plan(id)"/>
+            </column>
             <column name="etp_id" type="int">
                 <constraints foreignKeyName="organization_methodical_module_to_etp_fk" references="etp(id)"></constraints>
-            </column>
-        </createTable>
-
-        <createTable tableName="organization_methodical_section">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="name" type="varchar(500)" >
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="etp_plan_id" type="int">
-                <constraints foreignKeyName="organization_methodical_section_to_etp_plan_fk" references="etp_plan(id)"/>
-            </column>
-            <column name="organization_methodical_module_id" type="int">
-                <constraints foreignKeyName="organization_methodical_section_to_module_fk" references="organization_methodical_module(id)"/>
             </column>
         </createTable>
 

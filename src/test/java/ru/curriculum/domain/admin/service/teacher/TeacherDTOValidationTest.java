@@ -34,8 +34,8 @@ public class TeacherDTOValidationTest extends Assert {
     public void teacherDTOWithEmptyFullName_validationFailed() {
         TeacherDTO dto = getTeacherDTO();
         dto.setSurname(null);
-        dto.setFirstname("");
-        dto.setLastname("");
+        dto.setFirstName("");
+        dto.setPatronymic("");
 
         Set<ConstraintViolation<TeacherDTO>> violation = validator.validate(dto);
 
@@ -56,8 +56,8 @@ public class TeacherDTOValidationTest extends Assert {
         TeacherDTO teacherDTO = new TeacherDTO();
         teacherDTO.setId(1);
         teacherDTO.setSurname("Иванов");
-        teacherDTO.setFirstname("Иван");
-        teacherDTO.setLastname("Иванович");
+        teacherDTO.setFirstName("Иван");
+        teacherDTO.setPatronymic("Иванович");
         teacherDTO.setAcademicDegreeCode("ph_d");
         teacherDTO.setAcademicDegreeName("Доктор наук");
         teacherDTO.setPlaceOfWork("ИРОРТ");

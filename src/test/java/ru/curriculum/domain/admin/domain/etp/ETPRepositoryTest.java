@@ -47,15 +47,6 @@ public class ETPRepositoryTest extends IntegrationBoot {
                 savedETP.eaModules().iterator().next().sections().iterator().next().topics().size()
         );
 
-        assertEquals(
-                etp.emaModules().iterator().next().sections().size(),
-                savedETP.emaModules().iterator().next().sections().size()
-        );
-
-        assertEquals(
-                etp.omaModules().iterator().next().sections().size(),
-                savedETP.omaModules().iterator().next().sections().size()
-        );
     }
 
     @Test

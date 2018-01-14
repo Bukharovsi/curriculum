@@ -1,53 +1,47 @@
 package ru.curriculum.domain.etp.entity.organizationMethodicalActivity;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.domain.etp.entity.IModule;
+import ru.curriculum.domain.etp.entity.ISection;
 import ru.curriculum.domain.etp.entity.Plan;
-import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMASection;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
-/*
- * OMAModule - Organizationally methodical section.
- * Модуль организационно-методической деятельности.
- */
+
 @Entity
-@Table(name = "organization_methodical_module") //TODO меняем название
+@Table(name = "organization_methodical_module")
 @Getter
 @Accessors(fluent = true)
-public class OMAModule {
+public class OMAModule implements ISection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @OneToMany(
-            mappedBy = "omaModule",
-            targetEntity = OMASection.class,
+    @ManyToOne(
+            targetEntity = Plan.class,
             fetch = FetchType.EAGER,
-            orphanRemoval = true,
             cascade = CascadeType.ALL)
-    private Set<OMASection> sections;
-    @Setter
+    @JoinColumn(name = "etp_plan_id")
+    private Plan plan;
     @ManyToOne
     @JoinColumn(name = "etp_id")
+    @Setter
     private ETP etp;
 
     public OMAModule() {
-        this.sections = new HashSet<>();
+        this.plan = new Plan();
     }
 
-    public OMAModule(String name, Set<OMASection> omaSections) {
+    public OMAModule(String name, Plan plan) {
         this.name = name;
-        this.addSections(omaSections);
+        this.plan = plan;
     }
 
-    private void addSections(Set<OMASection> sections) {
-        sections.forEach(section -> section.omaModule(this));
-        this.sections = sections;
+    public OMAModule(Integer id, String name, Plan plan) {
+        this(name, plan);
+        this.id = id;
     }
 }

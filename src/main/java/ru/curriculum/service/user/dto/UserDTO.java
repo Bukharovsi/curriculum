@@ -3,7 +3,6 @@ package ru.curriculum.service.user.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.service.user.validation.PasswordConstraint;
@@ -23,8 +22,9 @@ public class UserDTO implements Serializable {
     @NotEmpty(message = "Необходимо заполнить поле \"Фамилия\"")
     private String surname;
     @NotEmpty(message = "Необходимо заполнить поле \"Имя\"")
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String patronymic;
+    private String fullName;
     private Boolean isTeacher;
 
     public UserDTO() {
@@ -34,9 +34,10 @@ public class UserDTO implements Serializable {
     public UserDTO(User user) {
         this.id = user.id();
         this.username = user.username();
-        this.firstname = user.firstname();
+        this.firstName = user.firstName();
         this.surname = user.surname();
-        this.lastname = user.lastname();
+        this.patronymic = user.patronymic();
+        this.fullName = user.fullName();
         this.isTeacher = user.isTeacher();
     }
 

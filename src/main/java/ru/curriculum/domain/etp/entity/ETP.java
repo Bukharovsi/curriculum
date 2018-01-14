@@ -1,18 +1,13 @@
 package ru.curriculum.domain.etp.entity;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
-import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
 import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
-import ru.curriculum.service.etp.dto.ETP_DTO;
-import ru.curriculum.service.etp.dto.EAModuleDTO;
+import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
 
 import javax.persistence.*;
 import java.util.*;
-
-import static java.util.stream.Collectors.toSet;
 
 /*
  * ETP - education thematic plan (УПТ - учебно-тематический план)

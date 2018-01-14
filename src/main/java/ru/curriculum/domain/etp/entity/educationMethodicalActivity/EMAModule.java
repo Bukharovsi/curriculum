@@ -4,50 +4,43 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.domain.etp.entity.IModule;
+import ru.curriculum.domain.etp.entity.ISection;
 import ru.curriculum.domain.etp.entity.Plan;
-import ru.curriculum.domain.etp.entity.educationActivity.EASection;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
-/*
- * EMAModule - Educational Methodical Section.
- * Модуль учебно-методической деятельности.
- */
+
 @Entity
 @Table(name = "education_methodical_module")
 @Getter
 @Accessors(fluent = true)
-public class EMAModule {
+public class EMAModule implements ISection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @OneToMany(
-            mappedBy = "emaModule",
-            targetEntity = EMASection.class,
+    @ManyToOne(
+            targetEntity = Plan.class,
             fetch = FetchType.EAGER,
-            orphanRemoval = true,
             cascade = CascadeType.ALL)
-    private Set<EMASection> sections;
+    @JoinColumn(name = "etp_plan_id")
+    private Plan plan;
     @ManyToOne
     @JoinColumn(name = "etp_id")
     @Setter
     private ETP etp;
 
     public EMAModule() {
-        this.sections = new HashSet<>();
+        this.plan = new Plan();
     }
 
-    public EMAModule(String name, Set<EMASection> sections) {
+    public EMAModule(String name, Plan plan) {
         this.name = name;
-        this.addSections(sections);
+        this.plan = plan;
     }
 
-    private void addSections(Set<EMASection> sections) {
-        sections.forEach(section -> section.emaModule(this));
-        this.sections = sections;
+    public EMAModule(Integer id, String name, Plan plan) {
+        this(name, plan);
+        this.id = id;
     }
 }

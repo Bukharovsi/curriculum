@@ -8,16 +8,20 @@
 
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <script type="text/javascript" th:src="@{/js/dataTablesSettings.js}"></script>
+    <script type="text/javascript" th:src="@{/js/etp/totalHoursCalc.js}"></script>
 
     <script>
-        // $(document).ready(function () {
-        //     var table = $('#table_etp').DataTable();
-        //     $('#button').click(function () {
-        //         var data = table.$('input, select').serializeArray();
-        //         console.log(JSON.stringify(data));
-        //         alert(data);
-        //     })
-        // });
+        $(document).ready(function () {
+            // var table = $('#table_etp').DataTable();
+            // $('#button').click(function () {
+            //     var data = table.$('input, select').serializeArray();
+            //     console.log(JSON.stringify(data));
+            //     alert(data);
+            // })
+            $("input[id*='plan']").each(function (index, element) {
+                element.onchange = totalHoursCalc
+            })
+        });
     </script>
 </head>
 <body>
@@ -110,77 +114,84 @@
                 </thead>
 
                 <tbody>
+
                 <!--УЧЕБНО-МЕТОДИЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ-->
                 <tr>
-                    <td colspan="11"><h4>Учебно-методическая деятельность</h4></td>
+                    <td colspan="2"><h4>Учебно-методическая деятельность</h4></td>
+                    <td>
+                        <a name="emaModule"></a>
+                        <button type="submit" name="addEMAModule" th:formaction="@{/etp#emaModule}">Добавить модуль</button>
+                    </td>
                 </tr>
-                <div th:each="section, rowSectionStat : *{emaModules}">
-                    <tr>
+                <div th:each="module, rowModuleStat : *{emaModules}">
+                    <tr style="background-color: dimgray;">
                         <div>
-                            <input hidden="true" th:field="*{emaModules[__${rowSectionStat.index}__].id}">
+                            <input hidden="true" th:field="*{emaModules[__${rowModuleStat.index}__].id}">
                         </div>
                         <td>
-                            <input th:field="*{emaModules[__${rowSectionStat.index}__].info.id}" hidden="true">
-                            <input th:field="*{emaModules[__${rowSectionStat.index}__].info.name}" hidden="true">
-                            <div>
-                                <p th:text="*{emaModules[__${rowSectionStat.index}__].info.name}">
-                            </div>
+                            <input type="text" class="form-control" th:field="*{emaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
                         </td>
-                        <td><input th:field="*{emaModules[__${rowSectionStat.index}__].plan.lectures}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowSectionStat.index}__].plan.practices}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowSectionStat.index}__].plan.independentWorks}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowSectionStat.index}__].plan.consultations}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowSectionStat.index}__].plan.peerReviews}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowSectionStat.index}__].plan.credits}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowSectionStat.index}__].plan.others}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowSectionStat.index}__].plan.standard}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowSectionStat.index}__].plan.totalHours}" type="number" min="0" class="form-control"></td>
-                        <td><select th:field="*{emaModules[__${rowSectionStat.index}__].plan.teacherId}" class="form-control">
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.lectures}" type="number" min="0" step="0.1" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.practices}" type="number" min="0" step="0.01" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.independentWorks}" type="number" min="0" step="0.01" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.consultations}" type="number" min="0" step="0.01" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.peerReviews}" type="number" min="0" step="0.01" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.credits}" type="number" min="0" step="0.01" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.others}" type="number" min="0" step="0.01" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.standard}" type="number" min="0" step="0.01" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.totalHours}" type="number" min="0" step="0.01" class="form-control"></td>
+                        <td><select th:field="*{emaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
                             <option value=""></option>
                             <option th:each="teacher : ${teachers}"
                                     th:value="${teacher.id}"
-                                    th:text="${(null != teacher.surname ? teacher.surname.concat(' ') : ' ')
-                                                    + (null != teacher.firstname ? teacher.firstname.substring(0,1).concat('.') : ' ')
-                                                    + (null != teacher.lastname ? teacher.lastname.substring(0,1).concat('.') : ' ')}">
+                                    th:text="${teacher.fullName}">
                             </option>
                         </select></td>
+                        <td>
+                            <button type="submit" th:value="${rowModuleStat.index}" name="removeEMAModule" th:formaction="@{/etp#emaModule}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
                     </tr>
                 </div>
 
                 <!--ОРГАНИЗАЦИОННО-МЕТОДИЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ-->
                 <tr>
-                    <td colspan="11"><h4>Организационно-методическая деятельность</h4></td>
+                    <td colspan="2"><h4>Организационно-методическая деятельность</h4></td>
+                    <td>
+                        <a name="omaModule"></a>
+                        <button type="submit" name="addOMAModule" th:formaction="@{/etp#omaModule}">Добавить модуль</button>
+                    </td>
                 </tr>
-                <div th:each="section, rowSectionStat : *{omaModules}">
-                    <tr>
+                <div th:each="module, rowModuleStat : *{omaModules}">
+                    <tr style="background-color: dimgray;">
                         <div>
-                            <input hidden="true" th:field="*{omaModules[__${rowSectionStat.index}__].id}">
+                            <input hidden="true" th:field="*{omaModules[__${rowModuleStat.index}__].id}">
                         </div>
                         <td>
-                            <input th:field="*{omaModules[__${rowSectionStat.index}__].info.id}" hidden="true">
-                            <input th:field="*{omaModules[__${rowSectionStat.index}__].info.name}" hidden="true">
-                            <div>
-                                <p th:text="*{omaModules[__${rowSectionStat.index}__].info.name}">
-                            </div>
+                            <input type="text" class="form-control" th:field="*{omaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
                         </td>
-                        <td><input th:field="*{omaModules[__${rowSectionStat.index}__].plan.lectures}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowSectionStat.index}__].plan.practices}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowSectionStat.index}__].plan.independentWorks}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowSectionStat.index}__].plan.consultations}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowSectionStat.index}__].plan.peerReviews}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowSectionStat.index}__].plan.credits}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowSectionStat.index}__].plan.others}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowSectionStat.index}__].plan.standard}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowSectionStat.index}__].plan.totalHours}" type="number" min="0" class="form-control"></td>
-                        <td><select th:field="*{omaModules[__${rowSectionStat.index}__].plan.teacherId}" class="form-control">
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.lectures}" type="number" min="0" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.practices}" type="number" min="0" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.independentWorks}" type="number" min="0" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.consultations}" type="number" min="0" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.peerReviews}" type="number" min="0" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.credits}" type="number" min="0" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.others}" type="number" min="0" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.standard}" type="number" min="0" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.totalHours}" type="number" min="0" class="form-control"></td>
+                        <td><select th:field="*{omaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
                             <option value=""></option>
                             <option th:each="teacher : ${teachers}"
                                     th:value="${teacher.id}"
-                                    th:text="${(null != teacher.surname ? teacher.surname.concat(' ') : ' ')
-                                                    + (null != teacher.firstname ? teacher.firstname.substring(0,1).concat('.') : ' ')
-                                                    + (null != teacher.lastname ? teacher.lastname.substring(0,1).concat('.') : ' ')}">
+                                    th:text="${teacher.fullName}">
                             </option>
                         </select></td>
+                        <td>
+                            <button type="submit" th:value="${rowModuleStat.index}" name="removeOMAModule" th:formaction="@{/etp#omaModule}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
                     </tr>
                 </div>
 
@@ -188,55 +199,79 @@
                 <tr>
                     <td colspan="2"><h4>Учебная деятельность</h4></td>
                     <td>
-                        <button type="submit" name="addModule">Добавить модуль</button>
+                        <a name="eaModule"></a>
+                        <button type="submit" name="addEAModule" th:formaction="@{/etp#eaModule}">Добавить модуль</button>
                     </td>
                 </tr>
                 <div th:each="module, rowModuleStat : *{eaModules}">
                     <div>
                         <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].id}">
                     </div>
-                    <tr>
+                    <tr style="background-color: dimgray;">
                         <td colspan="10">
                             <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
                         </td>
                         <td>
-                            <button type="submit" th:value="${rowModuleStat.index}" name="addSection">Добавить Раздел </button>
+                            <a name="eaModule"></a>
+                            <button type="submit" th:value="${rowModuleStat.index}" name="addEASection" th:formaction="@{/etp#eaModule}">Добавить Раздел </button>
                         </td>
                         <td>
-                            <button type="submit" th:value="${rowModuleStat.index}" name="removeModule">Удалить</button>
+                            <button type="submit" th:value="${rowModuleStat.index}" name="removeEAModule" th:formaction="@{/etp#eaModule}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
                         </td>
                     </tr>
 
                     <div th:each="section, rowSectionStat : *{eaModules[__${rowModuleStat.index}__].sections}">
-                        <tr>
-                            <div>
-                                <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].id}">
-                            </div>
-                            <td>
+                        <div>
+                            <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].id}">
+                        </div>
+                        <tr style="background-color: darkgray;">
+                            <td colspan="10">
                                 <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].name}" placeholder="Название раздела">
                             </td>
-                            <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.lectures}" type="number" min="0" class="form-control" ></td>
-                            <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.practices}" type="number" min="0" class="form-control"></td>
-                            <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.independentWorks}" type="number" min="0" class="form-control"></td>
-                            <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.consultations}" type="number" min="0" class="form-control"></td>
-                            <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.peerReviews}"  type="number" min="0" class="form-control"></td>
-                            <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.credits}"  type="number" min="0" class="form-control"></td>
-                            <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.others}" type="number" min="0" class="form-control"></td>
-                            <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.standard}" type="number" min="0" class="form-control"></td>
-                            <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.totalHours}" type="number" min="0" class="form-control"></td>
-                            <td><select th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].plan.teacherId}" class="form-control">
-                                <option value=""></option>
-                                <option th:each="teacher : ${teachers}"
-                                        th:value="${teacher.id}"
-                                        th:text="${(null != teacher.surname ? teacher.surname.concat(' ') : ' ')
-                                                    + (null != teacher.firstname ? teacher.firstname.substring(0,1).concat('.') : ' ')
-                                                    + (null != teacher.lastname ? teacher.lastname.substring(0,1).concat('.') : ' ')}">
-                                </option>
-                            </select></td>
                             <td>
-                                <button type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index}" name="removeSection">Удалить</button>
+                                <a name="eaTopic"></a>
+                                <button type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index}" name="addEATopic" th:formaction="@{/etp#eaTopic}">Добавить тему </button>
+                            </td>
+                            <td>
+                                <button type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index}" name="removeEASection" th:formaction="@{/etp#eaTopic}">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
                             </td>
                         </tr>
+
+                        <div th:each="topic, rowTopicStat : *{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics}">
+                            <tr>
+                                <div>
+                                    <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].id}">
+                                </div>
+                                <td>
+                                    <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].name}" placeholder="Название темы">
+                                </td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.lectures}" type="number" min="0" class="form-control" ></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.practices}" type="number" min="0" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.independentWorks}" type="number" min="0" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.consultations}" type="number" min="0" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.peerReviews}"  type="number" min="0" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.credits}"  type="number" min="0" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.others}" type="number" min="0" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.standard}" type="number" min="0" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.totalHours}" type="number" min="0" class="form-control"></td>
+                                <td><select th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.teacherId}" class="form-control">
+                                    <option value=""></option>
+                                    <option th:each="teacher : ${teachers}"
+                                            th:value="${teacher.id}"
+                                            th:text="${teacher.fullName}">
+                                    </option>
+                                </select></td>
+                                <td>
+                                    <button type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index + '.' + rowTopicStat.index}" name="removeEATopic" th:formaction="@{/etp#eaTopic}">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </div>
                     </div>
                 </div>
 

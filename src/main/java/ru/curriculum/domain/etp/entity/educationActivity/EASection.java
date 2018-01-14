@@ -42,6 +42,11 @@ public class EASection {
         this.addTopics(topics);
     }
 
+    public EASection(Integer id, String name, Set<EATopic> topics) {
+        this(name, topics);
+        this.id = id;
+    }
+
     private void addTopics(Set<EATopic> topics) {
         topics.forEach(topic -> topic.eaSection(this));
         this.topics = topics;
