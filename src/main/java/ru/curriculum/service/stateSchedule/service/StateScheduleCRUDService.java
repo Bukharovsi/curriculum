@@ -49,4 +49,8 @@ public class StateScheduleCRUDService {
         }
         return programsDto;
     }
+
+    public void delete(Integer id) {
+        stateProgramRepository.delete(id);
+    }
 }

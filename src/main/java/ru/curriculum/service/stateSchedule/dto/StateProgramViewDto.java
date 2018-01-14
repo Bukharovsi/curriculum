@@ -3,6 +3,7 @@ package ru.curriculum.service.stateSchedule.dto;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.service.user.dto.UserDTO;
 
 import java.util.Date;
@@ -33,8 +34,10 @@ public class StateProgramViewDto {
 
     private Integer countOfHoursPerLerner;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateStart;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFinish;
 
     private String responsibleDepartment;

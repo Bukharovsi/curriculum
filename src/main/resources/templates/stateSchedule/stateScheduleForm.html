@@ -11,18 +11,18 @@
     <div class="col-sm-offset-2 col-sm-8">
         <div th:if="${stateProgram.id}" style="align-items: center;">
             <h1>Редактирование
-                <span th:text="${stateProgram.name} на
-                    ${stateProgram.dateStart.getYear()} - ${stateProgram.dateFinish.getYear()} учебный год">
+                <span th:text="${stateProgram.getName()} на
+                    ${stateProgram.getDateStart().getYear()} '-' ${stateProgram.getDateFinish().getYear()} учебный год">
                 </span></h1>
         </div>
         <div th:unless="${stateProgram.id}" style="align-items: center;">
-            <h1>Создание пользователя</h1>
+            <h1>Создание плана графика</h1>
         </div>
         <hr/>
     </div>
     </div>
     <form class="form-horizontal"
-          th:action="@{/stateSchedule/new}"
+          th:action="@{/stateSchedule/edit}"
           th:object="${stateProgram}" modelAttribute="stateProgram"
           th:method="${stateProgram.id != null ? 'put' : 'post'}"
     >
@@ -59,12 +59,12 @@
                     </select>
                 </div>
             </div>
-            <div th:include="fragments/inputField :: inputField('Кол-во слушателей', '', ${stateProgram.lernerCount}, 'text', false)"></div>
-            <div th:include="fragments/inputField :: inputField('Кол-во групп', '', ${stateProgram.groupCount}, 'text', false)"></div>
-            <div th:include="fragments/inputField :: inputField('Объем на одно слушателя в часах', '', ${stateProgram.countOfHoursPerLerner}, 'text', false)"></div>
-            <div th:include="fragments/inputField :: inputField('Дата начала', '', ${stateProgram.dateStart}, 'date', false)"></div>
-            <div th:include="fragments/inputField :: inputField('Дата окончания', '', ${stateProgram.dateFinish}, 'date', false)"></div>
-            <div th:include="fragments/inputField :: inputField('Ответсвенное подразделение', '', ${stateProgram.responsibleDepartment}, 'text', false)"></div>
+            <div th:include="fragments/inputField :: inputField('Кол-во слушателей', 'lernerCount', ${stateProgram.lernerCount}, 'number', false)"></div>
+            <div th:include="fragments/inputField :: inputField('Кол-во групп', 'groupCount', ${stateProgram.groupCount}, 'number', false)"></div>
+            <div th:include="fragments/inputField :: inputField('Объем на одно слушателя в часах', 'countOfHoursPerLerner', ${stateProgram.countOfHoursPerLerner}, 'number', false)"></div>
+            <div th:include="fragments/inputField :: inputField('Дата начала', 'dateStart', ${stateProgram.dateStart}, 'date', false)"></div>
+            <div th:include="fragments/inputField :: inputField('Дата окончания', 'dateFinish', ${stateProgram.dateFinish}, 'date', false)"></div>
+            <div th:include="fragments/inputField :: inputField('Ответсвенное подразделение', 'responsibleDepartment', ${stateProgram.responsibleDepartment}, 'text', false)"></div>
             <div class="form-group">
                 <label class="control-label col-sm-2">Куратор: </label>
                 <div class="col-sm-8">
@@ -78,7 +78,7 @@
                     </select>
                 </div>
             </div>
-            <div th:include="fragments/inputField :: inputField('Место проведения', '', ${stateProgram.address}, 'text', false)"></div>
+            <div th:include="fragments/inputField :: inputField('Место проведения', 'address', ${stateProgram.address}, 'text', false)"></div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-8">
                     <input class="btn btn-default" type="submit" th:value="Сохранить"/>

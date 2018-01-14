@@ -3,10 +3,12 @@ package ru.curriculum.service.stateSchedule.dto;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.service.user.dto.UserDTO;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -30,28 +32,32 @@ public class StateProgramCreationDto {
     @NotEmpty(message = "Необходимо заполнить \"Форма обучения\"")
     private String modeId;
 
-    @NotEmpty(message = "Необходимо заполнить \"Форма реализации\"")
+    @NotNull(message = "Необходимо заполнить \"Форма реализации\"")
     private String implementationFormId;
 
-    @NotEmpty(message = "Необходимо заполнить \"Кол-во слушателей\"")
+    @NotNull(message = "Необходимо заполнить \"Кол-во слушателей\"")
     private Integer lernerCount;
 
-    @NotEmpty(message = "Необходимо заполнить \"Кол-во групп\"")
+    @NotNull(message = "Необходимо заполнить \"Кол-во групп\"")
     private Integer groupCount;
 
-    @NotEmpty(message = "Необходимо заполнить \"Объем на одного слушателя в часах\"")
+    @NotNull(message = "Необходимо заполнить \"Объем на одного слушателя в часах\"")
     private Integer countOfHoursPerLerner;
 
-    @NotEmpty(message = "Необходимо заполнить \"Дата начала\"")
+    @NotNull(message = "Необходимо заполнить \"Дата начала\"")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateStart;
 
-    @NotEmpty(message = "Необходимо заполнить \"Дата окончания\"")
+    @NotNull(message = "Необходимо заполнить \"Дата окончания\"")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFinish;
 
     @NotEmpty(message = "Необходимо заполнить \"Ответсвенное подразделение\"")
     private String responsibleDepartment;
 
-    @NotEmpty(message = "Необходимо заполнить \"Куратор\"")
+    @NotNull(message = "Необходимо заполнить \"Куратор\"")
     private Integer curatorId;
 
     @NotEmpty(message = "Необходимо заполнить \"Адрес\"")
