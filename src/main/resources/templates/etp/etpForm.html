@@ -5,6 +5,7 @@
 <head>
     <title>Учебно-тематический план</title>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/etp/etp.css}">
 
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <script type="text/javascript" th:src="@{/js/etp/totalHoursCalc.js}"></script>
@@ -84,18 +85,18 @@
             <table id="table_etp" class="table table-bordered">
                 <thead>
                 <tr>
-                    <th style="width: 25%;">Содержание (темы) занятий</th>
-                    <th style="width: 6%;">Лекций</th>
-                    <th style="width: 6%;">Практик</th>
-                    <th style="width: 6%;">Самостоя- тельных</th>
-                    <th style="width: 6%;">Консуль- таций</th>
-                    <th style="width: 6%;">Рецензи- рований</th>
-                    <th style="width: 6%;">Зачет</th>
-                    <th style="width: 6%;">Другое</th>
-                    <th style="width: 6%;">Норматив</th>
-                    <th style="width: 6%;">Всего часов</th>
-                    <th style="width: 15%;">Преподователь</th>
-                    <td></td>
+                    <th id="theme">Содержание (темы) занятий</th>
+                    <th id="lecture">Л</th>
+                    <th id="practice">П</th>
+                    <th id="independent">С</th>
+                    <th id="consultation">К</th>
+                    <th id="review">Р</th>
+                    <th id="credit">З</th>
+                    <th id="other">Др.</th>
+                    <th id="standard">Н</th>
+                    <th id="total_hours">Всего часов</th>
+                    <th id="teacher">Преподователь</th>
+                    <td id="remove_col"></td>
                 </tr>
                 </thead>
 
@@ -103,14 +104,14 @@
 
                 <!--УЧЕБНО-МЕТОДИЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ-->
                 <tr>
-                    <td colspan="2"><h4>Учебно-методическая деятельность</h4></td>
+                    <td id="ema_row" colspan="11"><h4>Учебно-методическая деятельность</h4></td>
                     <td>
                         <a name="emaModule"></a>
                         <button type="submit" name="addEMAModule" th:formaction="@{/etp#emaModule}">Добавить модуль</button>
                     </td>
                 </tr>
                 <div th:each="module, rowModuleStat : *{emaModules}">
-                    <tr style="background-color: dimgray;">
+                    <tr>
                         <div>
                             <input hidden="true" th:field="*{emaModules[__${rowModuleStat.index}__].id}">
                         </div>
@@ -125,7 +126,7 @@
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.credits}" type="text" class="form-control"></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.others}" type="text" class="form-control"></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.standard}" type="text" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.totalHours}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.totalHours}" disabled="true" type="text" class="form-control"></td>
                         <td><select th:field="*{emaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
                             <option value=""></option>
                             <option th:each="teacher : ${teachers}"
@@ -143,14 +144,14 @@
 
                 <!--ОРГАНИЗАЦИОННО-МЕТОДИЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ-->
                 <tr>
-                    <td colspan="2"><h4>Организационно-методическая деятельность</h4></td>
+                    <td id="oma_row" colspan="11"><h4>Организационно-методическая деятельность</h4></td>
                     <td>
                         <a name="omaModule"></a>
                         <button type="submit" name="addOMAModule" th:formaction="@{/etp#omaModule}">Добавить модуль</button>
                     </td>
                 </tr>
                 <div th:each="module, rowModuleStat : *{omaModules}">
-                    <tr style="background-color: dimgray;">
+                    <tr>
                         <div>
                             <input hidden="true" th:field="*{omaModules[__${rowModuleStat.index}__].id}">
                         </div>
@@ -165,7 +166,7 @@
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.credits}" type="text" class="form-control"></td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.others}" type="text" class="form-control"></td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.standard}" type="text" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.totalHours}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.totalHours}" disabled="true" type="text" class="form-control"></td>
                         <td><select th:field="*{omaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
                             <option value=""></option>
                             <option th:each="teacher : ${teachers}"
@@ -183,7 +184,7 @@
 
                 <!--УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ-->
                 <tr>
-                    <td colspan="2"><h4>Учебная деятельность</h4></td>
+                    <td id="ea_row" colspan="11"><h4>Учебная деятельность</h4></td>
                     <td>
                         <a name="eaModule"></a>
                         <button type="submit" name="addEAModule" th:formaction="@{/etp#eaModule}">Добавить модуль</button>
@@ -193,11 +194,11 @@
                     <div>
                         <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].id}">
                     </div>
-                    <tr style="background-color: dimgray;">
-                        <td colspan="10">
+                    <tr>
+                        <td id="ea_section" colspan="10">
                             <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
                         </td>
-                        <td>
+                        <td id="ea_section">
                             <a name="eaModule"></a>
                             <button type="submit" th:value="${rowModuleStat.index}" name="addEASection" th:formaction="@{/etp#eaModule}">Добавить Раздел </button>
                         </td>
@@ -212,7 +213,7 @@
                         <div>
                             <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].id}">
                         </div>
-                        <tr style="background-color: darkgray;">
+                        <tr>
                             <td colspan="10">
                                 <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].name}" placeholder="Название раздела">
                             </td>
@@ -243,7 +244,7 @@
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.credits}" type="text" class="form-control"></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.others}" type="text" class="form-control"></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.standard}" type="text" class="form-control"></td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.totalHours}" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.totalHours}" disabled="true" type="text" class="form-control"></td>
                                 <td><select th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.teacherId}" class="form-control">
                                     <option value=""></option>
                                     <option th:each="teacher : ${teachers}"
