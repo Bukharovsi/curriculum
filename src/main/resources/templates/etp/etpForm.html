@@ -7,22 +7,8 @@
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
 
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" th:src="@{/js/dataTablesSettings.js}"></script>
     <script type="text/javascript" th:src="@{/js/etp/totalHoursCalc.js}"></script>
-
-    <script>
-        $(document).ready(function () {
-            // var table = $('#table_etp').DataTable();
-            // $('#button').click(function () {
-            //     var data = table.$('input, select').serializeArray();
-            //     console.log(JSON.stringify(data));
-            //     alert(data);
-            // })
-            $("input[id*='plan']").each(function (index, element) {
-                element.onchange = totalHoursCalc
-            })
-        });
-    </script>
+    <script type="text/javascript" th:src="@{/js/etp/etp.js}"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
@@ -131,15 +117,15 @@
                         <td>
                             <input type="text" class="form-control" th:field="*{emaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
                         </td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.lectures}" type="number" min="0" step="0.1" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.practices}" type="number" min="0" step="0.01" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.independentWorks}" type="number" min="0" step="0.01" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.consultations}" type="number" min="0" step="0.01" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.peerReviews}" type="number" min="0" step="0.01" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.credits}" type="number" min="0" step="0.01" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.others}" type="number" min="0" step="0.01" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.standard}" type="number" min="0" step="0.01" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.totalHours}" type="number" min="0" step="0.01" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.lectures}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.practices}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.independentWorks}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.consultations}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.peerReviews}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.credits}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.others}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.standard}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.totalHours}" type="text" class="form-control"></td>
                         <td><select th:field="*{emaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
                             <option value=""></option>
                             <option th:each="teacher : ${teachers}"
@@ -171,15 +157,15 @@
                         <td>
                             <input type="text" class="form-control" th:field="*{omaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
                         </td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.lectures}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.practices}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.independentWorks}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.consultations}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.peerReviews}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.credits}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.others}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.standard}" type="number" min="0" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.totalHours}" type="number" min="0" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.lectures}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.practices}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.independentWorks}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.consultations}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.peerReviews}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.credits}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.others}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.standard}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.totalHours}" type="text" class="form-control"></td>
                         <td><select th:field="*{omaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
                             <option value=""></option>
                             <option th:each="teacher : ${teachers}"
@@ -249,15 +235,15 @@
                                 <td>
                                     <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].name}" placeholder="Название темы">
                                 </td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.lectures}" type="number" min="0" class="form-control" ></td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.practices}" type="number" min="0" class="form-control"></td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.independentWorks}" type="number" min="0" class="form-control"></td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.consultations}" type="number" min="0" class="form-control"></td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.peerReviews}"  type="number" min="0" class="form-control"></td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.credits}"  type="number" min="0" class="form-control"></td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.others}" type="number" min="0" class="form-control"></td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.standard}" type="number" min="0" class="form-control"></td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.totalHours}" type="number" min="0" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.lectures}" type="text" class="form-control" ></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.practices}" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.independentWorks}" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.consultations}" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.peerReviews}" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.credits}" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.others}" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.standard}" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.totalHours}" type="text" class="form-control"></td>
                                 <td><select th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.teacherId}" class="form-control">
                                     <option value=""></option>
                                     <option th:each="teacher : ${teachers}"

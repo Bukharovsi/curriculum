@@ -3,10 +3,9 @@
  * Обновляем total
  */
 function totalHoursCalc(e) {
-    //TODO: переделать для последнего
     var idAsArray = e.target.id.split('.')
+    // Пример id html элемента: emaModules[0].plan.lectures
     var template = idAsArray.slice(0, idAsArray.length -1).join('.')
-    console.log(template)
     var id = "input[id*='" + template + "']"
     var totalHours = 0.0
     $(id).each(function (index, element) {
