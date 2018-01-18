@@ -5,9 +5,11 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.etp.entity.ETP;
+import ru.curriculum.service.etp.validation.EndDateLargerThanBeginDateConstraint;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,6 +20,16 @@ import static java.util.stream.Collectors.toList;
 
 @Setter
 @Getter
+@EndDateLargerThanBeginDateConstraint.List({
+        @EndDateLargerThanBeginDateConstraint(
+                beginDate = "distanceLearningBeginDate", endDate = "distanceLearningEndDate",
+                message = "Дата окончания дистанционного обучения должна быть больше даты начала"
+        ),
+        @EndDateLargerThanBeginDateConstraint(
+                beginDate = "fullTimeLearningBeginDate", endDate = "fullTimeLearningEndDate",
+                message = "Дата окончания очного обучения должна быть больше даты начала"
+        )
+})
 public class ETP_DTO {
     private Integer id;
     @NotEmpty(message = "Необходими заполнить поле \"Название\"")
@@ -40,8 +52,11 @@ public class ETP_DTO {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fullTimeLearningEndDate;
+    @Valid
     private List<EAModuleDTO> eaModules;
+    @Valid
     private List<EMAModuleDTO> emaModules;
+    @Valid
     private List<OMAModuleDTO> omaModules;
 
     public ETP_DTO() {

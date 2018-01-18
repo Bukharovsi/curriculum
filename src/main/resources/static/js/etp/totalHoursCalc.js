@@ -9,7 +9,7 @@ function totalHoursCalc(e) {
     var id = "input[id*='" + template + "']"
     var totalHours = 0.0
     $(id).each(function (index, element) {
-        if('totalHours' !== element.id.split('.')[2]) {
+        if(!~element.id.indexOf('totalHours')) {
             totalHours += parseFloat(element.value)
         }
     })

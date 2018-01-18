@@ -51,12 +51,10 @@
                 <div class="form-inline">
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <!--<input class="form-control" type="date" name="distanceLearningBeginDate" th:value="${#dates.format(etp.distanceLearningBeginDate)}">-->
                             <input class="form-control" type="date" th:field="*{distanceLearningBeginDate}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <!--<input class="form-control" type="date" name="distanceLearningEndDate" th:value="${#dates.format(etp.distanceLearningEndDate)}">-->
                         <input class="form-control" type="date" th:field="*{distanceLearningEndDate}">
                     </div>
                 </div>
@@ -68,12 +66,10 @@
                 <div class="form-inline">
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <!--<input class="form-control" type="date" name="fullTimeLearningBeginDate" th:value="${#dates.format(etp.fullTimeLearningBeginDate)}">-->
                             <input class="form-control" type="date" th:field="*{fullTimeLearningBeginDate}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <!--<input class="form-control" type="date" name="fullTimeLearningEndDate" th:value="${#dates.format(etp.fullTimeLearningEndDate)}">-->
                         <input class="form-control" type="date" th:field="*{fullTimeLearningEndDate}">
                     </div>
                 </div>
@@ -96,7 +92,7 @@
                     <th id="standard">Н</th>
                     <th id="total_hours">Всего часов</th>
                     <th id="teacher">Преподователь</th>
-                    <td id="remove_col"></td>
+                    <td id="manage"></td>
                 </tr>
                 </thead>
 
@@ -107,7 +103,9 @@
                     <td id="ema_row" colspan="11"><h4>Учебно-методическая деятельность</h4></td>
                     <td>
                         <a name="emaModule"></a>
-                        <button type="submit" name="addEMAModule" th:formaction="@{/etp#emaModule}">Добавить модуль</button>
+                        <button class="btn btn-default" type="submit" name="addEMAModule" th:formaction="@{/etp#emaModule}">
+                            <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="Добавить модуль"></span>
+                        </button>
                     </td>
                 </tr>
                 <div th:each="module, rowModuleStat : *{emaModules}">
@@ -126,7 +124,7 @@
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.credits}" type="text" class="form-control"></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.others}" type="text" class="form-control"></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.standard}" type="text" class="form-control"></td>
-                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.totalHours}" disabled="true" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.totalHours}" type="text" class="form-control" readonly></td>
                         <td><select th:field="*{emaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
                             <option value=""></option>
                             <option th:each="teacher : ${teachers}"
@@ -135,8 +133,8 @@
                             </option>
                         </select></td>
                         <td>
-                            <button type="submit" th:value="${rowModuleStat.index}" name="removeEMAModule" th:formaction="@{/etp#emaModule}">
-                                <span class="glyphicon glyphicon-trash"></span>
+                            <button class="btn btn-default" type="submit" th:value="${rowModuleStat.index}" name="removeEMAModule" th:formaction="@{/etp#emaModule}">
+                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Удалить тему"></span>
                             </button>
                         </td>
                     </tr>
@@ -147,7 +145,9 @@
                     <td id="oma_row" colspan="11"><h4>Организационно-методическая деятельность</h4></td>
                     <td>
                         <a name="omaModule"></a>
-                        <button type="submit" name="addOMAModule" th:formaction="@{/etp#omaModule}">Добавить модуль</button>
+                        <button class="btn btn btn-primary" type="submit" name="addOMAModule" th:formaction="@{/etp#omaModule}">
+                            <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="Добавить модуль"></span>
+                        </button>
                     </td>
                 </tr>
                 <div th:each="module, rowModuleStat : *{omaModules}">
@@ -166,7 +166,7 @@
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.credits}" type="text" class="form-control"></td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.others}" type="text" class="form-control"></td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.standard}" type="text" class="form-control"></td>
-                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.totalHours}" disabled="true" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.totalHours}" type="text" class="form-control" readonly></td>
                         <td><select th:field="*{omaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
                             <option value=""></option>
                             <option th:each="teacher : ${teachers}"
@@ -175,8 +175,8 @@
                             </option>
                         </select></td>
                         <td>
-                            <button type="submit" th:value="${rowModuleStat.index}" name="removeOMAModule" th:formaction="@{/etp#omaModule}">
-                                <span class="glyphicon glyphicon-trash"></span>
+                            <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index}" name="removeOMAModule" th:formaction="@{/etp#omaModule}">
+                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Удалить тему"></span>
                             </button>
                         </td>
                     </tr>
@@ -187,7 +187,9 @@
                     <td id="ea_row" colspan="11"><h4>Учебная деятельность</h4></td>
                     <td>
                         <a name="eaModule"></a>
-                        <button type="submit" name="addEAModule" th:formaction="@{/etp#eaModule}">Добавить модуль</button>
+                        <button class="btn btn btn-primary" type="submit" name="addEAModule" th:formaction="@{/etp#eaModule}">
+                            <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="Добавить модуль"></span>
+                        </button>
                     </td>
                 </tr>
                 <div th:each="module, rowModuleStat : *{eaModules}">
@@ -200,11 +202,13 @@
                         </td>
                         <td id="ea_section">
                             <a name="eaModule"></a>
-                            <button type="submit" th:value="${rowModuleStat.index}" name="addEASection" th:formaction="@{/etp#eaModule}">Добавить Раздел </button>
+                            <button class="btn btn btn-primary" type="submit" th:value="${rowModuleStat.index}" name="addEASection" th:formaction="@{/etp#eaModule}">
+                                <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="Добавить раздел"></span>
+                            </button>
                         </td>
                         <td>
-                            <button type="submit" th:value="${rowModuleStat.index}" name="removeEAModule" th:formaction="@{/etp#eaModule}">
-                                <span class="glyphicon glyphicon-trash"></span>
+                            <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index}" name="removeEAModule" th:formaction="@{/etp#eaModule}">
+                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Удалить тему"></span>
                             </button>
                         </td>
                     </tr>
@@ -218,12 +222,14 @@
                                 <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].name}" placeholder="Название раздела">
                             </td>
                             <td>
+                                <button class="btn btn btn-primary" type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index}" name="addEATopic" th:formaction="@{/etp#eaTopic}">
+                                    <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="Добавить тему"></span>
+                                </button>
                                 <a name="eaTopic"></a>
-                                <button type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index}" name="addEATopic" th:formaction="@{/etp#eaTopic}">Добавить тему </button>
                             </td>
                             <td>
-                                <button type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index}" name="removeEASection" th:formaction="@{/etp#eaTopic}">
-                                    <span class="glyphicon glyphicon-trash"></span>
+                                <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index}" name="removeEASection" th:formaction="@{/etp#eaTopic}">
+                                    <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Удалить тему"></span>
                                 </button>
                             </td>
                         </tr>
@@ -244,7 +250,7 @@
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.credits}" type="text" class="form-control"></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.others}" type="text" class="form-control"></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.standard}" type="text" class="form-control"></td>
-                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.totalHours}" disabled="true" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.totalHours}" type="text" class="form-control" readonly></td>
                                 <td><select th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.teacherId}" class="form-control">
                                     <option value=""></option>
                                     <option th:each="teacher : ${teachers}"
@@ -253,8 +259,8 @@
                                     </option>
                                 </select></td>
                                 <td>
-                                    <button type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index + '.' + rowTopicStat.index}" name="removeEATopic" th:formaction="@{/etp#eaTopic}">
-                                        <span class="glyphicon glyphicon-trash"></span>
+                                    <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index + '.' + rowTopicStat.index}" name="removeEATopic" th:formaction="@{/etp#eaTopic}">
+                                        <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Удалить тему"></span>
                                     </button>
                                 </td>
                             </tr>

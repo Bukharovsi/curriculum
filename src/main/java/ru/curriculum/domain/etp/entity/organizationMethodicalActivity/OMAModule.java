@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.domain.etp.entity.ISection;
 import ru.curriculum.domain.etp.entity.Plan;
 
 import javax.persistence.*;
@@ -15,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "organization_methodical_module")
 @Getter
 @Accessors(fluent = true)
-public class OMAModule implements ISection {
+public class OMAModule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

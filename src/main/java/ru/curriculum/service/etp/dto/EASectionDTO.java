@@ -2,9 +2,11 @@ package ru.curriculum.service.etp.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.domain.etp.entity.educationActivity.EASection;
 import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
 
+import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,7 +14,9 @@ import java.util.stream.Collectors;
 @Setter
 public class EASectionDTO {
     private Integer id;
+    @NotEmpty(message = "\"Учебно деятельность\" необходимо заполнить поле \"Название раздела\"")
     private String name;
+    @Valid
     private List<EATopicDTO> topics;
 
     public EASectionDTO() {

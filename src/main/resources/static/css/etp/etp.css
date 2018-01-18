@@ -12,6 +12,10 @@
     text-align: left;
 }
 
+#manage {
+    width: 3%;
+}
+
 #teacher {
     width: 20%;
 }
