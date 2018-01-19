@@ -68,7 +68,6 @@ public class UserManagementController {
         return redirectTo(Routes.users);
     }
 
-    //TODO: брать нормальный роут
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteUser(@PathVariable("id") Integer id) {
         userCRUDService.delete(id);

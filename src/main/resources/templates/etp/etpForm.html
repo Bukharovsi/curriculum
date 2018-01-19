@@ -14,10 +14,10 @@
 <body>
 <div layout:fragment="content" th:remove="tag">
     <div th:if="${etp.id}">
-        <h1>РЕДАКТИРОВАНИЕ УЧЕБНО-ТЕМАТИЧЕСКОГО ПЛАНА</h1>
+        <h1>Редактирование Учебно-тематического плана</h1>
     </div>
     <div th:unless="${etp.id}">
-        <h1>СОЗДАНИЕ УЧЕБНО-ТЕМАТИЧЕСКОГО ПЛАНА</h1>
+        <h1>Создание Учебно-тематического плана</h1>
     </div>
     <hr>
 
@@ -103,8 +103,8 @@
                     <td id="ema_row" colspan="11"><h4>Учебно-методическая деятельность</h4></td>
                     <td>
                         <a name="emaModule"></a>
-                        <button class="btn btn-default" type="submit" name="addEMAModule" th:formaction="@{/etp#emaModule}">
-                            <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="Добавить модуль"></span>
+                        <button class="btn btn-success" type="submit" name="addEMAModule" th:formaction="@{/etp#emaModule}">
+                            <span class="glyphicon glyphicon-plus" data-toggle="tooltip" title="Добавить Тему"></span>
                         </button>
                     </td>
                 </tr>
@@ -114,7 +114,7 @@
                             <input hidden="true" th:field="*{emaModules[__${rowModuleStat.index}__].id}">
                         </div>
                         <td>
-                            <input type="text" class="form-control" th:field="*{emaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
+                            <input type="text" class="form-control" th:field="*{emaModules[__${rowModuleStat.index}__].name}" placeholder="Название темы">
                         </td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.lectures}" type="text" class="form-control"></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.practices}" type="text" class="form-control"></td>
@@ -133,8 +133,8 @@
                             </option>
                         </select></td>
                         <td>
-                            <button class="btn btn-default" type="submit" th:value="${rowModuleStat.index}" name="removeEMAModule" th:formaction="@{/etp#emaModule}">
-                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Удалить тему"></span>
+                            <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index}" name="removeEMAModule" th:formaction="@{/etp#emaModule}">
+                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Удалить тему"></span>
                             </button>
                         </td>
                     </tr>
@@ -145,8 +145,8 @@
                     <td id="oma_row" colspan="11"><h4>Организационно-методическая деятельность</h4></td>
                     <td>
                         <a name="omaModule"></a>
-                        <button class="btn btn btn-primary" type="submit" name="addOMAModule" th:formaction="@{/etp#omaModule}">
-                            <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="Добавить модуль"></span>
+                        <button class="btn btn-success" type="submit" name="addOMAModule" th:formaction="@{/etp#omaModule}">
+                            <span class="glyphicon glyphicon-plus" data-toggle="tooltip" title="Добавить тему"></span>
                         </button>
                     </td>
                 </tr>
@@ -156,7 +156,7 @@
                             <input hidden="true" th:field="*{omaModules[__${rowModuleStat.index}__].id}">
                         </div>
                         <td>
-                            <input type="text" class="form-control" th:field="*{omaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
+                            <input type="text" class="form-control" th:field="*{omaModules[__${rowModuleStat.index}__].name}" placeholder="Название темы">
                         </td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.lectures}" type="text" class="form-control"></td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.practices}" type="text" class="form-control"></td>
@@ -176,7 +176,7 @@
                         </select></td>
                         <td>
                             <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index}" name="removeOMAModule" th:formaction="@{/etp#omaModule}">
-                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Удалить тему"></span>
+                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Удалить тему"></span>
                             </button>
                         </td>
                     </tr>
@@ -187,8 +187,8 @@
                     <td id="ea_row" colspan="11"><h4>Учебная деятельность</h4></td>
                     <td>
                         <a name="eaModule"></a>
-                        <button class="btn btn btn-primary" type="submit" name="addEAModule" th:formaction="@{/etp#eaModule}">
-                            <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="Добавить модуль"></span>
+                        <button class="btn btn-success" type="submit" name="addEAModule" th:formaction="@{/etp#eaModule}">
+                            <span class="glyphicon glyphicon-plus" data-toggle="tooltip"title="Добавить модуль"></span>
                         </button>
                     </td>
                 </tr>
@@ -197,18 +197,18 @@
                         <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].id}">
                     </div>
                     <tr>
-                        <td id="ea_section" colspan="10">
+                        <td style="background-color: #9d9d9d94;" colspan="10">
                             <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
                         </td>
-                        <td id="ea_section">
+                        <td style="background-color: #9d9d9d94;">
                             <a name="eaModule"></a>
-                            <button class="btn btn btn-primary" type="submit" th:value="${rowModuleStat.index}" name="addEASection" th:formaction="@{/etp#eaModule}">
-                                <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="Добавить раздел"></span>
+                            <button class="btn btn-success" type="submit" th:value="${rowModuleStat.index}" name="addEASection" th:formaction="@{/etp#eaModule}">
+                                <span class="glyphicon glyphicon-plus" data-toggle="tooltip" title="Добавить раздел"></span>
                             </button>
                         </td>
                         <td>
                             <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index}" name="removeEAModule" th:formaction="@{/etp#eaModule}">
-                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Удалить тему"></span>
+                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="удалить модуль"></span>
                             </button>
                         </td>
                     </tr>
@@ -218,18 +218,18 @@
                             <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].id}">
                         </div>
                         <tr>
-                            <td colspan="10">
+                            <td style="background-color: #ddddddcc" colspan="10">
                                 <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].name}" placeholder="Название раздела">
                             </td>
-                            <td>
-                                <button class="btn btn btn-primary" type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index}" name="addEATopic" th:formaction="@{/etp#eaTopic}">
-                                    <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="Добавить тему"></span>
+                            <td style="background-color: #ddddddcc">
+                                <button class="btn btn-success" type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index}" name="addEATopic" th:formaction="@{/etp#eaTopic}">
+                                    <span class="glyphicon glyphicon-plus" data-toggle="tooltip" title="Добавить тему"></span>
                                 </button>
                                 <a name="eaTopic"></a>
                             </td>
                             <td>
                                 <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index}" name="removeEASection" th:formaction="@{/etp#eaTopic}">
-                                    <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Удалить тему"></span>
+                                    <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Удалить тему"></span>
                                 </button>
                             </td>
                         </tr>
@@ -260,7 +260,7 @@
                                 </select></td>
                                 <td>
                                     <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index + '.' + rowTopicStat.index}" name="removeEATopic" th:formaction="@{/etp#eaTopic}">
-                                        <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Удалить тему"></span>
+                                        <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Удалить тему"></span>
                                     </button>
                                 </td>
                             </tr>

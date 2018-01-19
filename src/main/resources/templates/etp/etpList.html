@@ -22,8 +22,8 @@
             <th>Цель</th>
             <th>Даты дистанционного обучения</th>
             <th>Даты очного обучения</th>
-            <th></th>
-            <th></th>
+            <th style="width: 2%;"></th>
+            <th style="width: 2%;"></th>
         </tr>
         </thead>
         <tbody>
@@ -32,10 +32,12 @@
             <td th:text="${etp.target}"></td>
             <td th:text="${#dates.format(etp.distanceLearningBeginDate, 'dd/MM/yyyy') + ' - ' + #dates.format(etp.distanceLearningEndDate, 'dd/MM/yyyy')}"></td>
             <td th:text="${#dates.format(etp.fullTimeLearningBeginDate, 'dd/MM/yyyy') + ' - ' + #dates.format(etp.fullTimeLearningEndDate, 'dd/MM/yyyy')}"></td>
-            <td align="right">
+            <td>
                 <a th:href="@{/etp/edit/{id}(id=${etp.id})}" data-toggle="tooltip" title="Редактировать">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
+            </td>
+            <td>
                 <a th:href="@{/etp/delete/{id}(id=${etp.id})}" data-toggle="tooltip" title="Удалить">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
