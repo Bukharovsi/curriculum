@@ -19,8 +19,8 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String surname;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String patronymic;
     @OneToOne(fetch = FetchType.EAGER)
     private AcademicDegree academicDegree;
     private String placeOfWork;
@@ -30,14 +30,17 @@ public class Teacher {
     private User user;
 
     public Teacher() {
+        this.firstName = "";
+        this.surname = "";
+        this.patronymic = "";
         this.placeOfWork = "ГАОУ ДПО Институт Развития Образования РТ";
     }
 
     public Teacher(
             Integer id,
             @NonNull String surname,
-            @NonNull String firstname,
-            @NotNull String lastname,
+            @NonNull String firstName,
+            @NotNull String patronymic,
             @NonNull AcademicDegree academicDegree,
             String placeOfWork,
             String position
@@ -45,8 +48,8 @@ public class Teacher {
         this();
         this.id = id;
         this.surname = surname;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.patronymic = patronymic;
         this.academicDegree = academicDegree;
         if(null != placeOfWork) {
             this.placeOfWork = placeOfWork;
@@ -54,17 +57,14 @@ public class Teacher {
         this.position = position;
     }
 
-//    public Teacher(TeacherDTO teacher) {
-//        this(
-//                teacher.getId(),
-//                teacher.getSurname(),
-//                teacher.getFirstname(),
-//                teacher.getLastname(),
-//                new AcademicDegree(teacher.getAcademicDegreeCode(), teacher.getAcademicDegreeName()),
-//                teacher.getPlaceOfWork(),
-//                teacher.getPosition());
-//        this.user = teacher.get
-//    }
+    public String fullName() {
+        String firstNameShort = !firstName.isEmpty() ?
+                firstName.substring(0, 1).toUpperCase().concat(".") : "";
+        String patronymicShort = !patronymic.isEmpty() ?
+                patronymic.substring(0, 1).toUpperCase().concat(".") : "";
+
+        return surname.concat(" ").concat(firstNameShort).concat(patronymicShort);
+    }
 
     public User userAccount() {
         return user;

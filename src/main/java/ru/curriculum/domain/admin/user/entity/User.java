@@ -27,9 +27,9 @@ public class User {
     @AttributeOverride(column = @Column(name = "password"), name = "password")
     @Target(Password.class)
     private Password password;
-    private String firstname;
+    private String firstName;
     private String surname;
-    private String lastname;
+    private String patronymic;
 
     // TODO: Либо много ролей,
     // TODO: либо роль определяетмя разрешениями,
@@ -41,6 +41,9 @@ public class User {
     private Teacher teacher;
 
     public User() {
+        this.firstName = "";
+        this.surname = "";
+        this.patronymic = "";
         this.role = new Role("user", "Пользователь");
     }
 
@@ -48,15 +51,15 @@ public class User {
             @NonNull String username,
             String password,
             String surname,
-            String firstname,
-            String lastname
+            String firstName,
+            String patronymic
     ) {
         this();
         this.username = username;
         this.password = new Password(password);
-        this.surname = surname;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.surname = null != surname ? surname : "";
+        this.firstName = null != firstName ? firstName : "";
+        this.patronymic = null != patronymic ? patronymic : "";
     }
 
     public User(UserDTO userDTO) {
@@ -64,8 +67,8 @@ public class User {
                 userDTO.getUsername(),
                 userDTO.getPassword(),
                 userDTO.getSurname(),
-                userDTO.getFirstname(),
-                userDTO.getLastname());
+                userDTO.getFirstName(),
+                userDTO.getPatronymic());
     }
 
     public void assignRole(Role role) {
@@ -73,12 +76,21 @@ public class User {
     }
 
     public void updatePrincipal(UserDTO userDTO) {
-        this.firstname = userDTO.getFirstname();
-        this.lastname = userDTO.getLastname();
+        this.firstName = userDTO.getFirstName();
+        this.patronymic = userDTO.getPatronymic();
         this.surname = userDTO.getSurname();
         if(userDTO.passwordIsPresent()) {
             this.password = new Password(userDTO.getPassword());
         }
+    }
+
+    public String fullName() {
+        String firstNameShort = !firstName.isEmpty() ?
+                firstName.substring(0, 1).toUpperCase().concat(".") : "";
+        String patronymicShort = !patronymic.isEmpty() ?
+                patronymic.substring(0, 1).toUpperCase().concat(".") : "";
+
+        return surname.concat(" ").concat(firstNameShort).concat(patronymicShort);
     }
 
     public void changePassword(String password) {

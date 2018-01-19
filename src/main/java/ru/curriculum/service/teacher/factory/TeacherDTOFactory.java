@@ -17,8 +17,8 @@ public class TeacherDTOFactory {
         teacherDTO.setUserId(userDTO.getId());
         teacherDTO.setUsername(userDTO.getUsername());
         teacherDTO.setSurname(userDTO.getSurname());
-        teacherDTO.setFirstname(userDTO.getFirstname());
-        teacherDTO.setLastname(userDTO.getLastname());
+        teacherDTO.setFirstName(userDTO.getFirstName());
+        teacherDTO.setPatronymic(userDTO.getPatronymic());
 
         return teacherDTO;
     }

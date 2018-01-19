@@ -29,8 +29,8 @@ public class TeacherFactory {
         Teacher teacher = new Teacher(
                 teacherDTO.getId(),
                 teacherDTO.getSurname(),
-                teacherDTO.getFirstname(),
-                teacherDTO.getLastname(),
+                teacherDTO.getFirstName(),
+                teacherDTO.getPatronymic(),
                 academicDegree,
                 teacherDTO.getPlaceOfWork(),
                 teacherDTO.getPosition());

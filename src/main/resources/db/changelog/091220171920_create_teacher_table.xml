@@ -13,10 +13,10 @@
             <column name="surname" type="varchar(255)" >
                 <constraints nullable="false"></constraints>
             </column>
-            <column name="firstname" type="varchar(255)" >
+            <column name="first_name" type="varchar(255)" >
                 <constraints nullable="false"></constraints>
             </column>
-            <column name="lastname" type="varchar(255)" >
+            <column name="patronymic" type="varchar(255)" >
                 <constraints nullable="false"></constraints>
             </column>
             <column name="place_of_work" type="varchar(255)" >

@@ -25,8 +25,9 @@ public class UserTest {
         assertEquals("test", user.username());
         assertTrue(encoder.matches("123", user.password().hash()));
         assertEquals("Иванов", user.surname());
-        assertEquals("Иван", user.firstname());
-        assertEquals("Иванович", user.lastname());
+        assertEquals("Иван", user.firstName());
+        assertEquals("Иванович", user.patronymic());
+        assertEquals("Иванов И.И.", user.fullName());
     }
 
     @Test
@@ -37,9 +38,9 @@ public class UserTest {
         assertNull("Id is not created because only system generate id", user.id());
         assertEquals(user.username(), dto.getUsername());
         assertTrue(encoder.matches("3333", user.password().hash()));
-        assertEquals(user.firstname(), dto.getFirstname());
+        assertEquals(user.firstName(), dto.getFirstName());
         assertEquals(user.surname(), dto.getSurname());
-        assertEquals(user.lastname(), dto.getLastname());
+        assertEquals(user.patronymic(), dto.getPatronymic());
     }
 
     @Test
@@ -50,9 +51,9 @@ public class UserTest {
         user.updatePrincipal(dto);
 
         assertNotEquals("Username immutable", user.username(), dto.getUsername());
-        assertEquals(user.firstname(), dto.getFirstname());
+        assertEquals(user.firstName(), dto.getFirstName());
         assertEquals(user.surname(), dto.getSurname());
-        assertEquals(user.lastname(), dto.getLastname());
+        assertEquals(user.patronymic(), dto.getPatronymic());
         assertTrue(encoder.matches(dto.getPassword(), user.password().hash()));
     }
 
@@ -95,14 +96,21 @@ public class UserTest {
         assertEquals(testRole, user.role());
     }
 
+    @Test
+    public void getFullNameWhenPartsOfFullNameIsEmpty_mustReturnCorrect() {
+        User user = new User();
+
+        assertEquals(" ", user.fullName());
+    }
+
     private UserDTO getUserDTO() {
         UserDTO dto = new UserDTO();
         dto.setId(22);
         dto.setUsername("newUserName");
         dto.setPassword("3333");
-        dto.setFirstname("newName");
+        dto.setFirstName("newName");
         dto.setSurname("newSurname");
-        dto.setLastname("newLastName");
+        dto.setPatronymic("newLastName");
 
         return dto;
     }

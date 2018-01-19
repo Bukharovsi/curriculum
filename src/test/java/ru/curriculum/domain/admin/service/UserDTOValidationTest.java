@@ -28,7 +28,7 @@ public class UserDTOValidationTest extends Assert {
         dto.setId(3);
         dto.setPassword("123");
         dto.setUsername("jhon");
-        dto.setFirstname("Mikola");
+        dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
@@ -42,7 +42,7 @@ public class UserDTOValidationTest extends Assert {
         dto.setId(3);
         dto.setPassword("12");
         dto.setUsername("jhon");
-        dto.setFirstname("Mikola");
+        dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
@@ -54,7 +54,7 @@ public class UserDTOValidationTest extends Assert {
     public void userDTOWithIdAndNoPassword_validationFailed() {
         UserDTO dto = new UserDTO();
         dto.setUsername("jhon");
-        dto.setFirstname("Mikola");
+        dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
@@ -68,7 +68,7 @@ public class UserDTOValidationTest extends Assert {
         dto.setId(3);
         dto.setUsername("jhon");
         dto.setPassword("");
-        dto.setFirstname("Mikola");
+        dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
@@ -81,7 +81,7 @@ public class UserDTOValidationTest extends Assert {
         UserDTO dto = new UserDTO();
         dto.setPassword("123");
         dto.setUsername("jhon");
-        dto.setFirstname("Mikola");
+        dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
@@ -94,7 +94,7 @@ public class UserDTOValidationTest extends Assert {
         UserDTO dto = new UserDTO();
         dto.setPassword("12");
         dto.setUsername("jhon");
-        dto.setFirstname("Mikola");
+        dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
@@ -107,7 +107,7 @@ public class UserDTOValidationTest extends Assert {
         UserDTO dto = new UserDTO();
         dto.setPassword("123");
         dto.setUsername("j");
-        dto.setFirstname("Mikola");
+        dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);
@@ -120,7 +120,7 @@ public class UserDTOValidationTest extends Assert {
         UserDTO dto = new UserDTO();
         dto.setPassword("123");
         dto.setUsername("jhon");
-        dto.setFirstname("");
+        dto.setFirstName("");
         dto.setSurname("");
 
         Set<ConstraintViolation<UserDTO>> violation = validator.validate(dto);

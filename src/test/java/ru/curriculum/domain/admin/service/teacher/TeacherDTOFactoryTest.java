@@ -27,8 +27,8 @@ public class TeacherDTOFactoryTest extends Assert {
         userDTO.setId(1);
         userDTO.setUsername("username");
         userDTO.setSurname("Test");
-        userDTO.setFirstname("Test");
-        userDTO.setLastname("Test");
+        userDTO.setFirstName("Test");
+        userDTO.setPatronymic("Test");
         userDTO.setPassword("123");
         Mockito
                 .when(userCRUDService.getUser(1))
@@ -39,9 +39,9 @@ public class TeacherDTOFactoryTest extends Assert {
     public void createTeacherDTOBasedOnUser_mustBeCreateCorrectly() {
         TeacherDTO teacherDTO = teacherDTOFactory.createTeacherDTOBasedOnUser(1);
 
-        assertEquals(userDTO.getFirstname(), teacherDTO.getFirstname());
+        assertEquals(userDTO.getFirstName(), teacherDTO.getFirstName());
         assertEquals(userDTO.getSurname(), teacherDTO.getSurname());
-        assertEquals(userDTO.getLastname(), teacherDTO.getLastname());
+        assertEquals(userDTO.getPatronymic(), teacherDTO.getPatronymic());
         assertEquals(userDTO.getId(), teacherDTO.getUserId());
         assertEquals(userDTO.getUsername(), teacherDTO.getUsername());
     }

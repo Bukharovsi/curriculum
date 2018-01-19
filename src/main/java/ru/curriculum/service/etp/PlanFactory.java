@@ -12,7 +12,6 @@ public class PlanFactory {
     @Autowired
     private TeacherRepository teacherRepository;
 
-    //TODO: пока не извезстно препод обязательное поле
     public Plan create(PlanDTO planDTO) {
         Teacher teacher = null;
         if(null != planDTO.getTeacherId()) {
@@ -29,7 +28,8 @@ public class PlanFactory {
                 planDTO.getOthers(),
                 planDTO.getStandard(),
                 planDTO.getTotalHours(),
-                teacher);
+                teacher
+        );
 
         return plan;
     }
