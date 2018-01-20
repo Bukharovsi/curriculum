@@ -12,10 +12,7 @@
             <div th:if="${teacher.id}" style="align-items: center;">
                 <!--TODO: Пусть фомрируется в ДТО -->
                 <h1>Редактирование преподователя
-                    <span th:text="${(null != teacher.surname ? teacher.surname.concat(' ') : ' ')
-                    + (null != teacher.firstname ? teacher.firstname.substring(0,1).concat('.') : ' ')
-                    + (null != teacher.lastname ? teacher.lastname.substring(0,1).concat('.') : ' ')}"
-                    >
+                    <span th:text="${teacher.fullName}">
                     </span>
                 </h1>
             </div>
@@ -33,8 +30,8 @@
             <input th:hidden="true" type="number" th:field="*{id}"/>
         </div>
         <div th:include="fragments/inputField :: inputField('Фамилия', 'surname', ${teacher.surname}, 'text', false)"></div>
-        <div th:include="fragments/inputField :: inputField('Имя', 'firstname', ${teacher.firstname}, 'text', false)"></div>
-        <div th:include="fragments/inputField :: inputField('Отчество', 'lastname', ${teacher.lastname}, 'text', false)"></div>
+        <div th:include="fragments/inputField :: inputField('Имя', 'firstName', ${teacher.firstName}, 'text', false)"></div>
+        <div th:include="fragments/inputField :: inputField('Отчество', 'patronymic', ${teacher.patronymic}, 'text', false)"></div>
         <div class="form-group">
             <label class="control-label col-sm-2">Академическая степень: </label>
             <div class="col-sm-8">

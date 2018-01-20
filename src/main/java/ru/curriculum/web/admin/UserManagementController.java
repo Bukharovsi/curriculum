@@ -49,7 +49,6 @@ public class UserManagementController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String createUser(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult errors) {
-        //TODO перехватывать исключение не уникальности логина добавлять в errors и возрващать вью
         uniquerUsernameValidator.validate(userDTO, errors);
         if(errors.hasErrors()) {
             return View.USER_FORM;

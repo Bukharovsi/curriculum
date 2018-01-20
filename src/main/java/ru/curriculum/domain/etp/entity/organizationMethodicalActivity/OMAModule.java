@@ -1,4 +1,5 @@
-package ru.curriculum.domain.etp.entity.organizationallyMethodicalSection;
+package ru.curriculum.domain.etp.entity.organizationMethodicalActivity;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,45 +9,38 @@ import ru.curriculum.domain.etp.entity.Plan;
 
 import javax.persistence.*;
 
-/*
- * OMASection - Organizationally methodical section.
- * Модуль организационно-методической деятельности.
- */
+
 @Entity
-@Table(name = "organizationally_methodical_section")
+@Table(name = "organization_methodical_module")
 @Getter
 @Accessors(fluent = true)
-public class OMASection {
+public class OMAModule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne(targetEntity = OMASectionInfo.class)
-    private OMASectionInfo info;
+    private String name;
     @ManyToOne(
             targetEntity = Plan.class,
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "etp_plan_id")
     private Plan plan;
-    @Setter
     @ManyToOne
     @JoinColumn(name = "etp_id")
+    @Setter
     private ETP etp;
 
-    public OMASection() {
+    public OMAModule() {
+        this.plan = new Plan();
     }
 
-    public OMASection(OMASectionInfo info, Plan plan) {
-        this.info = info;
+    public OMAModule(String name, Plan plan) {
+        this.name = name;
         this.plan = plan;
     }
 
-    public OMASection(
-            Integer id,
-            OMASectionInfo info,
-            Plan plan
-    ) {
-        this(info, plan);
+    public OMAModule(Integer id, String name, Plan plan) {
+        this(name, plan);
         this.id = id;
     }
 }

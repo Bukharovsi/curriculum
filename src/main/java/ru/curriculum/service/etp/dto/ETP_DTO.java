@@ -5,11 +5,11 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.presentation.dto.EMASectionDTO;
-import ru.curriculum.presentation.dto.OMASectionDTO;
+import ru.curriculum.service.etp.validation.EndDateLargerThanBeginDateConstraint;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,6 +20,16 @@ import static java.util.stream.Collectors.toList;
 
 @Setter
 @Getter
+@EndDateLargerThanBeginDateConstraint.List({
+        @EndDateLargerThanBeginDateConstraint(
+                beginDate = "distanceLearningBeginDate", endDate = "distanceLearningEndDate",
+                message = "Дата окончания дистанционного обучения должна быть больше даты начала"
+        ),
+        @EndDateLargerThanBeginDateConstraint(
+                beginDate = "fullTimeLearningBeginDate", endDate = "fullTimeLearningEndDate",
+                message = "Дата окончания очного обучения должна быть больше даты начала"
+        )
+})
 public class ETP_DTO {
     private Integer id;
     @NotEmpty(message = "Необходими заполнить поле \"Название\"")
@@ -42,13 +52,17 @@ public class ETP_DTO {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fullTimeLearningEndDate;
+    @Valid
     private List<EAModuleDTO> eaModules;
-    private List<EMASectionDTO> emaSections;
-    private List<OMASectionDTO> omaSections;
+    @Valid
+    private List<EMAModuleDTO> emaModules;
+    @Valid
+    private List<OMAModuleDTO> omaModules;
 
     public ETP_DTO() {
         this.eaModules = new ArrayList<>();
-        this.emaSections = new ArrayList<>();
+        this.emaModules = new ArrayList<>();
+        this.omaModules = new ArrayList<>();
     }
 
     public ETP_DTO(ETP etp) {
@@ -65,17 +79,17 @@ public class ETP_DTO {
                         .map(EAModuleDTO::new)
                         .sorted(Comparator.comparing(EAModuleDTO::getId))
                         .collect(toList());
-        this.emaSections =
-                etp.emaSections()
+        this.emaModules =
+                etp.emaModules()
                         .stream()
-                        .map(EMASectionDTO::new)
-                        .sorted(Comparator.comparing(EMASectionDTO::getId))
+                        .map(EMAModuleDTO::new)
+                        .sorted(Comparator.comparing(EMAModuleDTO::getId))
                         .collect(toList());
-        this.omaSections =
-                etp.omaSections()
+        this.omaModules =
+                etp.omaModules()
                         .stream()
-                        .map(OMASectionDTO::new)
-                        .sorted(Comparator.comparing(OMASectionDTO::getId))
+                        .map(OMAModuleDTO::new)
+                        .sorted(Comparator.comparing(OMAModuleDTO::getId))
                         .collect(toList());
     }
 }

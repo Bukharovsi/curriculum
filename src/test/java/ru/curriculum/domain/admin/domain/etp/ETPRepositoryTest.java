@@ -6,37 +6,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.domain.etp.entity.Plan;
-import ru.curriculum.domain.etp.entity.educationActivityModule.EAModule;
-import ru.curriculum.domain.etp.entity.educationActivityModule.EASection;
-import ru.curriculum.domain.etp.entity.educationMethodicalSection.EMASection;
-import ru.curriculum.domain.etp.entity.educationMethodicalSection.EMSectionInfo;
-import ru.curriculum.domain.etp.entity.organizationallyMethodicalSection.OMASection;
-import ru.curriculum.domain.etp.entity.organizationallyMethodicalSection.OMASectionInfo;
+import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
 import ru.curriculum.domain.etp.repository.ETPRepository;
-import ru.curriculum.domain.etp.repository.EMASectionInfoRepository;
-import ru.curriculum.domain.etp.repository.OMASectionInfoRepository;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class ETPRepositoryTest extends IntegrationBoot {
     @Autowired
     private ETPRepository etpRepository;
-    @Autowired
-    private EMASectionInfoRepository emaSectionInfoRepository;
-    @Autowired
-    private OMASectionInfoRepository omaSectionInfoRepository;
     private ETPMock etpMock;
-
-    private Iterable<OMASectionInfo> organizationInfo;
-    private Iterable<EMSectionInfo> educationInfo;
 
     @Before
     public void setUp() {
-        this.etpMock = new ETPMock();
-        this.organizationInfo = omaSectionInfoRepository.findAll();
-        this.educationInfo = emaSectionInfoRepository.findAll();
+        etpMock = new ETPMock();
     }
 
     @After
@@ -45,70 +25,39 @@ public class ETPRepositoryTest extends IntegrationBoot {
     }
 
     @Test
-    public void saveETPEntity_mustBeSavedCorrectly() {
-        ETP etp = createFullETPEntity();
-        etpRepository.save(etp);
-
-        ETP savedETP = etpRepository.findOne(etp.id());
-
-        assertNotNull(savedETP.id());
-        assertNotNull(savedETP.id());
-    }
-
-    @Test
-    public void saveETPWithEducationActivityModules_savedEntityMustBeContainCorrectETPPlan() {
+    public void saveNewETPEntity_mustBeSavedCorrectly() {
         ETP etp = etpMock.getETP();
-        EAModule module = etpMock.getFullEducationModule();
-        etp.addModule(module);
-        etpRepository.save(etp);
 
-        ETP savedETP = etpRepository.findOne(etp.id());
-        EAModule savedModule = savedETP.eaModules().iterator().next();
-        EASection savedSection = savedModule.eaSections().iterator().next();
+        ETP savedETP = etpRepository.save(etp);
+        assertNotNull(savedETP.id());
 
-        assertNotNull(savedSection.id());
-        assertNotNull(savedSection.eaModule());
-        assertEquals(etpMock.getSection().name(), savedSection.name());
-        assertNotNull(savedSection.plan());
-        assertNotNull(savedSection.plan().id());
-        assertEquals(etpMock.getPlan().lectures(), savedSection.plan().lectures());
-        assertEquals(etpMock.getPlan().practices(), savedSection.plan().practices());
-        assertEquals(etpMock.getPlan().consultations(), savedSection.plan().consultations());
-        assertEquals(etpMock.getPlan().peerReviews(), savedSection.plan().peerReviews());
-        assertEquals(etpMock.getPlan().independentWorks(), savedSection.plan().independentWorks());
-        assertEquals(etpMock.getPlan().credits(), savedSection.plan().credits());
-        assertEquals(etpMock.getPlan().standard(), savedSection.plan().standard());
-        assertEquals(etpMock.getPlan().totalHours(), savedSection.plan().totalHours());
+        EAModule eaModule = savedETP.eaModules().iterator().next();
+        assertNotNull(eaModule.id());
+        assertEquals(etp.eaModules().size(), savedETP.eaModules().size());
+        assertEquals(etp.emaModules().size(), savedETP.emaModules().size());
+        assertEquals(etp.omaModules().size(), savedETP.omaModules().size());
+
+        assertEquals(
+                etp.eaModules().iterator().next().sections().size(),
+                savedETP.eaModules().iterator().next().sections().size()
+        );
+
+        assertEquals(
+                etp.eaModules().iterator().next().sections().iterator().next().topics().size(),
+                savedETP.eaModules().iterator().next().sections().iterator().next().topics().size()
+        );
+
     }
 
     @Test
-    public void deleteETPEntity_mustBeDeleteAllChildEntities() {
-        ETP etp = createFullETPEntity();
-        etpRepository.save(etp);
+    public void saveETPEntityThenDelete_mustDeletedAllChildEntities() {
+        ETP etp = etpMock.getETP();
+        Integer id = etpRepository.save(etp).id();
 
-        assertNotNull("ETP saved correctly", etp.id());
-        Integer eptId = etp.id();
+        assertNotNull("ETP created", id);
 
-        etpRepository.delete(etp);
+        etpRepository.delete(id);
 
-        assertNull(etpRepository.findOne(eptId));
-    }
-
-    private ETP createFullETPEntity() {
-        Set<EMASection> methodicalSections = new HashSet<>();
-        educationInfo.forEach(info -> methodicalSections.add(new EMASection(info, new Plan())));
-        Set<OMASection> organizationSections = new HashSet<>();
-        organizationInfo.forEach(info -> organizationSections.add(new OMASection(info, new Plan())));
-
-        return new ETP(
-                etpMock.getETP().title(),
-                etpMock.getETP().target(),
-                etpMock.getETP().distanceLearningBeginDate(),
-                etpMock.getETP().distanceLearningEndDate(),
-                etpMock.getETP().fullTimeLearningBeginDate(),
-                etpMock.getETP().fullTimeLearningEndDate(),
-                etpMock.getETP().eaModules(),
-                methodicalSections,
-                organizationSections);
+        assertNull("ETP deleted", etpRepository.findOne(id));
     }
 }

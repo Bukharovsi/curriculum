@@ -21,8 +21,9 @@ public class TeacherTest extends Assert {
 
         assertEquals(new Integer(1), teacher.id());
         assertEquals("Иванов", teacher.surname());
-        assertEquals("Иван", teacher.firstname());
-        assertEquals("Иванович", teacher.lastname());
+        assertEquals("Иван", teacher.firstName());
+        assertEquals("Иванович", teacher.patronymic());
+        assertEquals("Иванов И.И.", teacher.fullName());
         assertEquals(new AcademicDegree("ph_d", "Доктор наук"), teacher.academicDegree());
         assertEquals("Макдоналдс", teacher.placeOfWork());
         assertEquals("Жарщик котлет", teacher.position());
@@ -43,7 +44,6 @@ public class TeacherTest extends Assert {
         assertEquals("ГАОУ ДПО Институт Развития Образования РТ", teacher.placeOfWork());
     }
 
-
     @Test
     public void assignAccountForUser() {
         Teacher teacher = new Teacher(
@@ -59,6 +59,20 @@ public class TeacherTest extends Assert {
 
         assertTrue(teacher.hasUserAccount());
         assertNotNull(teacher.userAccount());
+    }
+
+    @Test
+    public void getFullNameWhenPatronymicIsEmpty_mustBeCorrectFullName() {
+        Teacher teacher = new Teacher(
+                1,
+                "Иванов",
+                "Иван",
+                "",
+                new AcademicDegree("ph_d", "Доктор наук"),
+                "Макдоналдс",
+                "Жарщик котлет");
+
+        assertEquals("Иванов И.", teacher.fullName());
     }
 
     // TODO: чтобы не писать разные тесты для каждого случаия null, попробовать использовать в таких случаях TestNG

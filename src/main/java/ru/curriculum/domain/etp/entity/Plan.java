@@ -87,21 +87,4 @@ public class Plan {
                 teacher);
         this.id = id;
     }
-
-    public Plan(PlanDTO plan) {
-        this(
-                plan.getId(),
-                plan.getLectures(),
-                plan.getPractices(),
-                plan.getIndependentWorks(),
-                plan.getConsultations(),
-                plan.getPeerReviews(),
-                plan.getCredits(),
-                plan.getOthers(),
-                plan.getStandard(),
-                plan.getTotalHours(),
-                null); // TODO выпилим когда создавать будем не из дто
-        this.id = plan.getId();
-        this.teacher = null != plan.getDomainTeacher() ? plan.getDomainTeacher() : null;
-    }
 }

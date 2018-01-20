@@ -1,4 +1,4 @@
-package ru.curriculum.domain.etp.entity.educationMethodicalSection;
+package ru.curriculum.domain.etp.entity.educationMethodicalActivity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,20 +8,16 @@ import ru.curriculum.domain.etp.entity.Plan;
 
 import javax.persistence.*;
 
-/*
- * EMASection - Educational Methodical Section.
- * Модуль учебно-методической деятельности.
- */
+
 @Entity
-@Table(name = "education_methodical_section")
+@Table(name = "education_methodical_module")
 @Getter
 @Accessors(fluent = true)
-public class EMASection {
+public class EMAModule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne(targetEntity = EMSectionInfo.class)
-    private EMSectionInfo info;
+    private String name;
     @ManyToOne(
             targetEntity = Plan.class,
             fetch = FetchType.EAGER,
@@ -33,20 +29,17 @@ public class EMASection {
     @Setter
     private ETP etp;
 
-    public EMASection() {
+    public EMAModule() {
+        this.plan = new Plan();
     }
 
-    public EMASection(EMSectionInfo info, Plan plan) {
-        this.info = info;
+    public EMAModule(String name, Plan plan) {
+        this.name = name;
         this.plan = plan;
     }
 
-    public EMASection(
-            Integer id,
-            EMSectionInfo info,
-            Plan plan
-    ) {
-        this(info, plan);
+    public EMAModule(Integer id, String name, Plan plan) {
+        this(name, plan);
         this.id = id;
     }
 }

@@ -14,9 +14,10 @@ public class TeacherDTO {
     @NotEmpty(message = "Необходимо заполнить поле \"Фамилия\"")
     private String surname;
     @NotEmpty(message = "Необходимо заполнить поле \"Имя\"")
-    private String firstname;
+    private String firstName;
     @NotEmpty(message = "Необходимо заполнить поле \"Отчество\"")
-    private String lastname;
+    private String patronymic;
+    private String fullName;
     @NotEmpty(message = "Необходимо заполнить поле \"Академическая степень\"")
     private String academicDegreeCode;
     private String academicDegreeName;
@@ -32,8 +33,9 @@ public class TeacherDTO {
     public TeacherDTO(Teacher teacher) {
         this.id = teacher.id();
         this.surname = teacher.surname();
-        this.firstname = teacher.firstname();
-        this.lastname = teacher.lastname();
+        this.firstName = teacher.firstName();
+        this.patronymic = teacher.patronymic();
+        this.fullName = teacher.fullName();
         this.academicDegreeCode = teacher.academicDegree().code();
         this.academicDegreeName = teacher.academicDegree().name();
         this.placeOfWork = teacher.placeOfWork();
