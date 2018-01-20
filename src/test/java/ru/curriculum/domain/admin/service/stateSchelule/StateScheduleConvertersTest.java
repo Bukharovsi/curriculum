@@ -46,7 +46,7 @@ public class StateScheduleConvertersTest extends IntegrationBoot{
 
         StateProgram stateProgramEntity = dtoToStateScheduleConverter.createBasedOnDto(newStateProgram);
 
-        StateProgramViewDto viewDto = stateScheduleEntityToDtoConverter.makeDto(stateProgramEntity);
+        StateProgramViewDto viewDto = stateScheduleEntityToDtoConverter.makeViewDto(stateProgramEntity);
         Assert.assertEquals(stateProgramEntity.id(), viewDto.getId());
         Assert.assertEquals(newStateProgram.getAddress(), viewDto.getAddress());
         Assert.assertEquals(newStateProgram.getCountOfHoursPerLerner(), viewDto.getCountOfHoursPerLerner());

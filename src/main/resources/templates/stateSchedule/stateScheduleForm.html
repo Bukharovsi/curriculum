@@ -11,8 +11,8 @@
     <div class="col-sm-offset-2 col-sm-8">
         <div th:if="${stateProgram.id}" style="align-items: center;">
             <h1>Редактирование
-                <span th:text="${stateProgram.getName()} на
-                    ${stateProgram.getDateStart().getYear()} '-' ${stateProgram.getDateFinish().getYear()} учебный год">
+                <span th:text="${stateProgram.getName()}+'на'+
+                    ${stateProgram.getDateStart().getYear()} +'-'+ ${stateProgram.getDateFinish().getYear()} + 'учебный год'">
                 </span></h1>
         </div>
         <div th:unless="${stateProgram.id}" style="align-items: center;">

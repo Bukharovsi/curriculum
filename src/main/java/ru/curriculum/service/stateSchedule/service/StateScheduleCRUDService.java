@@ -8,7 +8,6 @@ import ru.curriculum.service.stateSchedule.converter.DtoToStateScheduleConverter
 import ru.curriculum.service.stateSchedule.converter.StateScheduleEntityToDtoConverter;
 import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
 import ru.curriculum.service.stateSchedule.dto.StateProgramViewDto;
-import ru.curriculum.service.stateSchedule.dto.StudyModeDto;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,7 +36,12 @@ public class StateScheduleCRUDService {
 
     public StateProgramViewDto get(Integer id) {
         StateProgram program = stateProgramRepository.findOne(id);
-        return stateScheduleEntityToDtoConverter.makeDto(program);
+        return stateScheduleEntityToDtoConverter.makeViewDto(program);
+    }
+
+    public StateProgramCreationDto getCreationDto(Integer id) {
+        StateProgram program = stateProgramRepository.findOne(id);
+        return stateScheduleEntityToDtoConverter.makeEditDto(program);
     }
 
     public Collection<StateProgramViewDto> findAll() {
@@ -45,7 +49,7 @@ public class StateScheduleCRUDService {
 
         Collection<StateProgramViewDto> programsDto = new ArrayList<>();
         for (StateProgram currentStateProgram: programs) {
-            programsDto.add(stateScheduleEntityToDtoConverter.makeDto(currentStateProgram));
+            programsDto.add(stateScheduleEntityToDtoConverter.makeViewDto(currentStateProgram));
         }
         return programsDto;
     }

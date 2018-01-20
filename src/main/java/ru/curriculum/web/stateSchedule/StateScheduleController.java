@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
-import ru.curriculum.service.stateSchedule.dto.StateProgramViewDto;
 import ru.curriculum.service.stateSchedule.service.ImplementationFormFindService;
 import ru.curriculum.service.stateSchedule.service.StateScheduleCRUDService;
 import ru.curriculum.service.stateSchedule.service.StudyModeFindService;
@@ -54,7 +53,7 @@ public class StateScheduleController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/editForm/{id}")
     public String editForm(Model model, @PathVariable("id") Integer stateProgramId) {
-        StateProgramViewDto stateProgramViewDto = stateScheduleCRUDService.get(stateProgramId);
+        StateProgramCreationDto stateProgramViewDto = stateScheduleCRUDService.getCreationDto(stateProgramId);
         model.addAttribute("stateProgram", stateProgramViewDto);
         model.addAttribute("implementationFormList", implementationFormFindService.findAll());
         model.addAttribute("studyModeList", studyModeFindService.findAll());
