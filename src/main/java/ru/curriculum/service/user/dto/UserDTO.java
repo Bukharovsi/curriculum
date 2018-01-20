@@ -48,8 +48,8 @@ public class UserDTO implements Serializable {
     public String fio() {
         return String.format("%s %s %s",
                 surname!=null ? surname : "",
-                firstname!=null ? firstname: "",
-                lastname!=null ? lastname: ""
+                firstName!=null ? firstName: "",
+                patronymic!=null ? patronymic: ""
         );
     }
 }
