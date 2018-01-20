@@ -9,4 +9,5 @@ public class Routes {
     public static final String accessDenied = "/accessDenied";
     public static final String teachers = "/admin/teachers";
     public static final String etp = "/etp";
+    public static final String stateSchedule = "/stateSchedule";
 }

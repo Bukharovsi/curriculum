@@ -44,4 +44,12 @@ public class UserDTO implements Serializable {
     public boolean passwordIsPresent() {
         return null != password && !password.isEmpty();
     }
+
+    public String fio() {
+        return String.format("%s %s %s",
+                surname!=null ? surname : "",
+                firstName!=null ? firstName: "",
+                patronymic!=null ? patronymic: ""
+        );
+    }
 }
