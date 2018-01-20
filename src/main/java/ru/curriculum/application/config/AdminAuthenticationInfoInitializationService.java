@@ -27,15 +27,14 @@ public class AdminAuthenticationInfoInitializationService implements Application
     private String username;
     @Value("${auth.admin.password}")
     private String password;
-    private boolean alreadySetup = false;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if (alreadySetup) {
-            return;
+        if (null != userRepository.findByUsername(username)) {
+            return; //already exists
         }
 
         User user = new User(
@@ -47,7 +46,5 @@ public class AdminAuthenticationInfoInitializationService implements Application
         Role roleAdmin = roleRepository.findOne("admin");
         user.assignRole(roleAdmin);
         userRepository.save(user);
-
-        alreadySetup = true;
     }
 }
