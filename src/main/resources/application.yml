@@ -11,7 +11,7 @@ spring:
     console:
       enabled: true
   profiles:
-    active: ${ACTIVE_SPRING_PROFILE}
+    active: ${ACTIVE_SPRING_PROFILE:default}
 
 thymeleaf:
   cache: false
