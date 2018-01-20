@@ -10,6 +10,8 @@ spring:
   h2:
     console:
       enabled: true
+  profiles:
+    active: ${ACTIVE_SPRING_PROFILE}
 
 thymeleaf:
   cache: false

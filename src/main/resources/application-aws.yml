@@ -8,9 +8,6 @@ spring:
     username: ${RDS_USERNAME}
     password: ${RDS_PASSWORD}
 
-  profiles:
-    active: ${ACTIVE_SPRING_PROFILE}
-
 auth:
   admin:
     username: admin
