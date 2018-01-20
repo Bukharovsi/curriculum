@@ -1,13 +1,11 @@
 package ru.curriculum.service.stateSchedule.dto;
 
 import lombok.*;
-import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.service.user.dto.UserDTO;
 
-import javax.persistence.*;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 

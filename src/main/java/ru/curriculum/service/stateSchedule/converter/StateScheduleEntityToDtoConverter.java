@@ -12,30 +12,36 @@ import ru.curriculum.service.user.dto.UserDTO;
 public class StateScheduleEntityToDtoConverter {
 
     public StateProgramViewDto makeViewDto(StateProgram stateProgram) {
-        return StateProgramViewDto.builder()
-            .name(stateProgram.name())
-            .targetAudience(stateProgram.targetAudience())
-            .dateStart(stateProgram.dateStart())
-            .dateFinish(stateProgram.dateFinish())
-            .address(stateProgram.address())
-            .groupCount(stateProgram.groupCount())
-            .id(stateProgram.id())
-            .countOfHoursPerLerner(stateProgram.countOfHoursPerLerner())
-            .lernerCount(stateProgram.lernerCount())
-            .responsibleDepartment(stateProgram.responsibleDepartment())
-            .mode(new StudyModeDto(stateProgram.mode().id(), stateProgram.mode().name()))
-            .implementationForm(
-                new ImplementationFormDto(
-                    stateProgram.implementationForm().id(),
-                    stateProgram.implementationForm().name()
+        StateProgramViewDto stateProgramDto = StateProgramViewDto.builder()
+                .id(stateProgram.id())
+                .name(stateProgram.name())
+                .targetAudience(stateProgram.targetAudience())
+                .dateStart(stateProgram.dateStart())
+                .dateFinish(stateProgram.dateFinish())
+                .address(stateProgram.address())
+                .groupCount(stateProgram.groupCount())
+                .id(stateProgram.id())
+                .countOfHoursPerLerner(stateProgram.countOfHoursPerLerner())
+                .lernerCount(stateProgram.lernerCount())
+                .responsibleDepartment(stateProgram.responsibleDepartment())
+                .mode(new StudyModeDto(stateProgram.mode().id(), stateProgram.mode().name()))
+                .implementationForm(
+                        new ImplementationFormDto(
+                                stateProgram.implementationForm().id(),
+                                stateProgram.implementationForm().name()
+                        )
                 )
-            )
-            .curator(new UserDTO(stateProgram.curator()))
-            .build();
+                .build();
+        if (stateProgram.curator() != null) {
+            stateProgramDto.setCurator(new UserDTO(stateProgram.curator()));
+        }
+
+        return stateProgramDto;
     }
 
     public StateProgramCreationDto makeEditDto(StateProgram stateProgram) {
-        return StateProgramCreationDto.builder()
+        StateProgramCreationDto stateProgramDto = StateProgramCreationDto.builder()
+                .id(stateProgram.id())
                 .name(stateProgram.name())
                 .targetAudience(stateProgram.targetAudience())
                 .dateStart(stateProgram.dateStart())
@@ -50,5 +56,11 @@ public class StateScheduleEntityToDtoConverter {
                 .implementationFormId(stateProgram.implementationForm().id())
                 .curatorId(stateProgram.curator().id())
                 .build();
+
+        if (stateProgram.curator() != null) {
+            stateProgramDto.setCuratorId(stateProgram.curator().id());
+        }
+
+        return stateProgramDto;
     }
 }

@@ -46,17 +46,20 @@
             <column name="responsible_department" type="varchar(1024)" >
                 <constraints nullable="false"/>
             </column>
-            <column name="curator_id" type="int" >
-                <constraints nullable="false"
-                             foreignKeyName="user_fk"
-                             referencedTableName="users"
-                             referencedColumnNames="id"
-                />
+            <column name="curator_id" type="int" defaultValue="NULL" >
             </column>
             <column name="address" type="varchar(1024)" >
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <addForeignKeyConstraint
+                baseTableName="state_program"
+                baseColumnNames="curator_id"
+                constraintName="curator_id_FK"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                onDelete="SET NULL"
+                ></addForeignKeyConstraint>
 
     </changeSet>
 </databaseChangeLog>

@@ -30,6 +30,7 @@ public class DtoToStateScheduleConverter {
         StudyMode studyMode = studyModeRepository.findOne(stateProgramCreationDto.getModeId());
 
         StateProgram newStateProgram = StateProgram.builder()
+            .id(stateProgramCreationDto.getId())
             .name(stateProgramCreationDto.getName())
             .curator(curator)
             .mode(studyMode)
