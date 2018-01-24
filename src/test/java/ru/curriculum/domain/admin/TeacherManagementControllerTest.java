@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.admin.user.repository.UserRepository;
-import ru.curriculum.domain.teacher.entity.AcademicDegree;
+import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
 
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static ru.curriculum.domain.teacher.entity.AcademicDegreeCode.*;
+import static ru.curriculum.domain.directories.academicDegree.AcademicDegreeCode.*;
 
 @WithMockUser
 public class TeacherManagementControllerTest extends IntegrationWebBoot {

@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.curriculum.domain.admin.user.exceptions.IllegalPassword;
+import ru.curriculum.domain.admin.user.exceptions.IllegalPasswordException;
 import ru.curriculum.domain.admin.user.entity.Password;
 
 public class PasswordTest {
@@ -30,7 +30,7 @@ public class PasswordTest {
         new Password(null);
     }
 
-    @Test(expected = IllegalPassword.class)
+    @Test(expected = IllegalPasswordException.class)
     public void tryCreatePasswordByStringWithLessThreeCharacters_mustBeException() {
         String passwordAsString = "12";
         new Password(passwordAsString);

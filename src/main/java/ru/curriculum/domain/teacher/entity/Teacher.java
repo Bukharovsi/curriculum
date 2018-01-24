@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,16 +16,24 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Accessors(fluent = true)
 public class Teacher {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String surname;
+
     private String firstName;
+
     private String patronymic;
+
     @OneToOne(fetch = FetchType.EAGER)
     private AcademicDegree academicDegree;
+
     private String placeOfWork;
-    private String position;
+
+    private String positionHeld;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
@@ -43,7 +52,7 @@ public class Teacher {
             @NotNull String patronymic,
             @NonNull AcademicDegree academicDegree,
             String placeOfWork,
-            String position
+            String positionHeld
     ) {
         this();
         this.id = id;
@@ -54,7 +63,7 @@ public class Teacher {
         if(null != placeOfWork) {
             this.placeOfWork = placeOfWork;
         }
-        this.position = position;
+        this.positionHeld = positionHeld;
     }
 
     public String fullName() {

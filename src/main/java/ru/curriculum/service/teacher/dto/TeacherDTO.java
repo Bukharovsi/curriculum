@@ -10,20 +10,32 @@ import ru.curriculum.domain.teacher.entity.Teacher;
 @Setter
 @EqualsAndHashCode(of = {"id"})
 public class TeacherDTO {
+
     private Integer id;
+
     @NotEmpty(message = "Необходимо заполнить поле \"Фамилия\"")
+
     private String surname;
+
     @NotEmpty(message = "Необходимо заполнить поле \"Имя\"")
     private String firstName;
+
     @NotEmpty(message = "Необходимо заполнить поле \"Отчество\"")
     private String patronymic;
+
     private String fullName;
+
     @NotEmpty(message = "Необходимо заполнить поле \"Академическая степень\"")
     private String academicDegreeCode;
+
     private String academicDegreeName;
+
     private String placeOfWork;
-    private String position;
+
+    private String positionHeld;
+
     private String username;
+
     private Integer userId;
 
     public TeacherDTO() {
@@ -39,7 +51,7 @@ public class TeacherDTO {
         this.academicDegreeCode = teacher.academicDegree().code();
         this.academicDegreeName = teacher.academicDegree().name();
         this.placeOfWork = teacher.placeOfWork();
-        this.position = teacher.position();
+        this.positionHeld = teacher.positionHeld();
         this.userId = teacher.hasUserAccount() ? teacher.userAccount().id() : null;
         this.username = teacher.hasUserAccount() ? teacher.user().username() : "";
     }

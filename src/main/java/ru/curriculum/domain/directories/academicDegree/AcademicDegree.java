@@ -1,4 +1,4 @@
-package ru.curriculum.domain.teacher.entity;
+package ru.curriculum.domain.directories.academicDegree;
 
 
 import lombok.EqualsAndHashCode;

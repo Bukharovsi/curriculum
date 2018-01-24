@@ -1,4 +1,4 @@
-package ru.curriculum.domain.teacher.entity;
+package ru.curriculum.domain.directories.academicDegree;
 
 public class AcademicDegreeCode {
     public final static String PH_D = "ph_d";
