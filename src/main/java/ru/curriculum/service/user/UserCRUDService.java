@@ -6,6 +6,7 @@ import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.admin.user.repository.UserRepository;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
+import ru.curriculum.service.user.converter.DtoToUserConverter;
 import ru.curriculum.service.user.dto.UserDTO;
 import ru.curriculum.service.user.exception.UserNotFoundException;
 
@@ -19,6 +20,8 @@ public class UserCRUDService {
     private UserRepository userRepository;
     @Autowired
     private TeacherRepository teacherRepository;
+    @Autowired
+    private DtoToUserConverter dtoToUserConverter;
 
     public Collection<UserDTO> findAllUsers() {
         Collection<UserDTO> userDTOs = new ArrayList<>();
@@ -38,13 +41,7 @@ public class UserCRUDService {
     }
 
     public void create(UserDTO dto) {
-        User newUser = new User(
-                dto.getUsername(),
-                dto.getPassword(),
-                dto.getSurname(),
-                dto.getFirstName(),
-                dto.getPatronymic()
-        );
+        User newUser = dtoToUserConverter.convert(dto);
         userRepository.save(newUser);
     }
 

@@ -54,6 +54,7 @@ public class User {
             String firstName,
             String patronymic
     ) {
+        this();
         this.id = id;
         this.username = username;
         this.password = new Password(password);

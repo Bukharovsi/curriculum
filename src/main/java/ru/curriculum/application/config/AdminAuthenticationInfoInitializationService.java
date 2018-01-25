@@ -33,17 +33,11 @@ public class AdminAuthenticationInfoInitializationService implements Application
     @Value("${auth.admin.password}")
     private String password;
 
-    private boolean alreadySetup = false;
-
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if(alreadySetup) {
-            return;
-        }
-
         if (null != userRepository.findByUsername(username)) {
             return; //already exists
         }
@@ -58,7 +52,5 @@ public class AdminAuthenticationInfoInitializationService implements Application
         userRepository.save(user);
 
         log.info("User with administrator role was created");
-
-        alreadySetup = true;
     }
 }

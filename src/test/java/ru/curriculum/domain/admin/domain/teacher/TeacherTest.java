@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
-import ru.curriculum.domain.directories.staffTable.StaffTable;
 import ru.curriculum.domain.teacher.entity.Teacher;
 
 public class TeacherTest extends Assert {

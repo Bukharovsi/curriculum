@@ -6,8 +6,7 @@ import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.admin.user.repository.UserRepository;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegreeRepository;
-import ru.curriculum.domain.directories.staffTable.StaffTable;
-import ru.curriculum.domain.directories.staffTable.StaffTableRepository;
+import ru.curriculum.domain.directories.staffTable.StaffPositionRepository;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.service.teacher.dto.TeacherDTO;
 
@@ -17,8 +16,6 @@ import javax.persistence.EntityNotFoundException;
 public class TeacherFactory {
     @Autowired
     private AcademicDegreeRepository academicDegreeRepository;
-    @Autowired
-    private StaffTableRepository staffTableRepository;
     @Autowired
     private UserRepository userRepository;
 

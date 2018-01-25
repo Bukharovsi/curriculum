@@ -2,10 +2,9 @@ package ru.curriculum.domain.admin.service.directories;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.curriculum.domain.directories.staffTable.StaffTable;
 import ru.curriculum.service.directories.staffTable.StaffTableDto;
 
-public class StaffTableDtoTest extends Assert {
+public class StaffPositionDtoTest extends Assert {
 
     @Test
     public void createStaffTableDto_mustBeCreateCorrectly() {

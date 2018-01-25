@@ -6,7 +6,7 @@
 
     <changeSet id="240120181913" author="Vlad">
 
-        <createTable tableName="staff_table">
+        <createTable tableName="staff_position">
             <column name="id" type="int" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -15,19 +15,19 @@
             </column>
         </createTable>
 
-        <insert tableName="staff_table">
+        <insert tableName="staff_position">
             <column name="position_held" value="Декан факультета"></column>
         </insert>
 
-        <insert tableName="staff_table">
+        <insert tableName="staff_position">
             <column name="position_held" value="Заведующий кафедрой"></column>
         </insert>
 
-        <insert tableName="staff_table">
+        <insert tableName="staff_position">
             <column name="position_held" value="Концертмейстер"></column>
         </insert>
 
-        <insert tableName="staff_table">
+        <insert tableName="staff_position">
             <column name="position_held" value="Педагог-библиотекарь"></column>
         </insert>
 

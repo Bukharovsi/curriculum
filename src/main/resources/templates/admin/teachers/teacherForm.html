@@ -52,7 +52,7 @@
             <div class="col-sm-8">
                 <select th:field="*{positionHeld}" class="form-control">
                     <option value=""></option>
-                    <option th:each="staff : ${staffTable}"
+                    <option th:each="staff : ${staffPosition}"
                             th:value="${staff.positionHeld}"
                             th:text="${staff.positionHeld}">
                     </option>

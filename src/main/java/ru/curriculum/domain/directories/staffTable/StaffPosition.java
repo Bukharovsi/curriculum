@@ -8,18 +8,18 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "staff_table")
+@Table(name = "staff_position")
 @Getter
 @Accessors(fluent = true)
 @NoArgsConstructor
 @EqualsAndHashCode
-public class StaffTable {
+public class StaffPosition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String positionHeld;
 
-    public StaffTable(String positionHeld) {
+    public StaffPosition(String positionHeld) {
         this.positionHeld = positionHeld;
     }
 }
