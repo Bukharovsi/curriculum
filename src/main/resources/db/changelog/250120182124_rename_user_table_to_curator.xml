@@ -1,0 +1,26 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="250120182124" author="Vlad">
+
+        <renameTable oldTableName="users" newTableName="curator"></renameTable>
+        <renameColumn tableName="teacher" oldColumnName="user_id" newColumnName="curator_id"></renameColumn>
+
+        <dropForeignKeyConstraint baseTableName="teacher" constraintName="teacher_users_fk"></dropForeignKeyConstraint>
+        <addForeignKeyConstraint baseTableName="teacher"
+                                 baseColumnNames="curator_id"
+                                 constraintName="teacher_curator_fk"
+                                 referencedTableName="curator"
+                                 referencedColumnNames="id"/>
+
+        <renameColumn tableName="curator" oldColumnName="username" newColumnName="login"></renameColumn>
+
+        <update tableName="role">
+            <column name="code" type="varchar(255)" value="curator"/>
+            <where>code = 'user'</where>
+        </update>
+    </changeSet>
+</databaseChangeLog>

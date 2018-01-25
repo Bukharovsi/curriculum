@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import ru.curriculum.domain.admin.user.entity.Role;
-import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.domain.admin.user.repository.RoleRepository;
-import ru.curriculum.domain.admin.user.repository.UserRepository;
+import ru.curriculum.domain.admin.curator.entity.Curator;
+import ru.curriculum.domain.admin.curator.entity.Role;
+import ru.curriculum.domain.admin.curator.repository.RoleRepository;
+import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -22,13 +22,13 @@ import javax.transaction.Transactional;
 public class AdminAuthenticationInfoInitializationService implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
-    private UserRepository userRepository;
+    private CuratorRepository curatorRepository;
 
     @Autowired
     private RoleRepository roleRepository;
 
-    @Value("${auth.admin.username}")
-    private String username;
+    @Value("${auth.admin.login}")
+    private String login;
 
     @Value("${auth.admin.password}")
     private String password;
@@ -38,19 +38,19 @@ public class AdminAuthenticationInfoInitializationService implements Application
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if (null != userRepository.findByUsername(username)) {
+        if (null != curatorRepository.findByLogin(login)) {
             return; //already exists
         }
 
-        User user = new User(username, password);
+        Curator curator = new Curator(login, password);
         Role roleAdmin = roleRepository.findOne("admin");
         if(null == roleAdmin) {
-            log.error("Failed to create user with administrator role. Because role not found");
+            log.error("Failed to create curator with role administrator role. Because role not found");
             throw new EntityNotFoundException("Роль \"Администратор\" не найдена в системе");
         }
-        user.assignRole(roleAdmin);
-        userRepository.save(user);
+        curator.assignRole(roleAdmin);
+        curatorRepository.save(curator);
 
-        log.info("User with administrator role was created");
+        log.info("Curator with administrator role was created");
     }
 }

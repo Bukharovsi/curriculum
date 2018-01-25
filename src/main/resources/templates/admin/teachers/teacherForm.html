@@ -22,7 +22,7 @@
             <hr/>
         </div>
     </div>
-    <form class="form-horizontal" th:action="@{/admin/teachers}" th:object="${teacher}" modelAttribute="user" method="post">
+    <form class="form-horizontal" th:action="@{/admin/teachers}" th:object="${teacher}" modelAttribute="curator" method="post">
 
         <div th:include="fragments/formValidationError"></div>
 
@@ -63,11 +63,11 @@
         <div class="form-group">
             <label class="control-label col-sm-2">Пользователь: </label>
             <div class="col-sm-8">
-                <select th:field="*{userId}" class="form-control">
+                <select th:field="*{curatorId}" class="form-control">
                     <option value=""></option>
-                    <option th:each="account : ${userAccounts}"
-                            th:value="${account.id}"
-                            th:text="${account.username}">
+                    <option th:each="profile : ${curatorProfiles}"
+                            th:value="${profile.id}"
+                            th:text="${profile.login}">
                     </option>
                 </select>
             </div>
@@ -75,7 +75,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-8">
                 <input class="btn btn-default" type="submit" th:value="Сохранить"/>
-                <a class="btn btn-default" href="/admin/users" th:href="@{/admin/teachers}">Назад</a>
+                <a class="btn btn-default" href="/admin/curators" th:href="@{/admin/teachers}">Назад</a>
             </div>
         </div>
     </form>

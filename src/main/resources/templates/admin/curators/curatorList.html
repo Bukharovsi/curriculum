@@ -1,0 +1,60 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Пользователи</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div>
+        <h1>Пользователи</h1>
+        <hr/>
+    </div>
+    <div>
+        <a class="btn btn-default" th:href="@{/admin/curators/new}">Добавить</a>
+    </div>
+    &nbsp;
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Логин</th>
+            <th style="width: 2%;"></th>
+            <th style="width: 2%"></th>
+            <th style="width: 2%"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="curator : ${curators}">
+            <!--/*@thymesVar id="curator" type="ru.curriculum.service.curator.dto.CuratorDTO"*/-->
+            <td th:text="${curator.surname}"></td>
+            <td th:text="${curator.firstName}"></td>
+            <td th:text="${curator.patronymic}"></td>
+            <td th:text="${curator.login}"></td>
+            <td align="right">
+            <td>
+                <div th:if="!${curator.isTeacher}">
+                    <a th:href="@{/admin/teachers/newFromCurator/{id}(id=${curator.id})}" data-toggle="tooltip" title="Назначить преподователем">
+                        <span class="glyphicon glyphicon-curator"></span>
+                    </a>
+                </div>
+            </td>
+            <td>
+                <a th:href="@{/admin/curators/edit/{id}(id=${curator.id})}" data-toggle="tooltip" title="Редактировать">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/admin/curators/delete/{id}(id=${curator.id})}" data-toggle="tooltip" title="Удалить">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

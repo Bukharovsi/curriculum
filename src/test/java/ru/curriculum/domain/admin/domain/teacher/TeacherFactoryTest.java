@@ -8,8 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.domain.admin.user.repository.UserRepository;
+import ru.curriculum.domain.admin.curator.entity.Curator;
+import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegreeRepository;
 import ru.curriculum.domain.teacher.entity.Teacher;
@@ -24,7 +24,7 @@ public class TeacherFactoryTest extends Assert {
     @Mock
     private AcademicDegreeRepository academicDegreeRepository;
     @Mock
-    private UserRepository userRepository;
+    private CuratorRepository curatorRepository;
     @InjectMocks
     private TeacherFactory teacherFactory;
 
@@ -37,8 +37,8 @@ public class TeacherFactoryTest extends Assert {
                 .when(academicDegreeRepository.findOne("none"))
                 .thenReturn(null);
         Mockito
-                .when(userRepository.findOne(1))
-                .thenReturn(new User());
+                .when(curatorRepository.findOne(1))
+                .thenReturn(new Curator());
     }
 
     @Test
@@ -72,10 +72,10 @@ public class TeacherFactoryTest extends Assert {
     @Test
     public void createUserFromUserDTOWhereDefineUserId_mustBeCreateTeacherWithUserAccount() {
         TeacherDTO dto = getTeacherDTO();
-        dto.setUserId(1);
+        dto.setCuratorId(1);
         Teacher teacher = teacherFactory.create(dto);
 
-        assertTrue(teacher.hasUserAccount());
+        assertTrue(teacher.hasCuratorProfile());
     }
 
     public TeacherDTO getTeacherDTO() {

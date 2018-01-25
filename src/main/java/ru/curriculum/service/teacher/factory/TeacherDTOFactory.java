@@ -3,22 +3,22 @@ package ru.curriculum.service.teacher.factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.service.teacher.dto.TeacherDTO;
-import ru.curriculum.service.user.dto.UserDTO;
-import ru.curriculum.service.user.UserCRUDService;
+import ru.curriculum.service.curator.dto.CuratorDTO;
+import ru.curriculum.service.curator.CuratorCRUDService;
 
 @Component
 public class TeacherDTOFactory {
     @Autowired
-    private UserCRUDService userCRUDService;
+    private CuratorCRUDService curatorCRUDService;
 
-    public TeacherDTO createTeacherDTOBasedOnUser(Integer userId) {
-        UserDTO userDTO = userCRUDService.getUser(userId);
+    public TeacherDTO createTeacherDTOBasedOnCurator(Integer curatorId) {
+        CuratorDTO curatorDTO = curatorCRUDService.getCurator(curatorId);
         TeacherDTO teacherDTO = new TeacherDTO();
-        teacherDTO.setUserId(userDTO.getId());
-        teacherDTO.setUsername(userDTO.getUsername());
-        teacherDTO.setSurname(userDTO.getSurname());
-        teacherDTO.setFirstName(userDTO.getFirstName());
-        teacherDTO.setPatronymic(userDTO.getPatronymic());
+        teacherDTO.setCuratorId(curatorDTO.getId());
+        teacherDTO.setCuratorLogin(curatorDTO.getLogin());
+        teacherDTO.setSurname(curatorDTO.getSurname());
+        teacherDTO.setFirstName(curatorDTO.getFirstName());
+        teacherDTO.setPatronymic(curatorDTO.getPatronymic());
 
         return teacherDTO;
     }

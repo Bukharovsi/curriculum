@@ -36,5 +36,5 @@ liquibase:
 
 auth:
   admin:
-    username: admin
+    login: admin
     password: 123

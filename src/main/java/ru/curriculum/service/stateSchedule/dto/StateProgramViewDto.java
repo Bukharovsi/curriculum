@@ -1,10 +1,8 @@
 package ru.curriculum.service.stateSchedule.dto;
 
 import lombok.*;
-import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.curriculum.service.user.dto.UserDTO;
+import ru.curriculum.service.curator.dto.CuratorDTO;
 
 import java.util.Date;
 
@@ -42,7 +40,7 @@ public class StateProgramViewDto {
 
     private String responsibleDepartment;
 
-    private UserDTO curator;
+    private CuratorDTO curator;
 
     private String address;
 }

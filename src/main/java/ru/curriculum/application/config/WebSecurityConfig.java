@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ru.curriculum.web.error.LoggingAccessDeniedHandler;
-import ru.curriculum.application.auth.principal.UserPrincipalService;
+import ru.curriculum.application.auth.principal.CuratorPrincipalService;
 
 @Configuration
 @EnableWebSecurity
@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoggingAccessDeniedHandler accessDeniedHandler;
     @Autowired
-    private UserPrincipalService userPrincipalService;
+    private CuratorPrincipalService curatorPrincipalService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,14 +49,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userPrincipalService);
+        authProvider.setUserDetailsService(curatorPrincipalService);
         authProvider.setPasswordEncoder(encoder());
 
         return authProvider;

@@ -2,7 +2,7 @@ package ru.curriculum.domain.admin.domain.teacher;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.teacher.entity.Teacher;
 
@@ -27,7 +27,7 @@ public class TeacherTest extends Assert {
         assertEquals(new AcademicDegree("ph_d", "Доктор наук"), teacher.academicDegree());
         assertEquals("Макдоналдс", teacher.placeOfWork());
         assertEquals("Жарщик котлет", teacher.positionHeld());
-        assertFalse("For default teacher don't has account", teacher.hasUserAccount());
+        assertFalse("For default teacher don't has account", teacher.hasCuratorProfile());
     }
 
     @Test
@@ -55,10 +55,10 @@ public class TeacherTest extends Assert {
                 "Макдоналдс",
                 "Жарщик котлет");
 
-        teacher.assignUserAccount(new User());
+        teacher.assignCuratorProfile(new Curator());
 
-        assertTrue(teacher.hasUserAccount());
-        assertNotNull(teacher.userAccount());
+        assertTrue(teacher.hasCuratorProfile());
+        assertNotNull(teacher.curatorProfile());
     }
 
     @Test

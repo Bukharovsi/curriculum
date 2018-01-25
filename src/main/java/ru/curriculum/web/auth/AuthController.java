@@ -11,7 +11,7 @@ public class AuthController {
 
     @RequestMapping(Routes.index)
     public String index() {
-        return Redirect.redirectTo(Routes.users);
+        return Redirect.redirectTo(Routes.curator);
     }
 
     @RequestMapping(Routes.login)

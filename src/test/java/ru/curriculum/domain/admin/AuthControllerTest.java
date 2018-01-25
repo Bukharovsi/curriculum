@@ -9,8 +9,8 @@ import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.domain.admin.user.repository.UserRepository;
+import ru.curriculum.domain.admin.curator.entity.Curator;
+import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -19,15 +19,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class AuthControllerTest extends IntegrationWebBoot {
+
     @Autowired
     private WebApplicationContext context;
+
     @Autowired
     private FilterChainProxy filter;
+
     protected MockMvc mockMvc;
 
     @Autowired
-    private UserRepository userRepository;
-    User user;
+    private CuratorRepository curatorRepository;
+    Curator curator;
 
     @Override
     public void setUp() {
@@ -36,19 +39,30 @@ public class AuthControllerTest extends IntegrationWebBoot {
                 .addFilter(filter)
                 .build();
 
-        user = new User("testAdmin", "123", "test", "test", "test");
-        userRepository.save(user);
+        curator = new Curator("testAdmin", "123", "test", "test", "test");
+        curatorRepository.save(curator);
     }
 
     @After
     public void tearDown() {
-        userRepository.deleteAll();
+        curatorRepository.deleteAll();
     }
+
+//    @Test
+//    public void loginAsSystemAdmin() throws Exception {
+//        mockMvc.perform(formLogin("/login")
+//                .user("admin")
+//                .password("123"))
+//                .andExpect(status().is3xxRedirection())
+//                .andExpect(redirectedUrl("/"))
+//                .andDo(print());
+//    }
 
     @Test
     @WithAnonymousUser
     public void getLoginFormTest() throws Exception {
         mockMvc.perform(get("/login"))
+                .andDo(print())
                 .andExpect(view().name("login"))
                 .andExpect(model().errorCount(0));
     }
