@@ -3,7 +3,7 @@ package ru.curriculum.domain.admin.domain.teacher;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.domain.teacher.entity.AcademicDegree;
+import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.teacher.entity.Teacher;
 
 public class TeacherTest extends Assert {
@@ -26,7 +26,7 @@ public class TeacherTest extends Assert {
         assertEquals("Иванов И.И.", teacher.fullName());
         assertEquals(new AcademicDegree("ph_d", "Доктор наук"), teacher.academicDegree());
         assertEquals("Макдоналдс", teacher.placeOfWork());
-        assertEquals("Жарщик котлет", teacher.position());
+        assertEquals("Жарщик котлет", teacher.positionHeld());
         assertFalse("For default teacher don't has account", teacher.hasUserAccount());
     }
 

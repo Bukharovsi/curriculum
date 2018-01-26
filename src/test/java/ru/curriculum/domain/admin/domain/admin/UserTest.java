@@ -39,53 +39,23 @@ public class UserTest extends IntegrationBoot {
     }
 
     @Test
-    public void createUserFromUserDTO() {
-        UserDTO dto = getUserDTO();
-        User user = new User(dto);
+    public void createUserFromUserNameAndPassword() {
+        User user = new User("test", "test");
 
         assertNull("Id is not created because only system generate id", user.id());
-        assertEquals(user.username(), dto.getUsername());
-        assertTrue(encoder.matches("3333", user.password().hash()));
-        assertEquals(user.firstName(), dto.getFirstName());
-        assertEquals(user.surname(), dto.getSurname());
-        assertEquals(user.patronymic(), dto.getPatronymic());
+        assertEquals(user.username(), "test");
+        assertTrue(encoder.matches("test", user.password().hash()));
+        assertEquals("Default user role", "user", user.role().code());
     }
 
     @Test
-    public void updateUserPrincipalInfo() {
-        UserDTO dto = getUserDTO();
-        User user = userTestFactory.createTestUser();
-
-        user.updatePrincipal(dto);
-
-        assertNotEquals("Username immutable", user.username(), dto.getUsername());
-        assertEquals(user.firstName(), dto.getFirstName());
-        assertEquals(user.surname(), dto.getSurname());
-        assertEquals(user.patronymic(), dto.getPatronymic());
-        assertTrue(encoder.matches(dto.getPassword(), user.password().hash()));
-    }
-
-    @Test
-    public void updateUserPrincipalInfoFromDTOWhereNoPassword_passwordRemainsTheSame() {
-        UserDTO dto = getUserDTO();
-        dto.setPassword(null);
-        User user = userTestFactory.createTestUser();
-
-        user.updatePrincipal(dto);
+    public void changePassword_mustBeChangedCorrectly() {
+        User user = getUser();
+        user.changePassword("123");
 
         assertTrue(encoder.matches("123", user.password().hash()));
     }
 
-    @Test
-    public void updateUserPrincipalInfoFromDTOWherePasswordIsEmtpyString_passwordRemainsTheSame() {
-        UserDTO dto = getUserDTO();
-        dto.setPassword("");
-        User user = userTestFactory.createTestUser();
-
-        user.updatePrincipal(dto);
-
-        assertTrue(encoder.matches("123", user.password().hash()));
-    }
 
     @Test
     public void createRole() {
@@ -123,7 +93,12 @@ public class UserTest extends IntegrationBoot {
         return dto;
     }
 
-
-
-    //TODO: updateUserPrincipal and changePassword
+    private User getUser() {
+        return new User(
+                "test",
+                "123",
+                "Иванов",
+                "Иван",
+                "Иванович");
+    }
 }

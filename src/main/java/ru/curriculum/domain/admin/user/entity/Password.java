@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.curriculum.domain.admin.user.exceptions.IllegalPassword;
+import ru.curriculum.domain.admin.user.exceptions.IllegalPasswordException;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -23,7 +23,7 @@ public class Password {
 
     public Password(@NonNull String password) {
         if(3 > password.length()) {
-            throw new IllegalPassword();
+            throw new IllegalPasswordException();
         }
         this.encoder = new BCryptPasswordEncoder(11);
         this.hashedPassword = encoder.encode(password);

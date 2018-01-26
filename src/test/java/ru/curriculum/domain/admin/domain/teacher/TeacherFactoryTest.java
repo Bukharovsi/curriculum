@@ -10,8 +10,8 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.admin.user.repository.UserRepository;
-import ru.curriculum.domain.teacher.entity.AcademicDegree;
-import ru.curriculum.domain.teacher.repository.AcademicDegreeRepository;
+import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
+import ru.curriculum.domain.directories.academicDegree.AcademicDegreeRepository;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.service.teacher.dto.TeacherDTO;
 import ru.curriculum.domain.teacher.factory.TeacherFactory;
@@ -52,7 +52,7 @@ public class TeacherFactoryTest extends Assert {
         assertEquals(dto.getAcademicDegreeCode(), teacher.academicDegree().code());
         assertEquals(dto.getAcademicDegreeName(), teacher.academicDegree().name());
         assertEquals(dto.getPlaceOfWork(), teacher.placeOfWork());
-        assertEquals(dto.getPosition(), teacher.position());
+        assertEquals(dto.getPositionHeld(), teacher.positionHeld());
     }
 
     @Test(expected = EntityNotFoundException.class)
@@ -87,7 +87,6 @@ public class TeacherFactoryTest extends Assert {
         teacherDTO.setAcademicDegreeCode("ph_d");
         teacherDTO.setAcademicDegreeName("Доктор наук");
         teacherDTO.setPlaceOfWork("ИРОРТ");
-        teacherDTO.setPosition("Преподователь информатики");
 
         return teacherDTO;
     }

@@ -9,16 +9,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
+import ru.curriculum.service.directories.academicDegree.AcademicDegreeFindService;
+import ru.curriculum.service.directories.staffTable.StaffTableFindService;
 import ru.curriculum.service.teacher.TeacherCRUDService;
 import ru.curriculum.service.teacher.dto.TeacherDTO;
 import ru.curriculum.service.teacher.factory.TeacherDTOFactory;
 import ru.curriculum.service.user.AccountService;
-import ru.curriculum.web.View;
 
 import javax.validation.Valid;
 
-
-import java.util.Collection;
 
 import static ru.curriculum.web.Redirect.*;
 import static ru.curriculum.web.View.*;
@@ -31,9 +30,12 @@ public class TeachersManagementController {
     @Autowired
     private AccountService accountService;
     @Autowired
+    private StaffTableFindService staffTableFindService;
+    @Autowired
+    private AcademicDegreeFindService academicDegreeFindService;
+    @Autowired
     private TeacherDTOFactory teacherDTOFactory;
 
-    // TODO: может перейти на new ModelAndView можно будет выделить отдельный класс для построения этой херни
     @RequestMapping(method = RequestMethod.GET)
     public String getAll(Model model) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
@@ -44,8 +46,9 @@ public class TeachersManagementController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String getNewTeacherForm(Model model) {
         model.addAttribute("teacher", new TeacherDTO());
-        model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+        model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
         model.addAttribute("userAccounts", accountService.getFreeAccounts());
+        model.addAttribute("staffTable", staffTableFindService.findAll());
 
         return TEACHER_FORM;
     }
@@ -53,8 +56,9 @@ public class TeachersManagementController {
     @RequestMapping(value = "/newFromUser/{userId}", method = RequestMethod.GET)
     public String getNewTeacherFromUserForm(@PathVariable("userId") Integer userId, Model model) {
         model.addAttribute("teacher", teacherDTOFactory.createTeacherDTOBasedOnUser(userId));
-        model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+        model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
         model.addAttribute("userAccounts", accountService.getFreeAccounts());
+        model.addAttribute("staffTable", staffTableFindService.findAll());
 
         return TEACHER_FORM;
     }
@@ -66,8 +70,9 @@ public class TeachersManagementController {
             Model model
     ) {
         if(teacherBindingResult.hasErrors()) {
-            model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+            model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
             model.addAttribute("userAccounts", accountService.getFreeAccounts());
+            model.addAttribute("staffTable", staffTableFindService.findAll());
 
             return TEACHER_FORM;
         }
@@ -80,8 +85,9 @@ public class TeachersManagementController {
     public String getEditUserForm(@PathVariable Integer id, Model model) {
         TeacherDTO teacherDTO = teacherCRUDService.get(id);
         model.addAttribute("teacher", teacherDTO);
-        model.addAttribute("academicDegrees", teacherCRUDService.getAcademicDegrees());
+        model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
         model.addAttribute("userAccounts", accountService.getFreeAccountsAndTeacherAccount(teacherDTO));
+        model.addAttribute("staffTable", staffTableFindService.findAll());
 
         return TEACHER_FORM;
     }

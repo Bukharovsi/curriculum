@@ -12,6 +12,7 @@ import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.admin.user.repository.RoleRepository;
 import ru.curriculum.domain.admin.user.repository.UserRepository;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 /*
@@ -19,16 +20,20 @@ import javax.transaction.Transactional;
  */
 @Component
 public class AdminAuthenticationInfoInitializationService implements ApplicationListener<ContextRefreshedEvent> {
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private RoleRepository roleRepository;
+
     @Value("${auth.admin.username}")
     private String username;
+
     @Value("${auth.admin.password}")
     private String password;
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
     @Transactional
@@ -37,14 +42,15 @@ public class AdminAuthenticationInfoInitializationService implements Application
             return; //already exists
         }
 
-        User user = new User(
-                username,
-                password,
-                "Администратор",
-                "Администратор",
-                null);
+        User user = new User(username, password);
         Role roleAdmin = roleRepository.findOne("admin");
+        if(null == roleAdmin) {
+            log.error("Failed to create user with administrator role. Because role not found");
+            throw new EntityNotFoundException("Роль \"Администратор\" не найдена в системе");
+        }
         user.assignRole(roleAdmin);
         userRepository.save(user);
+
+        log.info("User with administrator role was created");
     }
 }

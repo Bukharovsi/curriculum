@@ -89,6 +89,8 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
         User newUser = userRepository.findByUsername("test");
 
         assertNotNull("User was created", newUser);
+        assertNotNull("Default role created", newUser.role());
+        assertEquals("user", newUser.role().code());
     }
 
     @Test
@@ -108,6 +110,8 @@ public class UserManagementControllerTest extends IntegrationWebBoot {
         assertTrue(
                 "When editing user and no change password the password remains the same",
                 passwordEncoder.matches( "123", user.password().hash()));
+        assertNotNull("Role not changed", user.role());
+        assertEquals("user", user.role().code());
     }
 
     @Test

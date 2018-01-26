@@ -1,7 +1,7 @@
 package ru.curriculum.domain.admin.user.exceptions;
 
-public class IllegalPassword extends RuntimeException {
-    public IllegalPassword() {
+public class IllegalPasswordException extends RuntimeException {
+    public IllegalPasswordException() {
         super("Password length must be grater than 3");
     }
 }

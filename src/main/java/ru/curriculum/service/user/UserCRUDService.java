@@ -6,7 +6,9 @@ import ru.curriculum.domain.admin.user.entity.User;
 import ru.curriculum.domain.admin.user.repository.UserRepository;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
+import ru.curriculum.service.user.converter.DtoToUserConverter;
 import ru.curriculum.service.user.dto.UserDTO;
+import ru.curriculum.service.user.exception.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +20,8 @@ public class UserCRUDService {
     private UserRepository userRepository;
     @Autowired
     private TeacherRepository teacherRepository;
+    @Autowired
+    private DtoToUserConverter dtoToUserConverter;
 
     public Collection<UserDTO> findAllUsers() {
         Collection<UserDTO> userDTOs = new ArrayList<>();
@@ -28,20 +32,35 @@ public class UserCRUDService {
     }
 
     public UserDTO getUser(Integer userId) {
-        // TODO: либо применять get, либо проверять на null
         User user = userRepository.findOne(userId);
+        if(null == user) {
+            throw new UserNotFoundException(userId);
+        }
 
         return new UserDTO(user);
     }
 
-    public void create(UserDTO userDTO) {
-        User newUser = new User(userDTO);
+    public void create(UserDTO dto) {
+        User newUser = dtoToUserConverter.convert(dto);
         userRepository.save(newUser);
     }
 
-    public void update(UserDTO userDTO) {
-        User user = userRepository.findOne(userDTO.getId());
-        user.updatePrincipal(userDTO);
+    public void update(UserDTO dto) {
+        User user = userRepository.findOne(dto.getId());
+        if(null == user) {
+            throw new UserNotFoundException(dto.getId());
+        }
+
+        user.surname(dto.getSurname());
+        user.firstName(dto.getFirstName());
+        user.patronymic(dto.getPatronymic());
+        if(dto.getIsTeacher()) {
+            user.teacher(teacherRepository.findOne(dto.getId()));
+        }
+        if(null != dto.getPassword() && !dto.getPassword().isEmpty()) {
+            user.changePassword(dto.getPassword());
+        }
+
         userRepository.save(user);
     }
 

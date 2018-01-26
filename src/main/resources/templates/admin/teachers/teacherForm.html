@@ -7,10 +7,10 @@
 </head>
 <body>
 <div layout:fragment="content">
+    <!--/*@thymesVar id="teacher" type="ru.curriculum.service.teacher.dto.TeacherDTO"*/-->
     <div class="row">
         <div class="col-sm-offset-2 col-sm-8">
             <div th:if="${teacher.id}" style="align-items: center;">
-                <!--TODO: Пусть фомрируется в ДТО -->
                 <h1>Редактирование преподователя
                     <span th:text="${teacher.fullName}">
                     </span>
@@ -45,7 +45,21 @@
             </div>
         </div>
         <div th:include="fragments/inputField :: inputField('Место работы', 'placeOfWork', ${teacher.placeOfWork}, 'text', false)"></div>
-        <div th:include="fragments/inputField :: inputField('Занимаемая должность', 'position', ${teacher.position}, 'text', false)"></div>
+        <!--<div th:include="fragments/inputField :: inputField('Занимаемая должность', 'positionHeld', ${teacher.positionHeld}, 'text', false)"></div>-->
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Занимаея должность: </label>
+            <div class="col-sm-8">
+                <select th:field="*{positionHeld}" class="form-control">
+                    <option value=""></option>
+                    <option th:each="staff : ${staffPosition}"
+                            th:value="${staff.positionHeld}"
+                            th:text="${staff.positionHeld}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="control-label col-sm-2">Пользователь: </label>
             <div class="col-sm-8">

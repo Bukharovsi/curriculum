@@ -1,4 +1,4 @@
-package ru.curriculum.domain.admin.service;
+package ru.curriculum.domain.admin.service.user;
 
 import org.junit.Assert;
 import org.junit.Before;

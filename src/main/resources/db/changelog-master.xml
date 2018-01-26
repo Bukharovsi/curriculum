@@ -16,4 +16,5 @@
     <include file="/db/changelog/070120181342_create_study_mode_table.xml"/>
     <include file="/db/changelog/070120181346_create_implementation_form_table.xml"/>
     <include file="/db/changelog/070120181351_create_state_program_table.xml"/>
+    <include file="/db/changelog/240120181913_create_staff_position_directory_table.xml"/>
 </databaseChangeLog>

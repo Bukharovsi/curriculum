@@ -61,7 +61,6 @@ public class TeacherDTOValidationTest extends Assert {
         teacherDTO.setAcademicDegreeCode("ph_d");
         teacherDTO.setAcademicDegreeName("Доктор наук");
         teacherDTO.setPlaceOfWork("ИРОРТ");
-        teacherDTO.setPosition("Преподователь информатики");
 
         return teacherDTO;
     }
