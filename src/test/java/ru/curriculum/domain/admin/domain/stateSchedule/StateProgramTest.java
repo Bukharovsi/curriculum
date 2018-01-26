@@ -2,18 +2,13 @@ package ru.curriculum.domain.admin.domain.stateSchedule;
 
 import boot.IntegrationBoot;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.domain.admin.user.repository.UserRepository;
 import ru.curriculum.domain.helper.UserTestFactory;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 import ru.curriculum.domain.stateSchedule.repository.ImplementationFormRepository;
 import ru.curriculum.domain.stateSchedule.repository.StateProgramRepository;
 import ru.curriculum.domain.stateSchedule.repository.StudyModeRepository;
-import ru.curriculum.domain.teacher.repository.TeacherRepository;
 
 import java.util.Date;
 

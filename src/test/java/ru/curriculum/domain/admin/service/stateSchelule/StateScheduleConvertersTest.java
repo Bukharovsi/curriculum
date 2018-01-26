@@ -4,7 +4,7 @@ import boot.IntegrationBoot;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.helper.UserTestFactory;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 import ru.curriculum.service.stateSchedule.converter.DtoToStateScheduleConverter;
@@ -27,7 +27,7 @@ public class StateScheduleConvertersTest extends IntegrationBoot{
 
     @Test
     public void whenDtoConvertsToEntityAndToDtoThenDTOsTheSame() throws Exception {
-        User curator = userTestFactory.createAndSaveRandomUser();
+        Curator curator = userTestFactory.createAndSaveRandomUser();
 
         StateProgramCreationDto newStateProgram = StateProgramCreationDto.builder()
             .address("Kazan, main street 1")
@@ -51,7 +51,7 @@ public class StateScheduleConvertersTest extends IntegrationBoot{
         Assert.assertEquals(newStateProgram.getAddress(), viewDto.getAddress());
         Assert.assertEquals(newStateProgram.getCountOfHoursPerLerner(), viewDto.getCountOfHoursPerLerner());
         Assert.assertEquals(newStateProgram.getCuratorId(), viewDto.getCurator().getId());
-        Assert.assertEquals(stateProgramEntity.curator().username(), viewDto.getCurator().getUsername());
+        Assert.assertEquals(stateProgramEntity.curator().login(), viewDto.getCurator().getUsername());
         Assert.assertEquals(newStateProgram.getDateStart(), viewDto.getDateStart());
         Assert.assertEquals(newStateProgram.getDateFinish(), viewDto.getDateFinish());
         Assert.assertEquals(newStateProgram.getGroupCount(), viewDto.getGroupCount());

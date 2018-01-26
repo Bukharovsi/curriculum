@@ -1,10 +1,9 @@
 package ru.curriculum.domain.helper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestComponent;
 import org.springframework.stereotype.Component;
-import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.domain.admin.user.repository.UserRepository;
+import ru.curriculum.domain.admin.curator.entity.Curator;
+import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 
 import java.util.UUID;
 
@@ -12,10 +11,10 @@ import java.util.UUID;
 public class UserTestFactory {
 
     @Autowired
-    private UserRepository userRepository;
+    private CuratorRepository curatorRepository;
 
-    public User createTestUser() {
-        return new User(
+    public Curator createTestUser() {
+        return new Curator(
             "test",
             "123",
             "Иванов",
@@ -23,8 +22,8 @@ public class UserTestFactory {
             "Иванович");
     }
 
-    public User createAndSaveRandomUser() {
-        User user = new User(
+    public Curator createAndSaveRandomUser() {
+        Curator curator = new Curator(
             UUID.randomUUID().toString(),
             "123",
             "Иванов",
@@ -32,6 +31,6 @@ public class UserTestFactory {
             "Иванович"
         );
 
-        return userRepository.save(user);
+        return curatorRepository.save(curator);
     }
 }

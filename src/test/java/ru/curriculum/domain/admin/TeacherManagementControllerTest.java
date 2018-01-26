@@ -7,8 +7,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import ru.curriculum.domain.admin.user.entity.User;
-import ru.curriculum.domain.admin.user.repository.UserRepository;
+import ru.curriculum.domain.admin.curator.entity.Curator;
+import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
@@ -27,21 +27,21 @@ public class TeacherManagementControllerTest extends IntegrationWebBoot {
     @Autowired
     private TeacherRepository teacherRepository;
     @Autowired
-    private UserRepository userRepository;
+    private CuratorRepository curatorRepository;
     private List<Teacher> teachers;
-    private User user;
+    private Curator curator;
 
     @Before
     public void setUp() {
         super.setUp();
-        user = createUser();
+        curator = createUser();
         teachers = createTeachers();
     }
 
     @After
     public void tearDown() {
         teacherRepository.deleteAll();
-        userRepository.deleteAll();
+        curatorRepository.deleteAll();
     }
 
     @Test
@@ -95,12 +95,12 @@ public class TeacherManagementControllerTest extends IntegrationWebBoot {
 
     @Test
     public void getNewTeacherFromUserForm() throws Exception {
-        mockMvc.perform(get("/admin/teachers/newFromUser/{id}", user.id())
+        mockMvc.perform(get("/admin/teachers/newFromCurator/{id}", curator.id())
                 .accept(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(view().name("admin/teachers/teacherForm"))
                 .andExpect(model().attributeExists("teacher"))
                 .andExpect(model().attributeExists("academicDegrees"))
-                .andExpect(model().attributeExists("userAccounts"));
+                .andExpect(model().attributeExists("curatorProfiles"));
     }
 
     @Test
@@ -112,25 +112,25 @@ public class TeacherManagementControllerTest extends IntegrationWebBoot {
                 .param("firstName", teachers.get(0).firstName())
                 .param("surname", teachers.get(0).surname())
                 .param("academicDegreeCode", PROFESSOR)
-                .param("userId", user.id().toString()))
+                .param("curatorId", curator.id().toString()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/admin/teachers"))
                 .andDo(print());
         Teacher teacher = teacherRepository.findOne(teachers.get(0).id());
 
-        assertEquals(user, teacher.userAccount());
+        assertEquals(curator, teacher.curatorProfile());
     }
 
-    private User createUser() {
-        User user = new User(
+    private Curator createUser() {
+        Curator curator = new Curator(
                 "xui",
                 "123",
                 "Иванов",
                 "Иван",
                 "Иванович");
-        userRepository.save(user);
+        curatorRepository.save(curator);
 
-        return user;
+        return curator;
     }
 
     private List<Teacher> createTeachers() {

@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import ru.curriculum.domain.admin.user.entity.User;
+import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 
 import javax.persistence.*;
@@ -35,8 +35,8 @@ public class Teacher {
     private String positionHeld;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "curator_id")
+    private Curator curator;
 
     public Teacher() {
         this.firstName = "";
@@ -75,19 +75,19 @@ public class Teacher {
         return surname.concat(" ").concat(firstNameShort).concat(patronymicShort);
     }
 
-    public User userAccount() {
-        return user;
+    public Curator curatorProfile() {
+        return curator;
     }
 
-    public void assignUserAccount(User user) {
-        this.user = user;
+    public void assignCuratorProfile(Curator curator) {
+        this.curator = curator;
     }
 
-    public boolean hasUserAccount() {
-        return null != user;
+    public boolean hasCuratorProfile() {
+        return null != curator;
     }
 
-    public void deleteUserAccount() {
-        this.user = null;
+    public void deleteCuratorProfile() {
+        this.curator = null;
     }
 }

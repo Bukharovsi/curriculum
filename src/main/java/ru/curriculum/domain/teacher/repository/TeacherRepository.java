@@ -5,5 +5,5 @@ import ru.curriculum.domain.teacher.entity.Teacher;
 
 public interface TeacherRepository extends PagingAndSortingRepository<Teacher, Integer> {
 
-    Teacher findByUserId(Integer userId);
+    Teacher findByCuratorId(Integer curatorId);
 }

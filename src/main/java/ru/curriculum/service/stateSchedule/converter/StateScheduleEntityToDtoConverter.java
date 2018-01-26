@@ -6,7 +6,7 @@ import ru.curriculum.service.stateSchedule.dto.ImplementationFormDto;
 import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
 import ru.curriculum.service.stateSchedule.dto.StateProgramViewDto;
 import ru.curriculum.service.stateSchedule.dto.StudyModeDto;
-import ru.curriculum.service.user.dto.UserDTO;
+import ru.curriculum.service.curator.dto.CuratorDTO;
 
 @Component
 public class StateScheduleEntityToDtoConverter {
@@ -33,7 +33,7 @@ public class StateScheduleEntityToDtoConverter {
                 )
                 .build();
         if (stateProgram.curator() != null) {
-            stateProgramDto.setCurator(new UserDTO(stateProgram.curator()));
+            stateProgramDto.setCurator(new CuratorDTO(stateProgram.curator()));
         }
 
         return stateProgramDto;

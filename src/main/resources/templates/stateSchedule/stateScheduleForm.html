@@ -83,10 +83,10 @@
                 <div class="col-sm-8">
                     <select th:field="*{curatorId}" class="form-control">
                         <option value=""></option>
-                        <!--/*@thymesVar id="user" type="ru.curriculum.service.user.dto.UserDTO"*/-->
-                        <option th:each="user : ${userList}"
-                                th:value="${user.getId()}"
-                                th:text="${user.fio()}"
+                        <!--/*@thymesVar id="curator" type="ru.curriculum.service.curator.dto.CuratorDTO"*/-->
+                        <option th:each="curator : ${curatorList}"
+                                th:value="${curator.getId()}"
+                                th:text="${curator.fio()}"
                         ></option>
                     </select>
                 </div>
@@ -95,7 +95,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-8">
                     <input class="btn btn-default" type="submit" th:value="Сохранить"/>
-                    <a class="btn btn-default" href="/stateSchedule/list" th:href="@{/admin/users}">Назад</a>
+                    <a class="btn btn-default" href="/stateSchedule/list" th:href="@{/admin/curators}">Назад</a>
                 </div>
             </div>
         </div>

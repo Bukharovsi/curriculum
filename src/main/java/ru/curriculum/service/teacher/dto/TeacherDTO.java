@@ -34,9 +34,9 @@ public class TeacherDTO {
 
     private String positionHeld;
 
-    private String username;
+    private String curatorLogin;
 
-    private Integer userId;
+    private Integer curatorId;
 
     public TeacherDTO() {
         this.placeOfWork = "ГАОУ ДПО Институт Развития Образования РТ";
@@ -52,7 +52,7 @@ public class TeacherDTO {
         this.academicDegreeName = teacher.academicDegree().name();
         this.placeOfWork = teacher.placeOfWork();
         this.positionHeld = teacher.positionHeld();
-        this.userId = teacher.hasUserAccount() ? teacher.userAccount().id() : null;
-        this.username = teacher.hasUserAccount() ? teacher.user().username() : "";
+        this.curatorId = teacher.hasCuratorProfile() ? teacher.curatorProfile().id() : null;
+        this.curatorLogin = teacher.hasCuratorProfile() ? teacher.curator().login() : "";
     }
 }

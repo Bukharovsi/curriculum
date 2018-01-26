@@ -3,7 +3,7 @@ package ru.curriculum.domain.admin.application;
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
 import ru.curriculum.application.auth.principal.AuthorityFactory;
-import ru.curriculum.domain.admin.user.entity.Role;
+import ru.curriculum.domain.admin.curator.entity.Role;
 
 import static org.junit.Assert.*;
 

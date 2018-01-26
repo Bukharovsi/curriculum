@@ -3,7 +3,7 @@ package ru.curriculum.application.auth.principal;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-import ru.curriculum.domain.admin.user.entity.Role;
+import ru.curriculum.domain.admin.curator.entity.Role;
 
 @Component
 public class AuthorityFactory {
