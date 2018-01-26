@@ -81,7 +81,7 @@ public class CuratorTest extends IntegrationBoot {
     private CuratorDTO getUserDTO() {
         CuratorDTO dto = new CuratorDTO();
         dto.setId(22);
-        dto.setLogin("newUserName");
+        dto.setUsername("newUserName");
         dto.setPassword("3333");
         dto.setFirstName("newName");
         dto.setSurname("newSurname");

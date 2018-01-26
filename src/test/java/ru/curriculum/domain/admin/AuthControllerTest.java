@@ -9,6 +9,7 @@ import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import ru.curriculum.application.route.Routes;
 import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 
@@ -50,7 +51,7 @@ public class AuthControllerTest extends IntegrationWebBoot {
 
 //    @Test
 //    public void loginAsSystemAdmin() throws Exception {
-//        mockMvc.perform(formLogin("/login")
+//        mockMvc.perform(formLogin("/username")
 //                .user("admin")
 //                .password("123"))
 //                .andExpect(status().is3xxRedirection())
@@ -61,7 +62,7 @@ public class AuthControllerTest extends IntegrationWebBoot {
     @Test
     @WithAnonymousUser
     public void getLoginFormTest() throws Exception {
-        mockMvc.perform(get("/login"))
+        mockMvc.perform(get(Routes.login))
                 .andDo(print())
                 .andExpect(view().name("login"))
                 .andExpect(model().errorCount(0));
@@ -69,7 +70,7 @@ public class AuthControllerTest extends IntegrationWebBoot {
 
     @Test
     public void loginTest() throws Exception {
-        mockMvc.perform(formLogin("/login")
+        mockMvc.perform(formLogin(Routes.login)
                 .user("testAdmin")
                 .password("123"))
                 .andExpect(status().is3xxRedirection())
@@ -79,7 +80,7 @@ public class AuthControllerTest extends IntegrationWebBoot {
 
     @Test
     public void loginWithWrongLoginAndPassword_mustBeLoginError() throws Exception {
-        mockMvc.perform(formLogin("/login")
+        mockMvc.perform(formLogin(Routes.login)
                 .user("none")
                 .password("empty"))
                 .andExpect(redirectedUrl("/login?error"))

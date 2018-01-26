@@ -27,7 +27,7 @@ public class CuratorDTOValidationTest extends Assert {
         CuratorDTO dto = new CuratorDTO();
         dto.setId(3);
         dto.setPassword("123");
-        dto.setLogin("jhon");
+        dto.setUsername("jhon");
         dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
@@ -41,7 +41,7 @@ public class CuratorDTOValidationTest extends Assert {
         CuratorDTO dto = new CuratorDTO();
         dto.setId(3);
         dto.setPassword("12");
-        dto.setLogin("jhon");
+        dto.setUsername("jhon");
         dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
@@ -53,7 +53,7 @@ public class CuratorDTOValidationTest extends Assert {
     @Test
     public void userDTOWithIdAndNoPassword_validationFailed() {
         CuratorDTO dto = new CuratorDTO();
-        dto.setLogin("jhon");
+        dto.setUsername("jhon");
         dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
@@ -66,7 +66,7 @@ public class CuratorDTOValidationTest extends Assert {
     public void userDTOWIthIdAndPasswordIsEmptyString_validationSuccess() {
         CuratorDTO dto = new CuratorDTO();
         dto.setId(3);
-        dto.setLogin("jhon");
+        dto.setUsername("jhon");
         dto.setPassword("");
         dto.setFirstName("Mikola");
         dto.setSurname("Salo");
@@ -80,7 +80,7 @@ public class CuratorDTOValidationTest extends Assert {
     public void userDTOWithoutIdAndPasswordGraterThan3_validationSuccess() {
         CuratorDTO dto = new CuratorDTO();
         dto.setPassword("123");
-        dto.setLogin("jhon");
+        dto.setUsername("jhon");
         dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
@@ -93,7 +93,7 @@ public class CuratorDTOValidationTest extends Assert {
     public void userDTOWithoutIdAndPasswordLessThan3_validationFailed() {
         CuratorDTO dto = new CuratorDTO();
         dto.setPassword("12");
-        dto.setLogin("jhon");
+        dto.setUsername("jhon");
         dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
@@ -106,7 +106,7 @@ public class CuratorDTOValidationTest extends Assert {
     public void userDTOWithUsernameLessThan3Character_validationFailed() {
         CuratorDTO dto = new CuratorDTO();
         dto.setPassword("123");
-        dto.setLogin("j");
+        dto.setUsername("j");
         dto.setFirstName("Mikola");
         dto.setSurname("Salo");
 
@@ -119,7 +119,7 @@ public class CuratorDTOValidationTest extends Assert {
     public void userDTOWithEmptyFirstNameAndSurname_validationFailed() {
         CuratorDTO dto = new CuratorDTO();
         dto.setPassword("123");
-        dto.setLogin("jhon");
+        dto.setUsername("jhon");
         dto.setFirstName("");
         dto.setSurname("");
 

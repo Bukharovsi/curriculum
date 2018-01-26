@@ -25,7 +25,7 @@ public class TeacherDTOFactoryTest extends Assert {
     public void setUp() {
         curatorDTO = new CuratorDTO();
         curatorDTO.setId(1);
-        curatorDTO.setLogin("username");
+        curatorDTO.setUsername("username");
         curatorDTO.setSurname("Test");
         curatorDTO.setFirstName("Test");
         curatorDTO.setPatronymic("Test");
@@ -43,6 +43,6 @@ public class TeacherDTOFactoryTest extends Assert {
         assertEquals(curatorDTO.getSurname(), teacherDTO.getSurname());
         assertEquals(curatorDTO.getPatronymic(), teacherDTO.getPatronymic());
         assertEquals(curatorDTO.getId(), teacherDTO.getCuratorId());
-        assertEquals(curatorDTO.getLogin(), teacherDTO.getCuratorLogin());
+        assertEquals(curatorDTO.getUsername(), teacherDTO.getCuratorLogin());
     }
 }

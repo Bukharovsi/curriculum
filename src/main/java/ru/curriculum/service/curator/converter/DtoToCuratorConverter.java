@@ -9,7 +9,7 @@ public class DtoToCuratorConverter {
     public Curator convert(CuratorDTO dto) {
         return new Curator(
                 dto.getId(),
-                dto.getLogin(),
+                dto.getUsername(),
                 dto.getPassword(),
                 dto.getSurname(),
                 dto.getFirstName(),

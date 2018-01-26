@@ -51,7 +51,7 @@ public class StateScheduleConvertersTest extends IntegrationBoot{
         Assert.assertEquals(newStateProgram.getAddress(), viewDto.getAddress());
         Assert.assertEquals(newStateProgram.getCountOfHoursPerLerner(), viewDto.getCountOfHoursPerLerner());
         Assert.assertEquals(newStateProgram.getCuratorId(), viewDto.getCurator().getId());
-        Assert.assertEquals(stateProgramEntity.curator().login(), viewDto.getCurator().getLogin());
+        Assert.assertEquals(stateProgramEntity.curator().login(), viewDto.getCurator().getUsername());
         Assert.assertEquals(newStateProgram.getDateStart(), viewDto.getDateStart());
         Assert.assertEquals(newStateProgram.getDateFinish(), viewDto.getDateFinish());
         Assert.assertEquals(newStateProgram.getGroupCount(), viewDto.getGroupCount());

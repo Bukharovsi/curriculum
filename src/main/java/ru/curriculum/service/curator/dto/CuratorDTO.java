@@ -15,16 +15,24 @@ import java.io.Serializable;
 @PasswordConstraint
 @ToString
 public class CuratorDTO implements Serializable {
+
     private Integer id;
-    @Size(min = 3, max = 25, message = "Длина должна быть меньше {max} и меньше {min}")
-    private String login;
+
+    @Size(min = 3, max = 25, message = "Длина \"Лоигина\" должна быть меньше {max} и больше {min}")
+    private String username;
+
     private String password;
+
     @NotEmpty(message = "Необходимо заполнить поле \"Фамилия\"")
     private String surname;
+
     @NotEmpty(message = "Необходимо заполнить поле \"Имя\"")
     private String firstName;
+
     private String patronymic;
+
     private String fullName;
+
     private Boolean isTeacher;
 
     public CuratorDTO() {
@@ -33,7 +41,7 @@ public class CuratorDTO implements Serializable {
 
     public CuratorDTO(Curator curator) {
         this.id = curator.id();
-        this.login = curator.login();
+        this.username = curator.login();
         this.firstName = curator.firstName();
         this.surname = curator.surname();
         this.patronymic = curator.patronymic();

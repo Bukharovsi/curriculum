@@ -48,7 +48,7 @@ public class TeachersManagementController {
         model.addAttribute("teacher", new TeacherDTO());
         model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
         model.addAttribute("curatorProfiles", accountService.getFreeAccounts());
-        model.addAttribute("staffTable", staffTableFindService.findAll());
+        model.addAttribute("staffPosition", staffTableFindService.findAll());
 
         return TEACHER_FORM;
     }
@@ -58,7 +58,7 @@ public class TeachersManagementController {
         model.addAttribute("teacher", teacherDTOFactory.createTeacherDTOBasedOnCurator(curatorId));
         model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
         model.addAttribute("curatorProfiles", accountService.getFreeAccounts());
-        model.addAttribute("staffTable", staffTableFindService.findAll());
+        model.addAttribute("staffPosition", staffTableFindService.findAll());
 
         return TEACHER_FORM;
     }
@@ -72,7 +72,7 @@ public class TeachersManagementController {
         if(teacherBindingResult.hasErrors()) {
             model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
             model.addAttribute("curatorProfiles", accountService.getFreeAccounts());
-            model.addAttribute("staffTable", staffTableFindService.findAll());
+            model.addAttribute("staffPosition", staffTableFindService.findAll());
 
             return TEACHER_FORM;
         }
@@ -87,7 +87,7 @@ public class TeachersManagementController {
         model.addAttribute("teacher", teacherDTO);
         model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
         model.addAttribute("curatorProfiles", accountService.getFreeAccountsAndTeacherAccount(teacherDTO));
-        model.addAttribute("staffTable", staffTableFindService.findAll());
+        model.addAttribute("staffPosition", staffTableFindService.findAll());
 
         return TEACHER_FORM;
     }

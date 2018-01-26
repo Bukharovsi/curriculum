@@ -79,7 +79,7 @@ public class CuratorManagementControllerTest extends IntegrationWebBoot {
     public void createCurator() throws Exception {
         mockMvc.perform(post("/admin/curators")
                 .accept(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("login", "test")
+                .param("username", "test")
                 .param("password", "123")
                 .param("firstName", "test")
                 .param("surname", "test"))
@@ -120,7 +120,7 @@ public class CuratorManagementControllerTest extends IntegrationWebBoot {
         mockMvc.perform(put("/admin/curators")
                 .accept(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", curators.get(0).id().toString())
-                .param("login", curators.get(0).login())
+                .param("username", curators.get(0).login())
                 .param("password", "444")
                 .param("firstName", curators.get(0).firstName())
                 .param("surname", curators.get(0).surname())
@@ -141,7 +141,7 @@ public class CuratorManagementControllerTest extends IntegrationWebBoot {
         // Can not be curators with the same "curatorLogin"
         mockMvc.perform(post("/admin/curators")
                 .accept(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("login", curators.get(0).login())
+                .param("username", curators.get(0).login())
                 .param("password", "123")
                 .param("firstName", "test")
                 .param("surname", "test"))

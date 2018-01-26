@@ -2,13 +2,13 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
 <head>
-    <title>Пользователи</title>
+    <title>Кураторы</title>
 </head>
 <body>
 
 <div layout:fragment="content">
     <div>
-        <h1>Пользователи</h1>
+        <h1>Кураторы</h1>
         <hr/>
     </div>
     <div>
@@ -22,7 +22,7 @@
             <th>Имя</th>
             <th>Отчество</th>
             <th>Логин</th>
-            <th style="width: 2%;"></th>
+            <th style="width: 2%"></th>
             <th style="width: 2%"></th>
             <th style="width: 2%"></th>
         </tr>
@@ -33,21 +33,20 @@
             <td th:text="${curator.surname}"></td>
             <td th:text="${curator.firstName}"></td>
             <td th:text="${curator.patronymic}"></td>
-            <td th:text="${curator.login}"></td>
+            <td th:text="${curator.username}"></td>
             <td align="right">
-            <td>
                 <div th:if="!${curator.isTeacher}">
                     <a th:href="@{/admin/teachers/newFromCurator/{id}(id=${curator.id})}" data-toggle="tooltip" title="Назначить преподователем">
-                        <span class="glyphicon glyphicon-curator"></span>
+                        <span class="glyphicon glyphicon-user"></span>
                     </a>
                 </div>
             </td>
-            <td>
+            <td align="right">
                 <a th:href="@{/admin/curators/edit/{id}(id=${curator.id})}" data-toggle="tooltip" title="Редактировать">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
             </td>
-            <td>
+            <td align="right">
                 <a th:href="@{/admin/curators/delete/{id}(id=${curator.id})}" data-toggle="tooltip" title="Удалить">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>

@@ -15,7 +15,7 @@ public class TeacherDTOFactory {
         CuratorDTO curatorDTO = curatorCRUDService.getCurator(curatorId);
         TeacherDTO teacherDTO = new TeacherDTO();
         teacherDTO.setCuratorId(curatorDTO.getId());
-        teacherDTO.setCuratorLogin(curatorDTO.getLogin());
+        teacherDTO.setCuratorLogin(curatorDTO.getUsername());
         teacherDTO.setSurname(curatorDTO.getSurname());
         teacherDTO.setFirstName(curatorDTO.getFirstName());
         teacherDTO.setPatronymic(curatorDTO.getPatronymic());

@@ -14,8 +14,8 @@ public class UniqueLoginValidator {
     private CuratorRepository curatorRepository;
 
     public void validate(CuratorDTO curatorDTO, BindingResult errors) {
-        if(null != curatorRepository.findByLogin(curatorDTO.getLogin())) {
-            errors.addError(new ObjectError("login", "Такой логин уже существует"));
+        if(null != curatorRepository.findByLogin(curatorDTO.getUsername())) {
+            errors.addError(new ObjectError("username", "Такой логин уже существует"));
         }
     }
 }

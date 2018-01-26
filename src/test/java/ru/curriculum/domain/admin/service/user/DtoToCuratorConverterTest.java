@@ -26,7 +26,7 @@ public class DtoToCuratorConverterTest {
         Assert.assertEquals(dto.getSurname(), curator.surname());
         Assert.assertEquals(dto.getFirstName(), curator.firstName());
         Assert.assertEquals(dto.getPatronymic(), curator.patronymic());
-        Assert.assertEquals(dto.getLogin(), curator.login());
+        Assert.assertEquals(dto.getUsername(), curator.login());
     }
 
     private CuratorDTO getUserDTO() {

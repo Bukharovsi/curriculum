@@ -2,7 +2,7 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
 <head>
-    <title>Пользователи</title>
+    <title>Кураторы</title>
 </head>
 <body>
 <!--/*@thymesVar id="curator" type="ru.curriculum.service.curator.dto.CuratorDTO"*/-->
@@ -11,10 +11,10 @@
     <div class="row">
     <div class="col-sm-offset-2 col-sm-8">
         <div th:if="${curator.id}" style="align-items: center;">
-            <h1>Редактирование <span th:text="${curator.login}"></span></h1>
+            <h1>Редактирование <span th:text="${curator.username}"></span></h1>
         </div>
         <div th:unless="${curator.id}" style="align-items: center;">
-            <h1>Создание пользователя</h1>
+            <h1>Создание куратора</h1>
         </div>
         <hr/>
     </div>
@@ -25,7 +25,7 @@
             <div>
                 <input th:hidden="true" type="number" th:field="*{id}"/>
             </div>
-            <div th:include="fragments/inputField :: inputField('Логин', 'curatorLogin', ${curator.login}, 'text', ${curator.id != null ? true: false})"></div>
+            <div th:include="fragments/inputField :: inputField('Логин', 'username', ${curator.username}, 'text', ${curator.id != null ? true: false})"></div>
             <div th:include="fragments/inputField :: inputField('Пароль', 'password', ${curator.password}, 'text', false)"></div>
             <div th:include="fragments/inputField :: inputField('Фамилия', 'surname', ${curator.surname}, 'text', false)"></div>
             <div th:include="fragments/inputField :: inputField('Имя', 'firstName', ${curator.firstName}, 'text', false)"></div>
