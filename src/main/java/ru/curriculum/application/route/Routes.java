@@ -10,4 +10,5 @@ public class Routes {
     public static final String teachers = "/admin/teachers";
     public static final String etp = "/etp";
     public static final String stateSchedule = "/stateSchedule";
+    public static final String myStateSchedule = "/myStateSchedule";
 }

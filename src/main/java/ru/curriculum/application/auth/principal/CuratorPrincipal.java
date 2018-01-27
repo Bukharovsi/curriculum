@@ -53,4 +53,8 @@ public class CuratorPrincipal implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public Curator curator() {
+        return curator;
+    }
 }
