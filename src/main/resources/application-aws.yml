@@ -10,5 +10,5 @@ spring:
 
 auth:
   admin:
-    username: admin
+    login: admin
     password: irort16

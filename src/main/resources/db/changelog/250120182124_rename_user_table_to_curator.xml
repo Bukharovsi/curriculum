@@ -6,21 +6,44 @@
 
     <changeSet id="250120182124" author="Vlad">
 
+        <!--Make the user curator-->
         <renameTable oldTableName="users" newTableName="curator"></renameTable>
+
+        <renameColumn tableName="curator" oldColumnName="username" newColumnName="login"></renameColumn>
+
+        <!--Fix user role foreign key constraint-->
+        <insert tableName="role">
+            <column name="code" value="curator"></column>
+            <column name="name" value="Куратор"></column>
+        </insert>
+
+        <update tableName="curator">
+            <column name="role_code" type="varchar(255)" value="curator"/>
+            <where>role_code = 'user'</where>
+        </update>
+
+        <delete tableName="role">
+            <where>code = 'user'</where>
+        </delete>
+
+        <dropForeignKeyConstraint baseTableName="curator" constraintName="user_role_fk"/>
+
+        <addForeignKeyConstraint baseTableName="curator"
+                                 baseColumnNames="role_code"
+                                 constraintName="curator_role_fk"
+                                 referencedTableName="role"
+                                 referencedColumnNames="code"/>
+
+        <!--Fix teacher user foreign key constraint-->
         <renameColumn tableName="teacher" oldColumnName="user_id" newColumnName="curator_id"></renameColumn>
 
         <dropForeignKeyConstraint baseTableName="teacher" constraintName="teacher_users_fk"></dropForeignKeyConstraint>
+
         <addForeignKeyConstraint baseTableName="teacher"
                                  baseColumnNames="curator_id"
                                  constraintName="teacher_curator_fk"
                                  referencedTableName="curator"
                                  referencedColumnNames="id"/>
 
-        <renameColumn tableName="curator" oldColumnName="username" newColumnName="login"></renameColumn>
-
-        <update tableName="role">
-            <column name="code" type="varchar(255)" value="curator"/>
-            <where>code = 'user'</where>
-        </update>
     </changeSet>
 </databaseChangeLog>
