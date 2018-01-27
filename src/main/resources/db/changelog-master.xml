@@ -18,4 +18,6 @@
     <include file="/db/changelog/070120181351_create_state_program_table.xml"/>
     <include file="/db/changelog/240120181913_create_staff_position_directory_table.xml"/>
     <include file="/db/changelog/250120182124_rename_user_table_to_curator.xml"/>
+    <include file="/db/changelog/270120181342_insert_study_mode.xml"/>
+    <include file="/db/changelog/270120181346_insert_implementation_form.xml"/>
 </databaseChangeLog>

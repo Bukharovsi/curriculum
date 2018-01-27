@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="270120181346" author="Sergey">
+
+        <insert tableName="implementation_form">
+            <column name="id" value="modular_with_dot"></column>
+            <column name="name" value="Модульная с использованием ДОТ"></column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
