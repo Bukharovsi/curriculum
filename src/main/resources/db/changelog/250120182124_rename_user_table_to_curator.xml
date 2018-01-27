@@ -22,6 +22,10 @@
             <where>role_code = 'user'</where>
         </update>
 
+        <delete tableName="role">
+            <where>code = 'user'</where>
+        </delete>
+
         <dropForeignKeyConstraint baseTableName="curator" constraintName="user_role_fk"/>
 
         <addForeignKeyConstraint baseTableName="curator"
