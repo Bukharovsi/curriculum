@@ -16,21 +16,27 @@
         </createTable>
 
         <insert tableName="division">
+            <column name="id" value="1"></column>
             <column name="name" value="Ректорат"></column>
         </insert>
         <insert tableName="division">
+            <column name="id" value="2"></column>
             <column name="name" value="Центр научно-прикладных исследований в области образования"></column>
         </insert>
         <insert tableName="division">
+            <column name="id" value="3"></column>
             <column name="name" value="Центр развития профессионального образования"></column>
         </insert>
         <insert tableName="division">
+            <column name="id" value="4"></column>
             <column name="name" value="Центр разработки и внедрения информационных технологий и дистанционного обучения"></column>
         </insert>
         <insert tableName="division">
+            <column name="id" value="5"></column>
             <column name="name" value="Центр формирования развития кадрового потенциала в сфере образования"></column>
         </insert>
         <insert tableName="division">
+            <column name="id" value="6"></column>
             <column name="name" value="Центр национального образования"></column>
         </insert>
 

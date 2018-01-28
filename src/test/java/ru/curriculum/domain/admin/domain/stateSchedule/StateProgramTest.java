@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.curriculum.domain.helper.UserTestFactory;
+import ru.curriculum.domain.organization.entity.Division;
+import ru.curriculum.domain.organization.repository.DivisionRepository;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 import ru.curriculum.domain.stateSchedule.repository.ImplementationFormRepository;
 import ru.curriculum.domain.stateSchedule.repository.StateProgramRepository;
@@ -26,8 +28,14 @@ public class StateProgramTest extends IntegrationBoot {
     @Autowired
     private StateProgramRepository stateProgramRepository;
 
+    @Autowired
+    private DivisionRepository divisionRepository;
+
     @Test
     public void afterSavingAndGettingStateProgramsAreEquals() throws Exception {
+
+        Division mainDepartment = divisionRepository.save(new Division("main department"));
+
         StateProgram stateProgram = StateProgram.builder()
             .targetAudience("English teachers")
             .name("ABC")
@@ -40,7 +48,7 @@ public class StateProgramTest extends IntegrationBoot {
             .dateStart(new Date())
             .dateFinish(new Date())
             .address("Kazan, main street, 1")
-            .responsibleDepartment("Main department")
+            .responsibleDepartment(mainDepartment)
             .build();
 
         stateProgramRepository.save(stateProgram);

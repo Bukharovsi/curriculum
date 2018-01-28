@@ -2,11 +2,12 @@ package ru.curriculum.service.stateSchedule.converter;
 
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
+import ru.curriculum.service.curator.dto.CuratorDTO;
+import ru.curriculum.service.division.DivisionDto;
 import ru.curriculum.service.stateSchedule.dto.ImplementationFormDto;
 import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
 import ru.curriculum.service.stateSchedule.dto.StateProgramViewDto;
 import ru.curriculum.service.stateSchedule.dto.StudyModeDto;
-import ru.curriculum.service.curator.dto.CuratorDTO;
 
 @Component
 public class StateScheduleEntityToDtoConverter {
@@ -23,7 +24,7 @@ public class StateScheduleEntityToDtoConverter {
                 .id(stateProgram.id())
                 .countOfHoursPerLerner(stateProgram.countOfHoursPerLerner())
                 .lernerCount(stateProgram.lernerCount())
-                .responsibleDepartment(stateProgram.responsibleDepartment())
+                .responsibleDepartment(new DivisionDto(stateProgram.responsibleDepartment()))
                 .mode(new StudyModeDto(stateProgram.mode().id(), stateProgram.mode().name()))
                 .implementationForm(
                         new ImplementationFormDto(
@@ -51,7 +52,7 @@ public class StateScheduleEntityToDtoConverter {
                 .id(stateProgram.id())
                 .countOfHoursPerLerner(stateProgram.countOfHoursPerLerner())
                 .lernerCount(stateProgram.lernerCount())
-                .responsibleDepartment(stateProgram.responsibleDepartment())
+                .responsibleDepartmentId(stateProgram.responsibleDepartment().id())
                 .modeId(stateProgram.mode().id())
                 .implementationFormId(stateProgram.implementationForm().id())
                 .curatorId(stateProgram.curator().id())

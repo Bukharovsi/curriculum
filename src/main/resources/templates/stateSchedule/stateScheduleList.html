@@ -45,7 +45,7 @@
             <td th:text="${stateProgram.countOfHoursPerLerner}"></td>
             <td th:text="${#dates.format(stateProgram.dateStart, 'dd/MM/yyyy')}"></td>
             <td th:text="${#dates.format(stateProgram.dateFinish, 'dd/MM/yyyy')}"></td>
-            <td th:text="${stateProgram.responsibleDepartment}"></td>
+            <td th:text="${stateProgram.responsibleDepartment.name}"></td>
             <td th:text="${stateProgram.curator.fio()}"></td>
             <td th:text="${stateProgram.address}"></td>
             <td align="right">
