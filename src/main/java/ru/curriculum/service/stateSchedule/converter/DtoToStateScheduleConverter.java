@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
+import ru.curriculum.domain.organization.entity.Division;
+import ru.curriculum.domain.organization.repository.DivisionRepository;
 import ru.curriculum.domain.stateSchedule.entity.ImplementationForm;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 import ru.curriculum.domain.stateSchedule.entity.StudyMode;
@@ -21,28 +23,32 @@ public class DtoToStateScheduleConverter {
     private StudyModeRepository studyModeRepository;
 
     @Autowired
-    private ImplementationFormRepository implementationFormRepository;
+    private ImplementationFormRepository implFormRepository;
 
-    public StateProgram createBasedOnDto(StateProgramCreationDto stateProgramCreationDto) {
+    @Autowired
+    private DivisionRepository divisionRepository;
 
-        Curator curator = curatorRepository.findOne(stateProgramCreationDto.getCuratorId());
-        ImplementationForm implementationForm = implementationFormRepository.findOne(stateProgramCreationDto.getImplementationFormId());
-        StudyMode studyMode = studyModeRepository.findOne(stateProgramCreationDto.getModeId());
+    public StateProgram createBasedOnDto(StateProgramCreationDto stateProgramDto) {
+
+        Curator curator = curatorRepository.findOne(stateProgramDto.getCuratorId());
+        ImplementationForm implementForm = implFormRepository.findOne(stateProgramDto.getImplementationFormId());
+        StudyMode studyMode = studyModeRepository.findOne(stateProgramDto.getModeId());
+        Division responsibleDepartment = divisionRepository.findOne(stateProgramDto.getResponsibleDepartmentId());
 
         StateProgram newStateProgram = StateProgram.builder()
-            .id(stateProgramCreationDto.getId())
-            .name(stateProgramCreationDto.getName())
+            .id(stateProgramDto.getId())
+            .name(stateProgramDto.getName())
             .curator(curator)
             .mode(studyMode)
-            .implementationForm(implementationForm)
-            .dateStart(stateProgramCreationDto.getDateStart())
-            .dateFinish(stateProgramCreationDto.getDateFinish())
-            .lernerCount(stateProgramCreationDto.getLernerCount())
-            .groupCount(stateProgramCreationDto.getGroupCount())
-            .countOfHoursPerLerner(stateProgramCreationDto.getCountOfHoursPerLerner())
-            .responsibleDepartment(stateProgramCreationDto.getResponsibleDepartment())
-            .address(stateProgramCreationDto.getAddress())
-            .targetAudience(stateProgramCreationDto.getTargetAudience())
+            .implementationForm(implementForm)
+            .dateStart(stateProgramDto.getDateStart())
+            .dateFinish(stateProgramDto.getDateFinish())
+            .lernerCount(stateProgramDto.getLernerCount())
+            .groupCount(stateProgramDto.getGroupCount())
+            .countOfHoursPerLerner(stateProgramDto.getCountOfHoursPerLerner())
+            .responsibleDepartment(responsibleDepartment)
+            .address(stateProgramDto.getAddress())
+            .targetAudience(stateProgramDto.getTargetAudience())
             .build();
 
         return newStateProgram;

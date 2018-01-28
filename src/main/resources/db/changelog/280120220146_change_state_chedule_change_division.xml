@@ -1,0 +1,21 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="280120220146" author="Sergey">
+
+        <update tableName="state_program">
+            <column name="responsible_department" value="1"/>
+        </update>
+        <renameColumn tableName="state_program" oldColumnName="responsible_department" newColumnName="responsible_department_id"/>
+        <modifyDataType tableName="state_program" columnName="responsible_department_id" newDataType="int"/>
+
+        <addForeignKeyConstraint baseTableName="state_program"
+                                 baseColumnNames="responsible_department_id"
+                                 constraintName="responsible_department_FK"
+                                 referencedTableName="division"
+                                 referencedColumnNames="id" />
+    </changeSet>
+</databaseChangeLog>
