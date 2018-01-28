@@ -4,13 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.curriculum.domain.directories.staffTable.StaffPosition;
 
-public class StaffTableTest extends Assert{
+public class StaffTableTest {
 
     @Test
     public void createStaffTable_mustBeCreateCorrectly() {
         StaffPosition staffPosition = new StaffPosition("Занимаемая должность");
 
-        assertEquals("Занимаемая должность", staffPosition.positionHeld());
-        assertNull(staffPosition.id());
+        Assert.assertEquals("Занимаемая должность", staffPosition.positionHeld());
+        Assert.assertNull(staffPosition.id());
     }
 }

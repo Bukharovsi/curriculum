@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="280120181342" author="Sergey">
+
+        <createTable tableName="division">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)" >
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <insert tableName="division">
+            <column name="name" value="Ректорат"></column>
+        </insert>
+        <insert tableName="division">
+            <column name="name" value="Центр научно-прикладных исследований в области образования"></column>
+        </insert>
+        <insert tableName="division">
+            <column name="name" value="Центр развития профессионального образования"></column>
+        </insert>
+        <insert tableName="division">
+            <column name="name" value="Центр разработки и внедрения информационных технологий и дистанционного обучения"></column>
+        </insert>
+        <insert tableName="division">
+            <column name="name" value="Центр формирования развития кадрового потенциала в сфере образования"></column>
+        </insert>
+        <insert tableName="division">
+            <column name="name" value="Центр национального образования"></column>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
