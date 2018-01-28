@@ -17,19 +17,22 @@ public class PlanFactory {
         if(null != planDTO.getTeacherId()) {
             teacher = teacherRepository.findOne(planDTO.getTeacherId());
         }
-        Plan plan = new Plan(
-                planDTO.getId(),
-                planDTO.getLectures(),
-                planDTO.getPractices(),
-                planDTO.getIndependentWorks(),
-                planDTO.getConsultations(),
-                planDTO.getPeerReviews(),
-                planDTO.getCredits(),
-                planDTO.getOthers(),
-                planDTO.getStandard(),
-                planDTO.getTotalHours(),
-                teacher
-        );
+        Plan plan = Plan.builder()
+                .id(planDTO.getId())
+                .lectures(planDTO.getLectures())
+                .practices(planDTO.getPractices())
+                .independentWorks(planDTO.getIndependentWorks())
+                .consultations(planDTO.getConsultations())
+                .peerReviews(planDTO.getPeerReviews())
+                .credits(planDTO.getCredits())
+                .others(planDTO.getOthers())
+                .standard(planDTO.getStandard())
+                .totalHours(planDTO.getTotalHours())
+                .lernerCount(planDTO.getLernerCount())
+                .groupCount(planDTO.getGroupCount())
+                .conditionalPagesCount(planDTO.getConditionalPagesCount())
+                .teacher(teacher)
+                .build();
 
         return plan;
     }

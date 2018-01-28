@@ -6,22 +6,43 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.curriculum.domain.etp.entity.ETP;
+import ru.curriculum.domain.etp.entity.Plan;
 import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
 import ru.curriculum.domain.etp.repository.ETPRepository;
+import ru.curriculum.domain.teacher.entity.Teacher;
+import ru.curriculum.domain.teacher.repository.TeacherRepository;
 
 public class ETPRepositoryTest extends IntegrationBoot {
+
     @Autowired
     private ETPRepository etpRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
+
     private ETPMock etpMock;
 
     @Before
     public void setUp() {
         etpMock = new ETPMock();
+        Teacher teacher = new Teacher(
+                null,
+                etpMock.getTeacher().surname(),
+                etpMock.getTeacher().firstName(),
+                etpMock.getTeacher().patronymic(),
+                etpMock.getTeacher().academicDegree(),
+                etpMock.getTeacher().patronymic(),
+                etpMock.getTeacher().positionHeld()
+        );
+        Plan plan = etpMock.getPlan();
+        plan.teacher(teacherRepository.save(teacher));
+        etpMock.applyNewPlanForModules(plan);
     }
 
     @After
     public void tearDown() {
         etpRepository.deleteAll();
+        teacherRepository.deleteAll();
     }
 
     @Test

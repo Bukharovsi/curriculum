@@ -91,6 +91,9 @@
                     <th id="other">Др.</th>
                     <th id="standard">Н</th>
                     <th id="total_hours">Всего часов</th>
+                    <th id="lerner_count">Кол-во слушателей</th>
+                    <th id="group_count">Кол-во групп</th>
+                    <th id="pages_count">Кол-во условных страниц</th>
                     <th id="teacher">Преподователь</th>
                     <td id="manage"></td>
                 </tr>
@@ -100,7 +103,7 @@
 
                 <!--УЧЕБНО-МЕТОДИЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ-->
                 <tr>
-                    <td id="ema_row" colspan="11"><h4>Учебно-методическая деятельность</h4></td>
+                    <td id="ema_row" colspan="14"><h4>Учебно-методическая деятельность</h4></td>
                     <td>
                         <a name="emaModule"></a>
                         <button class="btn btn-success" type="submit" name="addEMAModule" th:formaction="@{/etp#emaModule}">
@@ -125,6 +128,9 @@
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.others}" type="text" class="form-control"></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.standard}" type="text" class="form-control"></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.totalHours}" type="text" class="form-control" readonly></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.lernerCount}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.groupCount}" type="text" class="form-control"></td>
+                        <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.conditionalPagesCount}" type="text" class="form-control"></td>
                         <td><select th:field="*{emaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
                             <option value=""></option>
                             <option th:each="teacher : ${teachers}"
@@ -142,7 +148,7 @@
 
                 <!--ОРГАНИЗАЦИОННО-МЕТОДИЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ-->
                 <tr>
-                    <td id="oma_row" colspan="11"><h4>Организационно-методическая деятельность</h4></td>
+                    <td id="oma_row" colspan="14"><h4>Организационно-методическая деятельность</h4></td>
                     <td>
                         <a name="omaModule"></a>
                         <button class="btn btn-success" type="submit" name="addOMAModule" th:formaction="@{/etp#omaModule}">
@@ -167,6 +173,9 @@
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.others}" type="text" class="form-control"></td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.standard}" type="text" class="form-control"></td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.totalHours}" type="text" class="form-control" readonly></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.lernerCount}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.groupCount}" type="text" class="form-control"></td>
+                        <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.conditionalPagesCount}" type="text" class="form-control"></td>
                         <td><select th:field="*{omaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
                             <option value=""></option>
                             <option th:each="teacher : ${teachers}"
@@ -184,7 +193,7 @@
 
                 <!--УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ-->
                 <tr>
-                    <td id="ea_row" colspan="11"><h4>Учебная деятельность</h4></td>
+                    <td id="ea_row" colspan="14"><h4>Учебная деятельность</h4></td>
                     <td>
                         <a name="eaModule"></a>
                         <button class="btn btn-success" type="submit" name="addEAModule" th:formaction="@{/etp#eaModule}">
@@ -251,6 +260,9 @@
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.others}" type="text" class="form-control"></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.standard}" type="text" class="form-control"></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.totalHours}" type="text" class="form-control" readonly></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.lernerCount}" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.groupCount}" type="text" class="form-control"></td>
+                                <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.conditionalPagesCount}" type="text" class="form-control"></td>
                                 <td><select th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.teacherId}" class="form-control">
                                     <option value=""></option>
                                     <option th:each="teacher : ${teachers}"

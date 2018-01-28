@@ -20,4 +20,5 @@
     <include file="/db/changelog/250120182124_rename_user_table_to_curator.xml"/>
     <include file="/db/changelog/270120181342_insert_study_mode.xml"/>
     <include file="/db/changelog/270120181346_insert_implementation_form.xml"/>
+    <include file="/db/changelog/280120181326_add_columns_to_plan.xml"/>
 </databaseChangeLog>
