@@ -3,12 +3,17 @@
     vertical-align: middle;
 }
 
-/*.table thead {*/
-    /*background-color: #c4d2fb;*/
-/*}*/
+#lecture, #practice, #independent, #consultation, #review, #credit, #other, #standard  {
+    width: 4%;
+}
+
+#pages_count, #total_hours, #lerner_count, #group_count {
+    width: 4%;
+    font-size: 12px;
+}
 
 #theme {
-    width: 35%;
+    width: 30%;
     text-align: left;
 }
 
@@ -17,9 +22,14 @@
 }
 
 #teacher {
-    width: 20%;
+    width: 15%;
 }
 
 #ea_row, #ema_row, #oma_row {
     background-color: #9d9d9d;
+}
+
+[name~=plan] {
+    padding-left: 0%;
+    padding-right: 0%;
 }
