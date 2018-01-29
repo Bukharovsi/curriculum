@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -52,8 +53,9 @@ public class StateProgramCreationDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFinish;
 
-    @NotEmpty(message = "Необходимо заполнить \"Ответсвенное подразделение\"")
-    private String responsibleDepartment;
+    @NotNull(message = "Необходимо заполнить \"Ответсвенное подразделение\"")
+    @Min(value = 1, message = "Необходимо заполнить \"Ответсвенное подразделение\"")
+    private int responsibleDepartmentId;
 
     @NotNull(message = "Необходимо заполнить \"Куратор\"")
     private Integer curatorId;

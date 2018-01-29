@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
+import ru.curriculum.service.curator.CuratorCRUDService;
+import ru.curriculum.service.division.DivisionFindingService;
 import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
 import ru.curriculum.service.stateSchedule.service.ImplementationFormFindService;
 import ru.curriculum.service.stateSchedule.service.StateScheduleCRUDService;
 import ru.curriculum.service.stateSchedule.service.StudyModeFindService;
-import ru.curriculum.service.curator.CuratorCRUDService;
 import ru.curriculum.web.View;
 
 import javax.validation.Valid;
@@ -36,6 +37,9 @@ public class StateScheduleController {
     @Autowired
     private CuratorCRUDService curatorCRUDService;
 
+    @Autowired
+    protected DivisionFindingService divisionService;
+
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("stateSchedule", stateScheduleCRUDService.findAll());
@@ -48,6 +52,7 @@ public class StateScheduleController {
         model.addAttribute("implementationFormList", implementationFormFindService.findAll());
         model.addAttribute("studyModeList", studyModeFindService.findAll());
         model.addAttribute("curatorList", curatorCRUDService.findAllCurators());
+        model.addAttribute("divisionList", divisionService.findAll());
         return View.STATE_SCHEDULE_FORM;
     }
 
@@ -58,6 +63,7 @@ public class StateScheduleController {
         model.addAttribute("implementationFormList", implementationFormFindService.findAll());
         model.addAttribute("studyModeList", studyModeFindService.findAll());
         model.addAttribute("curatorList", curatorCRUDService.findAllCurators());
+        model.addAttribute("divisionList", divisionService.findAll());
         return View.STATE_SCHEDULE_FORM;
     }
 
@@ -72,6 +78,7 @@ public class StateScheduleController {
             model.addAttribute("implementationFormList", implementationFormFindService.findAll());
             model.addAttribute("studyModeList", studyModeFindService.findAll());
             model.addAttribute("curatorList", curatorCRUDService.findAllCurators());
+            model.addAttribute("divisionList", divisionService.findAll());
             return View.STATE_SCHEDULE_FORM;
         }
 
@@ -89,6 +96,7 @@ public class StateScheduleController {
             model.addAttribute("implementationFormList", implementationFormFindService.findAll());
             model.addAttribute("studyModeList", studyModeFindService.findAll());
             model.addAttribute("curatorList", curatorCRUDService.findAllCurators());
+            model.addAttribute("divisionList", divisionService.findAll());
             return View.STATE_SCHEDULE_FORM;
         }
         stateScheduleCRUDService.create(stateProgramDto);

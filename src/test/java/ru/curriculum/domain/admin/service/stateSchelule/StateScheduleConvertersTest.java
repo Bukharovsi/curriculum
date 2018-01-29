@@ -40,7 +40,7 @@ public class StateScheduleConvertersTest extends IntegrationBoot{
             .lernerCount(10)
             .modeId("fulltime")
             .name("some name")
-            .responsibleDepartment("some department")
+            .responsibleDepartmentId(1)
             .targetAudience("teachers")
             .build();
 
@@ -61,7 +61,7 @@ public class StateScheduleConvertersTest extends IntegrationBoot{
         Assert.assertEquals(newStateProgram.getModeId(), viewDto.getMode().getId());
         Assert.assertEquals(stateProgramEntity.mode().name(), viewDto.getMode().getName());
         Assert.assertEquals(newStateProgram.getName(), viewDto.getName());
-        Assert.assertEquals(newStateProgram.getResponsibleDepartment(), viewDto.getResponsibleDepartment());
+        Assert.assertEquals(newStateProgram.getResponsibleDepartmentId(), viewDto.getResponsibleDepartment().getId());
         Assert.assertEquals(newStateProgram.getTargetAudience(), viewDto.getTargetAudience());
     }
 }

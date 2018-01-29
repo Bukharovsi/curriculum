@@ -3,6 +3,7 @@ package ru.curriculum.service.stateSchedule.dto;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.service.curator.dto.CuratorDTO;
+import ru.curriculum.service.division.DivisionDto;
 
 import java.util.Date;
 
@@ -38,7 +39,7 @@ public class StateProgramViewDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFinish;
 
-    private String responsibleDepartment;
+    private DivisionDto responsibleDepartment;
 
     private CuratorDTO curator;
 
