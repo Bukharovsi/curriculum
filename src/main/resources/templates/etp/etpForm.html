@@ -91,9 +91,9 @@
                     <th id="other">Др.</th>
                     <th id="standard">Н</th>
                     <th id="total_hours">Всего часов</th>
-                    <th id="lerner_count">Кол-во слушателей</th>
+                    <th id="lerner_count">Кол-во слуша- телей</th>
                     <th id="group_count">Кол-во групп</th>
-                    <th id="pages_count">Кол-во условных страниц</th>
+                    <th id="pages_count">Кол-во уcло- вных страниц</th>
                     <th id="teacher">Преподователь</th>
                     <td id="manage"></td>
                 </tr>
@@ -206,7 +206,7 @@
                         <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].id}">
                     </div>
                     <tr>
-                        <td style="background-color: #9d9d9d94;" colspan="10">
+                        <td style="background-color: #9d9d9d94;" colspan="13">
                             <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля">
                         </td>
                         <td style="background-color: #9d9d9d94;">
@@ -227,7 +227,7 @@
                             <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].id}">
                         </div>
                         <tr>
-                            <td style="background-color: #ddddddcc" colspan="10">
+                            <td style="background-color: #ddddddcc" colspan="13">
                                 <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].name}" placeholder="Название раздела">
                             </td>
                             <td style="background-color: #ddddddcc">
