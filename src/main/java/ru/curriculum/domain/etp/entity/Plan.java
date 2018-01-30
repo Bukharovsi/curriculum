@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Getter
 @Accessors(fluent = true)
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @Builder
 @EqualsAndHashCode(of= {"id"})
 public class Plan {
@@ -37,7 +37,4 @@ public class Plan {
     @Setter
     @ManyToOne(targetEntity = Teacher.class)
     private Teacher teacher;
-
-    public Plan() {
-    }
 }

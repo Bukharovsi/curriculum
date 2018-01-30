@@ -60,23 +60,6 @@ public class ETP {
             Date distanceLearningBeginDate,
             Date distanceLearningEndDate,
             Date fullTimeLearningBeginDate,
-            Date fullTimeLearningEndDate
-    ) {
-        this();
-        this.title = title;
-        this.target = target;
-        this.distanceLearningBeginDate = distanceLearningBeginDate;
-        this.distanceLearningEndDate = distanceLearningEndDate;
-        this.fullTimeLearningBeginDate = fullTimeLearningBeginDate;
-        this.fullTimeLearningEndDate = fullTimeLearningEndDate;
-    }
-
-    public ETP(
-            String title,
-            String target,
-            Date distanceLearningBeginDate,
-            Date distanceLearningEndDate,
-            Date fullTimeLearningBeginDate,
             Date fullTimeLearningEndDate,
             Set<EAModule> eaModules,
             Set<EMAModule> emaModules,
