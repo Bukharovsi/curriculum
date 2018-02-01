@@ -1,19 +1,28 @@
 $(function () {
-    // TODO : пересчет елементов при обновление страины(((
     $("input[id*='plan']").each(function (index, element) {
         element.onchange = calcTotal
         isIntegerField(element.name) ? getIntegerMask().mask(element) : getFloatMask().mask(element)
-        // if(!/totalHours/.test(element.name)) {
-        //     // $('#' + element.id).trigger('change')
-        //     $(getSearchSelectorTemplate(element.id)).trigger('change')
-        // }
     })
-
-    // $("input[id*='plan']").filter(function (index, element) {
-    //     return !(/totalHours/.test(element.name))
-    // }).trigger('change')
+    updateTotalAfterRenderPage()
 })
 
+/**
+ *   Pass row which has cells with total sum.
+ *  For each column run calculate total sum
+ */
+function updateTotalAfterRenderPage() {
+    $("input[name*='etpTotalRow']").each(function (i, e) {
+        var nameAsArray = e.name.split('.');
+        var name = nameAsArray[nameAsArray.length-1]
+        if(!/totlaHours/.test(name)) {
+            calcTotalColumn(name)
+        }
+    })
+}
+
+/**
+ * @returns {*} Mask for input which value is float
+ */
 function getFloatMask() {
     return new Inputmask('decimal', {
         digits: 2,
@@ -22,6 +31,9 @@ function getFloatMask() {
     })
 }
 
+/**
+ * @returns {*} Mask for input which value is integer
+ */
 function getIntegerMask() {
     return new Inputmask('integer', {
         allowMinus: false,
@@ -29,6 +41,12 @@ function getIntegerMask() {
     })
 }
 
+/**
+ *  Extract from DOM element id template for search row and column plan
+ * and update each total row and column.
+ *
+ * @param e Example element id: omaModules0.plan.lectures, eaModules0.sections0.topics0.plan.lectures
+ */
 function calcTotal(e) {
     var idAsArray = e.target.id.split('.')
     var rowNameTemplate = idAsArray.slice(0, idAsArray.length -1).join('.')
@@ -40,14 +58,19 @@ function calcTotal(e) {
     calcTotalColumn(columnNameTemplate)
 }
 
+/**
+ *  Find all cell by template column name and calc total row.
+ * After start calculate "totalHours" column
+ *
+ * @param rowName
+ */
 function calcTotalRow(rowName) {
     var rowSelector = getSearchSelectorTemplate(rowName)
 
-    console.log(rowName)
-
     var total = 0.0
     $(rowSelector).each(function (i, e) {
-        if(!isIntegerField(e.name)) {
+        e.name
+        if(!isIntegerField(e.name) && !/totalHours/.test(e.name)) {
             total += parseFloat(e.value)
         }
     })
@@ -57,6 +80,11 @@ function calcTotalRow(rowName) {
     calcTotalColumn('totalHours')
 }
 
+/**
+ * Find all cell by template column name and calc total sum
+ *
+ * @param colName
+ */
 function calcTotalColumn(colName) {
     var colSelector = getSearchSelectorTemplate(colName)
 
@@ -91,10 +119,22 @@ function calcTotalColumn(colName) {
     $('#etpTotalRow\\.' + colName).val((emaTotal + omaTotal + eaTotal))
 }
 
+/**
+ *  Check if cell is integer
+ *
+ * @param cellName
+ * @returns {boolean}
+ */
 function isIntegerField(cellName) {
-    return /lernerCount/.test(cellName) || /groupCount/.test(cellName) || /conditionalPagesCount/.test(cellName)  //|| /totalHours/.test(cellName)
+    return /lernerCount/.test(cellName) || /groupCount/.test(cellName) || /conditionalPagesCount/.test(cellName)
 }
 
+/**
+ *  Make template for searching cells by part of DOM element id
+ *
+ * @param partOfId Example: plan, eaModules0.sections0.topics0 ...
+ * @returns {string}
+ */
 function getSearchSelectorTemplate(partOfId) {
     return "input[id*='" + partOfId + "']"
 }

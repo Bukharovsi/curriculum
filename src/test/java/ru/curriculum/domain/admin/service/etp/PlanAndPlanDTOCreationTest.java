@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PlanFactoryTest {
+public class PlanAndPlanDTOCreationTest {
 
     @Mock
     private TeacherRepository teacherRepository;
@@ -36,9 +36,20 @@ public class PlanFactoryTest {
     @Test
     public void createPlan_mustBeCreateCorrectly() {
         PlanDTO dto = etpMock.getPlanDTO();
-
         Plan plan = planFactory.create(dto);
 
+        assertPlan(dto, plan);
+    }
+
+    @Test
+    public void createPlanDTOFromPlan_mustBeCreateWithEqualValues() {
+        Plan plan = etpMock.getPlan();
+        PlanDTO dto = new PlanDTO(plan);
+
+        assertPlan(dto, plan);
+    }
+
+    public void assertPlan(PlanDTO dto, Plan plan) {
         assertEquals(dto.getId(), plan.id());
         assertEquals(dto.getLectures(), plan.lectures());
         assertEquals(dto.getPractices(), plan.practices());
