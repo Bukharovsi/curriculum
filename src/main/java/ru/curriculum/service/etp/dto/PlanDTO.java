@@ -35,7 +35,7 @@ public class PlanDTO {
         this.peerReviews = plan.peerReviews();
         this.credits = plan.credits();
         this.others = plan.others();
-        this.standard = plan.totalHours();
+        this.standard = plan.standard();
         this.totalHours = plan.totalHours();
         this.lernerCount = plan.lernerCount();
         this.groupCount = plan.groupCount();

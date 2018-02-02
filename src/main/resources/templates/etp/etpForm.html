@@ -8,11 +8,11 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/etp/etp.css}">
 
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" th:src="@{/js/etp/totalHoursCalc.js}"></script>
     <script type="text/javascript" th:src="@{/js/etp/etp.js}"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
+    <!--/*@thymesVar id="etp" type="ru.curriculum.service.etp.dto.ETP_DTO"*/-->
     <div th:if="${etp.id}">
         <h1>Редактирование Учебно-тематического плана</h1>
     </div>
@@ -279,6 +279,67 @@
                         </div>
                     </div>
                 </div>
+
+                <tr>
+                    <td><label>Итого по О/М</label></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.lectures}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.practices}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.independentWorks}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.consultations}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.peerReviews}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.credits}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.others}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.standard}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.totalHours}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.lernerCount}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.groupCount}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{emaModuleTotalRow.conditionalPagesCount}" class="form-control" readonly></td>
+                </tr>
+                <tr>
+                    <td><label>Итого по О/Д</label></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.lectures}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.practices}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.independentWorks}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.consultations}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.peerReviews}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.credits}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.others}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.standard}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.totalHours}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.lernerCount}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.groupCount}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{omaModuleTotalRow.conditionalPagesCount}" class="form-control" readonly></td>
+                </tr>
+                <tr>
+                    <td><label>Итого по О/O</label></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.lectures}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.practices}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.independentWorks}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.consultations}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.peerReviews}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.credits}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.others}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.standard}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.totalHours}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.lernerCount}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.groupCount}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{eaModuleTotalRow.conditionalPagesCount}" class="form-control" readonly></td>
+                </tr>
+                <tr>
+                    <td><label>Всего по курсу</label></td>
+                    <td><input type="text" th:field="*{etpTotalRow.lectures}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.practices}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.independentWorks}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.consultations}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.peerReviews}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.credits}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.others}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.standard}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.totalHours}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.lernerCount}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.groupCount}" class="form-control" readonly></td>
+                    <td><input type="text" th:field="*{etpTotalRow.conditionalPagesCount}" class="form-control" readonly></td>
+                </tr>
 
                 </tbody>
             </table>

@@ -31,38 +31,60 @@ import static java.util.stream.Collectors.toList;
         )
 })
 public class ETP_DTO {
+
     private Integer id;
+
     @NotEmpty(message = "Необходими заполнить поле \"Название\"")
     private String title;
+
     @NotEmpty(message = "Необходими заполнить поле \"Цель\"")
     private String target;
+
     @NotNull(message = "Необходими заполнить поле \"Дата начала дистанционного обучения\"")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date distanceLearningBeginDate;
+
     @NotNull(message = "Необходими заполнить поле \"Дата окончания дистанционного обучения\"")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date distanceLearningEndDate;
+
     @NotNull(message = "Необходими заполнить поле \"Дата начала очного обучения\"")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fullTimeLearningBeginDate;
+
     @NotNull(message = "Необходими заполнить поле \"Дата окончания очного обучения\"")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fullTimeLearningEndDate;
+
     @Valid
     private List<EAModuleDTO> eaModules;
+
     @Valid
     private List<EMAModuleDTO> emaModules;
+
     @Valid
     private List<OMAModuleDTO> omaModules;
+
+    private TotalRow emaModuleTotalRow;
+
+    private TotalRow eaModuleTotalRow;
+
+    private TotalRow omaModuleTotalRow;
+
+    private TotalRow etpTotalRow;
 
     public ETP_DTO() {
         this.eaModules = new ArrayList<>();
         this.emaModules = new ArrayList<>();
         this.omaModules = new ArrayList<>();
+        this.emaModuleTotalRow = new TotalRow();
+        this.emaModuleTotalRow = new TotalRow();
+        this.emaModuleTotalRow = new TotalRow();
+        this.etpTotalRow = new TotalRow();
     }
 
     public ETP_DTO(ETP etp) {
@@ -77,19 +99,19 @@ public class ETP_DTO {
                 etp.eaModules()
                         .stream()
                         .map(EAModuleDTO::new)
-                        .sorted(Comparator.comparing(EAModuleDTO::getId))
+                        .sorted(Comparator.comparing(EAModuleDTO::getId).reversed())
                         .collect(toList());
         this.emaModules =
                 etp.emaModules()
                         .stream()
                         .map(EMAModuleDTO::new)
-                        .sorted(Comparator.comparing(EMAModuleDTO::getId))
+                        .sorted(Comparator.comparing(EMAModuleDTO::getId).reversed())
                         .collect(toList());
         this.omaModules =
                 etp.omaModules()
                         .stream()
                         .map(OMAModuleDTO::new)
-                        .sorted(Comparator.comparing(OMAModuleDTO::getId))
+                        .sorted(Comparator.comparing(OMAModuleDTO::getId).reversed())
                         .collect(toList());
     }
 }
