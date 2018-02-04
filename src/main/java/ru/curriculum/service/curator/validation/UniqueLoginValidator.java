@@ -5,16 +5,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
-import ru.curriculum.service.curator.dto.CuratorDTO;
+import ru.curriculum.service.curator.dto.CuratorDto;
 
-// TODO: запихать в одно место с валидацией формы CuratorDTO
+// TODO: запихать в одно место с валидацией формы CuratorDto
 @Component
 public class UniqueLoginValidator {
     @Autowired
     private CuratorRepository curatorRepository;
 
-    public void validate(CuratorDTO curatorDTO, BindingResult errors) {
-        if(null != curatorRepository.findByLogin(curatorDTO.getUsername())) {
+    public void validate(CuratorDto curatorDto, BindingResult errors) {
+        if(null != curatorRepository.findByLogin(curatorDto.getUsername())) {
             errors.addError(new ObjectError("username", "Такой логин уже существует"));
         }
     }

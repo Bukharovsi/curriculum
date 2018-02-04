@@ -30,7 +30,7 @@ import static java.util.stream.Collectors.toList;
                 message = "Дата окончания очного обучения должна быть больше даты начала"
         )
 })
-public class ETP_DTO {
+public class ETPDto {
 
     private Integer id;
 
@@ -60,14 +60,16 @@ public class ETP_DTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fullTimeLearningEndDate;
 
-    @Valid
-    private List<EAModuleDTO> eaModules;
+    private Integer stateProgramId;
 
     @Valid
-    private List<EMAModuleDTO> emaModules;
+    private List<EAModuleDto> eaModules;
 
     @Valid
-    private List<OMAModuleDTO> omaModules;
+    private List<EMAModuleDto> emaModules;
+
+    @Valid
+    private List<OMAModuleDto> omaModules;
 
     private TotalRow emaModuleTotalRow;
 
@@ -77,7 +79,7 @@ public class ETP_DTO {
 
     private TotalRow etpTotalRow;
 
-    public ETP_DTO() {
+    public ETPDto() {
         this.eaModules = new ArrayList<>();
         this.emaModules = new ArrayList<>();
         this.omaModules = new ArrayList<>();
@@ -87,7 +89,7 @@ public class ETP_DTO {
         this.etpTotalRow = new TotalRow();
     }
 
-    public ETP_DTO(ETP etp) {
+    public ETPDto(ETP etp) {
         this.id = etp.id();
         this.title = etp.title();
         this.target = etp.target();
@@ -95,23 +97,24 @@ public class ETP_DTO {
         this.distanceLearningEndDate = etp.distanceLearningEndDate();
         this.fullTimeLearningBeginDate = etp.fullTimeLearningBeginDate();
         this.fullTimeLearningEndDate = etp.fullTimeLearningEndDate();
+        this.stateProgramId = etp.stateProgramId();
         this.eaModules =
                 etp.eaModules()
                         .stream()
-                        .map(EAModuleDTO::new)
-                        .sorted(Comparator.comparing(EAModuleDTO::getId).reversed())
+                        .map(EAModuleDto::new)
+                        .sorted(Comparator.comparing(EAModuleDto::getId).reversed())
                         .collect(toList());
         this.emaModules =
                 etp.emaModules()
                         .stream()
-                        .map(EMAModuleDTO::new)
-                        .sorted(Comparator.comparing(EMAModuleDTO::getId).reversed())
+                        .map(EMAModuleDto::new)
+                        .sorted(Comparator.comparing(EMAModuleDto::getId).reversed())
                         .collect(toList());
         this.omaModules =
                 etp.omaModules()
                         .stream()
-                        .map(OMAModuleDTO::new)
-                        .sorted(Comparator.comparing(OMAModuleDTO::getId).reversed())
+                        .map(OMAModuleDto::new)
+                        .sorted(Comparator.comparing(OMAModuleDto::getId).reversed())
                         .collect(toList());
     }
 }

@@ -2,6 +2,7 @@ package ru.curriculum.web;
 
 public class View {
     public static final String INDEX = "index";
+    public static final String ERROR_PAGE = "error/errorPage";
     public static final String CURATOR_LIST = "admin/curators/curatorList";
     public static final String CURATOR_FORM = "admin/curators/curatorForm";
     public static final String TEACHERS_LIST = "admin/teachers/teachersList";

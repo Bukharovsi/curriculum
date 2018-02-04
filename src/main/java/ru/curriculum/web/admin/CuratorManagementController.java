@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.curator.CuratorCRUDService;
-import ru.curriculum.service.curator.dto.CuratorDTO;
+import ru.curriculum.service.curator.dto.CuratorDto;
 import ru.curriculum.service.curator.validation.UniqueLoginValidator;
 import ru.curriculum.web.View;
 
@@ -35,7 +35,7 @@ public class CuratorManagementController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String getNewCuratorForm(Model model) {
-        model.addAttribute("curator", new CuratorDTO());
+        model.addAttribute("curator", new CuratorDto());
 
         return View.CURATOR_FORM;
     }
@@ -48,22 +48,22 @@ public class CuratorManagementController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createCurator(@ModelAttribute("curator") @Valid CuratorDTO curatorDTO, BindingResult errors) {
-        uniqueLoginValidator.validate(curatorDTO, errors);
+    public String createCurator(@ModelAttribute("curator") @Valid CuratorDto curatorDto, BindingResult errors) {
+        uniqueLoginValidator.validate(curatorDto, errors);
         if(errors.hasErrors()) {
             return View.CURATOR_FORM;
         }
-        curatorCRUDService.create(curatorDTO);
+        curatorCRUDService.create(curatorDto);
 
         return redirectTo(Routes.curator);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String updateCurator(@ModelAttribute("curator") @Valid CuratorDTO curatorDTO, BindingResult errors) {
+    public String updateCurator(@ModelAttribute("curator") @Valid CuratorDto curatorDto, BindingResult errors) {
         if(errors.hasErrors()) {
             return View.CURATOR_FORM;
         }
-        curatorCRUDService.update(curatorDTO);
+        curatorCRUDService.update(curatorDto);
 
         return redirectTo(Routes.curator);
     }

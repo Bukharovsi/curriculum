@@ -9,8 +9,8 @@ import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
 import ru.curriculum.domain.teacher.entity.Teacher;
-import ru.curriculum.service.etp.dto.ETP_DTO;
-import ru.curriculum.service.etp.dto.PlanDTO;
+import ru.curriculum.service.etp.dto.ETPDto;
+import ru.curriculum.service.etp.dto.PlanDto;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -115,11 +115,11 @@ public class ETPMock {
         return topics;
     }
 
-    public ETP_DTO getETP_DTO() {
-        return new ETP_DTO(getETP());
+    public ETPDto getETP_DTO() {
+        return new ETPDto(getETP());
     }
 
-    public PlanDTO getPlanDTO() {
-        return new PlanDTO(plan);
+    public PlanDto getPlanDTO() {
+        return new PlanDto(plan);
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.admin.curator.entity.Role;
 import ru.curriculum.domain.helper.UserTestFactory;
-import ru.curriculum.service.curator.dto.CuratorDTO;
+import ru.curriculum.service.curator.dto.CuratorDto;
 
 public class CuratorTest extends IntegrationBoot {
 
@@ -78,8 +78,8 @@ public class CuratorTest extends IntegrationBoot {
         assertEquals(" ", curator.fullName());
     }
 
-    private CuratorDTO getUserDTO() {
-        CuratorDTO dto = new CuratorDTO();
+    private CuratorDto getUserDTO() {
+        CuratorDto dto = new CuratorDto();
         dto.setId(22);
         dto.setUsername("newUserName");
         dto.setPassword("3333");

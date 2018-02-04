@@ -1,4 +1,4 @@
-package ru.curriculum.domain.admin;
+package ru.curriculum.domain.admin.web;
 
 import boot.IntegrationWebBoot;
 import org.junit.After;
@@ -63,7 +63,6 @@ public class CuratorManagementControllerTest extends IntegrationWebBoot {
     public void getCurator() throws Exception {
         String url = "/admin/curators/edit/" + curators.get(0).id();
         mockMvc.perform(get(url))
-                .andDo(print())
                 .andExpect(view().name("admin/curators/curatorForm"))
                 .andExpect(model().attributeDoesNotExist("password"))
                 .andDo(print());
@@ -84,8 +83,7 @@ public class CuratorManagementControllerTest extends IntegrationWebBoot {
                 .param("firstName", "test")
                 .param("surname", "test"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/curators"))
-                .andDo(print());
+                .andExpect(redirectedUrl("/admin/curators"));
 
         Curator newCurator = curatorRepository.findByLogin("test");
 
@@ -103,8 +101,7 @@ public class CuratorManagementControllerTest extends IntegrationWebBoot {
                 .param("surname", curators.get(0).surname())
                 .param("patronymic", "Васильевич"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/curators"))
-                .andDo(print());
+                .andExpect(redirectedUrl("/admin/curators"));
         Curator curator = curatorRepository.findOne(curators.get(0).id());
 
         assertEquals("Васильевич", curator.patronymic());
@@ -126,8 +123,7 @@ public class CuratorManagementControllerTest extends IntegrationWebBoot {
                 .param("surname", curators.get(0).surname())
                 .param("patronymic", curators.get(0).patronymic()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/curators"))
-                .andDo(print());
+                .andExpect(redirectedUrl("/admin/curators"));
         Curator curator = curatorRepository.findOne(curators.get(0).id());
 
         assertTrue(
@@ -146,8 +142,7 @@ public class CuratorManagementControllerTest extends IntegrationWebBoot {
                 .param("firstName", "test")
                 .param("surname", "test"))
                 .andExpect(view().name("admin/curators/curatorForm"))
-                .andExpect(model().errorCount(1))
-                .andDo(print());
+                .andExpect(model().errorCount(1));
     }
 
     @Test
@@ -155,8 +150,7 @@ public class CuratorManagementControllerTest extends IntegrationWebBoot {
         String url = "/admin/curators/delete/" + curators.get(1).id();
         mockMvc.perform(get(url))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/curators"))
-                .andDo(print());
+                .andExpect(redirectedUrl("/admin/curators"));
 
         Curator curator = curatorRepository.findOne(curators.get(1).id());
 

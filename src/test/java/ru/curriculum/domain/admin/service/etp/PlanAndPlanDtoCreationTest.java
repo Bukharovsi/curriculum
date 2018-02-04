@@ -9,14 +9,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ru.curriculum.domain.admin.domain.etp.ETPMock;
 import ru.curriculum.domain.etp.entity.Plan;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
-import ru.curriculum.service.etp.PlanFactory;
-import ru.curriculum.service.etp.dto.PlanDTO;
+import ru.curriculum.service.etp.converter.PlanFactory;
+import ru.curriculum.service.etp.dto.PlanDto;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PlanAndPlanDTOCreationTest {
+public class PlanAndPlanDtoCreationTest {
 
     @Mock
     private TeacherRepository teacherRepository;
@@ -35,7 +35,7 @@ public class PlanAndPlanDTOCreationTest {
 
     @Test
     public void createPlan_mustBeCreateCorrectly() {
-        PlanDTO dto = etpMock.getPlanDTO();
+        PlanDto dto = etpMock.getPlanDTO();
         Plan plan = planFactory.create(dto);
 
         assertPlan(dto, plan);
@@ -44,12 +44,12 @@ public class PlanAndPlanDTOCreationTest {
     @Test
     public void createPlanDTOFromPlan_mustBeCreateWithEqualValues() {
         Plan plan = etpMock.getPlan();
-        PlanDTO dto = new PlanDTO(plan);
+        PlanDto dto = new PlanDto(plan);
 
         assertPlan(dto, plan);
     }
 
-    public void assertPlan(PlanDTO dto, Plan plan) {
+    public void assertPlan(PlanDto dto, Plan plan) {
         assertEquals(dto.getId(), plan.id());
         assertEquals(dto.getLectures(), plan.lectures());
         assertEquals(dto.getPractices(), plan.practices());

@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @PasswordConstraint
 @ToString
-public class CuratorDTO implements Serializable {
+public class CuratorDto implements Serializable {
 
     private Integer id;
 
@@ -35,11 +35,11 @@ public class CuratorDTO implements Serializable {
 
     private Boolean isTeacher;
 
-    public CuratorDTO() {
+    public CuratorDto() {
         this.isTeacher = false;
     }
 
-    public CuratorDTO(Curator curator) {
+    public CuratorDto(Curator curator) {
         this.id = curator.id();
         this.username = curator.login();
         this.firstName = curator.firstName();

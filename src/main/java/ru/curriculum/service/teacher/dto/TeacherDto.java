@@ -9,12 +9,11 @@ import ru.curriculum.domain.teacher.entity.Teacher;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-public class TeacherDTO {
+public class TeacherDto {
 
     private Integer id;
 
     @NotEmpty(message = "Необходимо заполнить поле \"Фамилия\"")
-
     private String surname;
 
     @NotEmpty(message = "Необходимо заполнить поле \"Имя\"")
@@ -38,11 +37,11 @@ public class TeacherDTO {
 
     private Integer curatorId;
 
-    public TeacherDTO() {
+    public TeacherDto() {
         this.placeOfWork = "ГАОУ ДПО Институт Развития Образования РТ";
     }
 
-    public TeacherDTO(Teacher teacher) {
+    public TeacherDto(Teacher teacher) {
         this.id = teacher.id();
         this.surname = teacher.surname();
         this.firstName = teacher.firstName();

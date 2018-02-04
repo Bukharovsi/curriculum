@@ -1,10 +1,11 @@
-package ru.curriculum.service.etp;
+package ru.curriculum.service.etp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.domain.etp.repository.ETPRepository;
-import ru.curriculum.service.etp.dto.ETP_DTO;
+import ru.curriculum.service.etp.converter.ETPDtoToEtpConverter;
+import ru.curriculum.service.etp.dto.ETPDto;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -17,30 +18,30 @@ public class ETP_CRUDService {
     @Autowired
     private ETPRepository etpRepository;
     @Autowired
-    private ETPFactory etpFactory;
+    private ETPDtoToEtpConverter etpDtoToEtpConverter;
 
-    public List<ETP_DTO> getAll() {
-        List<ETP_DTO> dtos = new ArrayList<>();
-        etpRepository.findAll().forEach(etp -> dtos.add(new ETP_DTO(etp)));
+    public List<ETPDto> getAll() {
+        List<ETPDto> dtos = new ArrayList<>();
+        etpRepository.findAll().forEach(etp -> dtos.add(new ETPDto(etp)));
 
         return dtos;
     }
 
-    public ETP_DTO get(Integer etpId) {
+    public ETPDto get(Integer etpId) {
         ETP etp = etpRepository.findOne(etpId);
         if(null == etp) {
             throw new EntityNotFoundException(format("УТП в иненитфикатором %s не найде в системе", etpId));
         }
 
-        return new ETP_DTO(etp);
+        return new ETPDto(etp);
     }
 
-    public void create(ETP_DTO etpDTO) {
-        ETP etp = etpFactory.create(etpDTO);
+    public void create(ETPDto etpDTO) {
+        ETP etp = etpDtoToEtpConverter.convert(etpDTO);
         etpRepository.save(etp);
     }
 
-    public void update(ETP_DTO etpDTO) {
+    public void update(ETPDto etpDTO) {
         ETP etpNeedToUpdate = etpRepository.findOne(etpDTO.getId());
         if(null == etpNeedToUpdate) {
             throw new EntityNotFoundException(format("УТП в иненитфикатором %s не найде в системе", etpDTO.getId()));

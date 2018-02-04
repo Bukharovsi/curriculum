@@ -12,25 +12,25 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class EASectionDTO {
+public class EASectionDto {
     private Integer id;
     @NotEmpty(message = "\"Учебно деятельность\" необходимо заполнить поле \"Название раздела\"")
     private String name;
     @Valid
-    private List<EATopicDTO> topics;
+    private List<EATopicDto> topics;
 
-    public EASectionDTO() {
+    public EASectionDto() {
         this.topics = new ArrayList<>();
     }
 
-    public EASectionDTO(EASection section) {
+    public EASectionDto(EASection section) {
         this();
         this.id = section.id();
         this.name = section.name();
         this.topics = section.topics()
                 .stream()
                 .sorted(Comparator.comparing(EATopic::id))
-                .map(EATopicDTO::new)
+                .map(EATopicDto::new)
                 .collect(Collectors.toList());
     }
 }

@@ -5,23 +5,21 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
-public class EMAModuleDTO {
+public class EMAModuleDto {
     private Integer id;
     @NotEmpty(message = "\"Учебная-методическая деятельность\" необходимо заполнить поле \"Название модуля\"")
     private String name;
-    private PlanDTO plan;
+    private PlanDto plan;
 
-    public EMAModuleDTO() {
-        this.plan = new PlanDTO();
+    public EMAModuleDto() {
+        this.plan = new PlanDto();
     }
 
-    public EMAModuleDTO(EMAModule module) {
+    public EMAModuleDto(EMAModule module) {
         this.id = module.id();
         this.name = module.name();
-        this.plan = new PlanDTO(module.plan());
+        this.plan = new PlanDto(module.plan());
     }
 }

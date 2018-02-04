@@ -7,13 +7,13 @@ import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 
 @Getter
 @Setter
-public class AcademicDegreeDTO {
+public class AcademicDegreeDto {
     private String code;
     private String name;
 
-    public AcademicDegreeDTO() {}
+    public AcademicDegreeDto() {}
 
-    public AcademicDegreeDTO(AcademicDegree academicDegree) {
+    public AcademicDegreeDto(AcademicDegree academicDegree) {
         this.code = academicDegree.code();
         this.name = academicDegree.name();
     }

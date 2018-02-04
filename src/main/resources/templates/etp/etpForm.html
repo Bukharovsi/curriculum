@@ -12,7 +12,7 @@
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <!--/*@thymesVar id="etp" type="ru.curriculum.service.etp.dto.ETP_DTO"*/-->
+    <!--/*@thymesVar id="etp" type="ru.curriculum.service.etp.dto.ETPDto"*/-->
     <div th:if="${etp.id}">
         <h1>Редактирование Учебно-тематического плана</h1>
     </div>
@@ -74,6 +74,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div>
+            <input hidden="true" th:field="*{stateProgramId}">
         </div>
 
 
@@ -140,7 +144,7 @@
                         </select></td>
                         <td>
                             <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index}" name="removeEMAModule" th:formaction="@{/etp#emaModule}">
-                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Удалить тему"></span>
+                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Удалить Раздел"></span>
                             </button>
                         </td>
                     </tr>

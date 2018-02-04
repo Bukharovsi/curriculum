@@ -93,7 +93,7 @@
                 <div class="col-sm-8">
                     <select th:field="*{curatorId}" class="form-control">
                         <option value=""></option>
-                        <!--/*@thymesVar id="curator" type="ru.curriculum.service.curator.dto.CuratorDTO"*/-->
+                        <!--/*@thymesVar id="curator" type="ru.curriculum.service.curator.dto.CuratorDto"*/-->
                         <option th:each="curator : ${curatorList}"
                                 th:value="${curator.getId()}"
                                 th:text="${curator.fio()}"
