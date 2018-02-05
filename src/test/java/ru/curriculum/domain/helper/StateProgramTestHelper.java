@@ -12,6 +12,7 @@ import ru.curriculum.domain.stateSchedule.repository.StateProgramRepository;
 import ru.curriculum.domain.stateSchedule.repository.StudyModeRepository;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class StateProgramTestHelper {
@@ -31,7 +32,8 @@ public class StateProgramTestHelper {
     private DivisionRepository divisionRepository;
 
     public StateProgram createStateProgram() {
-        Division mainDepartment = divisionRepository.save(new Division("English department"));
+        Division mainDepartment = divisionRepository.save(new Division(UUID.randomUUID().toString()));
+
         return StateProgram.builder()
                 .targetAudience("English teachers")
                 .name("ABC")
@@ -54,6 +56,6 @@ public class StateProgramTestHelper {
 
     public void deleteAll() {
         stateProgramRepository.deleteAll();
-        divisionRepository.deleteAll();
+//        divisionRepository.deleteAll();
     }
 }
