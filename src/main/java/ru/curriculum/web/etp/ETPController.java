@@ -93,6 +93,17 @@ public class ETPController {
         return ETP_FORM;
     }
 
+    @RequestMapping(value = "/etpFormedByStateProgram/{stateProgramId}", method = RequestMethod.GET)
+    public String getEtpByStateProgramCreation(
+            @PathVariable("stateProgramId") Integer stateProgramId,
+            Model model
+    ) {
+        model.addAttribute("etp", etpCRUDService.getByStateProgramId(stateProgramId));
+        model.addAttribute("teachers", teacherCRUDService.findAll());
+
+        return ETP_FORM;
+    }
+
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable("id") Integer eptId) {

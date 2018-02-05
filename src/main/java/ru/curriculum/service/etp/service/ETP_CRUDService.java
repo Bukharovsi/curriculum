@@ -30,7 +30,17 @@ public class ETP_CRUDService {
     public ETPDto get(Integer etpId) {
         ETP etp = etpRepository.findOne(etpId);
         if(null == etp) {
-            throw new EntityNotFoundException(format("УТП в иненитфикатором %s не найде в системе", etpId));
+            throw new EntityNotFoundException(format("УТП в иненитфикатором %s не найдено в системе", etpId));
+        }
+
+        return new ETPDto(etp);
+    }
+
+    public ETPDto getByStateProgramId(Integer stateProgramId) {
+        ETP etp = etpRepository.findByStateProgramId(stateProgramId);
+        if(null == etp) {
+            throw new EntityNotFoundException(
+                    format("УТП в созданное на основании плана с идентификатором %s не найдено в системе", stateProgramId));
         }
 
         return new ETPDto(etp);

@@ -38,7 +38,6 @@ public class ETPControllerTest extends IntegrationWebBoot {
         StateProgram program = stateProgramHelper.createAndSaveStateProgram();
         mockMvc.perform(get(Routes.etp + "/etpTemplate/" + program.id())
                 .accept(MediaType.APPLICATION_FORM_URLENCODED))
-                .andDo(print())
                 .andExpect(view().name(View.ETP_FORM));
     }
 
@@ -46,7 +45,6 @@ public class ETPControllerTest extends IntegrationWebBoot {
     public void getEtpTemplateFormFromNoneExistenceStateProgram_mustBeError() throws Exception {
         mockMvc.perform(get(Routes.etp + "/etpTemplate/9999")
                 .accept(MediaType.APPLICATION_FORM_URLENCODED))
-                .andDo(print())
                 .andExpect(view().name(View.ERROR_PAGE));
     }
 
@@ -59,7 +57,25 @@ public class ETPControllerTest extends IntegrationWebBoot {
 
         mockMvc.perform(get(Routes.etp + "/etpTemplate/" + program.id())
                 .accept(MediaType.APPLICATION_FORM_URLENCODED))
-                .andDo(print())
+                .andExpect(view().name(View.ERROR_PAGE));
+    }
+
+    @Test
+    public void getEptByStateProgramIdCreatedBy_mustReturnEtpForm() throws Exception {
+        StateProgram program = stateProgramHelper.createAndSaveStateProgram();
+        ETP etp = getETP();
+        etp.stateProgramId(program.id());
+        etpRepository.save(etp);
+
+        mockMvc.perform(get(Routes.etp + "/etpFormedByStateProgram/" + program.id())
+                .accept(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(view().name(View.ETP_FORM));
+    }
+
+    @Test
+    public void getEtpByStateProgramIdNotCreatedBy_mustBeError() throws Exception {
+        mockMvc.perform(get(Routes.etp + "/etpFormedByStateProgram/9999")
+                .accept(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(view().name(View.ERROR_PAGE));
     }
 

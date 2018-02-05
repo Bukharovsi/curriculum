@@ -60,10 +60,16 @@
                 <a th:href="@{/stateSchedule/editForm/{id}(id=${stateProgram.id})}" data-toggle="tooltip" title="Редактировать">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <!--TODO проврка на удаление потому, уже может быть создан УТП-->
-                <a th:href="@{/stateSchedule/delete/{id}(id=${stateProgram.id})}" data-toggle="tooltip" title="Удалить">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </a>
+                <div th:if="!${stateProgram.isEtpCreated()}">
+                    <a th:href="@{/stateSchedule/delete/{id}(id=${stateProgram.id})}" data-toggle="tooltip" title="Удалить">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+                <div th:if="${stateProgram.isEtpCreated()}">
+                    <a th:href="@{/etp/etpFormedByStateProgram/{id}(id=${stateProgram.id})}" data-toggle="tooltip" title="Перейти к УТП">
+                        <span class="glyphicon glyphicon-book"></span>
+                    </a>
+                </div>
             </td>
         </tr>
         </tbody>
