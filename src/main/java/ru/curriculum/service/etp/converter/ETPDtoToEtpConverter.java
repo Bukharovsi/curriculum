@@ -1,4 +1,4 @@
-package ru.curriculum.service.etp;
+package ru.curriculum.service.etp.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,28 +16,29 @@ import java.util.Set;
 
 
 @Component
-public class ETPFactory {
+public class ETPDtoToEtpConverter {
     @Autowired
     private PlanFactory planFactory;
 
-    public ETP create(ETP_DTO etpDTO) {
+    public ETP convert(ETPDto etpDto) {
         ETP etp = new ETP(
-                etpDTO.getId(),
-                etpDTO.getTitle(),
-                etpDTO.getTarget(),
-                etpDTO.getDistanceLearningBeginDate(),
-                etpDTO.getDistanceLearningEndDate(),
-                etpDTO.getFullTimeLearningBeginDate(),
-                etpDTO.getFullTimeLearningEndDate(),
-                createEAModules(etpDTO.getEaModules()),
-                createEMAModules(etpDTO.getEmaModules()),
-                createOMAModules(etpDTO.getOmaModules())
+                etpDto.getId(),
+                etpDto.getTitle(),
+                etpDto.getTarget(),
+                etpDto.getDistanceLearningBeginDate(),
+                etpDto.getDistanceLearningEndDate(),
+                etpDto.getFullTimeLearningBeginDate(),
+                etpDto.getFullTimeLearningEndDate(),
+                createEAModules(etpDto.getEaModules()),
+                createEMAModules(etpDto.getEmaModules()),
+                createOMAModules(etpDto.getOmaModules())
         );
+        etp.stateProgramId(etpDto.getStateProgramId());
 
         return etp;
     }
 
-    private Set<EAModule> createEAModules(List<EAModuleDTO> dtos) {
+    private Set<EAModule> createEAModules(List<EAModuleDto> dtos) {
         Set<EAModule> eaModules = new HashSet<>();
         dtos.forEach(dto -> {
             EAModule module = new EAModule(
@@ -49,7 +50,7 @@ public class ETPFactory {
         return eaModules;
     }
 
-    private Set<EASection> createEASections(List<EASectionDTO> dtos) {
+    private Set<EASection> createEASections(List<EASectionDto> dtos) {
         Set<EASection> eaSections = new HashSet<>();
         dtos.forEach(dto -> {
             EASection section = new EASection(
@@ -61,7 +62,7 @@ public class ETPFactory {
         return eaSections;
     }
 
-    private Set<EATopic> createTopics(List<EATopicDTO> dtos) {
+    private Set<EATopic> createTopics(List<EATopicDto> dtos) {
         Set<EATopic> topics = new HashSet<>();
         dtos.forEach(dto -> {
             EATopic topic = new EATopic(
@@ -73,7 +74,7 @@ public class ETPFactory {
         return topics;
     }
 
-    private Set<OMAModule> createOMAModules(List<OMAModuleDTO> dtos) {
+    private Set<OMAModule> createOMAModules(List<OMAModuleDto> dtos) {
         Set<OMAModule> omaModules = new HashSet<>();
         dtos.forEach(dto -> {
             OMAModule module = new OMAModule(
@@ -85,7 +86,7 @@ public class ETPFactory {
         return omaModules;
     }
 
-    private Set<EMAModule> createEMAModules(List<EMAModuleDTO> dtos) {
+    private Set<EMAModule> createEMAModules(List<EMAModuleDto> dtos) {
         Set<EMAModule> emaSections = new HashSet<>();
         dtos.forEach(dto -> {
             EMAModule module = new EMAModule(

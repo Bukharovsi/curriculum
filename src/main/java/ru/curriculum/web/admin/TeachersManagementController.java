@@ -12,8 +12,8 @@ import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.directories.academicDegree.AcademicDegreeFindService;
 import ru.curriculum.service.directories.staffTable.StaffTableFindService;
 import ru.curriculum.service.teacher.TeacherCRUDService;
-import ru.curriculum.service.teacher.dto.TeacherDTO;
-import ru.curriculum.service.teacher.factory.TeacherDTOFactory;
+import ru.curriculum.service.teacher.dto.TeacherDto;
+import ru.curriculum.service.teacher.factory.TeacherDtoFactory;
 import ru.curriculum.service.curator.AccountService;
 
 import javax.validation.Valid;
@@ -34,7 +34,7 @@ public class TeachersManagementController {
     @Autowired
     private AcademicDegreeFindService academicDegreeFindService;
     @Autowired
-    private TeacherDTOFactory teacherDTOFactory;
+    private TeacherDtoFactory teacherDtoFactory;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getAll(Model model) {
@@ -45,7 +45,7 @@ public class TeachersManagementController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String getNewTeacherForm(Model model) {
-        model.addAttribute("teacher", new TeacherDTO());
+        model.addAttribute("teacher", new TeacherDto());
         model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
         model.addAttribute("curatorProfiles", accountService.getFreeAccounts());
         model.addAttribute("staffPosition", staffTableFindService.findAll());
@@ -55,7 +55,7 @@ public class TeachersManagementController {
 
     @RequestMapping(value = "/newFromCurator/{curatorId}", method = RequestMethod.GET)
     public String getNewTeacherFromCuratorForm(@PathVariable("curatorId") Integer curatorId, Model model) {
-        model.addAttribute("teacher", teacherDTOFactory.createTeacherDTOBasedOnCurator(curatorId));
+        model.addAttribute("teacher", teacherDtoFactory.createTeacherDTOBasedOnCurator(curatorId));
         model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
         model.addAttribute("curatorProfiles", accountService.getFreeAccounts());
         model.addAttribute("staffPosition", staffTableFindService.findAll());
@@ -65,7 +65,7 @@ public class TeachersManagementController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String createTeacher(
-            @ModelAttribute("teacher") @Valid TeacherDTO teacherDTO,
+            @ModelAttribute("teacher") @Valid TeacherDto teacherDto,
             BindingResult teacherBindingResult,
             Model model
     ) {
@@ -76,17 +76,17 @@ public class TeachersManagementController {
 
             return TEACHER_FORM;
         }
-        teacherCRUDService.create(teacherDTO);
+        teacherCRUDService.create(teacherDto);
 
         return redirectTo(Routes.teachers);
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String getEditCuratorForm(@PathVariable Integer id, Model model) {
-        TeacherDTO teacherDTO = teacherCRUDService.get(id);
-        model.addAttribute("teacher", teacherDTO);
+        TeacherDto teacherDto = teacherCRUDService.get(id);
+        model.addAttribute("teacher", teacherDto);
         model.addAttribute("academicDegrees", academicDegreeFindService.findAll());
-        model.addAttribute("curatorProfiles", accountService.getFreeAccountsAndTeacherAccount(teacherDTO));
+        model.addAttribute("curatorProfiles", accountService.getFreeAccountsAndTeacherAccount(teacherDto));
         model.addAttribute("staffPosition", staffTableFindService.findAll());
 
         return TEACHER_FORM;

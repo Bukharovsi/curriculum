@@ -12,10 +12,10 @@ public class StaffTableFindService {
     @Autowired
     private StaffPositionRepository staffPositionRepository;
 
-    public Collection<StaffTableDto> findAll() {
+    public Collection<StaffPositionDto> findAll() {
         Collection dtos = new ArrayList();
         staffPositionRepository.findAll().forEach(staffTable ->
-                dtos.add(new StaffTableDto(staffTable.id(), staffTable.positionHeld()))
+                dtos.add(new StaffPositionDto(staffTable.id(), staffTable.positionHeld()))
         );
 
         return dtos;

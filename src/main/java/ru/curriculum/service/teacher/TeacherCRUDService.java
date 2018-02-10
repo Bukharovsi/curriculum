@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.curriculum.domain.teacher.factory.TeacherFactory;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
-import ru.curriculum.service.teacher.dto.TeacherDTO;
+import ru.curriculum.service.teacher.dto.TeacherDto;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,21 +17,21 @@ public class TeacherCRUDService {
     @Autowired
     private TeacherFactory teacherFactory;
 
-    public Collection<TeacherDTO> findAll() {
-        Collection<TeacherDTO> dtos = new ArrayList<>();
-        teacherRepository.findAll().forEach(teacher -> dtos.add(new TeacherDTO(teacher)));
+    public Collection<TeacherDto> findAll() {
+        Collection<TeacherDto> dtos = new ArrayList<>();
+        teacherRepository.findAll().forEach(teacher -> dtos.add(new TeacherDto(teacher)));
 
         return dtos;
     }
 
-    public TeacherDTO get(Integer teacherId) {
+    public TeacherDto get(Integer teacherId) {
         Teacher teacher = teacherRepository.findOne(teacherId);
 
-        return new TeacherDTO(teacher);
+        return new TeacherDto(teacher);
     }
 
-    public void create(TeacherDTO teacherDTO) {
-        Teacher teacher = teacherFactory.create(teacherDTO);
+    public void create(TeacherDto teacherDto) {
+        Teacher teacher = teacherFactory.create(teacherDto);
         teacherRepository.save(teacher);
     }
 

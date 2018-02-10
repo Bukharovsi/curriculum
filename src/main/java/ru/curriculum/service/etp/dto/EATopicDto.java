@@ -7,19 +7,19 @@ import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
 
 @Getter
 @Setter
-public class EATopicDTO {
+public class EATopicDto {
     private Integer id;
     @NotEmpty(message = "\"Учебно деятельность\" необходимо заполнить поле \"Название темы\"")
     private String name;
-    private PlanDTO plan;
+    private PlanDto plan;
 
-    public EATopicDTO() {
-        this.plan = new PlanDTO();
+    public EATopicDto() {
+        this.plan = new PlanDto();
     }
 
-    public EATopicDTO(EATopic topic) {
+    public EATopicDto(EATopic topic) {
         this.id = topic.id();
         this.name = topic.name();
-        this.plan = new PlanDTO(topic.plan());
+        this.plan = new PlanDto(topic.plan());
     }
 }

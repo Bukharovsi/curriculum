@@ -7,7 +7,7 @@ import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
 import ru.curriculum.service.curator.converter.DtoToCuratorConverter;
-import ru.curriculum.service.curator.dto.CuratorDTO;
+import ru.curriculum.service.curator.dto.CuratorDto;
 import ru.curriculum.service.curator.exception.CuratorNotFoundException;
 
 import java.util.ArrayList;
@@ -23,29 +23,29 @@ public class CuratorCRUDService {
     @Autowired
     private DtoToCuratorConverter dtoToCuratorConverter;
 
-    public Collection<CuratorDTO> findAllCurators() {
-        Collection<CuratorDTO> curatorDTOs = new ArrayList<>();
+    public Collection<CuratorDto> findAllCurators() {
+        Collection<CuratorDto> curatorDtos = new ArrayList<>();
         curatorRepository.findAll().forEach(curator ->
-                curatorDTOs.add(new CuratorDTO(curator)));
+                curatorDtos.add(new CuratorDto(curator)));
 
-        return curatorDTOs;
+        return curatorDtos;
     }
 
-    public CuratorDTO getCurator(Integer curatorId) {
+    public CuratorDto getCurator(Integer curatorId) {
         Curator curator = curatorRepository.findOne(curatorId);
         if(null == curator) {
             throw new CuratorNotFoundException(curatorId);
         }
 
-        return new CuratorDTO(curator);
+        return new CuratorDto(curator);
     }
 
-    public void create(CuratorDTO dto) {
+    public void create(CuratorDto dto) {
         Curator newCurator = dtoToCuratorConverter.convert(dto);
         curatorRepository.save(newCurator);
     }
 
-    public void update(CuratorDTO dto) {
+    public void update(CuratorDto dto) {
         Curator curator = curatorRepository.findOne(dto.getId());
         if(null == curator) {
             throw new CuratorNotFoundException(dto.getId());

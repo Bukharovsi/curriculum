@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import ru.curriculum.web.View;
 
 @ControllerAdvice
 public class ErrorHandlerController extends ResponseEntityExceptionHandler {
@@ -13,6 +14,6 @@ public class ErrorHandlerController extends ResponseEntityExceptionHandler {
     protected String handleConflict(Model model, RuntimeException ex, WebRequest request) {
         model.addAttribute("exception", ex);
 
-        return "error/errorPage";
+        return View.ERROR_PAGE;
     }
 }

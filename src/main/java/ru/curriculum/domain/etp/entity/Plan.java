@@ -3,7 +3,6 @@ package ru.curriculum.domain.etp.entity;
 import lombok.*;
 import lombok.experimental.Accessors;
 import ru.curriculum.domain.teacher.entity.Teacher;
-import ru.curriculum.service.etp.dto.PlanDTO;
 
 import javax.persistence.*;
 

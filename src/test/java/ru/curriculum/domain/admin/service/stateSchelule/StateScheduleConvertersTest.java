@@ -63,5 +63,6 @@ public class StateScheduleConvertersTest extends IntegrationBoot{
         Assert.assertEquals(newStateProgram.getName(), viewDto.getName());
         Assert.assertEquals(newStateProgram.getResponsibleDepartmentId(), viewDto.getResponsibleDepartment().getId());
         Assert.assertEquals(newStateProgram.getTargetAudience(), viewDto.getTargetAudience());
+        Assert.assertFalse(viewDto.isEtpCreated());
     }
 }

@@ -1,0 +1,18 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="040220182200" author="Vlad">
+
+        <addColumn tableName="etp">
+            <column name="state_program_id" type="int"></column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="etp"
+                                 baseColumnNames="state_program_id"
+                                 constraintName="etp_to_state_program_fk"
+                                 referencedTableName="state_program"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
