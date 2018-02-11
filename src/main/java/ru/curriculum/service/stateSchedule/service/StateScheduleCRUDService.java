@@ -77,4 +77,8 @@ public class StateScheduleCRUDService {
     public void delete(Integer id) {
         stateProgramRepository.delete(id);
     }
+
+    public void clean() {
+        stateProgramRepository.deleteAll();
+    }
 }

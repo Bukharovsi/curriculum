@@ -113,6 +113,12 @@ public class StateScheduleController {
         return redirectTo(Routes.stateSchedule);
     }
 
+    @RequestMapping(path = "/clean")
+    public String clean() {
+        stateScheduleCRUDService.clean();
+        return redirectTo(Routes.stateSchedule);
+    }
+
     @RequestMapping(method = RequestMethod.POST, path = "/uploadStateProgram")
     public String uploadStateProgramFile(@RequestParam("file") MultipartFile file) {
         stateScheduleCreationFromFileService.makeStateScheduleTemplatesFromFile(file);
