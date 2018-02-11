@@ -12,6 +12,7 @@ import ru.curriculum.service.division.DivisionFindingService;
 import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
 import ru.curriculum.service.stateSchedule.service.ImplementationFormFindService;
 import ru.curriculum.service.stateSchedule.service.StateScheduleCRUDService;
+import ru.curriculum.service.stateSchedule.service.StateScheduleCreationFromFileService;
 import ru.curriculum.service.stateSchedule.service.StudyModeFindService;
 import ru.curriculum.web.View;
 
@@ -37,6 +38,9 @@ public class StateScheduleController {
 
     @Autowired
     protected DivisionFindingService divisionService;
+
+    @Autowired
+    private StateScheduleCreationFromFileService stateScheduleCreationFromFileService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
@@ -111,7 +115,7 @@ public class StateScheduleController {
 
     @RequestMapping(method = RequestMethod.POST, path = "/uploadStateProgram")
     public String uploadStateProgramFile(@RequestParam("file") MultipartFile file) {
-
-        return View.STATE_SCHEDULE_LIST;
+        stateScheduleCreationFromFileService.makeStateScheduleTemplatesFromFile(file);
+        return redirectTo(Routes.stateSchedule);
     }
 }

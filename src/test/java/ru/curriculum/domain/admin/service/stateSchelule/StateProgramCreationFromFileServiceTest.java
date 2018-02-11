@@ -1,49 +1,46 @@
 package ru.curriculum.domain.admin.service.stateSchelule;
 
-import org.apache.poi.xwpf.usermodel.Document;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.junit.Assert;
+import boot.IntegrationBoot;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import ru.curriculum.service.stateSchedule.service.StateProgramFileParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.curriculum.domain.admin.curator.entity.Curator;
+import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
+import ru.curriculum.domain.stateSchedule.stateProgramFileParser.StateProgramFileParser;
 
-@Ignore
-public class StateProgramCreationFromFileServiceTest {
+public class StateProgramCreationFromFileServiceTest extends IntegrationBoot {
 
     //TODO: точно прверить работу с .doc файлами
-//    private String filename = "Положение_об обучении работников.docx";
     private String filename = "test.docx";
 
+    @Autowired
     private StateProgramFileParser stateProgramFileParser;
+
+    @Autowired
+    private CuratorRepository curatorRepository;
 
     @Before
     public void setUp() throws Exception {
-        stateProgramFileParser = new StateProgramFileParser();
     }
 
     @Test
     public void readDocFileTest() throws IOException {
-        FileInputStream fis = new FileInputStream(new File(filename));
-        stateProgramFileParser.parse(new File(filename));
+        Curator curator = createAndSaveCurator();
+//        stateProgramFileParser.parse(new File(filename));
+    }
 
-        XWPFDocument doc = new XWPFDocument(fis);
+    private Curator createAndSaveCurator() {
+        Curator curator = new Curator(
+                "ilvira",
+                "123",
+                "Лукманова",
+                "Эльвира",
+                "Равшановна"
+        );
 
-//        List<XWPFTable> tables = doc.getTables();
-//        tables.get(0).getRows().forEach(row -> {
-//            row.getTableCells().forEach(cell -> {
-//                System.out.print(cell.getText() + " ");
-//            });
-//            System.out.println();
-//        });
-
-        Assert.assertNotNull(doc);
+        return curatorRepository.save(curator);
     }
 }

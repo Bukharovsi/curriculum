@@ -1,0 +1,20 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="100220181800" author="Vlad">
+        <dropNotNullConstraint tableName="state_program" columnDataType="varchar(255)" columnName="name"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="state_program" columnDataType="varchar(255)" columnName="target_audience"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="state_program" columnDataType="varchar(255)" columnName="mode_id"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="state_program" columnDataType="varchar(255)" columnName="implementation_form_id"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="state_program" columnDataType="int" columnName="lerner_count"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="state_program" columnDataType="int" columnName="group_count"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="state_program" columnDataType="int" columnName="count_of_hours_per_lerner"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="state_program" columnDataType="varchar(1024)" columnName="responsible_department_id"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="state_program" columnDataType="varchar(1024)" columnName="address"></dropNotNullConstraint>
+
+        <modifyDataType columnName="target_audience" newDataType="varchar" tableName="state_program"/>
+    </changeSet>
+</databaseChangeLog>

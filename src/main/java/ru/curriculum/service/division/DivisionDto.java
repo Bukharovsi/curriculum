@@ -8,7 +8,7 @@ import ru.curriculum.domain.organization.entity.Division;
 @AllArgsConstructor
 public class DivisionDto {
 
-    private int id;
+    private Integer id;
 
     private String name;
 

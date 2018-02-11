@@ -55,7 +55,7 @@ public class StateProgramCreationDto {
 
     @NotNull(message = "Необходимо заполнить \"Ответсвенное подразделение\"")
     @Min(value = 1, message = "Необходимо заполнить \"Ответсвенное подразделение\"")
-    private int responsibleDepartmentId;
+    private Integer responsibleDepartmentId;
 
     @NotNull(message = "Необходимо заполнить \"Куратор\"")
     private Integer curatorId;
