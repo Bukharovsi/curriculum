@@ -1,0 +1,60 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="110220181913" author="Vlad">
+
+        <delete tableName="staff_position"></delete>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Ректор"></column>
+        </insert>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Проректор"></column>
+        </insert>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Начальник отдела"></column>
+        </insert>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Старший мeтодист"></column>
+        </insert>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Мeтодист"></column>
+        </insert>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Научный сотрудник"></column>
+        </insert>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Заведующий лабораторией"></column>
+        </insert>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Специалист"></column>
+        </insert>
+        <insert tableName="staff_position">
+            <column name="position_held" value="Профессор"></column>
+        </insert>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Доцент"></column>
+        </insert>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Старший преподаватель"></column>
+        </insert>
+
+        <insert tableName="staff_position">
+            <column name="position_held" value="Другое"></column>
+        </insert>
+
+
+    </changeSet>
+</databaseChangeLog>
