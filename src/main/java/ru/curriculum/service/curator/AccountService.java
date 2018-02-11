@@ -3,8 +3,8 @@ package ru.curriculum.service.curator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
-import ru.curriculum.service.teacher.dto.TeacherDTO;
-import ru.curriculum.service.curator.dto.CuratorDTO;
+import ru.curriculum.service.curator.dto.CuratorDto;
+import ru.curriculum.service.teacher.dto.TeacherDto;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,18 +16,18 @@ public class AccountService {
     @Autowired
     private CuratorCRUDService curatorCRUDService;
 
-    public Collection<CuratorDTO> getFreeAccounts() {
-        Collection<CuratorDTO> accounts = new ArrayList<>();
+    public Collection<CuratorDto> getFreeAccounts() {
+        Collection<CuratorDto> accounts = new ArrayList<>();
         curatorRepository.findAllByTeacherIsNull().forEach(curator ->
-                accounts.add(new CuratorDTO(curator)));
+                accounts.add(new CuratorDto(curator)));
 
         return accounts;
     }
 
-    public Collection<CuratorDTO> getFreeAccountsAndTeacherAccount(TeacherDTO teacherDTO) {
-        Collection<CuratorDTO> accounts = getFreeAccounts();
-        if(null != teacherDTO.getCuratorId()) {
-            accounts.add(curatorCRUDService.getCurator(teacherDTO.getCuratorId()));
+    public Collection<CuratorDto> getFreeAccountsAndTeacherAccount(TeacherDto teacherDto) {
+        Collection<CuratorDto> accounts = getFreeAccounts();
+        if(null != teacherDto.getCuratorId()) {
+            accounts.add(curatorCRUDService.getCurator(teacherDto.getCuratorId()));
         }
 
         return accounts;

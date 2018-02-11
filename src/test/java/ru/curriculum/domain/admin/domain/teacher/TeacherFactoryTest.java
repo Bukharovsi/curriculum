@@ -13,7 +13,7 @@ import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegreeRepository;
 import ru.curriculum.domain.teacher.entity.Teacher;
-import ru.curriculum.service.teacher.dto.TeacherDTO;
+import ru.curriculum.service.teacher.dto.TeacherDto;
 import ru.curriculum.domain.teacher.factory.TeacherFactory;
 
 import javax.persistence.EntityNotFoundException;
@@ -43,7 +43,7 @@ public class TeacherFactoryTest extends Assert {
 
     @Test
     public void createTeacher() {
-        TeacherDTO dto = getTeacherDTO();
+        TeacherDto dto = getTeacherDTO();
         Teacher teacher = teacherFactory.create(dto);
 
         assertEquals(dto.getSurname(), teacher.surname());
@@ -57,37 +57,37 @@ public class TeacherFactoryTest extends Assert {
 
     @Test(expected = EntityNotFoundException.class)
     public void createTeacherFromDTOWhichContainNoneExistenceAcademicDegreeCode_mustBeException() {
-        TeacherDTO dto = getTeacherDTO();
+        TeacherDto dto = getTeacherDTO();
         dto.setAcademicDegreeCode("none");
         teacherFactory.create(dto);
     }
 
     @Test(expected = NullPointerException.class)
     public void createTeacherFromDTOWhichNotContainSurname_mustBeException() {
-        TeacherDTO dto = getTeacherDTO();
+        TeacherDto dto = getTeacherDTO();
         dto.setSurname(null);
         teacherFactory.create(dto);
     }
 
     @Test
     public void createUserFromUserDTOWhereDefineUserId_mustBeCreateTeacherWithUserAccount() {
-        TeacherDTO dto = getTeacherDTO();
+        TeacherDto dto = getTeacherDTO();
         dto.setCuratorId(1);
         Teacher teacher = teacherFactory.create(dto);
 
         assertTrue(teacher.hasCuratorProfile());
     }
 
-    public TeacherDTO getTeacherDTO() {
-        TeacherDTO teacherDTO = new TeacherDTO();
-        teacherDTO.setId(1);
-        teacherDTO.setSurname("Иванов");
-        teacherDTO.setFirstName("Иван");
-        teacherDTO.setPatronymic("Иванович");
-        teacherDTO.setAcademicDegreeCode("ph_d");
-        teacherDTO.setAcademicDegreeName("Доктор наук");
-        teacherDTO.setPlaceOfWork("ИРОРТ");
+    public TeacherDto getTeacherDTO() {
+        TeacherDto teacherDto = new TeacherDto();
+        teacherDto.setId(1);
+        teacherDto.setSurname("Иванов");
+        teacherDto.setFirstName("Иван");
+        teacherDto.setPatronymic("Иванович");
+        teacherDto.setAcademicDegreeCode("ph_d");
+        teacherDto.setAcademicDegreeName("Доктор наук");
+        teacherDto.setPlaceOfWork("ИРОРТ");
 
-        return teacherDTO;
+        return teacherDto;
     }
 }

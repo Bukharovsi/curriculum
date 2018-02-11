@@ -1,8 +1,10 @@
 package ru.curriculum.service.stateSchedule.converter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.curriculum.domain.etp.repository.ETPRepository;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
-import ru.curriculum.service.curator.dto.CuratorDTO;
+import ru.curriculum.service.curator.dto.CuratorDto;
 import ru.curriculum.service.division.DivisionDto;
 import ru.curriculum.service.stateSchedule.dto.ImplementationFormDto;
 import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
@@ -11,8 +13,15 @@ import ru.curriculum.service.stateSchedule.dto.StudyModeDto;
 
 @Component
 public class StateScheduleEntityToDtoConverter {
+    @Autowired
+    private ETPRepository etpRepository;
+
 
     public StateProgramViewDto makeViewDto(StateProgram stateProgram) {
+        boolean eptIsCreated =
+                null != stateProgram.id() && null != etpRepository.findByStateProgramId(stateProgram.id())
+                        ? true : false;
+
         DivisionDto divisionDto = null != stateProgram.responsibleDepartment() ? new DivisionDto(stateProgram.responsibleDepartment()): null;
         StudyModeDto studyModeDto = null != stateProgram.mode() ? new StudyModeDto(stateProgram.mode().id(), stateProgram.mode().name()) : null;
         ImplementationFormDto implementationFormDto = null != stateProgram.implementationForm()
@@ -33,9 +42,10 @@ public class StateScheduleEntityToDtoConverter {
                 .responsibleDepartment(divisionDto)
                 .mode(studyModeDto)
                 .implementationForm(implementationFormDto)
+                .etpCreated(eptIsCreated)
                 .build();
         if (stateProgram.curator() != null) {
-            stateProgramDto.setCurator(new CuratorDTO(stateProgram.curator()));
+            stateProgramDto.setCurator(new CuratorDto(stateProgram.curator()));
         }
 
         return stateProgramDto;

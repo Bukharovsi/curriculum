@@ -23,5 +23,8 @@
     <include file="/db/changelog/280120181326_add_columns_to_plan.xml"/>
     <include file="/db/changelog/280120181342_create_division_table.xml"/>
     <include file="/db/changelog/280120220146_change_state_chedule_change_division.xml"/>
+    <include file="/db/changelog/040220182200_add_program_state_id_to_ept.xml"/>
+    <include file="/db/changelog/110220220146_add_financing_source_to_ETP.xml"/>
+    <include file="/db/changelog/110220181913_fill_staff_position_table.xml"/>
     <include file="/db/changelog/100220181800_change_state_program_null_constraint.xml"/>
 </databaseChangeLog>

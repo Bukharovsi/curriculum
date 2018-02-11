@@ -2,7 +2,6 @@ package ru.curriculum.domain.admin.service.etp;
 
 import org.junit.Assert;
 import org.junit.Before;
-
 import org.junit.Test;
 import ru.curriculum.domain.admin.domain.etp.ETPMock;
 import ru.curriculum.domain.etp.entity.ETP;
@@ -11,15 +10,10 @@ import ru.curriculum.domain.etp.entity.educationActivity.EASection;
 import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
-import ru.curriculum.service.etp.dto.EMAModuleDTO;
-import ru.curriculum.service.etp.dto.OMAModuleDTO;
-import ru.curriculum.service.etp.dto.EAModuleDTO;
-import ru.curriculum.service.etp.dto.EASectionDTO;
-import ru.curriculum.service.etp.dto.EATopicDTO;
-import ru.curriculum.service.etp.dto.ETP_DTO;
+import ru.curriculum.service.etp.dto.*;
 
 
-public class ETP_DTOTest extends Assert {
+public class ETPDtoTest extends Assert {
     private ETPMock etpMock;
 
     @Before
@@ -31,7 +25,7 @@ public class ETP_DTOTest extends Assert {
     public void createETP_DTOFromETP_mustBeCreateCorrectly() {
         ETP etp = etpMock.getETP();
 
-        ETP_DTO etpDTO = new ETP_DTO(etp);
+        ETPDto etpDTO = new ETPDto(etp);
 
         assertEquals(etp, etpDTO);
     }
@@ -40,7 +34,7 @@ public class ETP_DTOTest extends Assert {
     public void createEAModuleDTOFromETP_mustBeCreateCorrectly() {
         EAModule eaModule = new EAModule("Модуль учебной деятельности", etpMock.getEASections());
 
-        EAModuleDTO eaModuleDTO = new EAModuleDTO(eaModule);
+        EAModuleDto eaModuleDTO = new EAModuleDto(eaModule);
 
         assertEquals(eaModule.name(), eaModuleDTO.getName());
         assertEquals(eaModule.id(), eaModuleDTO.getId());
@@ -51,44 +45,44 @@ public class ETP_DTOTest extends Assert {
     public void createEASectionDTOFromEASection_mustBeCreateCorrectly() {
         EASection eaSection = new EASection("Раздел учебной деятельности", etpMock.getEATopics());
 
-        EASectionDTO eaSectionDTO = new EASectionDTO(eaSection);
+        EASectionDto eaSectionDto = new EASectionDto(eaSection);
 
-        assertEquals(eaSection.id(), eaSectionDTO.getId());
-        assertEquals(eaSection.name(), eaSectionDTO.getName());
-        assertEquals(eaSection.topics().size(), eaSectionDTO.getTopics().size());
+        assertEquals(eaSection.id(), eaSectionDto.getId());
+        assertEquals(eaSection.name(), eaSectionDto.getName());
+        assertEquals(eaSection.topics().size(), eaSectionDto.getTopics().size());
     }
 
     @Test
     public void createEATopicDTOFromEATopic_mustBeCreateCorrectly() {
         EATopic eaTopic = new EATopic("Тема раздела модуля учебной деятельности", etpMock.getPlan());
 
-        EATopicDTO eaTopicDTO = new EATopicDTO(eaTopic);
+        EATopicDto eaTopicDto = new EATopicDto(eaTopic);
 
-        assertEquals(eaTopic.id(), eaTopicDTO.getId());
-        assertEquals(eaTopic.name(), eaTopicDTO.getName());
+        assertEquals(eaTopic.id(), eaTopicDto.getId());
+        assertEquals(eaTopic.name(), eaTopicDto.getName());
     }
 
     @Test
     public void createEMAModuleDTOFromEMAModule_mustBeCreateCorrectly() {
         EMAModule emaModule = new EMAModule("Модуль учебно-методической деятельности", etpMock.getPlan());
 
-        EMAModuleDTO emaModuleDTO = new EMAModuleDTO(emaModule);
+        EMAModuleDto emaModuleDto = new EMAModuleDto(emaModule);
 
-        assertEquals(emaModule.id(), emaModuleDTO.getId());
-        assertEquals(emaModule.name(), emaModuleDTO.getName());
+        assertEquals(emaModule.id(), emaModuleDto.getId());
+        assertEquals(emaModule.name(), emaModuleDto.getName());
     }
 
     @Test
     public void createOMAModuleDTOFromOMAModule_mustBeCreateCorrectly() {
         OMAModule omaModule = new OMAModule("Модуль-организационно-методической деятельности", etpMock.getPlan());
 
-        OMAModuleDTO omaModuleDTO = new OMAModuleDTO(omaModule);
+        OMAModuleDto omaModuleDto = new OMAModuleDto(omaModule);
 
-        assertEquals(omaModule.id(), omaModuleDTO.getId());
-        assertEquals(omaModule.name(), omaModuleDTO.getName());
+        assertEquals(omaModule.id(), omaModuleDto.getId());
+        assertEquals(omaModule.name(), omaModuleDto.getName());
     }
 
-    public void assertEquals(ETP etp, ETP_DTO etpDTO) {
+    public void assertEquals(ETP etp, ETPDto etpDTO) {
         assertEquals(etp.id(), etpDTO.getId());
         assertEquals(etp.title(), etpDTO.getTitle());
         assertEquals(etp.target(), etpDTO.getTarget());
@@ -99,5 +93,6 @@ public class ETP_DTOTest extends Assert {
         assertEquals(etp.eaModules().size(), etpDTO.getEaModules().size());
         assertEquals(etp.emaModules().size(), etpDTO.getEmaModules().size());
         assertEquals(etp.omaModules().size(), etpDTO.getOmaModules().size());
+        assertEquals(etp.financingSource(), etpDTO.getFinancingSource());
     }
 }

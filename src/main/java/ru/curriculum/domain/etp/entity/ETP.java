@@ -1,13 +1,17 @@
 package ru.curriculum.domain.etp.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
-import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
+import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
+import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /*
  * ETP - education thematic plan (УПТ - учебно-тематический план)
@@ -19,13 +23,26 @@ import java.util.*;
 public class ETP {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter
     private Integer id;
+    @Setter
     private String title;
+    @Setter
     private String target;
+    @Setter
     private Date distanceLearningBeginDate;
+    @Setter
     private Date distanceLearningEndDate;
+    @Setter
     private Date fullTimeLearningBeginDate;
+    @Setter
     private Date fullTimeLearningEndDate;
+    @Setter
+    private Integer stateProgramId;
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private FinancingSource financingSource;
+
     @OneToMany(
             mappedBy = "etp",
             targetEntity = EAModule.class,
@@ -61,9 +78,7 @@ public class ETP {
             Date distanceLearningEndDate,
             Date fullTimeLearningBeginDate,
             Date fullTimeLearningEndDate,
-            Set<EAModule> eaModules,
-            Set<EMAModule> emaModules,
-            Set<OMAModule> omaModules
+            FinancingSource financingSource
     ) {
         this();
         this.title = title;
@@ -72,6 +87,30 @@ public class ETP {
         this.distanceLearningEndDate = distanceLearningEndDate;
         this.fullTimeLearningBeginDate = fullTimeLearningBeginDate;
         this.fullTimeLearningEndDate = fullTimeLearningEndDate;
+        this.financingSource = financingSource;
+    }
+
+    public ETP(
+            String title,
+            String target,
+            Date distanceLearningBeginDate,
+            Date distanceLearningEndDate,
+            Date fullTimeLearningBeginDate,
+            Date fullTimeLearningEndDate,
+            FinancingSource financingSource,
+            Set<EAModule> eaModules,
+            Set<EMAModule> emaModules,
+            Set<OMAModule> omaModules
+    ) {
+        this(
+                title,
+                target,
+                distanceLearningBeginDate,
+                distanceLearningEndDate,
+                fullTimeLearningBeginDate,
+                fullTimeLearningEndDate,
+                financingSource
+        );
         this.addEAModules(eaModules);
         this.addEMAModules(emaModules);
         this.addOMAModules(omaModules);
@@ -85,6 +124,7 @@ public class ETP {
             Date distanceLearningEndDate,
             Date fullTimeLearningBeginDate,
             Date fullTimeLearningEndDate,
+            FinancingSource financingSource,
             Set<EAModule> eaModules,
             Set<EMAModule> emaModules,
             Set<OMAModule> omaModules
@@ -96,6 +136,7 @@ public class ETP {
         this.distanceLearningEndDate = distanceLearningEndDate;
         this.fullTimeLearningBeginDate = fullTimeLearningBeginDate;
         this.fullTimeLearningEndDate = fullTimeLearningEndDate;
+        this.financingSource = financingSource;
         this.addEAModules(eaModules);
         this.addEMAModules(emaModules);
         this.addOMAModules(omaModules);

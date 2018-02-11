@@ -6,7 +6,7 @@ import org.junit.Test;
 import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.helper.UserTestFactory;
 import ru.curriculum.service.curator.converter.DtoToCuratorConverter;
-import ru.curriculum.service.curator.dto.CuratorDTO;
+import ru.curriculum.service.curator.dto.CuratorDto;
 
 public class DtoToCuratorConverterTest {
     private DtoToCuratorConverter dtoToCuratorConverter;
@@ -18,7 +18,7 @@ public class DtoToCuratorConverterTest {
 
     @Test
     public void convertDotToUser_mustBeConvertCorrectly() {
-        CuratorDTO dto = getUserDTO();
+        CuratorDto dto = getUserDTO();
 
         Curator curator = dtoToCuratorConverter.convert(dto);
 
@@ -29,8 +29,8 @@ public class DtoToCuratorConverterTest {
         Assert.assertEquals(dto.getUsername(), curator.login());
     }
 
-    private CuratorDTO getUserDTO() {
-        CuratorDTO dto = new CuratorDTO(new UserTestFactory().createTestUser());
+    private CuratorDto getUserDTO() {
+        CuratorDto dto = new CuratorDto(new UserTestFactory().createTestUser());
         dto.setPassword("123");
 
         return dto;

@@ -1,4 +1,4 @@
-package ru.curriculum.domain.admin;
+package ru.curriculum.domain.admin.web;
 
 import boot.IntegrationWebBoot;
 import org.junit.After;

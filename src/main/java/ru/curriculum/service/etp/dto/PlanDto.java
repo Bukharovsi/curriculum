@@ -3,11 +3,11 @@ package ru.curriculum.service.etp.dto;
 import lombok.Getter;
 import lombok.Setter;
 import ru.curriculum.domain.etp.entity.Plan;
-import ru.curriculum.service.teacher.dto.TeacherDTO;
+import ru.curriculum.service.teacher.dto.TeacherDto;
 
 @Getter
 @Setter
-public class PlanDTO {
+public class PlanDto {
     private Integer id;
     private Double lectures = 0.0;
     private Double practices = 0.0;
@@ -21,12 +21,12 @@ public class PlanDTO {
     private Integer lernerCount = 0;
     private Integer groupCount = 0;
     private Integer conditionalPagesCount = 0;
-    private TeacherDTO teacher;
+    private TeacherDto teacher;
     private Integer teacherId;
 
-    public PlanDTO() {}
+    public PlanDto() {}
 
-    public PlanDTO(Plan plan) {
+    public PlanDto(Plan plan) {
         this.id = plan.id();
         this.lectures = plan.lectures();
         this.practices = plan.practices();
@@ -40,7 +40,7 @@ public class PlanDTO {
         this.lernerCount = plan.lernerCount();
         this.groupCount = plan.groupCount();
         this.conditionalPagesCount = plan.conditionalPagesCount();
-        this.teacher = null != plan.teacher() ? new TeacherDTO(plan.teacher()) : null;
+        this.teacher = null != plan.teacher() ? new TeacherDto(plan.teacher()) : null;
         this.teacherId = null != plan.teacher() ? plan.teacher().id() : null;
     }
 }

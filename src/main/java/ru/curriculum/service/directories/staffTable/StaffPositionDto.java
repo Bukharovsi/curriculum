@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StaffTableDto {
+public class StaffPositionDto {
     private Integer id;
     private String positionHeld;
 }

@@ -12,10 +12,10 @@ public class AcademicDegreeFindService {
     @Autowired
     private AcademicDegreeRepository repository;
 
-    public Collection<AcademicDegreeDTO> findAll() {
+    public Collection<AcademicDegreeDto> findAll() {
         Collection dtos = new ArrayList();
         repository.findAll().forEach(academicDegree ->
-                dtos.add(new AcademicDegreeDTO(academicDegree))
+                dtos.add(new AcademicDegreeDto(academicDegree))
         );
 
         return dtos;

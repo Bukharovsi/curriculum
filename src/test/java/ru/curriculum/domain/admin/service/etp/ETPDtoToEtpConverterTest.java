@@ -10,16 +10,16 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.curriculum.domain.admin.domain.etp.ETPMock;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.service.etp.ETPFactory;
-import ru.curriculum.service.etp.PlanFactory;
-import ru.curriculum.service.etp.dto.ETP_DTO;
+import ru.curriculum.service.etp.converter.ETPDtoToEtpConverter;
+import ru.curriculum.service.etp.converter.PlanFactory;
+import ru.curriculum.service.etp.dto.ETPDto;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ETPFactoryTest extends Assert {
+public class ETPDtoToEtpConverterTest extends Assert {
     @Mock
     private PlanFactory planFactory;
     @InjectMocks
-    private ETPFactory etpFactory;
+    private ETPDtoToEtpConverter etpDtoToEtpConverter;
 
     private ETPMock etpMock;
 
@@ -30,8 +30,8 @@ public class ETPFactoryTest extends Assert {
 
     @Test
     public void createETP() {
-        ETP_DTO etpDTO = etpMock.getETP_DTO();
-        ETP etp = etpFactory.create(etpDTO);
+        ETPDto etpDTO = etpMock.getETP_DTO();
+        ETP etp = etpDtoToEtpConverter.convert(etpDTO);
 
         assertEquals(etpDTO.getId(), etp.id());
         assertEquals(etpDTO.getTitle(), etp.title());

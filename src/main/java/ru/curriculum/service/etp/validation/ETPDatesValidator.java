@@ -1,13 +1,13 @@
 package ru.curriculum.service.etp.validation;
 
 import org.springframework.beans.BeanWrapperImpl;
-import ru.curriculum.service.etp.dto.ETP_DTO;
+import ru.curriculum.service.etp.dto.ETPDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Date;
 
-public class ETPDatesValidator implements ConstraintValidator<EndDateLargerThanBeginDateConstraint, ETP_DTO> {
+public class ETPDatesValidator implements ConstraintValidator<EndDateLargerThanBeginDateConstraint, ETPDto> {
 
     private String beginDateFiled;
     private String endDateField;
@@ -19,7 +19,7 @@ public class ETPDatesValidator implements ConstraintValidator<EndDateLargerThanB
     }
 
     @Override
-    public boolean isValid(ETP_DTO etp, ConstraintValidatorContext context) {
+    public boolean isValid(ETPDto etp, ConstraintValidatorContext context) {
         Date beginDate = getFieldValue(beginDateFiled, etp);
         Date endDate = getFieldValue(endDateField, etp);
 
@@ -30,7 +30,7 @@ public class ETPDatesValidator implements ConstraintValidator<EndDateLargerThanB
         return true;
     }
 
-    private Date getFieldValue(String beginDateFiled, ETP_DTO etp) {
+    private Date getFieldValue(String beginDateFiled, ETPDto etp) {
         return (Date) new BeanWrapperImpl(etp).getPropertyValue(beginDateFiled);
     }
 }

@@ -7,7 +7,7 @@ import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegreeRepository;
 import ru.curriculum.domain.teacher.entity.Teacher;
-import ru.curriculum.service.teacher.dto.TeacherDTO;
+import ru.curriculum.service.teacher.dto.TeacherDto;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -18,28 +18,28 @@ public class TeacherFactory {
     @Autowired
     private CuratorRepository curatorRepository;
 
-    public Teacher create(TeacherDTO teacherDTO) {
-        AcademicDegree academicDegree = academicDegreeRepository.findOne(teacherDTO.getAcademicDegreeCode());
+    public Teacher create(TeacherDto teacherDto) {
+        AcademicDegree academicDegree = academicDegreeRepository.findOne(teacherDto.getAcademicDegreeCode());
 
         if(null == academicDegree) {
             String errorMessage = String.format(
                     "Ученая степень с кодом \"%s\" не заведена в системе",
-                    teacherDTO.getAcademicDegreeCode());
+                    teacherDto.getAcademicDegreeCode());
             throw new EntityNotFoundException(errorMessage);
         }
 
         Teacher teacher = new Teacher(
-                teacherDTO.getId(),
-                teacherDTO.getSurname(),
-                teacherDTO.getFirstName(),
-                teacherDTO.getPatronymic(),
+                teacherDto.getId(),
+                teacherDto.getSurname(),
+                teacherDto.getFirstName(),
+                teacherDto.getPatronymic(),
                 academicDegree,
-                teacherDTO.getPlaceOfWork(),
-                teacherDTO.getPositionHeld()
+                teacherDto.getPlaceOfWork(),
+                teacherDto.getPositionHeld()
         );
 
-        if(null != teacherDTO.getCuratorId()) {
-            Curator curator = curatorRepository.findOne(teacherDTO.getCuratorId());
+        if(null != teacherDto.getCuratorId()) {
+            Curator curator = curatorRepository.findOne(teacherDto.getCuratorId());
             teacher.assignCuratorProfile(curator);
         }
 

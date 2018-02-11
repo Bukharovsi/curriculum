@@ -7,19 +7,19 @@ import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
 
 @Getter
 @Setter
-public class OMAModuleDTO {
+public class OMAModuleDto {
     private Integer id;
     @NotEmpty(message = "\"Организационно-методическая деятельность\" необходимо заполнить поле \"Название модуля\"")
     private String name;
-    private PlanDTO plan;
+    private PlanDto plan;
 
-    public OMAModuleDTO() {
-        this.plan = new PlanDTO();
+    public OMAModuleDto() {
+        this.plan = new PlanDto();
     }
 
-    public OMAModuleDTO(OMAModule module) {
+    public OMAModuleDto(OMAModule module) {
         this.id = module.id();
         this.name = module.name();
-        this.plan = new PlanDTO(module.plan());
+        this.plan = new PlanDto(module.plan());
     }
 }

@@ -15,18 +15,18 @@ import static java.util.stream.Collectors.toList;
 
 @Setter
 @Getter
-public class EAModuleDTO {
+public class EAModuleDto {
     private Integer id;
     @NotEmpty(message = "\"Учебная деятельность\" необходимо заполнить поле \"Название модуля\"")
     private String name;
     @Valid
-    private List<EASectionDTO> sections;
+    private List<EASectionDto> sections;
 
-    public EAModuleDTO() {
+    public EAModuleDto() {
         sections = new ArrayList<>();
     }
 
-    public EAModuleDTO(EAModule module) {
+    public EAModuleDto(EAModule module) {
         this.id = module.id();
         this.name = module.name();
         this.sections =
@@ -34,7 +34,7 @@ public class EAModuleDTO {
                         .sections()
                         .stream()
                         .sorted(Comparator.comparing(EASection::id))
-                        .map(EASectionDTO::new)
+                        .map(EASectionDto::new)
                         .collect(toList());
     }
 }
