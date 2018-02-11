@@ -11,11 +11,27 @@
 <div layout:fragment="content">
     <h1>План-график образовательной деятельности</h1>
     <hr/>
-    <div class="btn-group-horizontal">
-        <a class="btn btn-default" th:href="@{/stateSchedule/newForm}">Добавить программу</a>
-        &nbsp;
-        <a class="btn btn-danger" th:href="@{/stateSchedule/clean}">Удалить Всё</a>
-    </div>
+    <form class="form-inline" method="POST" th:action="@{/stateSchedule/uploadStateProgram}" type="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <a class="btn btn-default" th:href="@{/stateSchedule/newForm}">Добавить программу</a>
+        </div>
+        <div class="form-group" style="margin-left: 15px">
+            <input type="file" class="form-control-file" name="file" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-default" type="submit">Cформировать план</button>
+        </div>
+        <div class="form-group">
+            <a class="btn btn-danger" th:href="@{/stateSchedule/clean}">Удалить Всё</a>
+        </div>
+    </form>
+
+    <!--<div>-->
+        <!--<form method="POST" th:action="@{/stateSchedule/uploadStateProgram}" type="post" enctype="multipart/form-data">-->
+            <!--<input type="file" name="file" /><br/><br/>-->
+            <!--<input type="submit" value="Сформировать план" />-->
+        <!--</form>-->
+    <!--</div>-->
     &nbsp;
     <table class="table table-hover">
         <thead>
@@ -41,15 +57,15 @@
         <tr th:each="stateProgram : ${stateSchedule}">
             <td th:text="${stateProgram.targetAudience}"></td>
             <td th:text="${stateProgram.name}"></td>
-            <td th:text="${stateProgram.mode.name}"></td>
-            <td th:text="${stateProgram.implementationForm.name}"></td>
+            <td th:text="${stateProgram.mode != null ? stateProgram.mode.name: null}"></td>
+            <td th:text="${stateProgram.implementationForm != null ? stateProgram.implementationForm.name: null}"></td>
             <td th:text="${stateProgram.lernerCount}"></td>
             <td th:text="${stateProgram.groupCount}"></td>
             <td th:text="${stateProgram.countOfHoursPerLerner}"></td>
             <td th:text="${#dates.format(stateProgram.dateStart, 'dd/MM/yyyy')}"></td>
             <td th:text="${#dates.format(stateProgram.dateFinish, 'dd/MM/yyyy')}"></td>
-            <td th:text="${stateProgram.responsibleDepartment.name}"></td>
-            <td th:text="${stateProgram.curator.fio()}"></td>
+            <td th:text="${stateProgram.responsibleDepartment != null ? stateProgram.responsibleDepartment.name : null}"></td>
+            <td th:text="${stateProgram.curator != null ? stateProgram.curator.fio() : null}"></td>
             <td th:text="${stateProgram.address}"></td>
             <th>
                 <div th:if="!${stateProgram.isEtpCreated()}">

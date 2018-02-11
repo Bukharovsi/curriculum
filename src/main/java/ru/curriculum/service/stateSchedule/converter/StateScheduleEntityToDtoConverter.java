@@ -22,6 +22,12 @@ public class StateScheduleEntityToDtoConverter {
                 null != stateProgram.id() && null != etpRepository.findByStateProgramId(stateProgram.id())
                         ? true : false;
 
+        DivisionDto divisionDto = null != stateProgram.responsibleDepartment() ? new DivisionDto(stateProgram.responsibleDepartment()): null;
+        StudyModeDto studyModeDto = null != stateProgram.mode() ? new StudyModeDto(stateProgram.mode().id(), stateProgram.mode().name()) : null;
+        ImplementationFormDto implementationFormDto = null != stateProgram.implementationForm()
+                ? new ImplementationFormDto(stateProgram.implementationForm().id(), stateProgram.implementationForm().name())
+                : null;
+
         StateProgramViewDto stateProgramDto = StateProgramViewDto.builder()
                 .id(stateProgram.id())
                 .name(stateProgram.name())
@@ -33,14 +39,9 @@ public class StateScheduleEntityToDtoConverter {
                 .id(stateProgram.id())
                 .countOfHoursPerLerner(stateProgram.countOfHoursPerLerner())
                 .lernerCount(stateProgram.lernerCount())
-                .responsibleDepartment(new DivisionDto(stateProgram.responsibleDepartment()))
-                .mode(new StudyModeDto(stateProgram.mode().id(), stateProgram.mode().name()))
-                .implementationForm(
-                        new ImplementationFormDto(
-                                stateProgram.implementationForm().id(),
-                                stateProgram.implementationForm().name()
-                        )
-                )
+                .responsibleDepartment(divisionDto)
+                .mode(studyModeDto)
+                .implementationForm(implementationFormDto)
                 .etpCreated(eptIsCreated)
                 .build();
         if (stateProgram.curator() != null) {
@@ -51,6 +52,11 @@ public class StateScheduleEntityToDtoConverter {
     }
 
     public StateProgramCreationDto makeEditDto(StateProgram stateProgram) {
+        Integer responsibleDepartmentId = null != stateProgram.responsibleDepartment() ? stateProgram.responsibleDepartment().id(): null;
+        String studyModeId = null != stateProgram.mode() ? stateProgram.mode().id() : null;
+        String implementationFormId = null != stateProgram.implementationForm() ? stateProgram.implementationForm().id() : null;
+        Integer curatorId = null != stateProgram.curator() ? stateProgram.curator().id() : null;
+
         StateProgramCreationDto stateProgramDto = StateProgramCreationDto.builder()
                 .id(stateProgram.id())
                 .name(stateProgram.name())
@@ -62,15 +68,11 @@ public class StateScheduleEntityToDtoConverter {
                 .id(stateProgram.id())
                 .countOfHoursPerLerner(stateProgram.countOfHoursPerLerner())
                 .lernerCount(stateProgram.lernerCount())
-                .responsibleDepartmentId(stateProgram.responsibleDepartment().id())
-                .modeId(stateProgram.mode().id())
-                .implementationFormId(stateProgram.implementationForm().id())
-                .curatorId(stateProgram.curator().id())
+                .responsibleDepartmentId(responsibleDepartmentId)
+                .modeId(studyModeId)
+                .implementationFormId(implementationFormId)
+                .curatorId(curatorId)
                 .build();
-
-        if (stateProgram.curator() != null) {
-            stateProgramDto.setCuratorId(stateProgram.curator().id());
-        }
 
         return stateProgramDto;
     }
