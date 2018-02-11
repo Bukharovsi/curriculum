@@ -12,8 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ru.curriculum.web.error.LoggingAccessDeniedHandler;
 import ru.curriculum.application.auth.principal.CuratorPrincipalService;
+import ru.curriculum.web.error.LoggingAccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -31,7 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(
                             "/css/**",
                             "/js/**",
-                            "/webjars/**").permitAll()
+                            "/webjars/**",
+                            "/health").permitAll()
                     .antMatchers("/", "/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 .and()
