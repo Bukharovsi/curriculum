@@ -110,4 +110,10 @@ public class StateScheduleController {
         stateScheduleCRUDService.delete(id);
         return redirectTo(Routes.stateSchedule);
     }
+
+    @RequestMapping(path = "/clean")
+    public String clean() {
+        stateScheduleCRUDService.clean();
+        return redirectTo(Routes.stateSchedule);
+    }
 }
