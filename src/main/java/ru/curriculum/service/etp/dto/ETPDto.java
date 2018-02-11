@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.etp.entity.ETP;
+import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.service.etp.validation.EndDateLargerThanBeginDateConstraint;
 
 import javax.persistence.Temporal;
@@ -60,6 +61,9 @@ public class ETPDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fullTimeLearningEndDate;
 
+    @NotNull(message = "Необходимо выбрать \"Источник финансирования\"")
+    private FinancingSource financingSource;
+
     private Integer stateProgramId;
 
     @Valid
@@ -98,6 +102,7 @@ public class ETPDto {
         this.fullTimeLearningBeginDate = etp.fullTimeLearningBeginDate();
         this.fullTimeLearningEndDate = etp.fullTimeLearningEndDate();
         this.stateProgramId = etp.stateProgramId();
+        this.financingSource = etp.financingSource();
         this.eaModules =
                 etp.eaModules()
                         .stream()

@@ -1,16 +1,17 @@
 package ru.curriculum.domain.etp.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
+import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
+import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
-import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /*
  * ETP - education thematic plan (УПТ - учебно-тематический план)
@@ -38,6 +39,9 @@ public class ETP {
     private Date fullTimeLearningEndDate;
     @Setter
     private Integer stateProgramId;
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private FinancingSource financingSource;
 
     @OneToMany(
             mappedBy = "etp",
@@ -73,7 +77,8 @@ public class ETP {
             Date distanceLearningBeginDate,
             Date distanceLearningEndDate,
             Date fullTimeLearningBeginDate,
-            Date fullTimeLearningEndDate
+            Date fullTimeLearningEndDate,
+            FinancingSource financingSource
     ) {
         this();
         this.title = title;
@@ -82,6 +87,7 @@ public class ETP {
         this.distanceLearningEndDate = distanceLearningEndDate;
         this.fullTimeLearningBeginDate = fullTimeLearningBeginDate;
         this.fullTimeLearningEndDate = fullTimeLearningEndDate;
+        this.financingSource = financingSource;
     }
 
     public ETP(
@@ -91,6 +97,7 @@ public class ETP {
             Date distanceLearningEndDate,
             Date fullTimeLearningBeginDate,
             Date fullTimeLearningEndDate,
+            FinancingSource financingSource,
             Set<EAModule> eaModules,
             Set<EMAModule> emaModules,
             Set<OMAModule> omaModules
@@ -101,7 +108,8 @@ public class ETP {
                 distanceLearningBeginDate,
                 distanceLearningEndDate,
                 fullTimeLearningBeginDate,
-                fullTimeLearningEndDate
+                fullTimeLearningEndDate,
+                financingSource
         );
         this.addEAModules(eaModules);
         this.addEMAModules(emaModules);
@@ -116,6 +124,7 @@ public class ETP {
             Date distanceLearningEndDate,
             Date fullTimeLearningBeginDate,
             Date fullTimeLearningEndDate,
+            FinancingSource financingSource,
             Set<EAModule> eaModules,
             Set<EMAModule> emaModules,
             Set<OMAModule> omaModules
@@ -127,6 +136,7 @@ public class ETP {
         this.distanceLearningEndDate = distanceLearningEndDate;
         this.fullTimeLearningBeginDate = fullTimeLearningBeginDate;
         this.fullTimeLearningEndDate = fullTimeLearningEndDate;
+        this.financingSource = financingSource;
         this.addEAModules(eaModules);
         this.addEMAModules(emaModules);
         this.addOMAModules(omaModules);

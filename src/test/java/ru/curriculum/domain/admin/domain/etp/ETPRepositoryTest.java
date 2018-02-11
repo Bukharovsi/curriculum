@@ -2,6 +2,7 @@ package ru.curriculum.domain.admin.domain.etp;
 
 import boot.IntegrationBoot;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,7 @@ public class ETPRepositoryTest extends IntegrationBoot {
 
         EAModule eaModule = savedETP.eaModules().iterator().next();
         assertNotNull(eaModule.id());
+        Assert.assertEquals(etp.financingSource(), savedETP.financingSource());
         assertEquals(etp.eaModules().size(), savedETP.eaModules().size());
         assertEquals(etp.emaModules().size(), savedETP.emaModules().size());
         assertEquals(etp.omaModules().size(), savedETP.omaModules().size());

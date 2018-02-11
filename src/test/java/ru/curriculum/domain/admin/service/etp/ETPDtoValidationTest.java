@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.curriculum.domain.admin.domain.etp.ETPMock;
+import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.service.etp.dto.ETPDto;
 
 import javax.validation.ConstraintViolation;
@@ -26,6 +27,7 @@ public class ETPDtoValidationTest extends Assert {
     @Test
     public void endDatesLargerThanBeginDates_validationError() {
         ETPDto etp = etpMock.getETP_DTO();
+        etp.setFinancingSource(FinancingSource.BUDGET);
         etp.setFullTimeLearningBeginDate(new Date(2));
         etp.setFullTimeLearningEndDate(new Date(1));
         etp.setDistanceLearningBeginDate(new Date(2));
@@ -39,6 +41,7 @@ public class ETPDtoValidationTest extends Assert {
     @Test
     public void endDatesLessThanBeginDates_validationSuccess() {
         ETPDto etp = etpMock.getETP_DTO();
+        etp.setFinancingSource(FinancingSource.BUDGET);
         etp.setFullTimeLearningBeginDate(new Date(1));
         etp.setFullTimeLearningEndDate(new Date(2));
         etp.setDistanceLearningBeginDate(new Date(1));
@@ -52,6 +55,7 @@ public class ETPDtoValidationTest extends Assert {
     @Test
     public void datesAreNull_validationFailed() {
         ETPDto etp = etpMock.getETP_DTO();
+        etp.setFinancingSource(FinancingSource.BUDGET);
         etp.setFullTimeLearningBeginDate(null);
         etp.setFullTimeLearningEndDate(null);
         etp.setDistanceLearningBeginDate(null);
