@@ -2,7 +2,6 @@ package ru.curriculum.domain.admin.service.etp;
 
 import org.junit.Assert;
 import org.junit.Before;
-
 import org.junit.Test;
 import ru.curriculum.domain.admin.domain.etp.ETPMock;
 import ru.curriculum.domain.etp.entity.ETP;
@@ -11,12 +10,7 @@ import ru.curriculum.domain.etp.entity.educationActivity.EASection;
 import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
-import ru.curriculum.service.etp.dto.EMAModuleDto;
-import ru.curriculum.service.etp.dto.OMAModuleDto;
-import ru.curriculum.service.etp.dto.EAModuleDto;
-import ru.curriculum.service.etp.dto.EASectionDto;
-import ru.curriculum.service.etp.dto.EATopicDto;
-import ru.curriculum.service.etp.dto.ETPDto;
+import ru.curriculum.service.etp.dto.*;
 
 
 public class ETPDtoTest extends Assert {
@@ -99,5 +93,6 @@ public class ETPDtoTest extends Assert {
         assertEquals(etp.eaModules().size(), etpDTO.getEaModules().size());
         assertEquals(etp.emaModules().size(), etpDTO.getEmaModules().size());
         assertEquals(etp.omaModules().size(), etpDTO.getOmaModules().size());
+        assertEquals(etp.financingSource(), etpDTO.getFinancingSource());
     }
 }

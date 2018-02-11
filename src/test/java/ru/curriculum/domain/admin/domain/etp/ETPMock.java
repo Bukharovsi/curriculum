@@ -2,11 +2,12 @@ package ru.curriculum.domain.admin.domain.etp;
 
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.etp.entity.ETP;
+import ru.curriculum.domain.etp.entity.Plan;
 import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
 import ru.curriculum.domain.etp.entity.educationActivity.EASection;
-import ru.curriculum.domain.etp.entity.Plan;
 import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
+import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.service.etp.dto.ETPDto;
@@ -32,6 +33,7 @@ public class ETPMock {
                 new Date(2),
                 new Date(3),
                 new Date(4),
+                FinancingSource.BUDGET,
                 getEAModules(),
                 getEMAModules(),
                 getOMAModules()

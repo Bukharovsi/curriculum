@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.domain.etp.entity.ETP;
+import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.domain.etp.repository.ETPRepository;
 import ru.curriculum.domain.helper.StateProgramTestHelper;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
@@ -16,7 +17,6 @@ import ru.curriculum.web.View;
 import java.util.Date;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
@@ -28,7 +28,7 @@ public class ETPControllerTest extends IntegrationWebBoot {
     private ETPRepository etpRepository;
 
     @After
-    public void tearDown() {
+    public void cleanUpDB() {
         etpRepository.deleteAll();
         stateProgramHelper.deleteAll();
     }
@@ -86,7 +86,8 @@ public class ETPControllerTest extends IntegrationWebBoot {
                 new Date(2),
                 new Date(3),
                 new Date(2),
-                new Date(3)
+                new Date(3),
+                FinancingSource.BUDGET
         );
     }
 }

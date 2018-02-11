@@ -24,4 +24,5 @@
     <include file="/db/changelog/280120181342_create_division_table.xml"/>
     <include file="/db/changelog/280120220146_change_state_chedule_change_division.xml"/>
     <include file="/db/changelog/040220182200_add_program_state_id_to_ept.xml"/>
+    <include file="/db/changelog/110220220146_add_financing_source_to_ETP.xml"/>
 </databaseChangeLog>
