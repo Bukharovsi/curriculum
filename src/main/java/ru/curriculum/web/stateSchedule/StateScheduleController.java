@@ -137,10 +137,7 @@ public class StateScheduleController {
         model.addAttribute("studyModeList", studyModeFindService.findAll());
         model.addAttribute("curatorList", curatorCRUDService.findAllCurators());
         model.addAttribute("divisionList", divisionService.findAll());
-
-//        etp.getOmaModules().add(new OMAModuleDto());
         stateProgramDto.getInternships().add(new InternshipDto());
-
         return View.STATE_SCHEDULE_FORM;
     }
 
@@ -155,10 +152,8 @@ public class StateScheduleController {
         model.addAttribute("studyModeList", studyModeFindService.findAll());
         model.addAttribute("curatorList", curatorCRUDService.findAllCurators());
         model.addAttribute("divisionList", divisionService.findAll());
-
         int internshipIndex = Integer.valueOf(req.getParameter("removeInternship"));
         stateProgramDto.getInternships().remove(internshipIndex);
-
         return View.STATE_SCHEDULE_FORM;
     }
 }
