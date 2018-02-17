@@ -11,6 +11,7 @@ import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.teacher.entity.Teacher;
+import ru.curriculum.domain.teacher.entity.TeacherType;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
 
 import java.util.ArrayList;
@@ -141,7 +142,9 @@ public class TeacherManagementControllerTest extends IntegrationWebBoot {
                 "Иванович",
                 new AcademicDegree(PH_D, "Доктор наук"),
                 "Макдоналдс",
-                "Жарщик котлет");
+                "Жарщик котлет",
+                TeacherType.STAFF
+                );
         Teacher teacher = new Teacher(
                 null,
                 "Петров",
@@ -149,7 +152,9 @@ public class TeacherManagementControllerTest extends IntegrationWebBoot {
                 "Петрович",
                 new AcademicDegree(PH_D, "Доктор наук"),
                 null,
-                null);
+                null,
+                TeacherType.INVITED
+                );
         List<Teacher> teachers = new ArrayList<>();
         teachers.add(cook);
         teachers.add(teacher);

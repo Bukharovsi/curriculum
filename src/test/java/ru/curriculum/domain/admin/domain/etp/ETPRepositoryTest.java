@@ -33,7 +33,8 @@ public class ETPRepositoryTest extends IntegrationBoot {
                 etpMock.getTeacher().patronymic(),
                 etpMock.getTeacher().academicDegree(),
                 etpMock.getTeacher().patronymic(),
-                etpMock.getTeacher().positionHeld()
+                etpMock.getTeacher().positionHeld(),
+                etpMock.getTeacher().type()
         );
         Plan plan = etpMock.getPlan();
         plan.teacher(teacherRepository.save(teacher));
