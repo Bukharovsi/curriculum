@@ -1,0 +1,67 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Формат загрузки файла "План-график"</title>
+</head>
+<body>
+
+<div th:replace="fragments/sidebar" th:remove="tag"></div>
+
+<div layout:fragment="content">
+    <h1>Формат загрузки файла "План-график"</h1>
+    <hr/>
+    <!--&nbsp;-->
+
+    <div>
+        <a class="btn btn-default" th:href="@{/stateSchedule}">Назад</a>
+    </div>
+
+    <div>
+        <h2>Название основных колонок</h2>
+        <ul>
+            <li>Целевая аудитория</li>
+            <li>Название дополнительной профессиональной программы</li>
+            <li>Форма обучения</li>
+            <li>Форма реализация</li>
+            <li>Кол-во слушателей, всего чел./групп</li>
+            <li>Объем на одного слушателя</li>
+            <li>Сроки обучения</li>
+            <li>Стажировка</li>
+            <li>Ответственное структурное подразделение</li>
+            <li>Куратор учебной группы, контактный телефон</li>
+            <li>Место проведения</li>
+        </ul>
+    </div>
+    <div>
+        <h2>Название колонок и формат заполнения</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Название колонки</th>
+                <th>Формат заполнения</th>
+                <th>Пример</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Целевая аудитория</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Название дополнительной профессиональной программы</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Форма обучения</td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -14,10 +14,11 @@ import java.util.*;
 
 @Component
 public class StateProgramFileParser {
-    private Logger logger = LoggerFactory.getLogger(StateProgramFileParser.class);
     private StateProgramFieldComparator stateProgramFieldComparator;
     private StateProgramDateParser stateProgramDateParser;
     private StateProgramField stateProgramField;
+
+    private Logger logger = LoggerFactory.getLogger(StateProgramFileParser.class);
 
     @Autowired
     public StateProgramFileParser(IDictionaryValuesFinder dictionaryValuesFinder) {

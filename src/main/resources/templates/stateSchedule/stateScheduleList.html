@@ -19,6 +19,11 @@
             <input type="file" class="form-control-file" name="file" />
         </div>
         <div class="form-group">
+            <a th:href="@{/stateSchedule/info}" data-toggle="tooltip" title="Формат файла">
+                <span class="glyphicon glyphicon-question-sign"></span>
+            </a>
+        </div>
+        <div class="form-group">
             <button class="btn btn-default" type="submit">Cформировать план</button>
         </div>
         <div class="form-group">
@@ -26,12 +31,6 @@
         </div>
     </form>
 
-    <!--<div>-->
-        <!--<form method="POST" th:action="@{/stateSchedule/uploadStateProgram}" type="post" enctype="multipart/form-data">-->
-            <!--<input type="file" name="file" /><br/><br/>-->
-            <!--<input type="submit" value="Сформировать план" />-->
-        <!--</form>-->
-    <!--</div>-->
     &nbsp;
     <table class="table table-hover">
         <thead>

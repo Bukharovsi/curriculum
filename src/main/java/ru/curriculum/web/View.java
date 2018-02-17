@@ -11,4 +11,5 @@ public class View {
     public static final String ETP_LIST = "etp/etpList";
     public static final String STATE_SCHEDULE_LIST = "stateSchedule/stateScheduleList";
     public static final String STATE_SCHEDULE_FORM = "stateSchedule/stateScheduleForm";
+    public static final String STATE_PROGRAM_FILE_FORMAT_INFO = "stateSchedule/stateProgramFileFormatInfo";
 }
