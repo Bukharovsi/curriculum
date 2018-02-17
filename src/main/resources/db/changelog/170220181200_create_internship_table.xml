@@ -1,0 +1,21 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="170220181200" author="Vlad">
+        <createTable tableName="internship">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="date_start" type="java.sql.Types.TIMESTAMP" ></column>
+            <column name="date_finish" type="java.sql.Types.TIMESTAMP" ></column>
+            <column name="theme" type="varchar"></column>
+            <column name="address" type="varchar(1024)"></column>
+            <column name="state_program_id" type="int">
+                <constraints foreignKeyName="internship_state_program_fk" references="state_program(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

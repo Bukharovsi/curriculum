@@ -7,18 +7,21 @@ import ru.curriculum.domain.organization.entity.Division;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Государственная программа, на основании которой формируется УТП
  */
 @Entity
 @Table(name = "state_program")
-@Data
+@Getter
+@Setter
 @Accessors(fluent = true)
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
+@ToString(exclude = "internships")
+@EqualsAndHashCode(exclude = "internships")
 public class StateProgram {
 
     @Id
@@ -34,6 +37,14 @@ public class StateProgram {
 
     @OneToOne(targetEntity = ImplementationForm.class, fetch = FetchType.EAGER)
     private ImplementationForm implementationForm;
+
+    @OneToMany(
+            mappedBy = "stateProgram",
+            targetEntity = Internship.class,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    private Set<Internship> internships;
 
     private Integer lernerCount;
 
@@ -52,4 +63,44 @@ public class StateProgram {
     private Curator curator;
 
     private String address;
+
+    public StateProgram(
+            Integer id,
+            String targetAudience,
+            String name, StudyMode mode,
+            ImplementationForm implementationForm,
+            Set<Internship> internships,
+            Integer lernerCount,
+            Integer groupCount,
+            Integer countOfHoursPerLerner,
+            Date dateStart,
+            Date dateFinish,
+            Division responsibleDepartment,
+            Curator curator,
+            String address
+    ) {
+        this.id = id;
+        this.targetAudience = targetAudience;
+        this.name = name;
+        this.mode = mode;
+        this.implementationForm = implementationForm;
+        this.setInternship(internships);
+        this.lernerCount = lernerCount;
+        this.groupCount = groupCount;
+        this.countOfHoursPerLerner = countOfHoursPerLerner;
+        this.dateStart = dateStart;
+        this.dateFinish = dateFinish;
+        this.responsibleDepartment = responsibleDepartment;
+        this.curator = curator;
+        this.address = address;
+    }
+
+    private void setInternship(Set<Internship> internships) {
+        if(null != internships) {
+            internships.forEach(internship -> internship.stateProgram(this));
+            this.internships = internships;
+        } else {
+            this.internships = new HashSet<>();
+        }
+    }
 }

@@ -6,6 +6,7 @@ import ru.curriculum.service.curator.dto.CuratorDto;
 import ru.curriculum.service.division.DivisionDto;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Государственная программа, на основании которой формируется УТП
@@ -26,6 +27,8 @@ public class StateProgramViewDto {
     private StudyModeDto mode;
 
     private ImplementationFormDto implementationForm;
+
+    private List<InternshipDto> internships;
 
     private Integer lernerCount;
 
