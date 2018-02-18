@@ -19,12 +19,16 @@ public class Internship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Setter
     private Date dateStart;
 
+    @Setter
     private Date dateFinish;
 
+    @Setter
     private String address;
 
+    @Setter
     private String theme;
 
     @Setter

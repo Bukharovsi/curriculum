@@ -1,6 +1,7 @@
 package ru.curriculum.domain.stateSchedule.dictionary;
 
 import ru.curriculum.domain.admin.curator.entity.Curator;
+import ru.curriculum.domain.organization.entity.Division;
 import ru.curriculum.domain.stateSchedule.entity.ImplementationForm;
 import ru.curriculum.domain.stateSchedule.entity.StudyMode;
 
@@ -44,6 +45,19 @@ public class DictionaryValuesFinder implements IDictionaryValuesFinder {
             String studyModeName = studyMode.name().replaceAll("\\s+","").toLowerCase();
             if(name.equals(studyModeName)) {
                 return studyMode;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public Division findResponsibleDepartment(String nameTemplate) {
+        String name = nameTemplate.replaceAll("\\s+","").toLowerCase();
+        for (Division division : dictionaryValuesStore.responsibleDepartment()) {
+            String divisionName = division.name().replaceAll("\\s+","").toLowerCase();
+            if(name.equals(divisionName)) {
+                return division;
             }
         }
 

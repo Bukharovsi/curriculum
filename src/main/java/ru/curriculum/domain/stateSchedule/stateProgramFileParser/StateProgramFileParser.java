@@ -1,52 +1,71 @@
 package ru.curriculum.domain.stateSchedule.stateProgramFileParser;
 
 import org.apache.poi.xwpf.usermodel.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import ru.curriculum.domain.stateSchedule.dictionary.IDictionaryValuesFinder;
+import ru.curriculum.domain.stateSchedule.entity.Internship;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
 @Component
 public class StateProgramFileParser {
-    private Logger logger = LoggerFactory.getLogger(StateProgramFileParser.class);
-    private StateProgramFieldComparator stateProgramFieldComparator;
+    private StateProgramFieldsStorage stateProgramFieldsStorage;
     private StateProgramDateParser stateProgramDateParser;
-    private StateProgramField stateProgramField;
+    private StateProgramFieldSetter fieldSetter;
+    private ColumnIndexToFieldMapper columnIndexToFieldMapper;
+    private StateProgramTemplateToStateProgramConverter stateProgramTemplateToStateProgramConverter;
 
     @Autowired
-    public StateProgramFileParser(IDictionaryValuesFinder dictionaryValuesFinder) {
-        this.stateProgramFieldComparator = new StateProgramFieldComparator();
+    public StateProgramFileParser(
+            IDictionaryValuesFinder dictionaryValuesFinder,
+            StateProgramTemplateToStateProgramConverter stateProgramTemplateToStateProgramConverter
+    ) {
+        this.stateProgramTemplateToStateProgramConverter = stateProgramTemplateToStateProgramConverter;
+        this.stateProgramFieldsStorage = new StateProgramFieldsStorage();
+        this.columnIndexToFieldMapper = new ColumnIndexToFieldMapper(stateProgramFieldsStorage);
         this.stateProgramDateParser = new StateProgramDateParser();
-        this.stateProgramField = new StateProgramField(dictionaryValuesFinder);
+        this.fieldSetter = new StateProgramFieldSetter(dictionaryValuesFinder);
     }
 
     public List<StateProgram> parse(MultipartFile file) {
         //TODO: проверка на расширение
         try {
             XWPFDocument doc = new XWPFDocument(file.getInputStream());
-            List<StateProgram> programs = parseDoc(doc);
-            return programs;
+            List<StateProgramTemplate> programs = parseDoc(doc);
+            return stateProgramTemplateToStateProgramConverter.convert(programs);
         } catch (IOException e) {
             throw new RuntimeException(
                     String.format("Во время формирования плана-графика возникла ошибка. \n", e.toString()));
         }
     }
 
-    private List<StateProgram> parseDoc(XWPFDocument doc) {
-        List<StateProgram> stateProgramList = new ArrayList<>();
+    public List<StateProgram> parse(File file) {
+        try {
+            XWPFDocument doc = new XWPFDocument(new FileInputStream(file));
+            List<StateProgramTemplate> programs = parseDoc(doc);
+            return stateProgramTemplateToStateProgramConverter.convert(programs);
+        } catch (IOException e) {
+            throw new RuntimeException(
+                    String.format("Во время формирования плана-графика возникла ошибка. \n", e.toString()));
+        }
+    }
+
+    private List<StateProgramTemplate> parseDoc(XWPFDocument doc) {
+        List<StateProgramTemplate> stateProgramList = new ArrayList<>();
         Integer programYear = stateProgramDateParser.getStateProgramYear(doc);
         XWPFTable table = getTable(doc);
         if(null == table) {
             return stateProgramList;
         }
+
         List<XWPFTableRow> rows = getRows(table);
-        Map<Integer, String> stateProgramFields = tryToIdentifyStateProgramFields(table);
+        ColumnIndexToFieldMap fieldMap = columnIndexToFieldMapper.tryToIdentifyFieldsAndMapToColumnIndex(table);
 
         Date stateProgramBeginDate = stateProgramDateParser.makeStartDate(programYear, 1);
         Date stateProgramEndDate = stateProgramDateParser.makeEndDate(programYear, 1);
@@ -59,58 +78,87 @@ public class StateProgramFileParser {
                 continue;
             }
 
-            StateProgram program = new StateProgram();
+            StateProgramTemplate program = new StateProgramTemplate();
+            Internship internship = new Internship();
+
             program.dateStart(stateProgramBeginDate);
             program.dateFinish(stateProgramEndDate);
 
             List<XWPFTableCell> cells = row.getTableCells();
             for (int cellNumber = 0; cellNumber < cells.size(); cellNumber++) {
-                if(stateProgramFields.containsKey(cellNumber)) {
-                    Object value = cells.get(cellNumber).getText().isEmpty() ? null : cells.get(cellNumber).getText();
-                    stateProgramField.addFieldToStateProgram(stateProgramFields.get(cellNumber), value, program);
+                if(fieldMap.columnIsPresent(cellNumber)) {
+                    String field = fieldMap.getField(cellNumber);
+                    Object value = !cells.get(cellNumber).getText().isEmpty() ? cells.get(cellNumber).getText() : null;
+                    if(stateProgramFieldsStorage.isInternshipField(field)) {
+                        fieldSetter.setFieldToInternship(field, value, internship);
+                    } else {
+                        fieldSetter.setFieldToStateProgram(field, value, program);
+                    }
                 }
             }
 
             if(stateProgramTemplateNotEmpty(program)) {
+                if(internshipNotEmpty(internship)) {
+                    program.internships().add(internship);
+                }
                 stateProgramList.add(program);
+            } else {
+                if(internshipNotEmpty(internship)) {
+                    if(null == internship.theme() || internship.theme().isEmpty()) {
+                        internship.theme(getPreviousInternshipTheme(stateProgramList));
+                    }
+                    stateProgramList
+                            .get(stateProgramList.size() - 1)
+                            .internships()
+                            .add(internship);
+                }
             }
         }
 
         return stateProgramList;
     }
 
+    private String getPreviousInternshipTheme(List<StateProgramTemplate> statePrograms) {
+        String previousTheme = null;
+        if(0 < statePrograms.size()) {
+            List<Internship> internships = statePrograms
+                    .get(statePrograms.size() - 1)
+                    .internships();
+            if(0 < internships.size()) {
+                previousTheme = internships
+                        .get(internships.size() - 1)
+                        .theme();
+            }
+        }
+        return previousTheme;
+    }
+
     private List<XWPFTableRow> getRows(XWPFTable table) {
-        return 1 < table.getNumberOfRows() ?
-                table.getRows().subList(1, table.getNumberOfRows() - 1) : new ArrayList<>();
+        return 1 < table.getNumberOfRows()
+                ? table.getRows().subList(1, table.getNumberOfRows() - 1)
+                : new ArrayList<>();
     }
 
     private XWPFTable getTable(XWPFDocument doc) {
         return 0 < doc.getTables().size() ? doc.getTables().get(0) : null;
     }
 
-    private Map<Integer, String> tryToIdentifyStateProgramFields(XWPFTable table) {
-        Map<Integer, String> stateProgramFields = new HashMap<>();
-        if(0 == table.getRows().size()) {
-            return stateProgramFields;
-        }
-        List<XWPFTableCell> cells = table.getRows().get(0).getTableCells();
-        for(int cellNumber = 0; cellNumber < cells.size(); cellNumber++) {
-            String fieldName = stateProgramFieldComparator.toFieldFormat(cells.get(cellNumber).getText());
-            if(stateProgramFieldComparator.isStateProgramField(fieldName)) {
-                stateProgramFields.put(cellNumber, fieldName);
-            }
-        }
-
-        return stateProgramFields;
-    }
-
-    private boolean stateProgramTemplateNotEmpty(StateProgram stateProgram) {
+    private boolean stateProgramTemplateNotEmpty(StateProgramTemplate stateProgram) {
         return !(null == stateProgram.name()
                 && null == stateProgram.targetAudience()
                 && null == stateProgram.implementationForm()
                 && null == stateProgram.lernerCount()
                 && null == stateProgram.groupCount()
                 && null == stateProgram.countOfHoursPerLerner()
+                && null == stateProgram.responsibleDepartment()
+                && null == stateProgram.address()
                 && null == stateProgram.curator());
+    }
+
+    private boolean internshipNotEmpty(Internship internship) {
+        return !(null == internship.theme()
+                && null == internship.dateStart()
+                && null == internship.dateFinish()
+                && null == internship.address());
     }
 }

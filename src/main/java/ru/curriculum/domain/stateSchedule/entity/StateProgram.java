@@ -19,7 +19,6 @@ import java.util.Set;
 @Setter
 @Accessors(fluent = true)
 @Builder
-@NoArgsConstructor
 @ToString(exclude = "internships")
 @EqualsAndHashCode(exclude = "internships")
 public class StateProgram {
@@ -64,6 +63,10 @@ public class StateProgram {
 
     private String address;
 
+    public StateProgram() {
+        this.internships = new HashSet<>();
+    }
+
     public StateProgram(
             Integer id,
             String targetAudience,
@@ -79,6 +82,7 @@ public class StateProgram {
             Curator curator,
             String address
     ) {
+        this();
         this.id = id;
         this.targetAudience = targetAudience;
         this.name = name;

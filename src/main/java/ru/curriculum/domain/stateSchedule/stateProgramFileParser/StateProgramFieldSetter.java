@@ -1,18 +1,23 @@
 package ru.curriculum.domain.stateSchedule.stateProgramFileParser;
 
 import ru.curriculum.domain.stateSchedule.dictionary.IDictionaryValuesFinder;
-import ru.curriculum.domain.stateSchedule.entity.StateProgram;
+import ru.curriculum.domain.stateSchedule.entity.Internship;
 
-import static ru.curriculum.domain.stateSchedule.stateProgramFileParser.StateProgramFieldComparator.*;
+import java.util.Date;
 
-public class StateProgramField {
+
+import static ru.curriculum.domain.stateSchedule.stateProgramFileParser.StateProgramFieldsStorage.*;
+
+public class StateProgramFieldSetter {
     private IDictionaryValuesFinder dictionaryValuesFinder;
+    private InternshipParser internshipParser;
 
-    public StateProgramField(IDictionaryValuesFinder dictionaryValuesFinder) {
+    public StateProgramFieldSetter(IDictionaryValuesFinder dictionaryValuesFinder) {
         this.dictionaryValuesFinder = dictionaryValuesFinder;
+        this.internshipParser = new InternshipParser();
     }
 
-    public void addFieldToStateProgram(String fieldName, Object value, StateProgram stateProgram) {
+    public void setFieldToStateProgram(String fieldName, Object value, StateProgramTemplate stateProgram) {
         if (null == value) {
             return;
         }
@@ -37,12 +42,41 @@ public class StateProgramField {
                 stateProgram.mode(dictionaryValuesFinder.findMode(value.toString()));
             case IMPLEMENTATION_FORM:
                 stateProgram.implementationForm(dictionaryValuesFinder.findImplementationForm(value.toString()));
+            case ADDRESS:
+                stateProgram.address(value.toString());
+            case RESPONSIBLE_DEPARTMENT:
+                stateProgram.responsibleDepartment(dictionaryValuesFinder.findResponsibleDepartment(value.toString()));
             default:
                 System.out.println("Неизвестное поле плана гос. горантии");
         }
     }
 
-    private void addLernerCountAndGroupCount(String value, StateProgram stateProgram) {
+    public void setFieldToInternship(String fieldName, Object value, Internship internship) {
+        if(null == value) {
+            return;
+        }
+
+        switch (fieldName) {
+            case INTERNSHIP:
+                addInternshipFields(value.toString(), internship);
+                break;
+            case INTERNSHIP_THEME:
+                internship.theme(value.toString());
+                break;
+            default:
+                System.out.println("Неизвестное поле плана гос гарантий");
+        }
+    }
+
+    private void addInternshipFields(String value, Internship internship) {
+        Date[] date = internshipParser.getStartAndFinishDates(value);
+        internship.dateStart(date[0]);
+        internship.dateFinish(date[1]);
+        String address = internshipParser.getAddress(value);
+        internship.address(address);
+    }
+
+    private void addLernerCountAndGroupCount(String value, StateProgramTemplate stateProgram) {
         if(value.contains("/")) {
             String[] str = value.split("/");
             if(2 == str.length) {
