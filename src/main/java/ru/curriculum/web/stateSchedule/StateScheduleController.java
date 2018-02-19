@@ -11,10 +11,7 @@ import ru.curriculum.service.curator.CuratorCRUDService;
 import ru.curriculum.service.division.DivisionFindingService;
 import ru.curriculum.service.stateSchedule.dto.InternshipDto;
 import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
-import ru.curriculum.service.stateSchedule.service.ImplementationFormFindService;
-import ru.curriculum.service.stateSchedule.service.StateScheduleCRUDService;
-import ru.curriculum.service.stateSchedule.service.StateScheduleCreationFromFileService;
-import ru.curriculum.service.stateSchedule.service.StudyModeFindService;
+import ru.curriculum.service.stateSchedule.service.*;
 import ru.curriculum.web.View;
 
 import javax.servlet.http.HttpServletRequest;
@@ -122,8 +119,15 @@ public class StateScheduleController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/uploadStateProgram")
-    public String uploadStateProgramFile(@RequestParam("file") MultipartFile file) {
-        stateScheduleCreationFromFileService.makeStateScheduleTemplatesFromFile(file);
+    public String uploadStateProgramFile(
+            Model model,
+            @RequestParam("file") MultipartFile file
+    ) {
+        FileParseResult result = stateScheduleCreationFromFileService.makeStateScheduleTemplatesFromFile(file);
+        if(!result.parseIsSuccess()) {
+            model.addAttribute("uploadFileErrors", result.getErrors());
+            return  View.STATE_SCHEDULE_LIST;
+        }
         return redirectTo(Routes.stateSchedule);
     }
 

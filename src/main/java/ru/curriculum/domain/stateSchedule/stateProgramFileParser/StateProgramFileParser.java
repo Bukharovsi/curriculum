@@ -1,15 +1,14 @@
 package ru.curriculum.domain.stateSchedule.stateProgramFileParser;
 
+import liquibase.util.file.FilenameUtils;
 import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import ru.curriculum.domain.stateSchedule.dictionary.IDictionaryValuesFinder;
 import ru.curriculum.domain.stateSchedule.entity.Internship;
-import ru.curriculum.domain.stateSchedule.entity.StateProgram;
+import ru.curriculum.service.stateSchedule.service.FileParseResult;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -19,37 +18,33 @@ public class StateProgramFileParser {
     private StateProgramDateParser stateProgramDateParser;
     private StateProgramFieldSetter fieldSetter;
     private ColumnIndexToFieldMapper columnIndexToFieldMapper;
-    private StateProgramTemplateToStateProgramConverter stateProgramTemplateToStateProgramConverter;
 
     @Autowired
-    public StateProgramFileParser(
-            IDictionaryValuesFinder dictionaryValuesFinder,
-            StateProgramTemplateToStateProgramConverter stateProgramTemplateToStateProgramConverter
-    ) {
-        this.stateProgramTemplateToStateProgramConverter = stateProgramTemplateToStateProgramConverter;
+    public StateProgramFileParser(IDictionaryValuesFinder dictionaryValuesFinder) {
         this.stateProgramFieldsStorage = new StateProgramFieldsStorage();
         this.columnIndexToFieldMapper = new ColumnIndexToFieldMapper(stateProgramFieldsStorage);
         this.stateProgramDateParser = new StateProgramDateParser();
         this.fieldSetter = new StateProgramFieldSetter(dictionaryValuesFinder);
     }
 
-    public List<StateProgram> parse(MultipartFile file) {
-        //TODO: проверка на расширение
+    public FileParseResult parse(MultipartFile file) {
+        FileParseResult result = new FileParseResult();
+        if(file.isEmpty()) {
+            result.addError("Невозможно сформировать \"План-график\" из пустого файла");
+            return result;
+        }
+
+        String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+        if(!ext.equals("docx")) {
+            result.addError("Допустимый формат: .docx");
+            return result;
+        }
+
         try {
             XWPFDocument doc = new XWPFDocument(file.getInputStream());
             List<StateProgramTemplate> programs = parseDoc(doc);
-            return stateProgramTemplateToStateProgramConverter.convert(programs);
-        } catch (IOException e) {
-            throw new RuntimeException(
-                    String.format("Во время формирования плана-графика возникла ошибка. \n", e.toString()));
-        }
-    }
-
-    public List<StateProgram> parse(File file) {
-        try {
-            XWPFDocument doc = new XWPFDocument(new FileInputStream(file));
-            List<StateProgramTemplate> programs = parseDoc(doc);
-            return stateProgramTemplateToStateProgramConverter.convert(programs);
+            result.setStateProgramTemplates(programs);
+            return result;
         } catch (IOException e) {
             throw new RuntimeException(
                     String.format("Во время формирования плана-графика возникла ошибка. \n", e.toString()));

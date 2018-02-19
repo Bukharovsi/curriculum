@@ -11,6 +11,7 @@
 <div layout:fragment="content">
     <h1>План-график образовательной деятельности</h1>
     <hr/>
+
     <form class="form-inline" method="POST" th:action="@{/stateSchedule/uploadStateProgram}" type="post" enctype="multipart/form-data">
         <div class="form-group">
             <a class="btn btn-default" th:href="@{/stateSchedule/newForm}">Добавить программу</a>
@@ -26,12 +27,15 @@
         </div>
     </form>
 
-    <!--<div>-->
-        <!--<form method="POST" th:action="@{/stateSchedule/uploadStateProgram}" type="post" enctype="multipart/form-data">-->
-            <!--<input type="file" name="file" /><br/><br/>-->
-            <!--<input type="submit" value="Сформировать план" />-->
-        <!--</form>-->
-    <!--</div>-->
+    &nbsp;
+
+    <div th:if="${uploadFileErrors != null}" class="alert alert-danger">
+        <div>При фомрирование "Плана-графика" возникли ошибки: </div>
+        <ul>
+            <li th:each="err : ${uploadFileErrors}" th:text="${err}" />
+        </ul>
+    </div>
+
     &nbsp;
     <table class="table table-hover">
         <thead>
