@@ -34,7 +34,6 @@ public class TeacherDto {
 
     private String placeOfWork;
 
-    @NotNull(message = "Необходимо заполнить поле \"Тип\"")
     private TeacherType type;
 
     private String positionHeld;
