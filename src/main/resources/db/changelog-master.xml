@@ -27,5 +27,6 @@
     <include file="/db/changelog/110220220146_add_financing_source_to_ETP.xml"/>
     <include file="/db/changelog/110220181913_fill_staff_position_table.xml"/>
     <include file="/db/changelog/100220181800_change_state_program_null_constraint.xml"/>
+    <include file="/db/changelog/170220182041_add_teacher_type_column.xml"/>
     <include file="/db/changelog/170220181200_create_internship_table.xml"/>
 </databaseChangeLog>

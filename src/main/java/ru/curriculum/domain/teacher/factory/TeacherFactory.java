@@ -35,7 +35,8 @@ public class TeacherFactory {
                 teacherDto.getPatronymic(),
                 academicDegree,
                 teacherDto.getPlaceOfWork(),
-                teacherDto.getPositionHeld()
+                teacherDto.getPositionHeld(),
+                teacherDto.getType()
         );
 
         if(null != teacherDto.getCuratorId()) {
