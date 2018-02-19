@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.domain.teacher.entity.Teacher;
+import ru.curriculum.domain.teacher.entity.TeacherType;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -31,6 +34,8 @@ public class TeacherDto {
 
     private String placeOfWork;
 
+    private TeacherType type;
+
     private String positionHeld;
 
     private String curatorLogin;
@@ -50,6 +55,7 @@ public class TeacherDto {
         this.academicDegreeCode = teacher.academicDegree().code();
         this.academicDegreeName = teacher.academicDegree().name();
         this.placeOfWork = teacher.placeOfWork();
+        this.type = teacher.type();
         this.positionHeld = teacher.positionHeld();
         this.curatorId = teacher.hasCuratorProfile() ? teacher.curatorProfile().id() : null;
         this.curatorLogin = teacher.hasCuratorProfile() ? teacher.curator().login() : "";

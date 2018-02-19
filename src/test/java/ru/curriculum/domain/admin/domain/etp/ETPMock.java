@@ -10,6 +10,7 @@ import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
 import ru.curriculum.domain.teacher.entity.Teacher;
+import ru.curriculum.domain.teacher.entity.TeacherType;
 import ru.curriculum.service.etp.dto.ETPDto;
 import ru.curriculum.service.etp.dto.PlanDto;
 
@@ -73,7 +74,8 @@ public class ETPMock {
                 "Иванович",
                 new AcademicDegree("ph_d", "Доктор наук"),
                 "Ирорт" ,
-                "Преподователь"
+                "Преподователь",
+                TeacherType.INVITED
         );
     }
 

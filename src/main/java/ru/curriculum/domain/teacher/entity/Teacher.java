@@ -34,6 +34,10 @@ public class Teacher {
 
     private String positionHeld;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private TeacherType type;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "curator_id")
     private Curator curator;
@@ -43,6 +47,7 @@ public class Teacher {
         this.surname = "";
         this.patronymic = "";
         this.placeOfWork = "ГАОУ ДПО Институт Развития Образования РТ";
+        this.type = TeacherType.STAFF;
     }
 
     public Teacher(
@@ -52,13 +57,17 @@ public class Teacher {
             @NotNull String patronymic,
             @NonNull AcademicDegree academicDegree,
             String placeOfWork,
-            String positionHeld
+            String positionHeld,
+            TeacherType type
     ) {
         this();
         this.id = id;
         this.surname = surname;
         this.firstName = firstName;
         this.patronymic = patronymic;
+        if(null != type) {
+            this.type = type;
+        }
         this.academicDegree = academicDegree;
         if(null != placeOfWork) {
             this.placeOfWork = placeOfWork;

@@ -5,8 +5,14 @@ import org.junit.Test;
 import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.teacher.entity.Teacher;
+import ru.curriculum.domain.teacher.entity.TeacherType;
 
-public class TeacherTest extends Assert {
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+
+public class TeacherTest  {
 
     @Test
     public void createTeacher() {
@@ -17,7 +23,9 @@ public class TeacherTest extends Assert {
                 "Иванович",
                 new AcademicDegree("ph_d", "Доктор наук"),
                 "Макдоналдс",
-                "Жарщик котлет");
+                "Жарщик котлет",
+                TeacherType.STAFF
+                );
 
         assertEquals(new Integer(1), teacher.id());
         assertEquals("Иванов", teacher.surname());
@@ -39,7 +47,9 @@ public class TeacherTest extends Assert {
                 "Иванович",
                 new AcademicDegree("ph_d", "Доктор наук"),
                 null,
-                "Жарщик котлет");
+                "Жарщик котлет",
+                TeacherType.STAFF
+                );
 
         assertEquals("ГАОУ ДПО Институт Развития Образования РТ", teacher.placeOfWork());
     }
@@ -53,7 +63,9 @@ public class TeacherTest extends Assert {
                 "Иванович",
                 new AcademicDegree("ph_d", "Доктор наук"),
                 "Макдоналдс",
-                "Жарщик котлет");
+                "Жарщик котлет",
+                TeacherType.STAFF
+                );
 
         teacher.assignCuratorProfile(new Curator());
 
@@ -70,7 +82,9 @@ public class TeacherTest extends Assert {
                 "",
                 new AcademicDegree("ph_d", "Доктор наук"),
                 "Макдоналдс",
-                "Жарщик котлет");
+                "Жарщик котлет",
+                TeacherType.STAFF
+                );
 
         assertEquals("Иванов И.", teacher.fullName());
     }
@@ -85,6 +99,8 @@ public class TeacherTest extends Assert {
                 "Иванович",
                 new AcademicDegree("ph_d", "Доктор наук"),
                 "Макдоналдс",
-                "Жарщик котлет");
+                "Жарщик котлет",
+                TeacherType.STAFF
+                );
     }
 }

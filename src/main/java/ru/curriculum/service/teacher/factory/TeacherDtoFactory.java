@@ -2,6 +2,7 @@ package ru.curriculum.service.teacher.factory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.curriculum.domain.teacher.entity.TeacherType;
 import ru.curriculum.service.teacher.dto.TeacherDto;
 import ru.curriculum.service.curator.dto.CuratorDto;
 import ru.curriculum.service.curator.CuratorCRUDService;
@@ -19,6 +20,7 @@ public class TeacherDtoFactory {
         teacherDto.setSurname(curatorDto.getSurname());
         teacherDto.setFirstName(curatorDto.getFirstName());
         teacherDto.setPatronymic(curatorDto.getPatronymic());
+        teacherDto.setType(TeacherType.STAFF);
 
         return teacherDto;
     }

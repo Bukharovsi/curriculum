@@ -61,6 +61,18 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-sm-2">Тип: </label>
+            <div class="col-sm-8">
+                <select class="form-control" th:field="*{type}">
+                    <option th:each="type : ${T(ru.curriculum.domain.teacher.entity.TeacherType).values()}"
+                            th:value="${type}"
+                            th:text="${type.displayName}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="control-label col-sm-2">Куратор: </label>
             <div class="col-sm-8">
                 <select th:field="*{curatorId}" class="form-control">
