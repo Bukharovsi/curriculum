@@ -14,7 +14,7 @@ public class StateProgramFieldsStorage {
     public final static String COUNT_OF_HOURS_PER_LERNER = "объемнаодногослушателя";
     public final static String CURATOR = "кураторучебнойгруппы";
     public final static String ADDRESS = "местопроведения";
-    public final static String INTERNSHIP = "стажировк";
+    public final static String INTERNSHIP = "стажиров";
     public final static String INTERNSHIP_THEME = "темастажировки";
     public final static String RESPONSIBLE_DEPARTMENT = "ответственноеподразделение";
 

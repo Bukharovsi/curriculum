@@ -6,14 +6,11 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
-import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 import ru.curriculum.domain.stateSchedule.stateProgramFileParser.StateProgramFileParser;
 
 @Ignore

@@ -131,6 +131,11 @@ public class StateScheduleController {
         return redirectTo(Routes.stateSchedule);
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/info")
+    public String stateProgramFileFormatInfo() {
+        return View.STATE_PROGRAM_FILE_FORMAT_INFO;
+    }
+
     @RequestMapping(params = {"addInternship"}, method = {RequestMethod.PUT, RequestMethod.POST})
     public String addInternship(
             @ModelAttribute("stateProgram") StateProgramCreationDto stateProgramDto,
