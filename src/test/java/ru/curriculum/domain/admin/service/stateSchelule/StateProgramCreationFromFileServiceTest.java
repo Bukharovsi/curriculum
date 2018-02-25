@@ -1,7 +1,9 @@
 package ru.curriculum.domain.admin.service.stateSchelule;
 
 import boot.IntegrationBoot;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -11,6 +13,7 @@ import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 import ru.curriculum.domain.stateSchedule.stateProgramFileParser.StateProgramFileParser;
 
+@Ignore
 public class StateProgramCreationFromFileServiceTest extends IntegrationBoot {
 
     //TODO: точно прверить работу с .doc файлами
@@ -29,7 +32,9 @@ public class StateProgramCreationFromFileServiceTest extends IntegrationBoot {
     @Test
     public void readDocFileTest() throws IOException {
         Curator curator = createAndSaveCurator();
-//        stateProgramFileParser.parse(new File(filename));
+//        List<StateProgram> list = stateProgramFileParser.parse(new File(filename));
+
+//        Assert.assertNotNull(list);
     }
 
     private Curator createAndSaveCurator() {

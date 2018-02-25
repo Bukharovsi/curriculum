@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 import ru.curriculum.domain.stateSchedule.repository.StateProgramRepository;
 import ru.curriculum.domain.stateSchedule.stateProgramFileParser.StateProgramFileParser;
-import ru.curriculum.service.stateSchedule.converter.MultipartFileToFileConverter;
+import ru.curriculum.domain.stateSchedule.stateProgramFileParser.StateProgramTemplateToStateProgramConverter;
 
 import java.util.List;
 
@@ -15,14 +15,18 @@ public class StateScheduleCreationFromFileService {
     @Autowired
     private StateProgramFileParser stateProgramFileParser;
     @Autowired
-    private MultipartFileToFileConverter multipartFileToFileConverter;
-    @Autowired
     private StateProgramRepository stateProgramRepository;
+    @Autowired
+    private StateProgramTemplateToStateProgramConverter stateProgramTemplateToStateProgramConverter;
 
-    public void makeStateScheduleTemplatesFromFile(MultipartFile multipartFile) {
+    public FileParseResult makeStateScheduleTemplatesFromFile(MultipartFile multipartFile) {
         try {
-            List<StateProgram> statePrograms = stateProgramFileParser.parse(multipartFile);
-            stateProgramRepository.save(statePrograms);
+            FileParseResult parseResult = stateProgramFileParser.parse(multipartFile);
+            if(parseResult.parseIsSuccess()) {
+                List<StateProgram> programs = stateProgramTemplateToStateProgramConverter.convert(parseResult.getStateProgramTemplates());
+                stateProgramRepository.save(programs);
+            }
+            return parseResult;
         } catch (Exception e) {
             throw new RuntimeException(String.format("При обработке файла произошли ошбики. %s", e.getMessage()));
         }

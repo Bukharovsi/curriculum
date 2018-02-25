@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
+import ru.curriculum.domain.organization.repository.DivisionRepository;
 import ru.curriculum.domain.stateSchedule.dictionary.DictionaryValuesFinder;
 import ru.curriculum.domain.stateSchedule.dictionary.DictionaryValuesStore;
 import ru.curriculum.domain.stateSchedule.dictionary.IDictionaryValuesFinder;
@@ -18,16 +19,17 @@ public class DictionaryValuesFinderConfig {
     private ImplementationFormRepository implementationFormRepository;
     @Autowired
     private StudyModeRepository studyModeRepository;
-
+    @Autowired
+    private DivisionRepository divisionRepository;
 
     @Bean
     public IDictionaryValuesFinder dictionaryValuesFinder() {
         DictionaryValuesStore dictionaryValuesStore = new DictionaryValuesStore(
                 curatorRepository,
                 implementationFormRepository,
-                studyModeRepository
+                studyModeRepository,
+                divisionRepository
         );
-
         return new DictionaryValuesFinder(dictionaryValuesStore);
     }
 }

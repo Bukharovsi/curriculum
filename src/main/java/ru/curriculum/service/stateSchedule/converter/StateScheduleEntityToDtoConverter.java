@@ -6,10 +6,9 @@ import ru.curriculum.domain.etp.repository.ETPRepository;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 import ru.curriculum.service.curator.dto.CuratorDto;
 import ru.curriculum.service.division.DivisionDto;
-import ru.curriculum.service.stateSchedule.dto.ImplementationFormDto;
-import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
-import ru.curriculum.service.stateSchedule.dto.StateProgramViewDto;
-import ru.curriculum.service.stateSchedule.dto.StudyModeDto;
+import ru.curriculum.service.stateSchedule.dto.*;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class StateScheduleEntityToDtoConverter {
@@ -42,6 +41,7 @@ public class StateScheduleEntityToDtoConverter {
                 .responsibleDepartment(divisionDto)
                 .mode(studyModeDto)
                 .implementationForm(implementationFormDto)
+                .internships(stateProgram.internships().stream().map(InternshipDto::new).collect(toList()))
                 .etpCreated(eptIsCreated)
                 .build();
         if (stateProgram.curator() != null) {
@@ -69,6 +69,7 @@ public class StateScheduleEntityToDtoConverter {
                 .countOfHoursPerLerner(stateProgram.countOfHoursPerLerner())
                 .lernerCount(stateProgram.lernerCount())
                 .responsibleDepartmentId(responsibleDepartmentId)
+                .internships(stateProgram.internships().stream().map(InternshipDto::new).collect(toList()))
                 .modeId(studyModeId)
                 .implementationFormId(implementationFormId)
                 .curatorId(curatorId)

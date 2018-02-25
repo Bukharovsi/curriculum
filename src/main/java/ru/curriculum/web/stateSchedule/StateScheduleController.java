@@ -9,13 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.curator.CuratorCRUDService;
 import ru.curriculum.service.division.DivisionFindingService;
+import ru.curriculum.service.stateSchedule.dto.InternshipDto;
 import ru.curriculum.service.stateSchedule.dto.StateProgramCreationDto;
-import ru.curriculum.service.stateSchedule.service.ImplementationFormFindService;
-import ru.curriculum.service.stateSchedule.service.StateScheduleCRUDService;
-import ru.curriculum.service.stateSchedule.service.StateScheduleCreationFromFileService;
-import ru.curriculum.service.stateSchedule.service.StudyModeFindService;
+import ru.curriculum.service.stateSchedule.service.*;
 import ru.curriculum.web.View;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import static ru.curriculum.web.Redirect.redirectTo;
@@ -120,8 +119,50 @@ public class StateScheduleController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/uploadStateProgram")
-    public String uploadStateProgramFile(@RequestParam("file") MultipartFile file) {
-        stateScheduleCreationFromFileService.makeStateScheduleTemplatesFromFile(file);
+    public String uploadStateProgramFile(
+            Model model,
+            @RequestParam("file") MultipartFile file
+    ) {
+        FileParseResult result = stateScheduleCreationFromFileService.makeStateScheduleTemplatesFromFile(file);
+        if(!result.parseIsSuccess()) {
+            model.addAttribute("uploadFileErrors", result.getErrors());
+            return  View.STATE_SCHEDULE_LIST;
+        }
         return redirectTo(Routes.stateSchedule);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/info")
+    public String stateProgramFileFormatInfo() {
+        return View.STATE_PROGRAM_FILE_FORMAT_INFO;
+    }
+
+    @RequestMapping(params = {"addInternship"}, method = {RequestMethod.PUT, RequestMethod.POST})
+    public String addInternship(
+            @ModelAttribute("stateProgram") StateProgramCreationDto stateProgramDto,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        model.addAttribute("implementationFormList", implementationFormFindService.findAll());
+        model.addAttribute("studyModeList", studyModeFindService.findAll());
+        model.addAttribute("curatorList", curatorCRUDService.findAllCurators());
+        model.addAttribute("divisionList", divisionService.findAll());
+        stateProgramDto.getInternships().add(new InternshipDto());
+        return View.STATE_SCHEDULE_FORM;
+    }
+
+    @RequestMapping(params = {"removeInternship"}, method = {RequestMethod.PUT, RequestMethod.POST})
+    public String removeInternship(
+            @ModelAttribute("stateProgram") StateProgramCreationDto stateProgramDto,
+            BindingResult bindingResult,
+            Model model,
+            HttpServletRequest req
+    ) {
+        model.addAttribute("implementationFormList", implementationFormFindService.findAll());
+        model.addAttribute("studyModeList", studyModeFindService.findAll());
+        model.addAttribute("curatorList", curatorCRUDService.findAllCurators());
+        model.addAttribute("divisionList", divisionService.findAll());
+        int internshipIndex = Integer.valueOf(req.getParameter("removeInternship"));
+        stateProgramDto.getInternships().remove(internshipIndex);
+        return View.STATE_SCHEDULE_FORM;
     }
 }

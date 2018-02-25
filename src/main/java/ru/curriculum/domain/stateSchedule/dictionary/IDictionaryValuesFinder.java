@@ -1,6 +1,7 @@
 package ru.curriculum.domain.stateSchedule.dictionary;
 
 import ru.curriculum.domain.admin.curator.entity.Curator;
+import ru.curriculum.domain.organization.entity.Division;
 import ru.curriculum.domain.stateSchedule.entity.ImplementationForm;
 import ru.curriculum.domain.stateSchedule.entity.StudyMode;
 
@@ -11,4 +12,6 @@ public interface IDictionaryValuesFinder {
     ImplementationForm findImplementationForm(String name);
 
     StudyMode findMode(String string);
+
+    Division findResponsibleDepartment(String string);
 }

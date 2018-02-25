@@ -6,9 +6,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Государственная программа, на основании которой формируется УТП
@@ -62,4 +65,7 @@ public class StateProgramCreationDto {
 
     @NotEmpty(message = "Необходимо заполнить \"Адрес\"")
     private String address;
+
+    @Valid
+    private List<InternshipDto> internships = new ArrayList<>();
 }
