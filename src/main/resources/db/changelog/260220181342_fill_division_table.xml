@@ -1,0 +1,82 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="260220181342" author="Sergey">
+
+        <delete tableName="division"></delete>
+
+        <insert tableName="division">
+            <column name="id" value="1"></column>
+            <column name="name" value="Библиотечно-информационный отдел"></column>
+        </insert>
+        <insert tableName="division">
+            <column name="id" value="2"></column>
+            <column name="name" value="Кафедра дошкольного и начального общего образования"></column>
+        </insert>
+        <insert tableName="division">
+            <column name="id" value="3"></column>
+            <column name="name" value="Кафедра естественно-математических дисциплин"></column>
+        </insert>
+        <insert tableName="division">
+            <column name="id" value="4"></column>
+            <column name="name" value="Кафедра педагогики, психологии и андрогогики"></column>
+        </insert>
+        <insert tableName="division">
+            <column name="id" value="5"></column>
+            <column name="name" value="Кафедра социально-гуманитарных дисциплин"></column>
+        </insert>
+        <insert tableName="division">
+            <column name="id" value="6"></column>
+            <column name="name" value="Кафедра татарского языка и литературы"></column>
+        </insert>
+
+        <insert tableName="division">
+            <column name="id" value="7"></column>
+            <column name="name" value="Кафедра теории и практики управления образованием"></column>
+        </insert>
+
+        <insert tableName="division">
+            <column name="id" value="8"></column>
+            <column name="name" value="Лаборатория инклюзивного образования"></column>
+        </insert>
+
+        <insert tableName="division">
+            <column name="id" value="9"></column>
+            <column name="name" value="Лаборатория национального образования"></column>
+        </insert>
+
+        <insert tableName="division">
+            <column name="id" value="10"></column>
+            <column name="name" value="Лаборатория социализации и воспитания, дополнительного образования"></column>
+        </insert>
+
+        <insert tableName="division">
+            <column name="id" value="11"></column>
+            <column name="name" value="Отдел мониторинга, экспертизы, оценки качества образования"></column>
+        </insert>
+
+        <insert tableName="division">
+            <column name="id" value="12"></column>
+            <column name="name" value="Отдел развития методической работы"></column>
+        </insert>
+
+        <insert tableName="division">
+            <column name="id" value="13"></column>
+            <column name="name" value="Центр развития профессионального образования (1 лаборатория)"></column>
+        </insert>
+
+        <insert tableName="division">
+            <column name="id" value="14"></column>
+            <column name="name" value="Центр развития профессионального образования (2 лаборатория)"></column>
+        </insert>
+
+        <insert tableName="division">
+            <column name="id" value="15"></column>
+            <column name="name" value="Лаборатория  электронного  обучения и дистанционных образовательных технологий"></column>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
