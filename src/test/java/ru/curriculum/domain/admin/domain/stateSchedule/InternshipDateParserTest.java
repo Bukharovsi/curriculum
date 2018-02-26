@@ -35,7 +35,7 @@ public class InternshipDateParserTest {
 
         Assert.assertEquals(2, dates.length);
         Assert.assertEquals(dateFormat.parse("20.01.2018").getTime(), dates[0].getTime());
-        Assert.assertEquals(dateFormat.parse("28.01.18"), dates[1]);
+        Assert.assertEquals(dateFormat.parse("28.01.2018"), dates[1]);
     }
 
     @Test

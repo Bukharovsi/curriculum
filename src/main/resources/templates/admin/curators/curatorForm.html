@@ -11,10 +11,10 @@
     <div class="row">
     <div class="col-sm-offset-2 col-sm-8">
         <div th:if="${curator.id}" style="align-items: center;">
-            <h1>Редактирование <span th:text="${curator.username}"></span></h1>
+            <div th:include="fragments/pageHeader :: pageHeader('Редактирование', ${curator.username})"></div>
         </div>
         <div th:unless="${curator.id}" style="align-items: center;">
-            <h1>Создание куратора</h1>
+            <div th:include="fragments/pageHeader :: pageHeader('Создание куратора', '')"></div>
         </div>
         <hr/>
     </div>

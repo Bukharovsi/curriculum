@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 public class InternshipParser {
     private final String DATE_SEARCH_PATTERN = "(0?[1-9]|[12][0-9]|3[01])\\.(0?[1-9]|1[012])\\.(((19|20)\\d\\d)|(\\d\\d))";
     private final SimpleDateFormat[] formats = {
-            new SimpleDateFormat("dd.MM.yyyy"),
             new SimpleDateFormat("dd.MM.yy")
     };
     private Pattern datePattern;
