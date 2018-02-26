@@ -11,9 +11,17 @@
     <div class="col-sm-offset-2 col-sm-8">
         <div th:if="${stateProgram.id}" style="align-items: center;">
             <h1>Редактирование
-                <span th:text="${stateProgram.getName()}+' на '+
-                    ${stateProgram.getDateStart().getYear()} +' - '+ ${stateProgram.getDateFinish().getYear()} + ' учебный год'">
-                </span></h1>
+                <span th:if="${stateProgram.getDateStart().getYear() != stateProgram.getDateFinish().getYear()}"
+                      style="font-size: smaller; color: #9d9d9d"
+                      th:text="${stateProgram.getName()}+' на '+
+                      ${#dates.format(stateProgram.getDateStart(),'yyyy')} +' - '+ ${#dates.format(stateProgram.getDateFinish(), 'yyyy')} + ' учебный год'">
+                </span>
+                <span th:if="${stateProgram.getDateStart().getYear() == stateProgram.getDateFinish().getYear()}"
+                      style="font-size: smaller; color: #9d9d9d"
+                      th:text="${stateProgram.getName()}+' на '+
+                      ${#dates.format(stateProgram.getDateStart(),'yyyy')} + ' учебный год'">
+                </span>
+            </h1>
         </div>
         <div th:unless="${stateProgram.id}" style="align-items: center;">
             <h1>Создание плана графика</h1>
@@ -111,7 +119,7 @@
                 <div class="col-sm-8">
                     <div class="form-group row">
                         <div class="col-sm-2 text-center"><label>Дата начала</label></div>
-                        <div class="col-sm-2 text-center"><label>Дата начала</label></div>
+                        <div class="col-sm-2 text-center"><label>Дата окончания</label></div>
                         <div class="col-sm-4 text-center"><label>Тема</label></div>
                         <div class="col-sm-3 text-center"><label>Место проведения</label></div>
                         <div class="col-sm-1 text-right">
