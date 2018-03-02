@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import ru.curriculum.lib.DahmerauLevenshtein;
 
 @RunWith(DataProviderRunner.class)
-@Cu
 public class DahmerauLevenshteinTest {
     private DahmerauLevenshtein dahmerauLevenshtein;
 
