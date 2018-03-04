@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import ru.curriculum.lib.DahmerauLevenshteinComparator;
+import ru.curriculum.lib.PercentageMetric;
 
 @RunWith(DataProviderRunner.class)
 public class DahmerauLevenshteinComparatorTest {
@@ -19,9 +20,35 @@ public class DahmerauLevenshteinComparatorTest {
         Assert.assertEquals(compareResult, comparator.isEqual(s1, s2));
     }
 
+    @Test
+    @UseDataProvider("dataProviderForPercentageMetric")
+    public void compareByPercentageMetric(String s1, String s2, PercentageMetric metric, boolean compareResult) {
+        DahmerauLevenshteinComparator comparator = new DahmerauLevenshteinComparator(metric);
+
+        Assert.assertEquals(compareResult, comparator.isEqual(s1, s2));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void tryToInstanceDahmerauLevenshteinComparatorByNegativeMetricValue_mustThrowException() {
         new DahmerauLevenshteinComparator(-1);
+    }
+
+    @DataProvider
+    public static Object[][] dataProviderForPercentageMetric() {
+        return new Object[][] {
+                { "Очное", "Очная", new PercentageMetric(50), true },
+                { "Очное", "Очная", new PercentageMetric(90), true },
+                { "Очное", "Очная", new PercentageMetric(40), true },
+                { "Очное", "Очная", new PercentageMetric(10), false },
+
+                { "Очное-Заочное", "Очная-заочная", new PercentageMetric(40), true },
+                { "Очное-Заочное", "Очная-заочная", new PercentageMetric(85), true },
+                { "Очное-Заочное", "Очная-заочная", new PercentageMetric(10), false },
+                { "Очное-Заочное", "", new PercentageMetric(0), false },
+                { "", "Очная-заочная", new PercentageMetric(100), true },
+                { "", "", new PercentageMetric(0), true },
+                { "", "", new PercentageMetric(100), true },
+        };
     }
 
     @DataProvider
