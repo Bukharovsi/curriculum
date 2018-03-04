@@ -2,65 +2,48 @@ package ru.curriculum.domain.stateSchedule.dictionary;
 
 import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.organization.entity.Division;
+import ru.curriculum.domain.stateSchedule.dictionary.finders.CuratorValueFinder;
+import ru.curriculum.domain.stateSchedule.dictionary.finders.ImplementationFormValueFinder;
+import ru.curriculum.domain.stateSchedule.dictionary.finders.ResponsibleDepartmentValuesFinder;
+import ru.curriculum.domain.stateSchedule.dictionary.finders.StudyModeValueFinder;
 import ru.curriculum.domain.stateSchedule.entity.ImplementationForm;
 import ru.curriculum.domain.stateSchedule.entity.StudyMode;
 
 public class DictionaryValuesFinder implements IDictionaryValuesFinder {
-    private DictionaryValuesStore dictionaryValuesStore;
+    private CuratorValueFinder curatorValueFinder;
+    private ImplementationFormValueFinder implementationFormValueFinder;
+    private ResponsibleDepartmentValuesFinder responsibleDepartmentValuesFinder;
+    private StudyModeValueFinder studyModeValueFinder;
 
-    public DictionaryValuesFinder(DictionaryValuesStore dictionaryValuesStore) {
-        this.dictionaryValuesStore = dictionaryValuesStore;
+    public DictionaryValuesFinder(
+            CuratorValueFinder curatorValueFinder,
+            ImplementationFormValueFinder implementationFormValueFinder,
+            ResponsibleDepartmentValuesFinder responsibleDepartmentValuesFinder,
+            StudyModeValueFinder studyModeValueFinder
+    ) {
+        this.curatorValueFinder = curatorValueFinder;
+        this.implementationFormValueFinder = implementationFormValueFinder;
+        this.responsibleDepartmentValuesFinder = responsibleDepartmentValuesFinder;
+        this.studyModeValueFinder = studyModeValueFinder;
     }
 
     @Override
     public Curator findCurator(String fullNameTemplate) {
-        String name = fullNameTemplate.replaceAll("[^а-яА-Я]", "").trim().toLowerCase();
-        for (Curator curator : dictionaryValuesStore.curators()) {
-            String curatorName = (curator.surname().concat(curator.firstName()).concat(curator.patronymic())).trim().toLowerCase();
-            if(name.equals(curatorName)) {
-                return curator;
-            }
-        }
-
-        return null;
+        return curatorValueFinder.find(fullNameTemplate);
     }
 
     @Override
     public ImplementationForm findImplementationForm(String nameTemplate) {
-        String name = nameTemplate.replaceAll("\\s+","").toLowerCase();
-        for (ImplementationForm implementationForm : dictionaryValuesStore.implementationForms()) {
-            String implementationFormName = implementationForm.name().replaceAll("\\s+","").toLowerCase();
-            if(name.equals(implementationFormName)) {
-                return implementationForm;
-            }
-        }
-
-        return null;
+        return implementationFormValueFinder.find(nameTemplate);
     }
 
     @Override
     public StudyMode findMode(String nameTemplate) {
-        String name = nameTemplate.replaceAll("\\s+","").toLowerCase();
-        for (StudyMode studyMode : dictionaryValuesStore.studyModes()) {
-            String studyModeName = studyMode.name().replaceAll("\\s+","").toLowerCase();
-            if(name.equals(studyModeName)) {
-                return studyMode;
-            }
-        }
-
-        return null;
+        return studyModeValueFinder.find(nameTemplate);
     }
 
     @Override
     public Division findResponsibleDepartment(String nameTemplate) {
-        String name = nameTemplate.replaceAll("\\s+","").toLowerCase();
-        for (Division division : dictionaryValuesStore.responsibleDepartment()) {
-            String divisionName = division.name().replaceAll("\\s+","").toLowerCase();
-            if(name.equals(divisionName)) {
-                return division;
-            }
-        }
-
-        return null;
+        return responsibleDepartmentValuesFinder.find(nameTemplate);
     }
 }
