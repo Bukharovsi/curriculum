@@ -1,26 +1,22 @@
 package ru.curriculum.lib;
 
+/**
+ * Implementation of search distance "dahmerau-levenshtein"
+ *
+ * https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+ */
 public class DahmerauLevenshtein {
 
-    public int find(String s1, String s2) {
+    public int findDistance(String s1, String s2) {
+        if(null == s1 || null == s2) {
+            throw new IllegalArgumentException("Input strings cannot be null");
+        }
+
         int[][] matrix = new int[s1.length() + 1][s2.length() + 1];
 
         for(int i = 0; i <= s1.length(); i++) {
             for(int j = 0; j <= s2.length(); j++) {
-//                if(i == 0 && j == 0) {
-//                    matrix[i][j] = 0;
-//                    continue;
-//                }
-//
-//                if(i == 0 && j > 0) {
-//                    matrix[i][j] = j;
-//                    continue;
-//                }
-//
-//                if(i > 0 && j == 0) {
-//                    matrix[i][j] = i;
-//                    continue;
-//                }
+
                 if(firstCase(i, j)) {
                     matrix[i][j] = minForFirstCase(i, j);
                     continue;
@@ -31,6 +27,7 @@ public class DahmerauLevenshtein {
                     continue;
                 }
 
+                // All cases if the first and second cases are false
                 matrix[i][j] = minForThirdCase(i, j, matrix, s1, s2);
             }
         }
@@ -38,6 +35,9 @@ public class DahmerauLevenshtein {
         return matrix[s1.length()][s2.length()];
     }
 
+    /**
+     * if min(i, j)
+     */
     private boolean firstCase(int i, int j) {
         return 0 == Math.min(i, j);
     }
@@ -46,6 +46,9 @@ public class DahmerauLevenshtein {
         return Math.max(i, j);
     }
 
+    /**
+     * if i,j>1 and Ai=Bj-1 and Ai-1=Bj
+     */
     private boolean secondCase(int i, int j, String s1, String s2) {
         return i > 1 && j > 1
                 && s1.charAt(i - 1) == s2.charAt(j - 2)
@@ -54,20 +57,23 @@ public class DahmerauLevenshtein {
 
     private int minForSecondCase(int i, int j, int[][] matrix, String s1, String s2) {
         int minByLivenshtein = minForThirdCase(i, j, matrix, s1, s2);
-        int additionalDahmerau = matrix[i-2][j-2] + 1;
+        int minAdditionalByDahmerau = matrix[i-2][j-2] + 1;
 
-        return Math.min(minByLivenshtein, additionalDahmerau);
+        return Math.min(minByLivenshtein, minAdditionalByDahmerau);
     }
 
     private int minForThirdCase(int i, int j, int[][] matrix, String s1, String s2) {
         int first = matrix[i][j - 1] + 1;
         int second = matrix[i - 1][j] + 1;
-        int third = matrix[i - 1][j - 1] + operationWeight(s1.charAt(i - 1), s2.charAt(j - 1));
+        int third = matrix[i - 1][j - 1] + m(s1.charAt(i - 1), s2.charAt(j - 1));
 
         return Math.min(Math.min(first, second), third);
     }
 
-    private int operationWeight(char c1, char c2) {
+    /**
+     * Indicator function. Base function of "dahmerau-levenshtein" to define operation weight
+     */
+    private int m(char c1, char c2) {
         return c1 == c2 ? 0 : 1;
     }
 }

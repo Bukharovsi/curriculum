@@ -20,38 +20,15 @@ public class DahmerauLevenshteinTest {
         dahmerauLevenshtein = new DahmerauLevenshtein();
     }
 
-    public void findTest() {
-//        String s1 = "POLYNOMIAL";
-//        String s2 = "EXPONENTIAL";
-        String s1 = "ape";
-        String s2 = "ea";
-
-        int [][] a = new int[s1.length() + 1][s2.length() + 1];
-
-        int result = this.dahmerauLevenshtein.find(s1, s2);
-
-        System.out.println(result);
-    }
-
-    public void test() {
-        compare("baba", "arab");
-        compare("contest", "toner");
-        compare("martial", "marital");
-        compare("monarchy", "democracy");
-        compare("seatback", "backseat");
-        compare("warfare", "farewell");
-        compare("smoking", "hospital");
-        compare("ape", "ea");
-    }
-
-    private void compare(String s1 ,String s2) {
-        System.out.println(s1 + " " + s2 + " " + dahmerauLevenshtein.find(s1, s2));
+    @Test(expected = IllegalArgumentException.class)
+    public void findDahmerauLevenshteinByNullInputString_mustThrowException() {
+        dahmerauLevenshtein.findDistance(null, null);
     }
 
     @Test
     @UseDataProvider("dataProvider")
     public void findingDahmerauLevenshteinTest(String s1, String s2, int expectedDistance) {
-        int distance = dahmerauLevenshtein.find(s1, s2);
+        int distance = dahmerauLevenshtein.findDistance(s1, s2);
 
         Assert.assertEquals(expectedDistance, distance);
     }
@@ -62,6 +39,11 @@ public class DahmerauLevenshteinTest {
                 { "POLYNOMIAL", "EXPONENTIAL", 6 },
                 { "Очное", "Очная", 2 },
                 { "Зачное", "Заочная", 3 },
+                { "очное-заочное", "очная-заочная", 4 },
+                { "А", "а", 1 },
+                { "", "", 0 },
+                { "blue", "", 4 },
+                { "", "light", 5 },
                 { "baba", "arab", 3 },
                 { "contest", "toner", 4 },
                 { "martial", "marital", 1 },
