@@ -40,7 +40,6 @@ public class DahmerauLevenshteinComparatorTest {
                 { "Очное", "Очная", new PercentageMetric(90), true },
                 { "Очное", "Очная", new PercentageMetric(40), true },
                 { "Очное", "Очная", new PercentageMetric(10), false },
-
                 { "Очное-Заочное", "Очная-заочная", new PercentageMetric(40), true },
                 { "Очное-Заочное", "Очная-заочная", new PercentageMetric(85), true },
                 { "Очное-Заочное", "Очная-заочная", new PercentageMetric(10), false },

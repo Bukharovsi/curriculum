@@ -3,33 +3,31 @@ package ru.curriculum.domain.stateSchedule.dictionary.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
-import ru.curriculum.domain.organization.repository.DivisionRepository;
 import ru.curriculum.domain.stateSchedule.dictionary.DictionaryValuesFinder;
-import ru.curriculum.domain.stateSchedule.dictionary.DictionaryValuesStore;
 import ru.curriculum.domain.stateSchedule.dictionary.IDictionaryValuesFinder;
-import ru.curriculum.domain.stateSchedule.repository.ImplementationFormRepository;
-import ru.curriculum.domain.stateSchedule.repository.StudyModeRepository;
+import ru.curriculum.domain.stateSchedule.dictionary.finders.CuratorValueFinder;
+import ru.curriculum.domain.stateSchedule.dictionary.finders.ImplementationFormValueFinder;
+import ru.curriculum.domain.stateSchedule.dictionary.finders.ResponsibleDepartmentValuesFinder;
+import ru.curriculum.domain.stateSchedule.dictionary.finders.StudyModeValueFinder;
 
 @Configuration
 public class DictionaryValuesFinderConfig {
     @Autowired
-    private CuratorRepository curatorRepository;
+    private CuratorValueFinder curatorValueFinder;
     @Autowired
-    private ImplementationFormRepository implementationFormRepository;
+    private ImplementationFormValueFinder implementationFormValueFinder;
     @Autowired
-    private StudyModeRepository studyModeRepository;
+    private ResponsibleDepartmentValuesFinder responsibleDepartmentValuesFinder;
     @Autowired
-    private DivisionRepository divisionRepository;
+    private StudyModeValueFinder studyModeValueFinder;
 
     @Bean
     public IDictionaryValuesFinder dictionaryValuesFinder() {
-        DictionaryValuesStore dictionaryValuesStore = new DictionaryValuesStore(
-                curatorRepository,
-                implementationFormRepository,
-                studyModeRepository,
-                divisionRepository
+        return new DictionaryValuesFinder(
+                curatorValueFinder,
+                implementationFormValueFinder,
+                responsibleDepartmentValuesFinder,
+                studyModeValueFinder
         );
-        return new DictionaryValuesFinder(dictionaryValuesStore);
     }
 }
