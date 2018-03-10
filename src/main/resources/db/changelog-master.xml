@@ -31,4 +31,5 @@
     <include file="/db/changelog/170220181200_create_internship_table.xml"/>
     <include file="/db/changelog/260218181913_fill_staff_position_table.xml"/>
     <include file="/db/changelog/260220181342_fill_division_table.xml"/>
+    <include file="/db/changelog/090320181413_add_lerner_count_and_school_days.xml"/>
 </databaseChangeLog>

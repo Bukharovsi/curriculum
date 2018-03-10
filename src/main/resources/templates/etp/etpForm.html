@@ -23,13 +23,19 @@
 
     <form class="form-horizontal" th:action="@{/etp}" th:object="${etp}" modelAttribute="etp" th:method="${etp.id != null ? 'put' : 'post'}">
 
-        <div class="col-sm-1">
-            <input class="btn btn-default" type="submit" th:value="Сохранить"/>
-        </div>
         <div>
-            <a class="btn btn-default" th:href="@{/etp}">Назад</a>
+            <div class="col-sm-8" style="margin-bottom: 25px;">
+                <input class="btn btn-default" type="submit" th:value="Сохранить"/>
+                <a class="btn btn-default" th:href="@{/etp}">Назад</a>
+            </div>
         </div>
-        &nbsp;
+
+        <!--<div class="col-sm-1">-->
+        <!--<input class="btn btn-default" type="submit" th:value="Сохранить"/>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<a class="btn btn-default" th:href="@{/etp}">Назад</a>-->
+        <!--</div>-->
 
         <div th:include="fragments/formValidationError"></div>
         <div class="form-group">
@@ -73,6 +79,20 @@
                         <input class="form-control" type="date" th:field="*{fullTimeLearningEndDate}">
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Кол-во учебных дней</label>
+            <div class="col-sm-6">
+                <input class="form-control" th:field="*{schoolDaysCount}" type="number" min="0"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Кол-во слушателей</label>
+            <div class="col-sm-6">
+                <input class="form-control" th:field="*{lernerCount}" type="number" min="0"/>
             </div>
         </div>
 
@@ -361,11 +381,17 @@
             </table>
         </div>
 
-        <div class="col-sm-1">
-            <input class="btn btn-default" type="submit" th:value="Сохранить"/>
-        </div>
+        <!--<div class="col-sm-1">-->
+            <!--<input class="btn btn-default" type="submit" th:value="Сохранить"/>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<a class="btn btn-default" th:href="@{/etp}">Назад</a>-->
+        <!--</div>-->
         <div>
-            <a class="btn btn-default" th:href="@{/etp}">Назад</a>
+            <div class="col-sm-8" style="margin-bottom: 25px;">
+                <input class="btn btn-default" type="submit" th:value="Сохранить"/>
+                <a class="btn btn-default" th:href="@{/etp}">Назад</a>
+            </div>
         </div>
     </form>
     &nbsp;

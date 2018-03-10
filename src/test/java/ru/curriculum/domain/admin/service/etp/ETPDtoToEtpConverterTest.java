@@ -40,6 +40,9 @@ public class ETPDtoToEtpConverterTest extends Assert {
         assertEquals(etpDTO.getDistanceLearningEndDate(), etp.distanceLearningEndDate());
         assertEquals(etpDTO.getFullTimeLearningBeginDate(), etp.fullTimeLearningBeginDate());
         assertEquals(etpDTO.getFullTimeLearningEndDate(), etp.fullTimeLearningEndDate());
+        assertEquals(etpDTO.getLernerCount(), etp.lernerCount());
+        assertEquals(etpDTO.getSchoolDaysCount(), etp.schoolDaysCount());
+        assertEquals(etpDTO.getFinancingSource(), etp.financingSource());
         assertEquals(etpDTO.getEaModules().size(), etp.eaModules().size());
         assertEquals(etpDTO.getEmaModules().size(), etp.emaModules().size());
         assertEquals(etpDTO.getOmaModules().size(), etp.omaModules().size());

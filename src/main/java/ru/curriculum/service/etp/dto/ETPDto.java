@@ -64,6 +64,10 @@ public class ETPDto {
     @NotNull(message = "Необходимо выбрать \"Источник финансирования\"")
     private FinancingSource financingSource;
 
+    private Integer lernerCount;
+
+    private Integer schoolDaysCount;
+
     private Integer stateProgramId;
 
     @Valid
@@ -102,6 +106,8 @@ public class ETPDto {
         this.fullTimeLearningBeginDate = etp.fullTimeLearningBeginDate();
         this.fullTimeLearningEndDate = etp.fullTimeLearningEndDate();
         this.stateProgramId = etp.stateProgramId();
+        this.lernerCount = etp.lernerCount();
+        this.schoolDaysCount = etp.schoolDaysCount();
         this.financingSource = etp.financingSource();
         this.eaModules =
                 etp.eaModules()

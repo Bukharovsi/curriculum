@@ -4,11 +4,11 @@
 }
 
 #lecture, #practice, #independent, #consultation, #review, #credit, #other, #standard  {
-    width: 4%;
+    width: 7%;
 }
 
 #pages_count, #total_hours, #lerner_count, #group_count {
-    width: 4%;
+    width: 7%;
     font-size: 12px;
 }
 
