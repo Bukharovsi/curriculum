@@ -7,11 +7,14 @@ import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
+import ru.curriculum.service.etp.statusManager.ETPStatus;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import static ru.curriculum.service.etp.statusManager.ETPStatus.*;
 
 /*
  * ETP - education thematic plan (УПТ - учебно-тематический план)
@@ -42,6 +45,9 @@ public class ETP {
     @Setter
     @Enumerated(EnumType.STRING)
     private FinancingSource financingSource;
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private ETPStatus status;
 
     @OneToMany(
             mappedBy = "etp",
@@ -69,6 +75,7 @@ public class ETP {
         this.eaModules = new HashSet<>();
         this.emaModules = new HashSet<>();
         this.omaModules = new HashSet<>();
+        this.status = DRAFT;
     }
 
     public ETP(
@@ -124,6 +131,7 @@ public class ETP {
             Date distanceLearningEndDate,
             Date fullTimeLearningBeginDate,
             Date fullTimeLearningEndDate,
+            ETPStatus status,
             FinancingSource financingSource,
             Set<EAModule> eaModules,
             Set<EMAModule> emaModules,
@@ -137,6 +145,7 @@ public class ETP {
         this.fullTimeLearningBeginDate = fullTimeLearningBeginDate;
         this.fullTimeLearningEndDate = fullTimeLearningEndDate;
         this.financingSource = financingSource;
+        this.status = null != status ? status : DRAFT;
         this.addEAModules(eaModules);
         this.addEMAModules(emaModules);
         this.addOMAModules(omaModules);

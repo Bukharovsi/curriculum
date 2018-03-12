@@ -9,6 +9,7 @@ import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.etp.service.ETPFromStateProgramFormationService;
 import ru.curriculum.service.etp.service.ETP_CRUDService;
 import ru.curriculum.service.etp.dto.*;
+import ru.curriculum.service.etp.statusManager.ETPStatusManager;
 import ru.curriculum.service.teacher.TeacherCRUDService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,19 +27,24 @@ public class ETPController {
     private TeacherCRUDService teacherCRUDService;
     @Autowired
     private ETPFromStateProgramFormationService etpFromStateProgramFormationService;
+    @Autowired
+    private ETPStatusManager etpStatusManager;
 
     @RequestMapping(path = "/new", method = RequestMethod.GET)
     public String getETPForm(Model model) {
         model.addAttribute("etp", new ETPDto());
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvaliableStatusesForNewEtp());
 
         return ETP_FORM;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String getEditForm(@PathVariable("id") Integer etpId, Model model) {
-        model.addAttribute("etp", etpCRUDService.get(etpId));
+        ETPDto etpDto = etpCRUDService.get(etpId);
+        model.addAttribute("etp", etpDto);
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etpDto.getActualStatus()));
 
         return ETP_FORM;
     }
@@ -74,6 +80,7 @@ public class ETPController {
     ) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("teachers", teacherCRUDService.findAll());
+            model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
 
             return ETP_FORM;
         }
@@ -87,8 +94,10 @@ public class ETPController {
             @PathVariable("stateProgramId") Integer stateProgramId,
             Model model
     ) {
-        model.addAttribute("etp", etpFromStateProgramFormationService.formETPTemplate(stateProgramId));
+        ETPDto etpDto = etpFromStateProgramFormationService.formETPTemplate(stateProgramId);
+        model.addAttribute("etp", etpDto);
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etpDto.getActualStatus()));
 
         return ETP_FORM;
     }
@@ -98,8 +107,10 @@ public class ETPController {
             @PathVariable("stateProgramId") Integer stateProgramId,
             Model model
     ) {
-        model.addAttribute("etp", etpCRUDService.getByStateProgramId(stateProgramId));
+        ETPDto etpDto = etpCRUDService.getByStateProgramId(stateProgramId);
+        model.addAttribute("etp", etpDto);
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etpDto.getActualStatus()));
 
         return ETP_FORM;
     }
@@ -119,6 +130,7 @@ public class ETPController {
             Model model
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
         etp.getEmaModules().add(new EMAModuleDto());
 
         return ETP_FORM;
@@ -132,6 +144,7 @@ public class ETPController {
             final HttpServletRequest req
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
         Integer moduleIndex = Integer.valueOf(req.getParameter("removeEMAModule"));
         etp.getEmaModules().remove(moduleIndex.intValue());
 
@@ -145,6 +158,7 @@ public class ETPController {
             Model model
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
         etp.getOmaModules().add(new OMAModuleDto());
 
         return ETP_FORM;
@@ -158,6 +172,7 @@ public class ETPController {
             final HttpServletRequest req
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
         Integer moduleIndex = Integer.valueOf(req.getParameter("removeOMAModule"));
         etp.getOmaModules().remove(moduleIndex.intValue());
 
@@ -171,6 +186,7 @@ public class ETPController {
             Model model
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
         etp.getEaModules().add(new EAModuleDto());
 
         return ETP_FORM;
@@ -184,6 +200,7 @@ public class ETPController {
             final HttpServletRequest req
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
         Integer indexOfModule = Integer.valueOf(req.getParameter("removeEAModule"));
         etp.getEaModules().remove(indexOfModule.intValue());
 
@@ -198,6 +215,7 @@ public class ETPController {
             final HttpServletRequest req
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
         Integer indexOfSectionInModule = Integer.valueOf(req.getParameter("addEASection"));
         EAModuleDto moduleDTO = etp.getEaModules().get(indexOfSectionInModule.intValue());
         moduleDTO.getSections().add(new EASectionDto());
@@ -213,6 +231,7 @@ public class ETPController {
             final HttpServletRequest req
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
         String indexOfSectionInModuleAsString = req.getParameter("removeEASection");
         String[] indexOfSectionInModule = indexOfSectionInModuleAsString.split("\\.");
         Integer indexOfModule = Integer.valueOf(indexOfSectionInModule[0]);
@@ -231,6 +250,7 @@ public class ETPController {
             final HttpServletRequest req
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
         String[] pathToTopic = req.getParameter("addEATopic").split("\\.");
         Integer moduleIndex = Integer.valueOf(pathToTopic[0]);
         Integer sectionIndex = Integer.valueOf(pathToTopic[1]);
@@ -252,6 +272,7 @@ public class ETPController {
             final HttpServletRequest req
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
         String[] pathToTopic = req.getParameter("removeEATopic").split("\\.");
         Integer moduleIndex = Integer.valueOf(pathToTopic[0]);
         Integer sectionIndex = Integer.valueOf(pathToTopic[1]);

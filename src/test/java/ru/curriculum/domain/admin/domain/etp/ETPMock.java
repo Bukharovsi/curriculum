@@ -13,6 +13,7 @@ import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.teacher.entity.TeacherType;
 import ru.curriculum.service.etp.dto.ETPDto;
 import ru.curriculum.service.etp.dto.PlanDto;
+import ru.curriculum.service.etp.statusManager.ETPStatus;
 
 import java.util.Date;
 import java.util.HashSet;

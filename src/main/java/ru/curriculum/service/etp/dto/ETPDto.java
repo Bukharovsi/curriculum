@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
+import ru.curriculum.service.etp.statusManager.ETPStatus;
 import ru.curriculum.service.etp.validation.EndDateLargerThanBeginDateConstraint;
 
 import javax.persistence.Temporal;
@@ -66,6 +67,10 @@ public class ETPDto {
 
     private Integer stateProgramId;
 
+    private ETPStatus actualStatus;
+
+    private ETPStatus newStatus;
+
     @Valid
     private List<EAModuleDto> eaModules;
 
@@ -84,6 +89,8 @@ public class ETPDto {
     private TotalRow etpTotalRow;
 
     public ETPDto() {
+        this.actualStatus = ETPStatus.DRAFT;
+        this.newStatus = ETPStatus.DRAFT;
         this.eaModules = new ArrayList<>();
         this.emaModules = new ArrayList<>();
         this.omaModules = new ArrayList<>();
@@ -102,6 +109,8 @@ public class ETPDto {
         this.fullTimeLearningBeginDate = etp.fullTimeLearningBeginDate();
         this.fullTimeLearningEndDate = etp.fullTimeLearningEndDate();
         this.stateProgramId = etp.stateProgramId();
+        this.actualStatus = etp.status();
+        this.newStatus = etp.status();
         this.financingSource = etp.financingSource();
         this.eaModules =
                 etp.eaModules()
@@ -121,5 +130,9 @@ public class ETPDto {
                         .map(OMAModuleDto::new)
                         .sorted(Comparator.comparing(OMAModuleDto::getId).reversed())
                         .collect(toList());
+    }
+
+    public boolean statusChanged() {
+        return !actualStatus.equals(newStatus);
     }
 }

@@ -29,6 +29,7 @@ public class ETPDtoToEtpConverter {
                 etpDto.getDistanceLearningEndDate(),
                 etpDto.getFullTimeLearningBeginDate(),
                 etpDto.getFullTimeLearningEndDate(),
+                etpDto.getActualStatus(),
                 etpDto.getFinancingSource(),
                 createEAModules(etpDto.getEaModules()),
                 createEMAModules(etpDto.getEmaModules()),

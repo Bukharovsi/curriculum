@@ -23,15 +23,41 @@
 
     <form class="form-horizontal" th:action="@{/etp}" th:object="${etp}" modelAttribute="etp" th:method="${etp.id != null ? 'put' : 'post'}">
 
-        <div class="col-sm-1">
-            <input class="btn btn-default" type="submit" th:value="Сохранить"/>
+        <!--<div class="col-sm-1">-->
+            <!--<input class="btn btn-default" type="submit" th:value="Сохранить"/>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<a class="btn btn-default" th:href="@{/etp}">Назад</a>-->
+        <!--</div>-->
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input class="btn btn-default" type="submit" th:value="Сохранить"/>
+                <a class="btn btn-default" th:href="@{/etp}">Назад</a>
+            </div>
         </div>
-        <div>
-            <a class="btn btn-default" th:href="@{/etp}">Назад</a>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div th:each="status : ${availableStatuses}">
+                    <button class="btn btn-default" type="submit" th:value="${status}" th:name="newStatus">
+                        <span th:text="${status.displayName}"></span>
+                    </button>
+                </div>
+            </div>
         </div>
+        <input th:field="*{actualStatus}" hidden="true">
         &nbsp;
 
         <div th:include="fragments/formValidationError"></div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Статус</label>
+            <div class="col-sm-6">
+                <input class="form-control" th:field="*{actualStatus.displayName}" disabled="true"/>
+            </div>
+        </div>
+
         <div class="form-group">
             <input th:field="*{id}" hidden="true">
             <label class="control-label col-sm-2">Название</label>
@@ -45,6 +71,22 @@
                 <input class="form-control" th:field="*{target}"/>
             </div>
         </div>
+
+
+        <!--<div class="form-group">-->
+            <!--<label class="control-label col-sm-2">Статус</label>-->
+            <!--<div class="col-sm-6">-->
+                <!--<select class="form-control" th:field="*{newStatus}" th:disabled="${etp.id != null ? false : true}">-->
+                    <!--<option th:each="status : ${availableStatuses}"-->
+                            <!--th:value="${status}"-->
+                            <!--th:text="${status.displayName}">-->
+                    <!--</option>-->
+                <!--</select>-->
+            <!--</div>-->
+
+
+        <!--</div>-->
+
         <div class="form-group">
             <label class="control-label col-sm-2">Даты дистанционного обучения</label>
             <div class="col-sm-6">

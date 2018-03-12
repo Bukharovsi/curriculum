@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.domain.etp.repository.ETPRepository;
+import ru.curriculum.service.etp.statusManager.ETPStatusManager;
 import ru.curriculum.service.etp.converter.ETPDtoToEtpConverter;
 import ru.curriculum.service.etp.dto.ETPDto;
 
@@ -19,6 +20,8 @@ public class ETP_CRUDService {
     private ETPRepository etpRepository;
     @Autowired
     private ETPDtoToEtpConverter etpDtoToEtpConverter;
+    @Autowired
+    private ETPStatusManager etpStatusManager;
 
     public List<ETPDto> getAll() {
         List<ETPDto> dtos = new ArrayList<>();
@@ -56,7 +59,13 @@ public class ETP_CRUDService {
         if(null == etpNeedToUpdate) {
             throw new EntityNotFoundException(format("УТП в иненитфикатором %s не найде в системе", etpDTO.getId()));
         }
-        create(etpDTO);
+
+        ETP etp = etpDtoToEtpConverter.convert(etpDTO);
+        if(etpDTO.statusChanged()) {
+            etpStatusManager.moveEtpToNewStatus(etp, etpDTO.getNewStatus());
+        }
+
+        etpRepository.save(etp);
     }
 
     public void delete(Integer etpId) {

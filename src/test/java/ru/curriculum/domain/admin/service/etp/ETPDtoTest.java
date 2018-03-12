@@ -11,6 +11,7 @@ import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
 import ru.curriculum.service.etp.dto.*;
+import ru.curriculum.service.etp.statusManager.ETPStatus;
 
 
 public class ETPDtoTest extends Assert {
@@ -19,6 +20,17 @@ public class ETPDtoTest extends Assert {
     @Before
     public void setUp() {
         etpMock = new ETPMock();
+    }
+
+    @Test
+    public void createETPDto_defaultValuesInitializedCorrectly() {
+        ETPDto dto = new ETPDto();
+
+        assertNotNull(dto.getEaModules());
+        assertNotNull(dto.getEmaModules());
+        assertNotNull(dto.getOmaModules());
+        assertEquals(ETPStatus.DRAFT, dto.getActualStatus());
+        assertEquals(ETPStatus.DRAFT, dto.getNewStatus());
     }
 
     @Test
