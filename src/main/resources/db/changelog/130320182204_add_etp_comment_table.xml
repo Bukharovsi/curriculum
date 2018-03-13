@@ -1,0 +1,37 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="130320182204" author="Vlad">
+        <createTable tableName="etp_comment">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="text" type="varchar"></column>
+            <column name="date" type="java.sql.Types.TIMESTAMP" ></column>
+            <column name="curator_id" type="int" defaultValue="NULL" ></column>
+            <column name="etp_id" type="int" defaultValue="NULL" ></column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="etp_comment"
+                baseColumnNames="curator_id"
+                constraintName="etp_comment_curator_fk"
+                referencedTableName="curator"
+                referencedColumnNames="id"
+                onDelete="SET NULL"
+        ></addForeignKeyConstraint>
+
+        <addForeignKeyConstraint
+                baseTableName="etp_comment"
+                baseColumnNames="etp_id"
+                constraintName="etp_comment_etp_fk"
+                referencedTableName="etp"
+                referencedColumnNames="id"
+                onDelete="SET NULL"
+        ></addForeignKeyConstraint>
+
+    </changeSet>
+</databaseChangeLog>

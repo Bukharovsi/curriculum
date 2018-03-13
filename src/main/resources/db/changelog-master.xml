@@ -32,4 +32,5 @@
     <include file="/db/changelog/260218181913_fill_staff_position_table.xml"/>
     <include file="/db/changelog/260220181342_fill_division_table.xml"/>
     <include file="/db/changelog/120320182000_add_status_to_etp.xml"/>
+    <include file="/db/changelog/130320182204_add_etp_comment_table.xml"/>
 </databaseChangeLog>

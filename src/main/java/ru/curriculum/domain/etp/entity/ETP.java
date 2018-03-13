@@ -70,11 +70,19 @@ public class ETP {
             orphanRemoval = true,
             cascade = CascadeType.ALL)
     private Set<OMAModule> omaModules;
+    @OneToMany(
+            mappedBy = "etp",
+            targetEntity = Comment.class,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    private Set<Comment> comments;
 
     public ETP() {
         this.eaModules = new HashSet<>();
         this.emaModules = new HashSet<>();
         this.omaModules = new HashSet<>();
+        this.comments = new HashSet<>();
         this.status = DRAFT;
     }
 
