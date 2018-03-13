@@ -34,7 +34,7 @@ public class ETPController {
     public String getETPForm(Model model) {
         model.addAttribute("etp", new ETPDto());
         model.addAttribute("teachers", teacherCRUDService.findAll());
-        model.addAttribute("availableStatuses", etpStatusManager.getAvaliableStatusesForNewEtp());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatusesForNewEtp());
 
         return ETP_FORM;
     }
@@ -90,7 +90,7 @@ public class ETPController {
     }
 
     @RequestMapping(value = "/etpTemplate/{stateProgramId}", method = RequestMethod.GET)
-    public String getEtpTemplateBaseOnStateProgram(
+    public String getEtpTemplateBasedOnStateProgram(
             @PathVariable("stateProgramId") Integer stateProgramId,
             Model model
     ) {
@@ -103,7 +103,7 @@ public class ETPController {
     }
 
     @RequestMapping(value = "/etpFormedByStateProgram/{stateProgramId}", method = RequestMethod.GET)
-    public String getEtpByStateProgramCreation(
+    public String getEtpByStateProgramIdCreatedBy(
             @PathVariable("stateProgramId") Integer stateProgramId,
             Model model
     ) {
@@ -121,6 +121,23 @@ public class ETPController {
         etpCRUDService.delete(eptId);
 
         return redirectTo(Routes.etp);
+    }
+
+    @RequestMapping(value = "/changeStatus", method = {RequestMethod.POST, RequestMethod.PUT})
+    public String moveEtpToNewStatus(
+            final @ModelAttribute("etp") @Valid ETPDto etpDto,
+            final BindingResult bindingResult,
+            Model model
+    ) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("teachers", teacherCRUDService.findAll());
+            model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etpDto.getActualStatus()));
+
+            return ETP_FORM;
+        }
+        etpCRUDService.changeStatus(etpDto);
+
+        return redirectTo(Routes.etp + "/edit/" + etpDto.getId());
     }
 
     @RequestMapping(params = {"addEMAModule"}, method = {RequestMethod.PUT, RequestMethod.POST})

@@ -25,7 +25,6 @@ public class ETPStatusTransitionManager {
     public List<ETPStatus> getAvailableStatuses(ETPStatus status) {
         List<ETPStatus> statuses = new ArrayList<>();
         statuses.addAll(transitions.get(status));
-//        statuses.add(status);
 
         return statuses;
     }

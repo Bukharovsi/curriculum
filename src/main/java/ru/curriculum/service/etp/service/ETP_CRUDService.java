@@ -59,12 +59,17 @@ public class ETP_CRUDService {
         if(null == etpNeedToUpdate) {
             throw new EntityNotFoundException(format("УТП в иненитфикатором %s не найде в системе", etpDTO.getId()));
         }
-
         ETP etp = etpDtoToEtpConverter.convert(etpDTO);
-        if(etpDTO.statusChanged()) {
-            etpStatusManager.moveEtpToNewStatus(etp, etpDTO.getNewStatus());
-        }
+        etpRepository.save(etp);
+    }
 
+    public void changeStatus(ETPDto etpDto) {
+        ETP etpNeedToChangeStatus = etpRepository.findOne(etpDto.getId());
+        if(null == etpNeedToChangeStatus) {
+            throw new EntityNotFoundException(format("УТП в иненитфикатором %s не найде в системе", etpDto.getId()));
+        }
+        ETP etp = etpDtoToEtpConverter.convert(etpDto);
+        etpStatusManager.moveEtpToNewStatus(etp, etpDto.getNewStatus());
         etpRepository.save(etp);
     }
 

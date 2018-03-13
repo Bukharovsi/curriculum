@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.etp.entity.ETP;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,7 +28,7 @@ public class ETPStatusManager {
         return etpStatusTransitionManager.getAvailableStatuses(status);
     }
 
-    public List<ETPStatus> getAvaliableStatusesForNewEtp() {
-        return etpStatusTransitionManager.getAvailableStatusesForInitial();
+    public List<ETPStatus> getAvailableStatusesForNewEtp() {
+        return new ArrayList<>();
     }
 }
