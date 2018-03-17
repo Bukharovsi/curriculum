@@ -29,12 +29,16 @@ public class ETPMock {
 
     public ETP getETP() {
         ETP etp = new ETP(
+                null,
                 "Учебный план",
                 "Научить",
                 new Date(1),
                 new Date(2),
                 new Date(3),
                 new Date(4),
+                ETPStatus.DRAFT,
+                50,
+                70,
                 FinancingSource.BUDGET,
                 getEAModules(),
                 getEMAModules(),

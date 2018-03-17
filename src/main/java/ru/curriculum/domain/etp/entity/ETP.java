@@ -41,6 +41,10 @@ public class ETP {
     @Setter
     private Date fullTimeLearningEndDate;
     @Setter
+    private Integer lernerCount;
+    @Setter
+    private Integer schoolDaysCount;
+    @Setter
     private Integer stateProgramId;
     @Setter
     @Enumerated(EnumType.STRING)
@@ -132,6 +136,8 @@ public class ETP {
             Date fullTimeLearningBeginDate,
             Date fullTimeLearningEndDate,
             ETPStatus status,
+            Integer lernerCount,
+            Integer schoolDaysCount,
             FinancingSource financingSource,
             Set<EAModule> eaModules,
             Set<EMAModule> emaModules,
@@ -144,6 +150,8 @@ public class ETP {
         this.distanceLearningEndDate = distanceLearningEndDate;
         this.fullTimeLearningBeginDate = fullTimeLearningBeginDate;
         this.fullTimeLearningEndDate = fullTimeLearningEndDate;
+        this.lernerCount = lernerCount;
+        this.schoolDaysCount = schoolDaysCount;
         this.financingSource = financingSource;
         this.status = null != status ? status : DRAFT;
         this.addEAModules(eaModules);

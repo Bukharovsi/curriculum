@@ -30,6 +30,8 @@ public class ETPDtoToEtpConverter {
                 etpDto.getFullTimeLearningBeginDate(),
                 etpDto.getFullTimeLearningEndDate(),
                 etpDto.getActualStatus(),
+                etpDto.getLernerCount(),
+                etpDto.getSchoolDaysCount(),
                 etpDto.getFinancingSource(),
                 createEAModules(etpDto.getEaModules()),
                 createEMAModules(etpDto.getEmaModules()),

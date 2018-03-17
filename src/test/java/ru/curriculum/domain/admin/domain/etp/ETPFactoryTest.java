@@ -27,6 +27,7 @@ public class ETPFactoryTest {
         Assert.assertEquals(program.name(), etpTemplate.title());
         Assert.assertEquals(program.dateStart(), etpTemplate.fullTimeLearningBeginDate());
         Assert.assertEquals(program.dateFinish(), etpTemplate.fullTimeLearningEndDate());
+        Assert.assertEquals(program.lernerCount(), etpTemplate.lernerCount());
     }
 
 
@@ -35,6 +36,7 @@ public class ETPFactoryTest {
                 .name("Информационные технологии")
                 .dateStart(new Date(1))
                 .dateFinish(new Date(5))
+                .lernerCount(13)
                 .build();
 
         return program;
