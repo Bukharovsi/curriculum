@@ -13,6 +13,8 @@ import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
 import ru.curriculum.service.etp.dto.*;
 import ru.curriculum.service.etp.statusManager.ETPStatus;
 
+import java.util.ArrayList;
+
 
 public class ETPDtoTest extends Assert {
     private ETPMock etpMock;
@@ -37,7 +39,7 @@ public class ETPDtoTest extends Assert {
     public void createETP_DTOFromETP_mustBeCreateCorrectly() {
         ETP etp = etpMock.getETP();
 
-        ETPDto etpDTO = new ETPDto(etp);
+        ETPDto etpDTO = new ETPDto(etp, new ArrayList<>());
 
         assertEquals(etp, etpDTO);
     }

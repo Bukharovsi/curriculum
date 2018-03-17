@@ -9,7 +9,7 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="text" type="varchar"></column>
+            <column name="content" type="varchar"></column>
             <column name="date" type="java.sql.Types.TIMESTAMP" ></column>
             <column name="curator_id" type="int" defaultValue="NULL" ></column>
             <column name="etp_id" type="int" defaultValue="NULL" ></column>

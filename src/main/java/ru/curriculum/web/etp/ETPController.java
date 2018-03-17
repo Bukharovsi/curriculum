@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.curriculum.application.route.Routes;
+import ru.curriculum.service.etp.service.ETPCommentCRUDService;
 import ru.curriculum.service.etp.service.ETPFromStateProgramFormationService;
 import ru.curriculum.service.etp.service.ETP_CRUDService;
 import ru.curriculum.service.etp.dto.*;
@@ -29,6 +30,8 @@ public class ETPController {
     private ETPFromStateProgramFormationService etpFromStateProgramFormationService;
     @Autowired
     private ETPStatusManager etpStatusManager;
+    @Autowired
+    private ETPCommentCRUDService etpCommentCRUDService;
 
     @RequestMapping(path = "/new", method = RequestMethod.GET)
     public String getETPForm(Model model) {
@@ -302,5 +305,45 @@ public class ETPController {
                 .remove(topicIndex.intValue());
 
         return ETP_FORM;
+    }
+
+    @RequestMapping(value = "/comment/new", method = {RequestMethod.POST, RequestMethod.PUT})
+    public String addNewComment(@ModelAttribute("etp") ETPDto etpDto, Model model) {
+        model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etpDto.getActualStatus()));
+        etpDto.getComments().add(new CommentDto());
+
+        return ETP_FORM;
+    }
+
+    @RequestMapping(value = "/comment/remove", method = {RequestMethod.POST, RequestMethod.PUT})
+    public String removeCommentFromCommentList(
+            @ModelAttribute("etp") ETPDto etpDto,
+            Model model,
+            HttpServletRequest req
+    ) {
+        model.addAttribute("teachers", teacherCRUDService.findAll());
+        model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etpDto.getActualStatus()));
+        Integer indexOfComment = Integer.valueOf(req.getParameter("removeComment"));
+        etpDto.getComments().remove(indexOfComment.intValue());
+
+        return ETP_FORM;
+    }
+
+    @RequestMapping(value = "comment/create")
+    public String createComment(
+            @ModelAttribute("comment") @Valid ETPDto etpDto,
+            HttpServletRequest req
+    ) {
+        Integer indexOfNewComment = Integer.valueOf(req.getParameter("createComment"));
+        etpCommentCRUDService.create(etpDto.getId(), etpDto.getComments().get(indexOfNewComment.intValue()));
+
+        return redirectTo(Routes.etp + "/edit/" + etpDto.getId());
+    }
+
+    @RequestMapping(value = "/{etpId}/comment/delete/{id}", method = RequestMethod.GET)
+    public String deleteComment(@PathVariable("etpId") Integer etpId, @PathVariable("id") Integer id) {
+        etpCommentCRUDService.deleteEtpComment(id);
+        return redirectTo(Routes.etp + "/edit/" + etpId);
     }
 }

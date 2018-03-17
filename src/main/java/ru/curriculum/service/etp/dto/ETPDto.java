@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.curriculum.domain.etp.entity.Comment;
 import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.service.etp.statusManager.ETPStatus;
@@ -13,10 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -80,6 +78,8 @@ public class ETPDto {
     @Valid
     private List<OMAModuleDto> omaModules;
 
+    private List<CommentDto> comments;
+
     private TotalRow emaModuleTotalRow;
 
     private TotalRow eaModuleTotalRow;
@@ -94,6 +94,7 @@ public class ETPDto {
         this.eaModules = new ArrayList<>();
         this.emaModules = new ArrayList<>();
         this.omaModules = new ArrayList<>();
+        this.comments = new ArrayList<>();
         this.emaModuleTotalRow = new TotalRow();
         this.emaModuleTotalRow = new TotalRow();
         this.emaModuleTotalRow = new TotalRow();
@@ -130,9 +131,11 @@ public class ETPDto {
                         .map(OMAModuleDto::new)
                         .sorted(Comparator.comparing(OMAModuleDto::getId).reversed())
                         .collect(toList());
+        this.comments = new ArrayList<>();
     }
 
-    public boolean statusChanged() {
-        return !actualStatus.equals(newStatus);
+    public ETPDto(ETP ept, List<Comment> comments) {
+        this(ept);
+        this.comments = comments.stream().map(CommentDto::new).collect(toList());
     }
 }

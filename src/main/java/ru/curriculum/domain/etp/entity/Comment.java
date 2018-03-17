@@ -1,10 +1,10 @@
 package ru.curriculum.domain.etp.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
 import ru.curriculum.domain.admin.curator.entity.Curator;
 
 import javax.persistence.*;
@@ -15,23 +15,26 @@ import java.util.Date;
 @Getter
 @Accessors(fluent = true)
 @NoArgsConstructor
-@AllArgsConstructor
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    private String text;
+    private String content;
 
     @Setter
     @ManyToOne(targetEntity = Curator.class)
     private Curator curator;
 
+    @CreationTimestamp
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "etp_id")
-    @Setter
-    private ETP etp;
+    private Integer etpId;
+
+    public Comment(String content, Curator curator, Integer etpId) {
+        this.content = content;
+        this.curator = curator;
+        this.etpId = etpId;
+    }
 }
