@@ -31,7 +31,7 @@ public class ETPDtoToEtpConverterTest extends Assert {
 
     @Test
     public void createETP() {
-        ETPDto etpDTO = etpMock.getETP_DTO();
+        ETPDto etpDTO = etpMock.getETPDto();
         ETP etp = etpDtoToEtpConverter.convert(etpDTO);
 
         assertEquals(etpDTO.getId(), etp.id());

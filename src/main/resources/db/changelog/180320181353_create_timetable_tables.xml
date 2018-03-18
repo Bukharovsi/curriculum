@@ -1,0 +1,55 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="180320181353" author="Vlad">
+        <createTable tableName="timetable">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="theme" type="varchar(1000)" ></column>
+            <column name="begin_date" type="TIMESTAMP WITH TIMEZONE"></column>
+            <column name="end_date" type="TIMESTAMP WITH TIMEZONE"></column>
+        </createTable>
+
+        <createTable tableName="lesson_form">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)"></column>
+        </createTable>
+
+        <insert tableName="lesson_form">
+            <column name="name" value="Лекция"></column>
+            <column name="name" value="Практика"></column>
+            <column name="name" value="Лекция/Практика"></column>
+            <column name="name" value="Консультация"></column>
+            <column name="name" value="Самостоятельная работа"></column>
+            <column name="name" value="Лабораторная работа"></column>
+        </insert>
+
+        <createTable tableName="lesson">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="theme" type="varchar(1000)" ></column>
+            <column name="date" type="DATE"></column>
+            <column name="time" type="TIME"></column>
+            <column name="lerner_count" type="int"></column>
+            <column name="address" type="varchar"></column>
+            <column name="audience_number" type="int"></column>
+            <column name="teacher_id" type="int">
+                <constraints foreignKeyName="lesson_teacher_fk" references="teacher(id)"/>
+            </column>
+            <column name="timetable_id" type="int">
+                <constraints foreignKeyName="lesson_timetable_fk" references="timetable(id)"/>
+            </column>
+            <column name="lesson_form_id" type="int">
+                <constraints foreignKeyName="lesson_lesson_form_fk" references="lesson_form(id)"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

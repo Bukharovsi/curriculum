@@ -43,4 +43,8 @@ public class PlanDto {
         this.teacher = null != plan.teacher() ? new TeacherDto(plan.teacher()) : null;
         this.teacherId = null != plan.teacher() ? plan.teacher().id() : null;
     }
+
+    public boolean hasTeacher() {
+        return null != teacherId;
+    }
 }

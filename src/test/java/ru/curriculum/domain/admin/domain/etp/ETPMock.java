@@ -124,7 +124,7 @@ public class ETPMock {
         return topics;
     }
 
-    public ETPDto getETP_DTO() {
+    public ETPDto getETPDto() {
         return new ETPDto(getETP());
     }
 
