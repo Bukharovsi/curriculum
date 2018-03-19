@@ -1,0 +1,50 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Расписание</title>
+</head>
+<body>
+
+<div th:replace="fragments/sidebar" th:remove="tag"></div>
+
+<div layout:fragment="content">
+    <div>
+        <h1>Расписание</h1>
+        <hr/>
+    </div>
+    <!--<div>-->
+        <!--<a class="btn btn-default" th:href="@{/etp/new}">Добавить</a>-->
+    <!--</div>-->
+    &nbsp;
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Дата начала</th>
+            <th>Дата окончания</th>
+            <th style="width: 2%;"></th>
+            <th style="width: 2%;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="timetable" type="ru.curriculum.service.timetable.dto.TimetableDto"*/-->
+        <tr th:each="timetable: ${timetables}">
+            <td th:text="${timetable.theme}"></td>
+            <td th:text="${#temporals.format(timetable.beginDate, 'dd/MM/yyyy')}"></td>
+            <td th:text="${#temporals.format(timetable.endDate, 'dd/MM/yyyy')}"></td>
+            <td>
+                <a th:href="@{/timetable/edit/{id}(id=${timetable.id})}" data-toggle="tooltip" title="Редактировать">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/etp/delete/{id}(id=${timetable.id})}" data-toggle="tooltip" title="Удалить">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

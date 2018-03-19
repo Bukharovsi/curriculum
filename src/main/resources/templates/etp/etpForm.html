@@ -27,6 +27,9 @@
             <div class="col-sm-12">
                 <input class="btn btn-default" type="submit" th:value="Сохранить"/>
                 <a class="btn btn-default" th:href="@{/etp}">Назад</a>
+                <button class="btn btn-default" type="submit" th:formaction="@{/timetable/newTimetablesFromEtp}" >
+                    Сформировать расписание
+                </button>
             </div>
         </div>
 

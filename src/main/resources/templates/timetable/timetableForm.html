@@ -1,0 +1,95 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Расписание</title>
+</head>
+<body>
+<!--/*@thymesVar id="timetable" type="ru.curriculum.service.timetable.dto.TimetableDto"*/-->
+
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+            <div th:if="${timetable.id}" style="align-items: center;">
+                <div th:include="fragments/pageHeader :: pageHeader('Редактирование', ${timetable.theme})"></div>
+            </div>
+            <!--<div th:unless="${curator.id}" style="align-items: center;">-->
+                <!--<div th:include="fragments/pageHeader :: pageHeader('Создание куратора', '')"></div>-->
+            <!--</div>-->
+            <hr/>
+        </div>
+    </div>
+    <form class="form-horizontal"
+          th:action="@{/timetable/edit}"
+          th:object="${timetable}"
+          modelAttribute="timetable"
+          th:method="${timetable.id != null ? 'put' : 'post'}"
+    >
+        <div class="form-group">
+            <div th:include="fragments/formValidationError"></div>
+            <div>
+                <input th:hidden="true" type="number" th:field="*{id}"/>
+            </div>
+            <div th:include="fragments/inputField :: inputField('Тема', 'theme', ${timetable.theme}, 'text', false)"></div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Дата</label>
+                <div class="col-sm-8">
+                    <div class="form-inline">
+                        <input class="form-control" type="date" th:field="*{beginDate}">
+                        <input class="form-control" type="date" th:field="*{endDate}">
+                    </div>
+                </div>
+            </div>
+
+            &nbsp;
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th align="center">Дата проведения занятий</th>
+                    <th align="center">Время проведения занятий</th>
+                    <th align="center">Кол-во слушателей</th>
+                    <th align="center">Форма занятий</th>
+                    <th align="center">Тема занятий</th>
+                    <th align="center">ФИО преподователя, должность</th>
+                    <th align="center">Место проведения</th>
+                    <th align="center">Номер аудитории</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--/*@thymesVar id="stateProgram" type="ru.curriculum.service.timetable.dto.LessonDto"*/-->
+                <tr th:each="lesson : *{lessons}">
+                    <td th:text="${lesson.date}"></td>
+                    <td th:text="${lesson.time}"></td>
+                    <td th:text="${lesson.lernerCount}"></td>
+                    <td th:text="${lesson.lessonForm.name}"></td>
+                    <td th:text="${lesson.theme}"></td>
+                    <td th:text="${lesson.teacher.fullName}"></td>
+                    <td th:text="${lesson.address}"></td>
+                    <td th:text="${lesson.audienceNumber}"></td>
+                    <td align="right">
+                        <a th:href="@{/timetable/edit/{id}(id=${timetable.id})}" data-toggle="tooltip" title="Редактировать">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <div>
+                            <a th:href="@{/etp/edit/{id}(id=${timetable.id})}" data-toggle="tooltip" title="Перейти к УТП">
+                                <span class="glyphicon glyphicon-book"></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-8">
+                <input class="btn btn-default" type="submit" th:value="Сохранить"/>
+                <a class="btn btn-default" href="/admin/curators" th:href="@{/timetable}">Назад</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

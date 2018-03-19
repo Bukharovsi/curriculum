@@ -18,10 +18,8 @@ public class Timetable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
     private LocalDateTime beginDate;
 
-    @Column
     private LocalDateTime endDate;
 
     private String theme;
