@@ -4,18 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.curriculum.domain.etp.entity.Comment;
 import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
+import ru.curriculum.service.etp.statusManager.ETPStatus;
 import ru.curriculum.service.etp.validation.EndDateLargerThanBeginDateConstraint;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -64,7 +63,15 @@ public class ETPDto {
     @NotNull(message = "Необходимо выбрать \"Источник финансирования\"")
     private FinancingSource financingSource;
 
+    private Integer lernerCount;
+
+    private Integer schoolDaysCount;
+
     private Integer stateProgramId;
+
+    private ETPStatus actualStatus;
+
+    private ETPStatus newStatus;
 
     @Valid
     private List<EAModuleDto> eaModules;
@@ -75,6 +82,8 @@ public class ETPDto {
     @Valid
     private List<OMAModuleDto> omaModules;
 
+    private List<CommentDto> comments;
+
     private TotalRow emaModuleTotalRow;
 
     private TotalRow eaModuleTotalRow;
@@ -84,9 +93,12 @@ public class ETPDto {
     private TotalRow etpTotalRow;
 
     public ETPDto() {
+        this.actualStatus = ETPStatus.DRAFT;
+        this.newStatus = ETPStatus.DRAFT;
         this.eaModules = new ArrayList<>();
         this.emaModules = new ArrayList<>();
         this.omaModules = new ArrayList<>();
+        this.comments = new ArrayList<>();
         this.emaModuleTotalRow = new TotalRow();
         this.emaModuleTotalRow = new TotalRow();
         this.emaModuleTotalRow = new TotalRow();
@@ -102,6 +114,10 @@ public class ETPDto {
         this.fullTimeLearningBeginDate = etp.fullTimeLearningBeginDate();
         this.fullTimeLearningEndDate = etp.fullTimeLearningEndDate();
         this.stateProgramId = etp.stateProgramId();
+        this.lernerCount = etp.lernerCount();
+        this.schoolDaysCount = etp.schoolDaysCount();
+        this.actualStatus = etp.status();
+        this.newStatus = etp.status();
         this.financingSource = etp.financingSource();
         this.eaModules =
                 etp.eaModules()
@@ -121,5 +137,11 @@ public class ETPDto {
                         .map(OMAModuleDto::new)
                         .sorted(Comparator.comparing(OMAModuleDto::getId).reversed())
                         .collect(toList());
+        this.comments = new ArrayList<>();
+    }
+
+    public ETPDto(ETP ept, List<Comment> comments) {
+        this(ept);
+        this.comments = comments.stream().map(CommentDto::new).collect(toList());
     }
 }

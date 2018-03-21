@@ -14,6 +14,7 @@ public class ETPFactory {
         etp.financingSource(FinancingSource.BUDGET);
         etp.fullTimeLearningBeginDate(stateProgram.dateStart());
         etp.fullTimeLearningEndDate(stateProgram.dateFinish());
+        etp.lernerCount(stateProgram.lernerCount());
 
         return etp;
     }

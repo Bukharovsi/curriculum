@@ -23,62 +23,92 @@
 
     <form class="form-horizontal" th:action="@{/etp}" th:object="${etp}" modelAttribute="etp" th:method="${etp.id != null ? 'put' : 'post'}">
 
-        <div class="col-sm-1">
-            <input class="btn btn-default" type="submit" th:value="Сохранить"/>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input class="btn btn-default" type="submit" th:value="Сохранить"/>
+                <a class="btn btn-default" th:href="@{/etp}">Назад</a>
+            </div>
         </div>
-        <div>
-            <a class="btn btn-default" th:href="@{/etp}">Назад</a>
-        </div>
+
+        <input th:field="*{actualStatus}" hidden="true">
         &nbsp;
 
         <div th:include="fragments/formValidationError"></div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Статус</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" th:field="*{actualStatus.displayName}" disabled="true"/>
+                    </div>
+                </div>
+
+                <span th:if="${etp.id != null && etp.actualStatus != T(ru.curriculum.service.etp.statusManager.ETPStatus).STATEMENT ? true : false}">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Перевести в статус</label>
+                        <div class="col-sm-10">
+                            <span th:each="status : ${availableStatuses}">
+                                <button class="btn btn-default" type="submit" th:value="${status}" th:name="newStatus" th:formaction="@{/etp/changeStatus}" >
+                                    <span th:text="${status.displayName}"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+
         <div class="form-group">
             <input th:field="*{id}" hidden="true">
             <label class="control-label col-sm-2">Название</label>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <input class="form-control" th:field="*{title}"/>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2">Цель</label>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <input class="form-control" th:field="*{target}"/>
             </div>
         </div>
+
         <div class="form-group">
             <label class="control-label col-sm-2">Даты дистанционного обучения</label>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <div class="form-inline">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <input class="form-control" type="date" th:field="*{distanceLearningBeginDate}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="date" th:field="*{distanceLearningEndDate}">
-                    </div>
+                    <input class="form-control" type="date" th:field="*{distanceLearningBeginDate}">
+                    <input class="form-control" type="date" th:field="*{distanceLearningEndDate}">
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2">Даты очного обучения</label>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <div class="form-inline">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <input class="form-control" type="date" th:field="*{fullTimeLearningBeginDate}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="date" th:field="*{fullTimeLearningEndDate}">
-                    </div>
+                    <input class="form-control" type="date" th:field="*{fullTimeLearningBeginDate}">
+                    <input class="form-control" type="date" th:field="*{fullTimeLearningEndDate}">
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-sm-2">Источник финансирования</label>
+            <label class="control-label col-sm-2">Кол-во учебных дней</label>
             <div class="col-sm-6">
+                <input class="form-control" th:field="*{schoolDaysCount}" type="number" min="0"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Кол-во слушателей</label>
+            <div class="col-sm-6">
+                <input class="form-control" th:field="*{lernerCount}" type="number" min="0"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Источник финансирования</label>
+            <div class="col-sm-8">
                 <select class="form-control" th:field="*{financingSource}">
                     <option th:each="financing : ${T(ru.curriculum.domain.etp.entity.financingSource.FinancingSource).values()}"
                             th:value="${financing}"
@@ -361,12 +391,59 @@
             </table>
         </div>
 
-        <div class="col-sm-1">
-            <input class="btn btn-default" type="submit" th:value="Сохранить"/>
+        <div class="panel panel-default" th:if="${etp.id != null}">
+            <div class="panel-heading"><h4>Комментарии:</h4></div>
+            <div class="panel-body">
+                <a name="etpComments"></a>
+                <span th:each="comment, commentStat : *{comments}">
+                    <div th:if="${comment.id != null}" class="panel panel-default">
+                        <!--Т.к. добавляем каждый новый коммент на беке, то чтобы предыдущие не сломались, нужны эти инпуты-->
+                        <input hidden="true" th:field="*{comments[__${commentStat.index}__].id}">
+                        <input hidden="true" th:field="*{comments[__${commentStat.index}__].author}">
+                        <input hidden="true" th:field="*{comments[__${commentStat.index}__].content}">
+                        <input hidden="true" th:field="*{comments[__${commentStat.index}__].curatorId}">
+                        <div class="panel-heading"
+                             th:style="${#authorization.getAuthentication().getPrincipal().curator().id() == comment.curatorId} ? 'background-color: #ddd' : '#f5f5f5'"
+                        >
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span th:text="${comment.author}"></span>
+                                </div>
+                                <div class="col-sm-8" align="right" th:if="${#authorization.getAuthentication().getPrincipal().curator().id() == comment.curatorId}">
+                                       <a th:href="@{/etp/{etpId}/comment/delete/{id}(id=${comment.id}, etpId=${etp.id})}" data-toggle="tooltip" title="Удалить">
+                                           <span class="glyphicon glyphicon-remove" style="color: #c9302c"></span>
+                                       </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <span th:text="${comment.content}"></span>
+                        </div>
+                    </div>
+                    <span th:if="${comment.id == null}">
+                        <div class="row" style="margin-right: 5px; margin-left: 5px;">
+                            <label>Новый комментарий:</label>
+                            <textarea class="form-control col-sm-12" rows="5" th:field="*{comments[__${commentStat.index}__].content}"></textarea>
+                        </div>
+                        <div class="row" align="right" style="margin-right: 5px; margin-left: 5px;margin-top: 5px;">
+                            <button class="btn btn-default" type="submit" th:value="${commentStat.index}" name="removeComment" th:formaction="@{/etp/comment/remove#etpComments}">
+                                <span>Отмена</span>
+                            </button>
+                            <button class="btn btn-default" type="submit" th:value="${commentStat.index}" name="createComment" th:formaction="@{/etp/comment/create#etpComments}">
+                                <span>Сохранить</span>
+                            </button>
+                        </div>
+                    </span>
+                </span>
+            </div>
+
+            <div class="panel-footer" align="right">
+                <button class="btn btn-default" type="submit" th:formaction="@{/etp/comment/new#etpComments}">
+                    <span>Комментарий</span>
+                </button>
+            </div>
         </div>
-        <div>
-            <a class="btn btn-default" th:href="@{/etp}">Назад</a>
-        </div>
+
     </form>
     &nbsp;
 
