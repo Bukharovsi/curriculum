@@ -12,21 +12,40 @@
             <column name="theme" type="varchar(1000)" ></column>
             <column name="begin_date" type="TIMESTAMP WITH TIMEZONE"></column>
             <column name="end_date" type="TIMESTAMP WITH TIMEZONE"></column>
+            <column name="etp_id" type="int">
+                <constraints foreignKeyName="timetable_etp_fk" references="etp(id)"/>
+            </column>
         </createTable>
 
         <createTable tableName="lesson_form">
-            <column name="id" type="int" autoIncrement="true">
+            <column name="code" type="varchar(20)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="name" type="varchar(50)"></column>
         </createTable>
 
         <insert tableName="lesson_form">
+            <column name="code" value="lecture"></column>
             <column name="name" value="Лекция"></column>
+        </insert>
+        <insert tableName="lesson_form">
+            <column name="code" value="practice"></column>
             <column name="name" value="Практика"></column>
+        </insert>
+        <insert tableName="lesson_form">
+            <column name="code" value="lecture_practice"></column>
             <column name="name" value="Лекция/Практика"></column>
+        </insert>
+        <insert tableName="lesson_form">
+            <column name="code" value="consultation"></column>
             <column name="name" value="Консультация"></column>
+        </insert>
+        <insert tableName="lesson_form">
+            <column name="code" value="independent_work"></column>
             <column name="name" value="Самостоятельная работа"></column>
+        </insert>
+        <insert tableName="lesson_form">
+            <column name="code" value="laboratory_work"></column>
             <column name="name" value="Лабораторная работа"></column>
         </insert>
 
@@ -36,7 +55,7 @@
             </column>
             <column name="theme" type="varchar(1000)" ></column>
             <column name="date" type="DATE"></column>
-            <column name="time" type="TIME"></column>
+            <column name="time" type="varchar(25)"></column>
             <column name="lerner_count" type="int"></column>
             <column name="address" type="varchar"></column>
             <column name="audience_number" type="int"></column>
@@ -46,8 +65,8 @@
             <column name="timetable_id" type="int">
                 <constraints foreignKeyName="lesson_timetable_fk" references="timetable(id)"/>
             </column>
-            <column name="lesson_form_id" type="int">
-                <constraints foreignKeyName="lesson_lesson_form_fk" references="lesson_form(id)"/>
+            <column name="lesson_form_code" type="varchar(20)">
+                <constraints foreignKeyName="lesson_lesson_form_fk" references="lesson_form(code)"/>
             </column>
         </createTable>
 

@@ -13,8 +13,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class LessonForm {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String code;
 
     private String name;
+
+    public LessonForm(String name) {
+        this.name = name;
+    }
 }

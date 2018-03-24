@@ -1,12 +1,12 @@
 package ru.curriculum.domain.admin.service.timetable;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.curriculum.domain.admin.domain.etp.ETPMock;
+import ru.curriculum.domain.etp.repository.ETPRepository;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
 import ru.curriculum.domain.timetable.entity.Timetable;
 import ru.curriculum.service.etp.dto.ETPDto;
@@ -22,6 +22,9 @@ public class CreationTimetableFromEtpServiceTest {
 
     @Mock
     private TeacherRepository teacherRepository;
+
+    @Mock
+    private ETPRepository etpRepository;
 
     @InjectMocks
     private CreationTimetableFromEtpService creationTimetableFromEtpService;

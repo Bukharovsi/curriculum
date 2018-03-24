@@ -52,8 +52,10 @@ public class TeacherDto {
         this.firstName = teacher.firstName();
         this.patronymic = teacher.patronymic();
         this.fullName = teacher.fullName();
-        this.academicDegreeCode = teacher.academicDegree().code();
-        this.academicDegreeName = teacher.academicDegree().name();
+        if(null != teacher.academicDegree()) {
+            this.academicDegreeCode = teacher.academicDegree().code();
+            this.academicDegreeName = teacher.academicDegree().name();
+        }
         this.placeOfWork = teacher.placeOfWork();
         this.type = teacher.type();
         this.positionHeld = teacher.positionHeld();

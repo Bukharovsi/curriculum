@@ -23,19 +23,24 @@ public class Lesson {
 
     private String theme;
 
+    @Setter
     private LocalDate date;
 
-    private LocalTime time;
+    @Setter
+    private String time;
 
     private Integer lernerCount;
 
     @ManyToOne(targetEntity = Teacher.class)
     private Teacher teacher;
 
+    @Setter
     private String address;
 
+    @Setter
     private Integer audienceNumber;
 
+    @Setter
     @ManyToOne(targetEntity = LessonForm.class)
     private LessonForm lessonForm;
 

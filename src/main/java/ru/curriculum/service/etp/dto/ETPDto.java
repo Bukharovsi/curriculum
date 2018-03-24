@@ -73,6 +73,8 @@ public class ETPDto {
 
     private ETPStatus newStatus;
 
+    private Integer timetableId;
+
     @Valid
     private List<EAModuleDto> eaModules;
 
@@ -119,6 +121,7 @@ public class ETPDto {
         this.actualStatus = etp.status();
         this.newStatus = etp.status();
         this.financingSource = etp.financingSource();
+        this.timetableId = null != etp.timetable() ? etp.timetable().id() : null;
         this.eaModules =
                 etp.eaModules()
                         .stream()

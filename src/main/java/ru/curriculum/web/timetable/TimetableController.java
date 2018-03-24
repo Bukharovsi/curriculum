@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.etp.dto.ETPDto;
 import ru.curriculum.service.teacher.TeacherCRUDService;
+import ru.curriculum.service.timetable.AddressFindingService;
+import ru.curriculum.service.timetable.LessonFormFindingService;
 import ru.curriculum.service.timetable.TimetableCRUDService;
 import ru.curriculum.service.timetable.dto.TimetableDto;
 
@@ -26,6 +28,10 @@ public class TimetableController {
     private TimetableCRUDService timetableCRUDService;
     @Autowired
     private TeacherCRUDService teacherCRUDService;
+    @Autowired
+    private LessonFormFindingService lessonFormFindingService;
+    @Autowired
+    private AddressFindingService addressFindingService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model model) {
@@ -36,16 +42,20 @@ public class TimetableController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String getEditForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("timetable", timetableCRUDService.get(id));
+        model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
+        model.addAttribute("addressList", addressFindingService.getAddresses());
         return TIMETABLE_FORM;
     }
 
-    @RequestMapping(params = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public String editTimetable(
             @ModelAttribute("timetable") @Valid TimetableDto timetableDto,
             BindingResult bindingResult,
             Model model
     ) {
         if(bindingResult.hasErrors()) {
+            model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
+            model.addAttribute("addressList", addressFindingService.getAddresses());
             return TIMETABLE_FORM;
         }
         timetableCRUDService.update(timetableDto);

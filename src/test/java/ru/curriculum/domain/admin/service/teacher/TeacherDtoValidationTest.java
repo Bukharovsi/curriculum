@@ -3,6 +3,7 @@ package ru.curriculum.domain.admin.service.teacher;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ru.curriculum.domain.helper.TeacherHelper;
 import ru.curriculum.service.teacher.dto.TeacherDto;
 
 import javax.validation.ConstraintViolation;
@@ -14,16 +15,18 @@ import java.util.Set;
 public class TeacherDtoValidationTest extends Assert {
     private Validator validator;
     private ValidatorFactory validatorFactory;
+    private TeacherHelper teacherHelper;
 
     @Before
     public void setUp() {
         validatorFactory= Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
+        teacherHelper = new TeacherHelper();
     }
 
     @Test
     public void teacherDTOWithAllValidField_validationSuccess() {
-        TeacherDto dto = getTeacherDTO();
+        TeacherDto dto = teacherHelper.getTeacherDTO();
 
         Set<ConstraintViolation<TeacherDto>> violation = validator.validate(dto);
 
@@ -32,7 +35,7 @@ public class TeacherDtoValidationTest extends Assert {
 
     @Test
     public void teacherDTOWithEmptyFullName_validationFailed() {
-        TeacherDto dto = getTeacherDTO();
+        TeacherDto dto = teacherHelper.getTeacherDTO();
         dto.setSurname(null);
         dto.setFirstName("");
         dto.setPatronymic("");
@@ -44,24 +47,11 @@ public class TeacherDtoValidationTest extends Assert {
 
     @Test
     public void teacherDTOWithEmptyAcademicDegreeCode_validationFailed() {
-        TeacherDto dto = getTeacherDTO();
+        TeacherDto dto = teacherHelper.getTeacherDTO();
         dto.setAcademicDegreeCode(null);
 
         Set<ConstraintViolation<TeacherDto>> violation = validator.validate(dto);
 
         assertEquals(1, violation.size());
-    }
-
-    public TeacherDto getTeacherDTO() {
-        TeacherDto teacherDto = new TeacherDto();
-        teacherDto.setId(1);
-        teacherDto.setSurname("Иванов");
-        teacherDto.setFirstName("Иван");
-        teacherDto.setPatronymic("Иванович");
-        teacherDto.setAcademicDegreeCode("ph_d");
-        teacherDto.setAcademicDegreeName("Доктор наук");
-        teacherDto.setPlaceOfWork("ИРОРТ");
-
-        return teacherDto;
     }
 }

@@ -7,11 +7,11 @@ import ru.curriculum.domain.timetable.entity.LessonForm;
 @Getter
 @Setter
 public class LessonFormDto {
-    private Integer id;
+    private String code;
     private String name;
 
     public LessonFormDto(LessonForm lessonForm) {
-        this.id = lessonForm.id();
+        this.code = lessonForm.code();
         this.name = lessonForm.name();
     }
 }

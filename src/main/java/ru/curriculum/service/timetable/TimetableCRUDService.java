@@ -8,9 +8,12 @@ import ru.curriculum.service.etp.dto.ETPDto;
 import ru.curriculum.service.timetable.dto.TimetableDto;
 
 import javax.persistence.EntityNotFoundException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Comparator.*;
+import static java.util.Comparator.naturalOrder;
 
 @Component
 public class TimetableCRUDService {
@@ -18,6 +21,8 @@ public class TimetableCRUDService {
     private TimetableRepository timetableRepository;
     @Autowired
     private CreationTimetableFromEtpService creationTimetableFromEtpService;
+    @Autowired
+    private TimetableEditService timetableEditService;
 
     public TimetableDto get(Integer id) {
         Timetable timetable = timetableRepository.findOne(id);
@@ -32,11 +37,19 @@ public class TimetableCRUDService {
         timetableRepository.findAll().forEach(timetable ->
             timetableDtos.add(new TimetableDto(timetable))
         );
-        return timetableDtos;
+        return timetableDtos
+                .stream()
+                .sorted(nullsLast(comparing(TimetableDto::getBeginDate, nullsLast(naturalOrder()))))
+                .collect(Collectors.toList());
     }
 
     public void update(TimetableDto timetableDto) {
-
+        Timetable timetable = timetableRepository.findOne(timetableDto.getId());
+        if(null == timetable) {
+            throw new EntityNotFoundException(String.format("Расписание с id=%s не найдено", timetableDto.getId()));
+        }
+        timetableEditService.editTimetable(timetable, timetableDto);
+        timetableRepository.save(timetable);
     }
 
     public TimetableDto makeTimetable(ETPDto etpDto) {

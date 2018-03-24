@@ -1,7 +1,9 @@
 package ru.curriculum.domain.timetable.entity;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.Accessors;
+import ru.curriculum.domain.etp.entity.ETP;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,15 +34,26 @@ public class Timetable {
             cascade = CascadeType.ALL)
     private Set<Lesson> lessons;
 
+    @OneToOne(targetEntity = ETP.class)
+    @JoinColumn(name = "etp_id")
+    public ETP createdFrom;
+
     public Timetable() {
         this.lessons = new HashSet<>();
     }
 
-    public Timetable(LocalDateTime beginDate, LocalDateTime endDate, String theme, Set<Lesson> lessons) {
+    public Timetable(
+            LocalDateTime beginDate,
+            LocalDateTime endDate,
+            String theme,
+            @NonNull Set<Lesson> lessons,
+            ETP etp
+    ) {
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.theme = theme;
         this.addLessons(lessons);
+        this.createdFrom = etp;
     }
 
     private void addLessons(Set<Lesson> lessons) {

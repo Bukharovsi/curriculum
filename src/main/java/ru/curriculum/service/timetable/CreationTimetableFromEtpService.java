@@ -2,6 +2,7 @@ package ru.curriculum.service.timetable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.curriculum.domain.etp.repository.ETPRepository;
 import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
 import ru.curriculum.domain.timetable.entity.Lesson;
@@ -18,6 +19,8 @@ import java.util.Set;
 public class CreationTimetableFromEtpService {
     @Autowired
     private TeacherRepository teacherRepository;
+    @Autowired
+    private ETPRepository etpRepository;
 
     public Timetable makeTimetable(ETPDto etpDto) {
         LocalDateTime beginDate = null;
@@ -34,7 +37,8 @@ public class CreationTimetableFromEtpService {
                 beginDate,
                 endDate,
                 etpDto.getTitle(),
-                makeLessons(etpDto)
+                makeLessons(etpDto),
+                etpRepository.findOne(etpDto.getId())
         );
         return timetable;
     }

@@ -1,6 +1,5 @@
 package ru.curriculum.domain.admin.domain.teacher;
 
-import org.junit.Assert;
 import org.junit.Test;
 import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
@@ -65,7 +64,7 @@ public class TeacherTest  {
                 "Макдоналдс",
                 "Жарщик котлет",
                 TeacherType.STAFF
-                );
+        );
 
         teacher.assignCuratorProfile(new Curator());
 
