@@ -42,22 +42,21 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th style="text-align: center; vertical-align: middle">Дата проведения занятий</th>
-                    <th style="text-align: center; vertical-align: middle">Время проведения занятий</th>
-                    <th style="text-align: center; vertical-align: middle">Кол-во слушателей</th>
-                    <th style="text-align: center; vertical-align: middle">Форма занятий</th>
-                    <th style="text-align: center; vertical-align: middle">Тема занятий</th>
-                    <th style="text-align: center; vertical-align: middle">ФИО преподователя, должность</th>
-                    <th style="text-align: center; vertical-align: middle">Место проведения</th>
-                    <th style="text-align: center; vertical-align: middle">Номер аудитории</th>
-                    <th></th>
+                    <th style="text-align: center; vertical-align: middle; width: 6%">Дата проведения занятий</th>
+                    <th style="text-align: center; vertical-align: middle; width: 10%">Время проведения занятий</th>
+                    <th style="text-align: center; vertical-align: middle; width: 2%">Кол-во слушателей</th>
+                    <th style="text-align: center; vertical-align: middle; width: 10%">Форма занятий</th>
+                    <th style="text-align: center; vertical-align: middle; width: 30%">Тема занятий</th>
+                    <th style="text-align: center; vertical-align: middle; width: 20%">ФИО преподователя, должность</th>
+                    <th style="text-align: center; vertical-align: middle; width: 20%">Место проведения</th>
+                    <th style="text-align: center; vertical-align: middle; width: 4%">Номер аудитории</th>
                 </tr>
                 </thead>
                 <tbody>
                 <!--/*@thymesVar id="stateProgram" type="ru.curriculum.service.timetable.dto.LessonDto"*/-->
                 <div th:each="lesson, lessonStat : *{lessons}">
                     <input th:field="*{lessons[__${lessonStat.index}__].id}" hidden>
-                    <tr>
+                    <tr style="text-align: center">
                         <td><input th:field="*{lessons[__${lessonStat.index}__].date}" type="date" class="form-control"></td>
 
                         <td><select th:field="*{lessons[__${lessonStat.index}__].time}" class="form-control">
@@ -77,13 +76,16 @@
                             ></option></select>
                         </td>
                         <td th:text="${lesson.theme}"></td>
-                        <td th:text="${lesson.teacher != null ? lesson.teacher.fullName : ''}"></td>
-                        <td><select th:field="*{lessons[__${lessonStat.index}__].address}" class="form-control">
-                            <option value=""></option>
-                            <option th:each="address : ${addressList}"
-                                    th:value="${address}"
-                                    th:text="${address}"
-                            ></option></select>
+                        <td th:text="${lesson.teacher != null ? lesson.teacher.teacherDegreeInfo() : ''}"></td>
+                        <td>
+                            <input th:field="*{lessons[__${lessonStat.index}__].address}" class="form-control" type="text" list="addresses"/>
+                            <datalist  id="addresses">
+                                    <option value=""></option>
+                                    <option th:each="address : ${addressList}"
+                                            th:value="${address}"
+                                            th:text="${address}"
+                                    ></option>
+                            </datalist>
                         </td>
                         <td><input th:field="*{lessons[__${lessonStat.index}__].audienceNumber}" type="number" class="form-control"></td>
                     </tr>

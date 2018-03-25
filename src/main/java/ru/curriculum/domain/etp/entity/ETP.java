@@ -57,8 +57,7 @@ public class ETP {
     @OneToOne(
             mappedBy = "createdFrom",
             targetEntity = Timetable.class,
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+            fetch = FetchType.EAGER)
     private Timetable timetable;
     @OneToMany(
             mappedBy = "etp",

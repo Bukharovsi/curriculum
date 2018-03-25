@@ -56,4 +56,8 @@ public class TimetableCRUDService {
         Timetable timetable =timetableRepository.save(creationTimetableFromEtpService.makeTimetable(etpDto));
         return new TimetableDto(timetable);
     }
+
+    public void delete(Integer id) {
+        timetableRepository.delete(id);
+    }
 }

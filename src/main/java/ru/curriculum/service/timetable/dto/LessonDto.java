@@ -34,6 +34,7 @@ public class LessonDto {
         add("10:40-12:10");
         add("13:00-14:30");
         add("14:00-16:10");
+        add("16:20-17:50");
     }};
 
     public LessonDto(Lesson lesson) {

@@ -62,4 +62,12 @@ public class TeacherDto {
         this.curatorId = teacher.hasCuratorProfile() ? teacher.curatorProfile().id() : null;
         this.curatorLogin = teacher.hasCuratorProfile() ? teacher.curator().login() : "";
     }
+
+    public String teacherDegreeInfo() {
+        return String.format("%s, %s, %s",
+                fullName,
+                null != academicDegreeName ? academicDegreeName : "",
+                null != placeOfWork ? placeOfWork : ""
+        );
+    }
 }

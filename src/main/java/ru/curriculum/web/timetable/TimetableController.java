@@ -75,4 +75,10 @@ public class TimetableController {
         TimetableDto timetableDto = timetableCRUDService.makeTimetable(etpDto);
         return redirectTo(Routes.timetable + "/edit/" + timetableDto.getId());
     }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Integer id) {
+        timetableCRUDService.delete(id);
+        return redirectTo(Routes.timetable);
+    }
 }
