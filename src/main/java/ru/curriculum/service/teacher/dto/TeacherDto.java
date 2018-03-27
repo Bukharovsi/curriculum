@@ -52,12 +52,22 @@ public class TeacherDto {
         this.firstName = teacher.firstName();
         this.patronymic = teacher.patronymic();
         this.fullName = teacher.fullName();
-        this.academicDegreeCode = teacher.academicDegree().code();
-        this.academicDegreeName = teacher.academicDegree().name();
+        if(null != teacher.academicDegree()) {
+            this.academicDegreeCode = teacher.academicDegree().code();
+            this.academicDegreeName = teacher.academicDegree().name();
+        }
         this.placeOfWork = teacher.placeOfWork();
         this.type = teacher.type();
         this.positionHeld = teacher.positionHeld();
         this.curatorId = teacher.hasCuratorProfile() ? teacher.curatorProfile().id() : null;
         this.curatorLogin = teacher.hasCuratorProfile() ? teacher.curator().login() : "";
+    }
+
+    public String teacherDegreeInfo() {
+        return String.format("%s, %s, %s",
+                fullName,
+                null != academicDegreeName ? academicDegreeName : "",
+                null != placeOfWork ? placeOfWork : ""
+        );
     }
 }

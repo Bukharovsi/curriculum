@@ -38,8 +38,11 @@
                 </a>
             </td>
             <td>
-                <a th:href="@{/etp/delete/{id}(id=${etp.id})}" data-toggle="tooltip" title="Удалить">
+                <a th:if="${etp.timetableId == null}" th:href="@{/etp/delete/{id}(id=${etp.id})}" data-toggle="tooltip" title="Удалить">
                     <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <a th:if="${etp.timetableId != null}" th:href="@{/timetable/edit/{id}(id=${etp.timetableId})}" data-toggle="tooltip" title="Перейти к расписанию">
+                    <span class="glyphicon glyphicon-book"></span>
                 </a>
             </td>
         </tr>

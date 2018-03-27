@@ -12,4 +12,6 @@ public class View {
     public static final String STATE_SCHEDULE_LIST = "stateSchedule/stateScheduleList";
     public static final String STATE_SCHEDULE_FORM = "stateSchedule/stateScheduleForm";
     public static final String STATE_PROGRAM_FILE_FORMAT_INFO = "stateSchedule/stateProgramFileFormatInfo";
+    public static final String TIMETABLE_FORM = "timetable/timetableForm";
+    public static final String TIMETABLE_LIST = "timetable/timetableList";
 }

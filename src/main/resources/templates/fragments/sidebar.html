@@ -22,6 +22,9 @@
             <li th:class="${uri.contains('/etp') ? 'active':''}">
                 <a th:href="@{/etp}"> УТП </a>
             </li>
+            <li th:class="${uri.contains('/timetable') ? 'active':''}">
+                <a th:href="@{/timetable}"> Расписание </a>
+            </li>
         </ul>
     </div>
 </th:block>

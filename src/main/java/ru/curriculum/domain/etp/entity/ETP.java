@@ -7,6 +7,7 @@ import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
 import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.domain.etp.entity.organizationMethodicalActivity.OMAModule;
+import ru.curriculum.domain.timetable.entity.Timetable;
 import ru.curriculum.service.etp.statusManager.ETPStatus;
 
 import javax.persistence.*;
@@ -53,6 +54,11 @@ public class ETP {
     @Enumerated(EnumType.STRING)
     private ETPStatus status;
 
+    @OneToOne(
+            mappedBy = "createdFrom",
+            targetEntity = Timetable.class,
+            fetch = FetchType.EAGER)
+    private Timetable timetable;
     @OneToMany(
             mappedBy = "etp",
             targetEntity = EAModule.class,
