@@ -24,9 +24,6 @@ public class Lesson {
     private String theme;
 
     @Setter
-    private LocalDate date;
-
-    @Setter
     private String time;
 
     private Integer lernerCount;
@@ -44,9 +41,8 @@ public class Lesson {
     @ManyToOne(targetEntity = LessonForm.class)
     private LessonForm lessonForm;
 
-    @ManyToOne
-    @JoinColumn(name = "timetable_id")
     @Setter
-    private Timetable timetable;
-
+    @ManyToOne
+    @JoinColumn(name = "school_day_id")
+    private SchoolDay schoolDay;
 }

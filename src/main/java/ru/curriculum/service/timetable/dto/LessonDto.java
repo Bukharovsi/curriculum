@@ -19,11 +19,10 @@ import java.util.List;
 public class LessonDto {
     private Integer id;
     private String theme;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date;
     private String time;
     private Integer lernerCount;
     private TeacherDto teacher;
+    private Integer teacherId;
     private String address;
     private Integer audienceNumber;
     private String lessonFormId;
@@ -40,10 +39,12 @@ public class LessonDto {
     public LessonDto(Lesson lesson) {
         this.id = lesson.id();
         this.theme = lesson.theme();
-        this.date = lesson.date();
         this.time = lesson.time();
         this.lernerCount = lesson.lernerCount();
-        this.teacher = null != lesson.teacher() ? new TeacherDto(lesson.teacher()) : null;
+        if(null != lesson.teacher()) {
+            this.teacher =  new TeacherDto(lesson.teacher());
+            this.teacherId = lesson.teacher().id();
+        }
         this.address = lesson.address();
         this.audienceNumber = lesson.audienceNumber();
         if(null != lesson.lessonForm()) {

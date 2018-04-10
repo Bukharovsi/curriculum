@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 import ru.curriculum.domain.etp.entity.ETP;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,44 +20,60 @@ public class Timetable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private LocalDateTime beginDate;
+    private LocalDate beginDate;
 
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     private String theme;
 
     @OneToMany(
             mappedBy = "timetable",
-            targetEntity = Lesson.class,
+            targetEntity = SchoolDay.class,
             fetch = FetchType.EAGER,
             orphanRemoval = true,
             cascade = CascadeType.ALL)
-    private Set<Lesson> lessons;
+    private Set<SchoolDay> schoolDays;
 
     @OneToOne(targetEntity = ETP.class)
     @JoinColumn(name = "etp_id")
     public ETP createdFrom;
 
     public Timetable() {
-        this.lessons = new HashSet<>();
+        this.schoolDays = new HashSet<>();
     }
 
     public Timetable(
-            LocalDateTime beginDate,
-            LocalDateTime endDate,
+            LocalDate beginDate,
+            LocalDate endDate,
             String theme,
-            @NonNull Set<Lesson> lessons,
+            @NonNull Set<SchoolDay> schoolDays,
             ETP etp
     ) {
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.theme = theme;
-        this.addLessons(lessons);
+        this.addSchoolDays(schoolDays);
         this.createdFrom = etp;
     }
 
-    private void addLessons(Set<Lesson> lessons) {
-        lessons.forEach(lesson -> lesson.timetable(this));
-        this.lessons = lessons;
+    public Timetable(
+            Integer id,
+            LocalDate beginDate,
+            LocalDate endDate,
+            String theme,
+            @NonNull Set<SchoolDay> schoolDays,
+            ETP etp
+    ) {
+        this.id = id;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+        this.theme = theme;
+        this.addSchoolDays(schoolDays);
+        this.createdFrom = etp;
+    }
+
+    private void addSchoolDays(Set<SchoolDay> schoolDays) {
+        schoolDays.forEach(schoolDay -> schoolDay.timetable(this));
+        this.schoolDays = schoolDays;
     }
 }

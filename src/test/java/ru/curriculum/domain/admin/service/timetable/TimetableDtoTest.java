@@ -7,11 +7,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import ru.curriculum.domain.etp.entity.ETP;
-import ru.curriculum.domain.timetable.entity.Lesson;
+import ru.curriculum.domain.timetable.entity.SchoolDay;
 import ru.curriculum.domain.timetable.entity.Timetable;
 import ru.curriculum.service.timetable.dto.TimetableDto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,25 +27,25 @@ public class TimetableDtoTest {
         Assert.assertEquals(timetable.theme(), dto.getTheme());
         Assert.assertEquals(timetable.beginDate(), dto.getBeginDate());
         Assert.assertEquals(timetable.endDate(), dto.getEndDate());
-        Assert.assertEquals(timetable.lessons().size(), dto.getLessons().size());
+        Assert.assertEquals(timetable.schoolDays().size(), dto.getSchoolDays().size());
     }
 
     @DataProvider
     public static Object[][] timetableDataProvider() {
-        Set<Lesson> lessons = new HashSet<>();
-        lessons.add(new Lesson());
-        lessons.add(new Lesson());
+        Set<SchoolDay> shoolDays = new HashSet<>();
+        shoolDays.add(new SchoolDay(LocalDate.now()));
+        shoolDays.add(new SchoolDay(LocalDate.now()));
 
         ETP etp = new ETP();
         etp.id(1);
 
         return new Object[][]{
-                { new Timetable(LocalDateTime.now(), LocalDateTime.now(), "Main theme", new HashSet<>(), etp) },
-                { new Timetable(LocalDateTime.parse("2018-01-01T00:00"), LocalDateTime.parse("2018-12-31T23:59"), "Main theme", new HashSet<>(), etp) },
-                { new Timetable(LocalDateTime.parse("2018-01-01T00:00"), LocalDateTime.parse("2018-12-31T23:59"), null, new HashSet<>(), etp) },
-                { new Timetable(null, LocalDateTime.parse("2018-12-31T23:59"), null, new HashSet<>(), etp) },
-                { new Timetable(LocalDateTime.parse("2018-12-31T23:59"), null, null, new HashSet<>(), etp) },
-                { new Timetable(null, null, null, lessons, etp) }
+                { new Timetable(LocalDate.now(), LocalDate.now(), "Main theme", new HashSet<>(), etp) },
+                { new Timetable(LocalDate.parse("2018-01-01"), LocalDate.parse("2018-12-31"), "Main theme", new HashSet<>(), etp) },
+                { new Timetable(LocalDate.parse("2018-01-01"), LocalDate.parse("2018-12-31"), null, new HashSet<>(), etp) },
+                { new Timetable(LocalDate.parse("2018-12-31"), LocalDate.parse("2018-12-31"), null, new HashSet<>(), etp) },
+                { new Timetable(LocalDate.parse("2018-12-31"), LocalDate.parse("2018-12-31"), null, new HashSet<>(), etp) },
+                { new Timetable(LocalDate.parse("2018-01-01"), LocalDate.parse("2018-12-31"), null, shoolDays, etp) }
         };
     }
 }

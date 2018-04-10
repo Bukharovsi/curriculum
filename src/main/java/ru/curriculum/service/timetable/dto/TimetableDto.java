@@ -6,11 +6,10 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.timetable.entity.Timetable;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
-import static java.util.Comparator.*;
-import static java.util.Comparator.naturalOrder;
 import static java.util.stream.Collectors.toList;
 
 @Getter
@@ -20,16 +19,16 @@ public class TimetableDto {
     private Integer id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime beginDate;
+    private LocalDate beginDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     private String theme;
 
     private Integer createFromEtpId;
 
-    private List<LessonDto> lessons;
+    private List<SchoolDayDto> schoolDays;
 
     public TimetableDto(Timetable timetable) {
         this.id = timetable.id();
@@ -37,12 +36,10 @@ public class TimetableDto {
         this.endDate = timetable.endDate();
         this.theme = timetable.theme();
         this.createFromEtpId = null != timetable.createdFrom() ? timetable.createdFrom().id() : null;
-        this.lessons = timetable.lessons()
+        this.schoolDays = timetable.schoolDays()
                 .stream()
-                .map(LessonDto::new)
-                .sorted(nullsLast(
-                        comparing(LessonDto::getDate, nullsLast(naturalOrder())))
-                        .thenComparing(comparing(LessonDto::getId, nullsLast(naturalOrder()))))
+                .map(SchoolDayDto::new)
+                .sorted(Comparator.comparing(SchoolDayDto::getDate))
                 .collect(toList());
     }
 }
