@@ -15,10 +15,9 @@ import ru.curriculum.service.timetable.AddressFindingService;
 import ru.curriculum.service.timetable.LessonFormFindingService;
 import ru.curriculum.service.timetable.TimetableCRUDService;
 import ru.curriculum.service.timetable.TimetableFindingService;
-import ru.curriculum.service.timetable.dto.LessonDto;
 import ru.curriculum.service.timetable.dto.TimetableDto;
+import ru.curriculum.service.timetable.dto.WeeklyTimetableDto;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import static ru.curriculum.web.Redirect.*;
@@ -46,7 +45,7 @@ public class TimetableController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String getEditForm(@PathVariable("id") Integer id, Model model) {
-        TimetableDto timetableDto = timetableCRUDService.get(id);
+        WeeklyTimetableDto timetableDto = timetableCRUDService.get(id);
         model.addAttribute("timetable", timetableDto);
         model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
         model.addAttribute("addressList", addressFindingService.getAddresses());
@@ -57,7 +56,7 @@ public class TimetableController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public String editTimetable(
-            @ModelAttribute("timetable") @Valid TimetableDto timetableDto,
+            @ModelAttribute("timetable") @Valid WeeklyTimetableDto timetableDto,
             BindingResult bindingResult,
             Model model
     ) {
@@ -82,7 +81,7 @@ public class TimetableController {
             model.addAttribute("teachers", teacherCRUDService.findAll());
             return ETP_FORM;
         }
-        TimetableDto timetableDto = timetableCRUDService.makeTimetable(etpDto);
+        WeeklyTimetableDto timetableDto = timetableCRUDService.makeTimetable(etpDto);
         return redirectTo(Routes.timetable + "/edit/" + timetableDto.getId());
     }
 
@@ -90,48 +89,5 @@ public class TimetableController {
     public String delete(@PathVariable("id") Integer id) {
         timetableCRUDService.delete(id);
         return redirectTo(Routes.timetable);
-    }
-
-    @RequestMapping(params = {"addLesson"}, method = {RequestMethod.PUT, RequestMethod.POST})
-    public String addLesson(
-            final @ModelAttribute("timetable") @Valid TimetableDto timetableDto,
-            final BindingResult bindingResult,
-            Model model,
-            final HttpServletRequest req
-
-    ) {
-        model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
-        model.addAttribute("addressList", addressFindingService.getAddresses());
-        model.addAttribute("teachers", teacherCRUDService.findAll());
-        model.addAttribute("lessonThemes", timetableFindingService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
-        Integer schoolDayIndex = Integer.valueOf(req.getParameter("addLesson"));
-        timetableDto
-                .getSchoolDays().get(schoolDayIndex.intValue())
-                .getLessons()
-                .add(new LessonDto());
-        return TIMETABLE_FORM;
-    }
-
-    @RequestMapping(params = {"removeLesson"}, method = {RequestMethod.PUT, RequestMethod.POST})
-    public String removeLesson(
-            final @ModelAttribute("timetable") @Valid TimetableDto timetableDto,
-            final BindingResult bindingResult,
-            Model model,
-            final HttpServletRequest req
-
-    ) {
-        model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
-        model.addAttribute("addressList", addressFindingService.getAddresses());
-        model.addAttribute("teachers", teacherCRUDService.findAll());
-        model.addAttribute("lessonThemes", timetableFindingService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
-        String indexOfLessonInSchoolDaysAsString = req.getParameter("removeLesson");
-        String[] indexOfLessonInSchoolDays = indexOfLessonInSchoolDaysAsString.split("\\.");
-        Integer indexOfSchoolDay = Integer.valueOf(indexOfLessonInSchoolDays[0]);
-        Integer indexOfLesson = Integer.valueOf(indexOfLessonInSchoolDays[1]);
-        timetableDto
-                .getSchoolDays().get(indexOfSchoolDay.intValue())
-                .getLessons()
-                .remove(indexOfLesson.intValue());
-        return TIMETABLE_FORM;
     }
 }

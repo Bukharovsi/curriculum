@@ -10,9 +10,7 @@ import ru.curriculum.domain.timetable.entity.LessonForm;
 import ru.curriculum.domain.timetable.entity.SchoolDay;
 import ru.curriculum.domain.timetable.entity.Timetable;
 import ru.curriculum.domain.timetable.repository.LessonFormRepository;
-import ru.curriculum.service.timetable.dto.LessonDto;
-import ru.curriculum.service.timetable.dto.SchoolDayDto;
-import ru.curriculum.service.timetable.dto.TimetableDto;
+import ru.curriculum.service.timetable.dto.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -78,5 +76,35 @@ public class TimetableDtoToTimetableConverter {
             lessons.add(lesson);
         });
         return lessons;
+    }
+
+    public Timetable convert(WeeklyTimetableDto timetableDto) {
+        return new Timetable(
+                timetableDto.getId(),
+                timetableDto.getBeginDate(),
+                timetableDto.getEndDate(),
+                timetableDto.getTheme(),
+                weeksToSchoolDays(timetableDto.getWeeks()),
+                etpRepository.findOne(timetableDto.getId())
+        );
+    }
+
+    private Set<SchoolDay> weeksToSchoolDays(List<WeekDto> weeks) {
+        Set<SchoolDay> schoolDays = new HashSet<>();
+        for (WeekDto week : weeks) {
+            for (SchoolDayDto schoolDayDto : week.getSchoolDays()) {
+                schoolDays.add(schoolDayDtoToSchoolDay(schoolDayDto));
+            }
+        }
+
+        return schoolDays;
+    }
+
+    private SchoolDay schoolDayDtoToSchoolDay(SchoolDayDto schoolDayDto) {
+        return new SchoolDay(
+                schoolDayDto.getId(),
+                schoolDayDto.getDate(),
+                convertLessons(schoolDayDto.getLessons())
+        );
     }
 }

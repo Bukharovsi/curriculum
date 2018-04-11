@@ -40,7 +40,7 @@ public class SchoolDay {
 
     public SchoolDay(LocalDate date, Set<Lesson> lessons) {
         this.date = date;
-        this.lessons = lessons;
+        this.addLessons(lessons);
     }
 
     public SchoolDay(LocalDate date) {

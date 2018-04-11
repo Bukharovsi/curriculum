@@ -28,8 +28,8 @@ public class LessonDto {
     private String lessonFormId;
     private String lessonFormName;
 
-    private final List<String> timesList = new ArrayList<String>() {{
-        add("9:00-10:30");
+    public static final List<String> timesList = new ArrayList<String>() {{
+        add("09:00-10:30");
         add("10:40-12:10");
         add("13:00-14:30");
         add("14:00-16:10");

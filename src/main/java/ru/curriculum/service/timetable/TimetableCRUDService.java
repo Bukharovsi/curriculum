@@ -3,10 +3,11 @@ package ru.curriculum.service.timetable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.timetable.entity.Timetable;
+import ru.curriculum.domain.timetable.entity.WeeklyTimetable;
 import ru.curriculum.domain.timetable.repository.TimetableRepository;
 import ru.curriculum.service.etp.dto.ETPDto;
 import ru.curriculum.service.timetable.converter.TimetableDtoToTimetableConverter;
-import ru.curriculum.service.timetable.dto.TimetableDto;
+import ru.curriculum.service.timetable.dto.WeeklyTimetableDto;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -25,40 +26,39 @@ public class TimetableCRUDService {
     @Autowired
     private TimetableDtoToTimetableConverter timetableDtoToTimetableConverter;
 
-    public TimetableDto get(Integer id) {
+    public WeeklyTimetableDto get(Integer id) {
         Timetable timetable = timetableRepository.findOne(id);
         if(null == timetable) {
             throw new EntityNotFoundException(String.format("Расписание с id=%s не найдено", id));
         }
-        return new TimetableDto(timetable);
+        return new WeeklyTimetableDto(new WeeklyTimetable(timetable));
     }
 
-    public List<TimetableDto> findAll() {
-        List<TimetableDto> timetableDtos = new ArrayList<>();
+    public List<WeeklyTimetableDto> findAll() {
+        List<WeeklyTimetableDto> timetableDtos = new ArrayList<>();
         timetableRepository.findAll().forEach(timetable ->
-            timetableDtos.add(new TimetableDto(timetable))
+            timetableDtos.add(new WeeklyTimetableDto(new WeeklyTimetable(timetable)))
         );
         return timetableDtos
                 .stream()
-                .sorted(nullsLast(comparing(TimetableDto::getBeginDate, nullsLast(naturalOrder()))))
+                .sorted(nullsLast(comparing(WeeklyTimetableDto::getBeginDate, nullsLast(naturalOrder()))))
                 .collect(Collectors.toList());
     }
 
-    public void update(TimetableDto timetableDto) {
-        Timetable timetable = timetableRepository.findOne(timetableDto.getId());
-        if(null == timetable) {
-            throw new EntityNotFoundException(String.format("Расписание с id=%s не найдено", timetableDto.getId()));
-        }
-        Timetable updateTimetable = timetableDtoToTimetableConverter.convert(timetableDto);
-        timetableRepository.save(updateTimetable);
-    }
-
-    public TimetableDto makeTimetable(ETPDto etpDto) {
+    public WeeklyTimetableDto makeTimetable(ETPDto etpDto) {
         Timetable timetable =timetableRepository.save(creationTimetableFromEtpService.makeTimetable(etpDto));
-        return new TimetableDto(timetable);
+        return new WeeklyTimetableDto(new WeeklyTimetable(timetable));
     }
 
     public void delete(Integer id) {
         timetableRepository.delete(id);
+    }
+
+    public void update(WeeklyTimetableDto timetableDto) {
+        if(null == timetableRepository.findOne(timetableDto.getId())) {
+            throw new EntityNotFoundException(String.format("Расписание с id=%s не найдено", timetableDto.getId()));
+        }
+        Timetable timetable = timetableDtoToTimetableConverter.convert(timetableDto);
+        timetableRepository.save(timetable);
     }
 }

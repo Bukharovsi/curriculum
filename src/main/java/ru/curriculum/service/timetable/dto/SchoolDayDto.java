@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,14 +37,20 @@ public class SchoolDayDto {
     public SchoolDayDto(SchoolDay schoolDay) {
         this.id = schoolDay.id();
         this.date = schoolDay.date();
-        if(null != schoolDay.date()) {
-            this.dayOfWeek = DayOfWeek
-                    .of(schoolDay.date().get(ChronoField.DAY_OF_WEEK))
-                    .getDisplayName(TextStyle.FULL, new Locale("ru"));
-        }
+        this.dayOfWeek = null != schoolDay.date() ? toDisplayFormat(schoolDay.date()) : null;
         this.lessons = schoolDay.lessons()
                 .stream()
                 .map(LessonDto::new)
+                .sorted(Comparator.comparing(LessonDto::getTime))
                 .collect(toList());
+    }
+
+    private String toDisplayFormat(LocalDate date) {
+        String dayOfWeek = DayOfWeek
+                .of(date.get(ChronoField.DAY_OF_WEEK))
+                .getDisplayName(TextStyle.FULL, new Locale("ru"));
+
+        return dayOfWeek.substring(0, 1).toUpperCase()
+                .concat(dayOfWeek.substring(1, dayOfWeek.length()));
     }
 }
