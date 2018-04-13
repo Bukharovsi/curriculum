@@ -14,7 +14,9 @@ import ru.curriculum.service.teacher.TeacherCRUDService;
 import ru.curriculum.service.timetable.AddressFindingService;
 import ru.curriculum.service.timetable.LessonFormFindingService;
 import ru.curriculum.service.timetable.TimetableCRUDService;
+import ru.curriculum.service.timetable.TimetableFindingService;
 import ru.curriculum.service.timetable.dto.TimetableDto;
+import ru.curriculum.service.timetable.dto.WeeklyTimetableDto;
 
 import javax.validation.Valid;
 
@@ -32,6 +34,8 @@ public class TimetableController {
     private LessonFormFindingService lessonFormFindingService;
     @Autowired
     private AddressFindingService addressFindingService;
+    @Autowired
+    private TimetableFindingService timetableFindingService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model model) {
@@ -41,21 +45,26 @@ public class TimetableController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String getEditForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("timetable", timetableCRUDService.get(id));
+        WeeklyTimetableDto timetableDto = timetableCRUDService.get(id);
+        model.addAttribute("timetable", timetableDto);
         model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
         model.addAttribute("addressList", addressFindingService.getAddresses());
+        model.addAttribute("lessonThemes", timetableFindingService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
+        model.addAttribute("teachers", teacherCRUDService.findAll());
         return TIMETABLE_FORM;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public String editTimetable(
-            @ModelAttribute("timetable") @Valid TimetableDto timetableDto,
+            @ModelAttribute("timetable") @Valid WeeklyTimetableDto timetableDto,
             BindingResult bindingResult,
             Model model
     ) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
             model.addAttribute("addressList", addressFindingService.getAddresses());
+            model.addAttribute("lessonThemes", timetableFindingService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
+            model.addAttribute("teachers", teacherCRUDService.findAll());
             return TIMETABLE_FORM;
         }
         timetableCRUDService.update(timetableDto);
@@ -72,7 +81,7 @@ public class TimetableController {
             model.addAttribute("teachers", teacherCRUDService.findAll());
             return ETP_FORM;
         }
-        TimetableDto timetableDto = timetableCRUDService.makeTimetable(etpDto);
+        WeeklyTimetableDto timetableDto = timetableCRUDService.makeTimetable(etpDto);
         return redirectTo(Routes.timetable + "/edit/" + timetableDto.getId());
     }
 

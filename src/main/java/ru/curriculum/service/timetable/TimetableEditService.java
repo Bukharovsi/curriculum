@@ -19,19 +19,20 @@ public class TimetableEditService {
     }
 
     private void editLessons(Timetable timetable, TimetableDto timetableDto) {
-        timetable.lessons().forEach(lesson -> {
-            Optional<LessonDto> lessonDto = timetableDto.getLessons()
-                    .stream()
-                    .filter(l -> l.getId().equals(lesson.id()))
-                    .findFirst();
-            if(lessonDto.isPresent()) {
-                LessonDto dto = lessonDto.get();
-                lesson.date(dto.getDate());
-                lesson.time(dto.getTime());
-                lesson.lessonForm(lessonFormRepository.findOne(dto.getLessonFormId()));
-                lesson.address(dto.getAddress());
-                lesson.audienceNumber(dto.getAudienceNumber());
-            }
-        });
+
+//        timetable.lessons().forEach(lesson -> {
+//            Optional<LessonDto> lessonDto = timetableDto.getLessons()
+//                    .stream()
+//                    .filter(l -> l.getId().equals(lesson.id()))
+//                    .findFirst();
+//            if(lessonDto.isPresent()) {
+//                LessonDto dto = lessonDto.get();
+//                lesson.date(dto.getDate());
+//                lesson.time(dto.getTime());
+//                lesson.lessonForm(lessonFormRepository.findOne(dto.getLessonFormId()));
+//                lesson.address(dto.getAddress());
+//                lesson.audienceNumber(dto.getAudienceNumber());
+//            }
+//        });
     }
 }

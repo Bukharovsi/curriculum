@@ -3,85 +3,64 @@ package ru.curriculum.service.timetable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.etp.repository.ETPRepository;
-import ru.curriculum.domain.teacher.entity.Teacher;
-import ru.curriculum.domain.teacher.repository.TeacherRepository;
 import ru.curriculum.domain.timetable.entity.Lesson;
+import ru.curriculum.domain.timetable.entity.SchoolDay;
 import ru.curriculum.domain.timetable.entity.Timetable;
 import ru.curriculum.service.etp.dto.ETPDto;
-import ru.curriculum.service.etp.dto.PlanDto;
+import ru.curriculum.service.timetable.dto.LessonDto;
 
-import java.time.LocalDateTime;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.HashSet;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Set;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toSet;
 
 @Component
 public class CreationTimetableFromEtpService {
     @Autowired
-    private TeacherRepository teacherRepository;
-    @Autowired
     private ETPRepository etpRepository;
 
     public Timetable makeTimetable(ETPDto etpDto) {
-        LocalDateTime beginDate = null;
-        if(null != etpDto.getFullTimeLearningBeginDate()) {
-            beginDate = LocalDateTime.ofInstant(etpDto.getFullTimeLearningBeginDate().toInstant(), ZoneId.systemDefault());
-        }
-
-        LocalDateTime endDate = null;
-        if(null != etpDto.getFullTimeLearningEndDate()) {
-            endDate = LocalDateTime.ofInstant(etpDto.getFullTimeLearningEndDate().toInstant(), ZoneId.systemDefault());
-        }
+        LocalDate beginDate = toLocalDate(etpDto.getFullTimeLearningBeginDate());
+        LocalDate endDate = toLocalDate(etpDto.getFullTimeLearningEndDate());
 
         Timetable timetable = new Timetable(
                 beginDate,
                 endDate,
                 etpDto.getTitle(),
-                makeLessons(etpDto),
+                generateSchoolDays(beginDate, endDate),
                 etpRepository.findOne(etpDto.getId())
         );
+
         return timetable;
     }
 
-    private Set<Lesson> makeLessons(ETPDto etpDto) {
-        Set<Lesson> lessons = new HashSet<>();
-
-        etpDto.getOmaModules().forEach(omaModuleDto -> {
-            Lesson lesson = Lesson.builder()
-                    .theme(omaModuleDto.getName())
-                    .teacher(getTeacher(omaModuleDto.getPlan()))
-                    .lernerCount(omaModuleDto.getPlan().getLernerCount())
-                    .build();
-            lessons.add(lesson);
-        });
-
-        etpDto.getEaModules().forEach(eaModuleDto ->
-            eaModuleDto.getSections().forEach(eaSectionDto ->
-                eaSectionDto.getTopics().forEach(eaTopicDto -> {
-                    Lesson lesson = Lesson.builder()
-                            .theme(eaTopicDto.getName())
-                            .teacher(getTeacher(eaTopicDto.getPlan()))
-                            .lernerCount(eaTopicDto.getPlan().getLernerCount())
-                            .build();
-                    lessons.add(lesson);
-                })
-            )
-        );
-
-        etpDto.getEmaModules().forEach(emaModuleDto -> {
-            Lesson lesson = Lesson.builder()
-                    .theme(emaModuleDto.getName())
-                    .teacher(getTeacher(emaModuleDto.getPlan()))
-                    .lernerCount(emaModuleDto.getPlan().getLernerCount())
-                    .build();
-            lessons.add(lesson);
-        });
-
-        return lessons;
-
+    private Set<SchoolDay> generateSchoolDays(LocalDate beginDate, LocalDate endDate) {
+        return Stream
+                .iterate(beginDate, date -> date.plusDays(1))
+                .filter(date -> isSchoolDay(date))
+                .limit(ChronoUnit.DAYS.between(beginDate, endDate))
+                .map(date -> new SchoolDay(date, generateLessons()))
+                .collect(toSet());
     }
 
-    private Teacher getTeacher(PlanDto planDto) {
-        return planDto.hasTeacher() ? teacherRepository.findOne(planDto.getTeacherId()) : null;
+    private Set<Lesson> generateLessons() {
+        return LessonDto.timesList
+                .stream()
+                .map(time -> Lesson.builder().time(time).build())
+                .collect(toSet());
+    }
+
+    private boolean isSchoolDay(LocalDate date) {
+        return !DayOfWeek.of(date.get(ChronoField.DAY_OF_WEEK)).equals(DayOfWeek.SUNDAY);
+    }
+
+    private LocalDate toLocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }
