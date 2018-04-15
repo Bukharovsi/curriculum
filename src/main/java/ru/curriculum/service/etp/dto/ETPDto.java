@@ -102,12 +102,13 @@ public class ETPDto {
         this.omaModules = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.emaModuleTotalRow = new TotalRow();
-        this.emaModuleTotalRow = new TotalRow();
-        this.emaModuleTotalRow = new TotalRow();
+        this.omaModuleTotalRow = new TotalRow();
+        this.eaModuleTotalRow = new TotalRow();
         this.etpTotalRow = new TotalRow();
     }
 
     public ETPDto(ETP etp) {
+        this();
         this.id = etp.id();
         this.title = etp.title();
         this.target = etp.target();

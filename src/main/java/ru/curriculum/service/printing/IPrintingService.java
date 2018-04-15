@@ -5,5 +5,5 @@ import ru.curriculum.domain.printing.file.IFile;
 
 public interface IPrintingService {
 
-    IFile getExcelFileWillBePrinted(String fileName);
+    IFile getExcelFileWillBePrinted(Integer etpId);
 }
