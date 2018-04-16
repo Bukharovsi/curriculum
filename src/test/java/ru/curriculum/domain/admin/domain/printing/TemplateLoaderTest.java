@@ -4,11 +4,11 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Before;
 import org.junit.Test;
 import ru.curriculum.domain.admin.domain.etp.ETPMock;
-import ru.curriculum.domain.printing.file.template.ITemplate;
-import ru.curriculum.domain.printing.file.template.Template;
+import ru.curriculum.domain.printing.file.template.IWorkbookGenerator;
+import ru.curriculum.domain.printing.file.template.WorkbookGenerator;
 import ru.curriculum.domain.printing.file.template.loader.TemplateLoaderFromResource;
-import ru.curriculum.domain.printing.file.template.specific.ETPTemplate;
-import ru.curriculum.domain.printing.file.template.specific.ETPTemplateSubstitutionRule;
+import ru.curriculum.domain.printing.file.template.specific.EtpWorkbookGenerator;
+import ru.curriculum.domain.printing.file.template.specific.ETPTemplateCoordinates;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,15 +25,15 @@ public class TemplateLoaderTest {
 
     @Test
     public void loadTemplate() throws IOException {
-        ITemplate etpTemplate = new ETPTemplate(
-                new Template(
+        IWorkbookGenerator etpTemplate = new EtpWorkbookGenerator(
+                new WorkbookGenerator(
                         new TemplateLoaderFromResource("etp.xls")
                 ),
-                new ETPTemplateSubstitutionRule(),
+                new ETPTemplateCoordinates(),
                 etpMock.getETPDto()
         );
 
-        Workbook workbook = etpTemplate.makeTemplate();
+        Workbook workbook = etpTemplate.createWorkbook();
         FileOutputStream fos = new FileOutputStream(new File("etp.xls"));
         workbook.write(fos);
         workbook.close();

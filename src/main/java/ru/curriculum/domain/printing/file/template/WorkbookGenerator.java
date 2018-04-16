@@ -10,14 +10,14 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class Template implements ITemplate {
+public class WorkbookGenerator implements IWorkbookGenerator {
     private ITemplateLoader loader;
 
-    public Template(ITemplateLoader loader) {
+    public WorkbookGenerator(ITemplateLoader loader) {
         this.loader = loader;
     }
 
-    public Workbook makeTemplate() {
+    public Workbook createWorkbook() {
         File file = loader.load();
         Workbook workbook;
         try {

@@ -6,10 +6,10 @@ import ru.curriculum.domain.printing.exception.CreationFileException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class ExcelFile implements IFile {
+public class ExcelDownloadableFile implements IDownloadableFile {
     private Workbook workbook;
 
-    public ExcelFile(Workbook workbook) {
+    public ExcelDownloadableFile(Workbook workbook) {
         this.workbook = workbook;
     }
 

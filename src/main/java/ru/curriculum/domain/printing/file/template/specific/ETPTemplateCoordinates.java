@@ -4,9 +4,9 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 
 
-@Getter
+@Getter()
 @Accessors(fluent = true)
-public class ETPTemplateSubstitutionRule {
+public class ETPTemplateCoordinates {
     private final Integer tableStartRow = 29;
     private final Integer topicName = 1;
     private final Integer lectures = 2;
@@ -35,7 +35,7 @@ public class ETPTemplateSubstitutionRule {
     private CellAddress etpSchoolDays;
     private CellAddress etpFinancingSource;
 
-    public ETPTemplateSubstitutionRule() {
+    public ETPTemplateCoordinates() {
         this.etpTheme = new CellAddress(14, 0);
         this.etpTarget = new CellAddress(17, 0);
         this.etpDistanceBeginDate = new CellAddress(20,2);

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
-import ru.curriculum.domain.printing.file.IFile;
-import ru.curriculum.service.printing.IPrintingService;
+import ru.curriculum.domain.printing.file.IDownloadableFile;
+import ru.curriculum.service.printing.IReportService;
 
 import java.io.UnsupportedEncodingException;
 
@@ -17,11 +17,11 @@ import java.io.UnsupportedEncodingException;
 @RequestMapping(path = Routes.etp)
 public class ETPFileDownloadController {
     @Autowired
-    private IPrintingService printingService;
+    private IReportService reportService;
 
     @RequestMapping(value = "/{etpId}/download", method = RequestMethod.GET)
     public HttpEntity<byte[]> downloadFile(@PathVariable("etpId") Integer etpId) throws UnsupportedEncodingException {
-        IFile file = printingService.getExcelFileWillBePrinted(etpId);
+        IDownloadableFile file = reportService.createWorkbookForEtp(etpId);
         return new ResponseFile(file).toHttpEntity();
     }
 }
