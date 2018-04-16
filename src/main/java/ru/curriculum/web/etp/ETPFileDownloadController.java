@@ -10,6 +10,8 @@ import ru.curriculum.application.route.Routes;
 import ru.curriculum.domain.printing.file.IFile;
 import ru.curriculum.service.printing.IPrintingService;
 
+import java.io.UnsupportedEncodingException;
+
 
 @Controller
 @RequestMapping(path = Routes.etp)
@@ -18,7 +20,7 @@ public class ETPFileDownloadController {
     private IPrintingService printingService;
 
     @RequestMapping(value = "/{etpId}/download", method = RequestMethod.GET)
-    public HttpEntity<byte[]> downloadFile(@PathVariable("etpId") Integer etpId) {
+    public HttpEntity<byte[]> downloadFile(@PathVariable("etpId") Integer etpId) throws UnsupportedEncodingException {
         IFile file = printingService.getExcelFileWillBePrinted(etpId);
         return new ResponseFile(file).toHttpEntity();
     }

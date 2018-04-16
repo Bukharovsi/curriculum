@@ -28,7 +28,7 @@ public class ExcelFile implements IFile {
 
     @Override
     public String name() {
-        return "While it will be test".concat(format());
+        return "УТП".concat(format());
     }
 
     @Override
