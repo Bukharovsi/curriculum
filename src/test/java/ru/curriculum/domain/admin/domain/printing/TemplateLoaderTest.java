@@ -1,7 +1,10 @@
 package ru.curriculum.domain.admin.domain.printing;
 
+import org.apache.poi.hssf.util.CellReference;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.curriculum.domain.admin.domain.etp.ETPMock;
 import ru.curriculum.domain.printing.file.template.IWorkbookGenerator;
@@ -14,7 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
+@Ignore
 public class TemplateLoaderTest {
     private ETPMock etpMock;
 
@@ -34,6 +37,12 @@ public class TemplateLoaderTest {
         );
 
         Workbook workbook = etpTemplate.createWorkbook();
+
+        Row row = workbook.getSheet("УТП").getRow(0);
+        row.getCell(0);
+
+        String cell = CellReference.convertNumToColString(1);
+
         FileOutputStream fos = new FileOutputStream(new File("etp.xls"));
         workbook.write(fos);
         workbook.close();

@@ -1,7 +1,11 @@
 package ru.curriculum.domain.printing.file.template.specific;
 
+import org.apache.poi.hssf.util.CellReference;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import ru.curriculum.domain.printing.file.excel.SUM;
 import ru.curriculum.service.etp.dto.*;
 
 public class EtpPivotFiller extends EtpFiller {
@@ -15,27 +19,79 @@ public class EtpPivotFiller extends EtpFiller {
         this.tsr = tsr;
     }
 
-
     public void fillPivotCell(Sheet sheet, Integer eaModuleLastRow) {
-        fillTableCellPlansValue(sheet.getRow(eaModuleLastRow), etp.getEmaModuleTotalRow());
-        fillTableCellPlansValue(sheet.getRow(eaModuleLastRow + 1), etp.getOmaModuleTotalRow());
-        fillTableCellPlansValue(sheet.getRow(eaModuleLastRow + 2), etp.getEaModuleTotalRow());
-        fillTableCellPlansValue(sheet.getRow(eaModuleLastRow + 3), etp.getEtpTotalRow());
+        fill(sheet.getRow(eaModuleLastRow), getBeginRowForEmaModule(), getEndRowForEmaModule());
+        fill(sheet.getRow(eaModuleLastRow + 1), getBeginRowForOmaModule(), getEndRowForOmaModule());
+        fill(sheet.getRow(eaModuleLastRow + 2), getBeginRowForEaModule(), getEndRowForEaModule());
+        fill(sheet.getRow(eaModuleLastRow + 3), getBeginRowForTotalRow(), getEndRowForTotalRow());
     }
 
+    private void fill(Row row, Integer beginRow, Integer endRow) {
+        createCellFormula(row, beginRow, endRow, tsr.lectures());
+        createCellFormula(row, beginRow, endRow, tsr.practices());
+        createCellFormula(row, beginRow, endRow, tsr.independentWorks());
+        createCellFormula(row, beginRow, endRow, tsr.consultations());
+        createCellFormula(row, beginRow, endRow, tsr.peerReviews());
+        createCellFormula(row, beginRow, endRow, tsr.credits());
+        createCellFormula(row, beginRow, endRow, tsr.others());
+        createCellFormula(row, beginRow, endRow, tsr.standard());
+        createCellFormula(row, beginRow, endRow, tsr.totalHours());
+        createCellFormula(row, beginRow, endRow, tsr.lernerCount());
+        createCellFormula(row, beginRow, endRow, tsr.groupCount());
+        createCellFormula(row, beginRow, endRow, tsr.conditionalPagesCount());
+    }
 
-    private void fillTableCellPlansValue(Row row, TotalRow totalRow) {
-        createTableCell(row, tsr.lectures(), totalRow.getLectures());
-        createTableCell(row, tsr.practices(), totalRow.getPractices());
-        createTableCell(row, tsr.independentWorks(), totalRow.getIndependentWorks());
-        createTableCell(row, tsr.consultations(), totalRow.getConsultations());
-        createTableCell(row, tsr.peerReviews(), totalRow.getPeerReviews());
-        createTableCell(row, tsr.credits(), totalRow.getCredits());
-        createTableCell(row, tsr.others(), totalRow.getOthers());
-        createTableCell(row, tsr.standard(), totalRow.getStandard());
-        createTableCell(row, tsr.totalHours(), totalRow.getTotalHours());
-        createTableCell(row, tsr.lernerCount(), totalRow.getLernerCount());
-        createTableCell(row, tsr.groupCount(), totalRow.getGroupCount());
-        createTableCell(row, tsr.conditionalPagesCount(), totalRow.getConditionalPagesCount());
+    private void createCellFormula(Row row, Integer beginRow, Integer endRow, Integer column) {
+        Cell cell = row.createCell(column);
+        cell.setCellType(CellType.FORMULA);
+        cell.setCellStyle(defaultCellStyle.tableCellStyle());
+        String formula = new SUM(createCellAddress(beginRow, column), createCellAddress(endRow, column)).getFormula();
+        cell.setCellFormula(formula);
+    }
+
+    private String createCellAddress(Integer row, Integer column) {
+        return CellReference.convertNumToColString(column).concat(row.toString());
+    }
+
+    private Integer getBeginRowForEmaModule() {
+        return tsr.tableStartRow();
+    }
+
+    private Integer getEndRowForEmaModule() {
+        return getBeginRowForEmaModule() + etp.getEmaModules().size();
+    }
+
+    private Integer getBeginRowForOmaModule() {
+        return getEndRowForEmaModule() + 1;
+    }
+
+    private Integer getEndRowForOmaModule() {
+        return getBeginRowForOmaModule() + etp.getOmaModules().size();
+    }
+
+    private Integer getBeginRowForEaModule() {
+        return getEndRowForOmaModule() + 1;
+    }
+
+    private Integer getEndRowForEaModule() {
+        int rowTotalCount = 0;
+        for (EAModuleDto module : etp.getEaModules()) {
+            for (EASectionDto section : module.getSections()) {
+                // number of topics and section theme
+                rowTotalCount += section.getTopics().size() + 1;
+            }
+            // module theme
+            rowTotalCount += 1;
+        }
+
+        return getBeginRowForEaModule() + rowTotalCount;
+    }
+
+    private Integer getBeginRowForTotalRow() {
+        return getEndRowForEaModule() + 1;
+    }
+
+    private Integer getEndRowForTotalRow() {
+        return getBeginRowForTotalRow() + 2;
     }
 }

@@ -1,7 +1,8 @@
-package ru.curriculum.domain.printing.file;
+package ru.curriculum.domain.printing.file.excel;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import ru.curriculum.domain.printing.exception.CreationFileException;
+import ru.curriculum.domain.printing.file.IDownloadableFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
