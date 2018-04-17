@@ -56,7 +56,7 @@ public class TimetableRepositoryTest extends IntegrationBoot {
         Set<Lesson> lessons = new HashSet<Lesson>(){
             { add(
                     Lesson.builder()
-                            .time("14:00-16:10")
+                            .time("14:40-16:10")
                             .theme("Тема занятия")
                             .lernerCount(20)
                             .lessonForm(lessonFormRepository.findAll().iterator().next())
@@ -66,7 +66,7 @@ public class TimetableRepositoryTest extends IntegrationBoot {
             ); }
             { add(
                     Lesson.builder()
-                            .time("14:00-16:10")
+                            .time("14:40-16:10")
                             .theme("Тема занятия")
                             .lernerCount(20)
                             .lessonForm(lessonFormRepository.findAll().iterator().next())
