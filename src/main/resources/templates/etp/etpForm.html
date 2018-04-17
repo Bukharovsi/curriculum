@@ -37,6 +37,9 @@
                 <a th:if="${null != etp.timetableId}" class="btn btn-default" th:href="@{/timetable/edit/{id}(id=${etp.timetableId})}" >
                     Перейти к расписанию
                 </a>
+                <a th:if="${null != etp.id}" class="btn btn-default" th:href="@{/etp/{id}/download(id=${etp.id})}">
+                    Excel
+                </a>
             </div>
         </div>
 
