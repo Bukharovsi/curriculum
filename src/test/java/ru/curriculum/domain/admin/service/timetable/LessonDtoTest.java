@@ -26,7 +26,6 @@ public class LessonDtoTest {
 
         Assert.assertEquals(lesson.id(), dto.getId());
         Assert.assertEquals(lesson.theme(), dto.getTheme());
-        Assert.assertEquals(lesson.date(), dto.getDate());
         Assert.assertEquals(lesson.time(), dto.getTime());
         Assert.assertEquals(lesson.address(), dto.getAddress());
         Assert.assertEquals(lesson.audienceNumber(), dto.getAudienceNumber());
@@ -46,11 +45,9 @@ public class LessonDtoTest {
                             .theme("Theme")
                             .address("Street 204")
                             .audienceNumber(10)
-                            .date(LocalDate.now())
-                            .time("14:00-16:10")
+                            .time("14:40-16:10")
                             .lessonForm(new LessonForm())
                             .teacher(new Teacher())
-                            .timetable(new Timetable())
                             .build()
                 },
                 {
@@ -59,11 +56,9 @@ public class LessonDtoTest {
                                 .theme("Theme")
                                 .address("Street 204")
                                 .audienceNumber(10)
-                                .date(LocalDate.parse("2018-01-01"))
-                                .time("14:00 - 16:10")
+                                .time("14:40 - 16:10")
                                 .lessonForm(new LessonForm("Пракика"))
                                 .teacher(new TeacherHelper().getTeacher())
-                                .timetable(new Timetable())
                                 .build()
                 },
                 {

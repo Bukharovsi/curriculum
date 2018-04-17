@@ -8,6 +8,7 @@ import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.domain.etp.repository.ETPRepository;
 import ru.curriculum.domain.timetable.entity.Lesson;
+import ru.curriculum.domain.timetable.entity.SchoolDay;
 import ru.curriculum.domain.timetable.repository.LessonFormRepository;
 import ru.curriculum.domain.timetable.entity.Timetable;
 import ru.curriculum.domain.timetable.repository.TimetableRepository;
@@ -45,7 +46,7 @@ public class TimetableRepositoryTest extends IntegrationBoot {
         assertEquals(timetable.beginDate(), savedTimetable.beginDate());
         assertEquals(timetable.endDate(), savedTimetable.endDate());
         assertEquals(timetable.theme(), savedTimetable.theme());
-        assertEquals(timetable.lessons().size(), savedTimetable.lessons().size());
+        assertEquals(timetable.schoolDays().size(), savedTimetable.schoolDays().size());
     }
 
     private Timetable getTimetable() {
@@ -55,8 +56,7 @@ public class TimetableRepositoryTest extends IntegrationBoot {
         Set<Lesson> lessons = new HashSet<Lesson>(){
             { add(
                     Lesson.builder()
-                            .date(LocalDate.now())
-                            .time("14:00-16:10")
+                            .time("14:40-16:10")
                             .theme("Тема занятия")
                             .lernerCount(20)
                             .lessonForm(lessonFormRepository.findAll().iterator().next())
@@ -66,8 +66,7 @@ public class TimetableRepositoryTest extends IntegrationBoot {
             ); }
             { add(
                     Lesson.builder()
-                            .date(LocalDate.now())
-                            .time("14:00-16:10")
+                            .time("14:40-16:10")
                             .theme("Тема занятия")
                             .lernerCount(20)
                             .lessonForm(lessonFormRepository.findAll().iterator().next())
@@ -77,11 +76,14 @@ public class TimetableRepositoryTest extends IntegrationBoot {
             ); }
         };
 
+        Set<SchoolDay> schoolDays = new HashSet<>();
+
+
         Timetable timetable = new Timetable(
-                LocalDateTime.now(),
-                LocalDateTime.now().plusDays(1),
+                LocalDate.now(),
+                LocalDate.now().plusDays(1),
                 "Тема обучения",
-                lessons,
+                schoolDays,
                 savedEtp
         );
 

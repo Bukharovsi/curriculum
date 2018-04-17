@@ -5,7 +5,7 @@
     <title>Расписание</title>
 </head>
 <body>
-<!--/*@thymesVar id="timetable" type="ru.curriculum.service.timetable.dto.TimetableDto"*/-->
+<!--/*@thymesVar id="timetable" type="ru.curriculum.service.timetable.dto.WeeklyTimetableDto"*/-->
 
 <div layout:fragment="content">
     <div class="row">
@@ -23,6 +23,14 @@
           th:method="put"
     >
         <div class="form-group">
+            <div class="col-sm-12">
+                <input class="btn btn-default" type="submit" th:value="Сохранить"/>
+                <a class="btn btn-default" th:href="@{/etp/edit/{id}(id=${timetable.createFromEtpId})}">Перейти к УТП</a>
+                <a class="btn btn-default" th:href="@{/timetable}">Назад</a>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div th:include="fragments/formValidationError"></div>
             <div>
                 <input th:hidden="true" type="number" th:field="*{id}"/>
@@ -32,63 +40,90 @@
                 <label class="control-label col-sm-2">Дата</label>
                 <div class="col-sm-8">
                     <div class="form-inline">
-                        <input class="form-control" th:type="date" th:field="*{beginDate}" disabled>
-                        <input class="form-control" th:type="date" th:field="*{endDate}" disabled>
+                        <input th:type="number" th:field="*{createFromEtpId}" hidden>
+                        <input class="form-control" th:type="date" th:field="*{beginDate}" readonly>
+                        <input class="form-control" th:type="date" th:field="*{endDate}" readonly>
                     </div>
                 </div>
             </div>
 
             &nbsp;
             <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th style="text-align: center; vertical-align: middle; width: 6%">Дата проведения занятий</th>
-                    <th style="text-align: center; vertical-align: middle; width: 10%">Время проведения занятий</th>
-                    <th style="text-align: center; vertical-align: middle; width: 2%">Кол-во слушателей</th>
-                    <th style="text-align: center; vertical-align: middle; width: 10%">Форма занятий</th>
-                    <th style="text-align: center; vertical-align: middle; width: 30%">Тема занятий</th>
-                    <th style="text-align: center; vertical-align: middle; width: 20%">ФИО преподователя, должность</th>
-                    <th style="text-align: center; vertical-align: middle; width: 20%">Место проведения</th>
-                    <th style="text-align: center; vertical-align: middle; width: 4%">Номер аудитории</th>
-                </tr>
-                </thead>
                 <tbody>
-                <!--/*@thymesVar id="stateProgram" type="ru.curriculum.service.timetable.dto.LessonDto"*/-->
-                <div th:each="lesson, lessonStat : *{lessons}">
-                    <input th:field="*{lessons[__${lessonStat.index}__].id}" hidden>
-                    <tr style="text-align: center">
-                        <td><input th:field="*{lessons[__${lessonStat.index}__].date}" type="date" class="form-control"></td>
-
-                        <td><select th:field="*{lessons[__${lessonStat.index}__].time}" class="form-control">
-                            <option value=""></option>
-                            <option th:each="time : ${lesson.timesList}"
-                                    th:value="${time}"
-                                    th:text="${time}"
-                            ></option></select>
-                        </td>
-
-                        <td th:text="${lesson.lernerCount}"></td>
-                        <td><select th:field="*{lessons[__${lessonStat.index}__].lessonFormId}" class="form-control">
-                            <option value=""></option>
-                            <option th:each="lessonForm : ${lessonFormList}"
-                                    th:value="${lessonForm.code}"
-                                    th:text="${lessonForm.name}"
-                            ></option></select>
-                        </td>
-                        <td th:text="${lesson.theme}"></td>
-                        <td th:text="${lesson.teacher != null ? lesson.teacher.teacherDegreeInfo() : ''}"></td>
-                        <td>
-                            <input th:field="*{lessons[__${lessonStat.index}__].address}" class="form-control" type="text" list="addresses"/>
-                            <datalist  id="addresses">
-                                    <option value=""></option>
-                                    <option th:each="address : ${addressList}"
-                                            th:value="${address}"
-                                            th:text="${address}"
-                                    ></option>
-                            </datalist>
-                        </td>
-                        <td><input th:field="*{lessons[__${lessonStat.index}__].audienceNumber}" type="number" class="form-control"></td>
+                <!--/*@thymesVar id="stateProgram" type="ru.curriculum.service.timetable.dto.WeekDto"*/-->
+                <div th:each="week, weekStat: *{weeks}">
+                    <tr style="background-color: burlywood">
+                        <th style="text-align: center; vertical-align: middle; width: 10%">Время проведения занятий</th>
+                        <th style="text-align: center; vertical-align: middle; width: 30%">Тема занятий</th>
+                        <th style="text-align: center; vertical-align: middle; width: 4%">Кол-во слушателей</th>
+                        <th style="text-align: center; vertical-align: middle; width: 20%">ФИО преподователя, должность</th>
+                        <th style="text-align: center; vertical-align: middle; width: 10%">Форма занятий</th>
+                        <th style="text-align: center; vertical-align: middle; width: 20%">Место проведения</th>
+                        <th style="text-align: center; vertical-align: middle; width: 4%">Номер аудитории</th>
                     </tr>
+                    <!--/*@thymesVar id="stateProgram" type="ru.curriculum.service.timetable.dto.SchoolDayDto"*/-->
+                    <div th:each="day, dayStat : *{weeks[__${weekStat.index}__].schoolDays}">
+                        <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].id}" hidden>
+                        <tr>
+                            <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].date}" hidden>
+                            <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].dayOfWeek}" hidden>
+                            <td th:text="${day.dayOfWeek + ', ' + day.date}" colspan="7" style="background-color: lemonchiffon"></td>
+                        </tr>
+
+                        <!--/*@thymesVar id="stateProgram" type="ru.curriculum.service.timetable.dto.LessonDto"*/-->
+                        <div th:each="lesson, lessonStat : *{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons}">
+                        <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].id}" hidden>
+                        <tr style="text-align: center">
+                            <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].time}" class="form-control">
+                                <option value=""></option>
+                                <option th:each="time : ${lesson.timesList}"
+                                        th:value="${time}"
+                                        th:text="${time}"
+                                ></option></select>
+                            </td>
+
+                            <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].theme}" class="form-control">
+                                <option value=""></option>
+                                <option th:each="theme : ${lessonThemes}"
+                                        th:value="${theme}"
+                                        th:text="${theme}"
+                                ></option></select>
+                            </td>
+
+                            <td><input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].lernerCount}" type="number" class="form-control"></td>
+
+                            <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].teacherId}" class="form-control">
+                                <option value=""></option>
+                                <option th:each="teacher : ${teachers}"
+                                        th:value="${teacher.id}"
+                                        th:text="${teacher.fullName}">
+                                </option>
+                            </select></td>
+
+                            <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].lessonFormId}" class="form-control">
+                                <option value=""></option>
+                                <option th:each="lessonForm : ${lessonFormList}"
+                                        th:value="${lessonForm.code}"
+                                        th:text="${lessonForm.name}"
+                                ></option></select>
+                            </td>
+
+                            <td>
+                                <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].address}" class="form-control" type="text" list="addresses"/>
+                                <datalist  id="addresses">
+                                        <option value=""></option>
+                                        <option th:each="address : ${addressList}"
+                                                th:value="${address}"
+                                                th:text="${address}"
+                                        ></option>
+                                </datalist>
+                            </td>
+                            <td><input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].audienceNumber}" type="number" class="form-control"></td>
+                        </tr>
+                    </div>
+
+                    </div>
+
                 </div>
                 </tbody>
             </table>

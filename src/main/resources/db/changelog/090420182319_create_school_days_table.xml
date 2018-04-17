@@ -1,0 +1,43 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="090420182319" author="Vlad">
+
+        <!--MODIFY "timetable" TABLE-->
+        <modifyDataType tableName="timetable" columnName="begin_date" newDataType="DATE"></modifyDataType>
+        <modifyDataType tableName="timetable" columnName="end_date" newDataType="DATE"></modifyDataType>
+
+        <!--CREATE "school_days TABLE-->
+        <createTable tableName="school_day">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="date" type="DATE"></column>
+            <column name="timetable_id" type="int">
+                <constraints foreignKeyName="school_day_timetable_fk" references="timetable(id)"/>
+            </column>
+        </createTable>
+
+        <!--MODIFY "lesson" TABLE-->
+        <delete tableName="lesson"></delete>
+
+        <dropForeignKeyConstraint baseTableName="lesson" constraintName="lesson_timetable_fk"/>
+
+        <addColumn tableName="lesson">
+            <column name="school_day_id" type="int"></column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="lesson"
+                                 baseColumnNames="school_day_id"
+                                 constraintName="lesson_school_day_fk"
+                                 referencedTableName="school_day"
+                                 referencedColumnNames="id"
+        />
+
+        <dropColumn tableName="lesson" columnName="timetable_id"></dropColumn>
+        <dropColumn tableName="lesson" columnName="date"></dropColumn>
+
+    </changeSet>
+</databaseChangeLog>
