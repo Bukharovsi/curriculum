@@ -31,7 +31,6 @@ public class EtpHeaderFiller {
         fillHeaderCell(sheet, tsr.etpFinancingSource(), etp.getFinancingSource().getDisplayName());
     }
 
-
     private void fillHeaderCell(Sheet sheet, CellAddress address, String value) {
         Cell cell = sheet
             .getRow(address.rowNumber())

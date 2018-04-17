@@ -5,7 +5,7 @@ import org.apache.poi.ss.usermodel.Row;
 
 abstract class EtpFiller {
 
-    private final DefaultCellStyle defaultCellStyle;
+    protected final DefaultCellStyle defaultCellStyle;
 
     public EtpFiller(DefaultCellStyle defaultCellStyle) {
         this.defaultCellStyle = defaultCellStyle;
@@ -26,6 +26,12 @@ abstract class EtpFiller {
     protected void createTableCell(Row row, Integer cellNumber, Integer value) {
         Cell cell = row.createCell(cellNumber);
         cell.setCellStyle(defaultCellStyle.tableCellStyle());
+        cell.setCellValue(value);
+    }
+
+    protected void createSubmoduleTableCell(Row row, Integer cellNumber, String value) {
+        Cell cell = row.createCell(cellNumber);
+        cell.setCellStyle(defaultCellStyle.mergedCellStyle());
         cell.setCellValue(value);
     }
 }

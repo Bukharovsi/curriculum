@@ -6,17 +6,14 @@ import ru.curriculum.domain.printing.file.template.IWorkbookGenerator;
 import ru.curriculum.domain.printing.file.template.WorkbookGenerator;
 import ru.curriculum.service.etp.dto.*;
 
-import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 public class EtpWorkbookGenerator implements IWorkbookGenerator {
-    private final WorkbookGenerator template;
+    private final IWorkbookGenerator template;
     private final ETPDto etp;
     private final ETPTemplateCoordinates tsr;
-    private DefaultCellStyle defaultCellStyle;
 
-
-    public EtpWorkbookGenerator(WorkbookGenerator template, ETPTemplateCoordinates tsr, ETPDto etp) {
+    public EtpWorkbookGenerator(IWorkbookGenerator template, ETPTemplateCoordinates tsr, ETPDto etp) {
         this.template = template;
         this.etp = etp;
         this.tsr = tsr;
@@ -25,13 +22,13 @@ public class EtpWorkbookGenerator implements IWorkbookGenerator {
     @Override
     public Workbook createWorkbook() {
         Workbook workbook = template.createWorkbook();
-        this.defaultCellStyle = new DefaultCellStyle(workbook);
+        DefaultCellStyle cellStyle = new DefaultCellStyle(workbook);
 
-        EtpHeaderFiller headerFiller = new EtpHeaderFiller(etp, tsr, defaultCellStyle);
-        EtpEmaFiller etpEmaFiller = new EtpEmaFiller(etp, tsr, defaultCellStyle);
-        EtpOmaFiller etpOmaFiller = new EtpOmaFiller(etp, tsr, defaultCellStyle);
-        EtpEaFiller etpEaFiller = new EtpEaFiller(etp, tsr, defaultCellStyle);
-        EtpPivotFiller etpPivotFiller = new EtpPivotFiller(etp, tsr, defaultCellStyle);
+        EtpHeaderFiller headerFiller = new EtpHeaderFiller(etp, tsr, cellStyle);
+        EtpEmaFiller etpEmaFiller = new EtpEmaFiller(etp, tsr, cellStyle);
+        EtpOmaFiller etpOmaFiller = new EtpOmaFiller(etp, tsr, cellStyle);
+        EtpEaFiller etpEaFiller = new EtpEaFiller(etp, tsr, cellStyle);
+        EtpPivotFiller etpPivotFiller = new EtpPivotFiller(etp, tsr, cellStyle);
 
         Sheet sheet = workbook.getSheet("УТП");
         Objects.requireNonNull(sheet, "Can`t find \"УТП\" sheet in workbook");
@@ -44,10 +41,4 @@ public class EtpWorkbookGenerator implements IWorkbookGenerator {
 
         return workbook;
     }
-
-
-
-
-
-
 }

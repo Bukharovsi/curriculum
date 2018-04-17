@@ -1,6 +1,5 @@
 package ru.curriculum.domain.printing.file.template.specific;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import ru.curriculum.service.etp.dto.EMAModuleDto;
@@ -31,8 +30,8 @@ public class EtpEmaFiller extends EtpFiller {
 
         for (EMAModuleDto module : etp.getEmaModules()) {
             Row row = sheet.getRow(index);
-            row.createCell(0).setCellValue(String.format("%s.", moduleIndex));
-            row.createCell(tsr.topicName()).setCellValue(module.getName());
+            createSubmoduleTableCell(row, 0, String.format("%s.", moduleIndex));
+            createSubmoduleTableCell(row, tsr.topicName(), module.getName());
             fillTableCellPlansValue(row, module.getPlan());
             moduleIndex++;
             index++;
