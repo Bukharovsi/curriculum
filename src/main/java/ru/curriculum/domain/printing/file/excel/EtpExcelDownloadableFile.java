@@ -5,12 +5,13 @@ import ru.curriculum.domain.printing.exception.CreationFileException;
 import ru.curriculum.domain.printing.file.IDownloadableFile;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.util.Objects;
 
-public class ExcelDownloadableFile implements IDownloadableFile {
+public class EtpExcelDownloadableFile implements IDownloadableFile {
     private Workbook workbook;
 
-    public ExcelDownloadableFile(Workbook workbook) {
+    public EtpExcelDownloadableFile(Workbook workbook) {
+        Objects.requireNonNull(workbook, "Workbook cannot be null");
         this.workbook = workbook;
     }
 
@@ -19,9 +20,9 @@ public class ExcelDownloadableFile implements IDownloadableFile {
         ByteArrayOutputStream content = new ByteArrayOutputStream();
         try {
             workbook.write(content);
-        } catch (IOException e) {
+        } catch (Exception e) {
             // TODO: надо закрывать workbook в случае ошибки, но он кидает тоже ексепнш
-            throw new CreationFileException("Can't create excel file");
+            throw new CreationFileException(e);
         }
 
         return content;

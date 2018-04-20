@@ -7,13 +7,14 @@ import ru.curriculum.domain.printing.exception.CreationTemplateException;
 import ru.curriculum.domain.printing.file.template.loader.ITemplateLoader;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.Objects;
 
 
 public class WorkbookGenerator implements IWorkbookGenerator {
     private ITemplateLoader loader;
 
     public WorkbookGenerator(ITemplateLoader loader) {
+        Objects.requireNonNull(loader, "ITemplateLoader shouldn't be a null");
         this.loader = loader;
     }
 
@@ -24,7 +25,7 @@ public class WorkbookGenerator implements IWorkbookGenerator {
             //TODO: надо правильно закрыть наверное в finally
             workbook = WorkbookFactory.create(file);
             return workbook;
-        } catch (IOException | InvalidFormatException e) {
+        } catch (Exception e) {
             throw new CreationTemplateException(e);
         }
     }

@@ -1,4 +1,4 @@
-package ru.curriculum.domain.printing.file.template.specific;
+package ru.curriculum.domain.printing.file.excel;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;

@@ -4,7 +4,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.printing.file.IDownloadableFile;
-import ru.curriculum.domain.printing.file.excel.ExcelDownloadableFile;
+import ru.curriculum.domain.printing.file.excel.EtpExcelDownloadableFile;
 import ru.curriculum.domain.printing.file.template.specific.EtpWorkbookGenerator;
 import ru.curriculum.domain.printing.file.template.WorkbookGenerator;
 import ru.curriculum.domain.printing.file.template.loader.TemplateLoaderFromResource;
@@ -25,6 +25,6 @@ public class EtpReportGenerationService implements IReportService {
                 etpCrudService.get(etpId)
         ).createWorkbook();
 
-        return new ExcelDownloadableFile(workbook);
+        return new EtpExcelDownloadableFile(workbook);
     }
 }
