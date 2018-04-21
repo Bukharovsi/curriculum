@@ -2,6 +2,7 @@ package ru.curriculum.domain.printing.file.template.specific;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import ru.curriculum.domain.printing.file.excel.DefaultCellStyle;
 
 abstract class EtpFiller {
 

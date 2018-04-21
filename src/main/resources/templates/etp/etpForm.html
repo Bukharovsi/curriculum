@@ -26,7 +26,6 @@
         <div class="form-group">
             <div class="col-sm-12">
                 <input class="btn btn-default" type="submit" th:value="Сохранить"/>
-                <a class="btn btn-default" th:href="@{/etp}">Назад</a>
                 <button th:if="${null != etp.id && null == etp.timetableId}"
                         class="btn btn-default"
                         type="submit"
@@ -37,7 +36,12 @@
                 <a th:if="${null != etp.timetableId}" class="btn btn-default" th:href="@{/timetable/edit/{id}(id=${etp.timetableId})}" >
                     Перейти к расписанию
                 </a>
-                <a th:if="${null != etp.id}" class="btn btn-default" th:href="@{/etp/{id}/download(id=${etp.id})}">
+                <a class="btn btn-default" th:href="@{/etp}">Назад</a>
+                <a th:if="${null != etp.id}"
+                   th:href="@{/etp/{id}/download(id=${etp.id})}"
+                   style="background-color: #7dcc4d"
+                   class="btn btn-default pull-right"
+                >
                     Excel
                 </a>
             </div>

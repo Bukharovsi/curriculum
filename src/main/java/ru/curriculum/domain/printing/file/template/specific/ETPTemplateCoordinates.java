@@ -2,6 +2,7 @@ package ru.curriculum.domain.printing.file.template.specific;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import ru.curriculum.domain.printing.file.excel.CellAddress;
 
 
 @Getter()
@@ -23,6 +24,10 @@ public class ETPTemplateCoordinates {
     private final Integer conditionalPagesCount = 14;
     private final Integer teacher = 15;
 
+    /**
+     * Offset after "Education Activity module" in excel file template
+     * for that we can add pivot row
+     */
     private final Integer offset = 15;
 
     private CellAddress etpTheme;

@@ -2,7 +2,7 @@ package ru.curriculum.domain.etp.entity.financingSource;
 
 public enum  FinancingSource {
     BUDGET("Бюджет"),
-    NOT_BUDGET("Вне Бюджет");
+    NOT_BUDGET("Внебюджет");
 
 
     private final String displayName;

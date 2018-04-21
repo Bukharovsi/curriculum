@@ -2,6 +2,8 @@ package ru.curriculum.domain.printing.file.template.specific;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
+import ru.curriculum.domain.printing.file.excel.CellAddress;
+import ru.curriculum.domain.printing.file.excel.DefaultCellStyle;
 import ru.curriculum.service.etp.dto.ETPDto;
 
 import java.text.SimpleDateFormat;

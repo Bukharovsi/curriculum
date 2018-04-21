@@ -1,4 +1,4 @@
-package ru.curriculum.web.etp;
+package ru.curriculum.web.downloadableFile;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

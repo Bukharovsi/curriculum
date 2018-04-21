@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.domain.printing.file.IDownloadableFile;
 import ru.curriculum.service.printing.IReportService;
+import ru.curriculum.web.downloadableFile.ResponseFile;
 
 import java.io.UnsupportedEncodingException;
 

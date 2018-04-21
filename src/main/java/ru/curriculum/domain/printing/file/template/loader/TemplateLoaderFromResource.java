@@ -7,10 +7,9 @@ import org.springframework.core.io.ClassPathResource;
 import ru.curriculum.domain.printing.exception.TemplateLoadingException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
+
 
 public class TemplateLoaderFromResource implements ITemplateLoader {
     private static final String TEMPLATE_PATH = "/printing/";
@@ -27,7 +26,11 @@ public class TemplateLoaderFromResource implements ITemplateLoader {
         try {
             File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), ".xls");
             tempFile.deleteOnExit();
-            FileUtils.copyInputStreamToFile(getClass().getResourceAsStream(getFullPathToTemplate()), tempFile);
+            InputStream fileAsInputStream = getClass().getResourceAsStream(getFullPathToTemplate());
+            if(null == fileAsInputStream) {
+                throw new TemplateLoadingException(templateFileName, "File not found ");
+            }
+            FileUtils.copyInputStreamToFile(fileAsInputStream, tempFile);
             return tempFile;
         } catch (IOException e) {
             log.warn("Can`t load template %s from jar by path %s, I will try to load from filesystem",

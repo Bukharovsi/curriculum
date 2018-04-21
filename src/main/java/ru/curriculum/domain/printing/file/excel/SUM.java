@@ -7,6 +7,9 @@ public class SUM implements ExcelFormula {
     private final String cellAddressEnd;
 
     public SUM(String cellAddressStart, String cellAddressEnd) {
+        if(null == cellAddressEnd || null == cellAddressStart) {
+            throw new NullPointerException("Cell address cannot be null");
+        }
         this.cellAddressStart = cellAddressStart;
         this.cellAddressEnd = cellAddressEnd;
     }
