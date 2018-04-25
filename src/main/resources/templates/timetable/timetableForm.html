@@ -67,19 +67,15 @@
                         <tr>
                             <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].date}" hidden>
                             <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].dayOfWeek}" hidden>
-                            <td th:text="${day.dayOfWeek + ', ' + day.date}" colspan="7" style="background-color: lemonchiffon"></td>
+                            <td th:text="${day.dayOfWeek + ', ' + #temporals.format(day.date, 'dd/MM/yyyy')}" colspan="7" style="background-color: lemonchiffon"></td>
                         </tr>
 
                         <!--/*@thymesVar id="stateProgram" type="ru.curriculum.service.timetable.dto.LessonDto"*/-->
                         <div th:each="lesson, lessonStat : *{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons}">
                         <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].id}" hidden>
                         <tr style="text-align: center">
-                            <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].time}" class="form-control">
-                                <option value=""></option>
-                                <option th:each="time : ${lesson.timesList}"
-                                        th:value="${time}"
-                                        th:text="${time}"
-                                ></option></select>
+                            <td>
+                                <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].time}" class="form-control" readonly>
                             </td>
 
                             <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].theme}" class="form-control">
