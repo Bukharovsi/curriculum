@@ -14,8 +14,7 @@ import ru.curriculum.service.teacher.TeacherCRUDService;
 import ru.curriculum.service.timetable.AddressFindingService;
 import ru.curriculum.service.timetable.LessonFormFindingService;
 import ru.curriculum.service.timetable.TimetableCRUDService;
-import ru.curriculum.service.timetable.TimetableFindingService;
-import ru.curriculum.service.timetable.dto.TimetableDto;
+import ru.curriculum.service.timetable.TimetableSearchService;
 import ru.curriculum.service.timetable.dto.WeeklyTimetableDto;
 
 import javax.validation.Valid;
@@ -35,7 +34,7 @@ public class TimetableController {
     @Autowired
     private AddressFindingService addressFindingService;
     @Autowired
-    private TimetableFindingService timetableFindingService;
+    private TimetableSearchService timetableSearchService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getList(Model model) {
@@ -49,7 +48,7 @@ public class TimetableController {
         model.addAttribute("timetable", timetableDto);
         model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
         model.addAttribute("addressList", addressFindingService.getAddresses());
-        model.addAttribute("lessonThemes", timetableFindingService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
+        model.addAttribute("lessonThemes", timetableSearchService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
         model.addAttribute("teachers", teacherCRUDService.findAll());
         return TIMETABLE_FORM;
     }
@@ -63,7 +62,7 @@ public class TimetableController {
         if(bindingResult.hasErrors()) {
             model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
             model.addAttribute("addressList", addressFindingService.getAddresses());
-            model.addAttribute("lessonThemes", timetableFindingService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
+            model.addAttribute("lessonThemes", timetableSearchService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
             model.addAttribute("teachers", teacherCRUDService.findAll());
             return TIMETABLE_FORM;
         }

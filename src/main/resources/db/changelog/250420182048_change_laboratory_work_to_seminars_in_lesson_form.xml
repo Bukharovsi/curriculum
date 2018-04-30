@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="250420182048" author="Vlad">
+
+        <insert tableName="lesson_form">
+            <column name="code" value="seminars"></column>
+            <column name="name" value="Семинары и круглы столы"></column>
+        </insert>
+
+        <update tableName="lesson">
+            <column name="lesson_form_code" type="varchar(20)" value="seminars"/>
+            <where>lesson_form_code = 'laboratory_work'</where>
+        </update>
+
+        <delete tableName="lesson_form">
+            <where>code = 'laboratory_work'</where>
+        </delete>
+
+    </changeSet>
+</databaseChangeLog>
