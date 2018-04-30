@@ -3,6 +3,7 @@
       layout:decorate="~{fragments/layout}">
 <head>
     <title>Расписание</title>
+    <script type="text/javascript" th:src="@{/js/timetable/themeSelection.js}"></script>
 </head>
 <body>
 <!--/*@thymesVar id="timetable" type="ru.curriculum.service.timetable.dto.WeeklyTimetableDto"*/-->
@@ -78,7 +79,10 @@
                                 <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].time}" class="form-control" readonly>
                             </td>
 
-                            <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].theme}" class="form-control">
+                            <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].theme}"
+                                        onchange="themeSelection(this)"
+                                        class="form-control"
+                            >
                                 <option value=""></option>
                                 <option th:each="theme : ${lessonThemes}"
                                         th:value="${theme}"
