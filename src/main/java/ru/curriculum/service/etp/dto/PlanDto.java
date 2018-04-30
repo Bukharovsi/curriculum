@@ -17,6 +17,7 @@ public class PlanDto {
     private Double credits = 0.0;
     private Double others = 0.0;
     private Double standard = 0.0;
+    private Double hoursPerOneListener = 0.0;
     private Double totalHours = 0.0;
     private Integer lernerCount = 0;
     private Integer groupCount = 0;
@@ -36,6 +37,7 @@ public class PlanDto {
         this.credits = plan.credits();
         this.others = plan.others();
         this.standard = plan.standard();
+        this.hoursPerOneListener = plan.hoursPerOneListener();
         this.totalHours = plan.totalHours();
         this.lernerCount = plan.lernerCount();
         this.groupCount = plan.groupCount();

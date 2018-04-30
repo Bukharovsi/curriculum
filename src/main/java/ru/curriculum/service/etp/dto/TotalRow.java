@@ -16,6 +16,7 @@ public class TotalRow {
     private Double credits = 0.0;
     private Double others = 0.0;
     private Double standard = 0.0;
+    private Double hoursPerOneListener = 0.0;
     private Double totalHours = 0.0;
     private Integer lernerCount = 0;
     private Integer groupCount = 0;

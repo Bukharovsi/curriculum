@@ -21,6 +21,7 @@ public class PlanTest {
         assertEquals(new Double(0.0), plan.consultations());
         assertEquals(new Double(0.0), plan.others());
         assertEquals(new Double(0.0), plan.standard());
+        assertEquals(new Double(0.0), plan.hoursPerOneListener());
         assertEquals(new Double(0.0), plan.totalHours());
         assertEquals(new Integer(0), plan.lernerCount());
         assertEquals(new Integer(0), plan.groupCount());

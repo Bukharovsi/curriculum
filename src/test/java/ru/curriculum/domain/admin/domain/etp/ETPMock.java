@@ -62,6 +62,7 @@ public class ETPMock {
                 new Integer(1),
                 new Integer(2),
                 new Integer(3),
+                1.6,
                 3.0,
                 getTeacher()
         );

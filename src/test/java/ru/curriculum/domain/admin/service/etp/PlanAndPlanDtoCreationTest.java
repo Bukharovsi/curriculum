@@ -61,6 +61,7 @@ public class PlanAndPlanDtoCreationTest {
         assertEquals(dto.getStandard(), plan.standard());
         assertEquals(dto.getTotalHours(), plan.totalHours());
         assertEquals(dto.getLernerCount(), plan.lernerCount());
+        assertEquals(dto.getHoursPerOneListener(), plan.hoursPerOneListener());
         assertEquals(dto.getGroupCount(), plan.groupCount());
         assertEquals(dto.getConditionalPagesCount(), plan.conditionalPagesCount());
         assertNotNull(plan.teacher());
