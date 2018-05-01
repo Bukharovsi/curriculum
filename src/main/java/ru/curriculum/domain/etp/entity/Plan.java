@@ -32,6 +32,7 @@ public class Plan {
     private Integer lernerCount = 0;
     private Integer groupCount = 0;
     private Integer conditionalPagesCount = 0;
+    private Double hoursPerOneListener = 0.0;
     private Double totalHours = 0.0;
     @Setter
     @ManyToOne(targetEntity = Teacher.class)

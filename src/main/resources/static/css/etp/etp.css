@@ -7,7 +7,7 @@
     width: 4%;
 }
 
-#pages_count, #total_hours, #lerner_count, #group_count {
+#pages_count, #total_hours, #lerner_count, #group_count, #hours_per_one_listener {
     width: 4%;
     font-size: 12px;
 }
@@ -33,3 +33,7 @@
     padding-left: 0%;
     padding-right: 0%;
 }
+
+/*[name~=standard] {*/
+    /*background-color: #ccfdfd;*/
+/*}*/

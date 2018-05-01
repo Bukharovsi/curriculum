@@ -15,7 +15,7 @@ public class EtpPivotFiller extends EtpFiller {
     private final ETPTemplateCoordinates tsr;
 
     public EtpPivotFiller(ETPDto etp, ETPTemplateCoordinates tsr, DefaultCellStyle defaultCellStyle) {
-        super(defaultCellStyle);
+        super(defaultCellStyle, tsr);
         this.etp = etp;
         this.tsr = tsr;
     }
@@ -34,6 +34,7 @@ public class EtpPivotFiller extends EtpFiller {
         createCellFormula(row, beginRow, endRow, tsr.consultations());
         createCellFormula(row, beginRow, endRow, tsr.peerReviews());
         createCellFormula(row, beginRow, endRow, tsr.credits());
+        createCellFormula(row, beginRow, endRow, tsr.hoursPerOneListener());
         createCellFormula(row, beginRow, endRow, tsr.others());
         createCellFormula(row, beginRow, endRow, tsr.standard());
         createCellFormula(row, beginRow, endRow, tsr.totalHours());

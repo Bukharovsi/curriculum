@@ -27,6 +27,7 @@ public class PlanFactory {
                 .credits(planDto.getCredits())
                 .others(planDto.getOthers())
                 .standard(planDto.getStandard())
+                .hoursPerOneListener(planDto.getHoursPerOneListener())
                 .totalHours(planDto.getTotalHours())
                 .lernerCount(planDto.getLernerCount())
                 .groupCount(planDto.getGroupCount())

@@ -14,7 +14,7 @@ public class EtpEaFiller extends EtpFiller {
     private final DefaultCellStyle defaultCellStyle;
 
     public EtpEaFiller(ETPDto etp, ETPTemplateCoordinates tsr, DefaultCellStyle defaultCellStyle) {
-        super(defaultCellStyle);
+        super(defaultCellStyle, tsr);
         this.etp = etp;
         this.tsr = tsr;
         this.defaultCellStyle = defaultCellStyle;
@@ -84,11 +84,12 @@ public class EtpEaFiller extends EtpFiller {
         createTableCell(row, tsr.peerReviews(), plan.getPeerReviews());
         createTableCell(row, tsr.credits(), plan.getCredits());
         createTableCell(row, tsr.others(), plan.getOthers());
+        createHoursPerOneListenerFormula(row);
         createTableCell(row, tsr.standard(), plan.getStandard());
-        createTableCell(row, tsr.totalHours(), plan.getTotalHours());
         createTableCell(row, tsr.lernerCount(), plan.getLernerCount());
         createTableCell(row, tsr.groupCount(), plan.getGroupCount());
         createTableCell(row, tsr.conditionalPagesCount(), plan.getConditionalPagesCount());
+        createTotalHoursCell(row);
         String teacher = plan.hasTeacher() ? plan.getTeacher().getFullName() : "";
         createTableCell(row, tsr.teacher(), teacher);
     }

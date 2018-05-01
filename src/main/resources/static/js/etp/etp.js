@@ -1,7 +1,7 @@
 $(function () {
     $("input[id*='plan']").each(function (index, element) {
         element.onchange = calcTotal
-        isIntegerField(element.name) ? getIntegerMask().mask(element) : getFloatMask().mask(element)
+        attachMask(element)
     })
     updateTotalAfterRenderPage()
 })
@@ -20,6 +20,12 @@ function updateTotalAfterRenderPage() {
     })
 }
 
+function attachMask(element) {
+    if (!isReadonlyField(element.name)) {
+        isIntegerField(element.name) ? getIntegerMask().mask(element) : getFloatMask().mask(element)
+    }
+}
+
 /**
  * @returns {*} Mask for input which value is float
  */
@@ -27,7 +33,7 @@ function getFloatMask() {
     return new Inputmask('decimal', {
         digits: 2,
         allowMinus: false,
-        placeholder: '0.0'
+        placeholder: "0.0",
     })
 }
 
@@ -37,7 +43,7 @@ function getFloatMask() {
 function getIntegerMask() {
     return new Inputmask('integer', {
         allowMinus: false,
-        placeholder: '0'
+        placeholder: "0"
     })
 }
 
@@ -48,13 +54,13 @@ function getIntegerMask() {
  * @param e Example element id: omaModules0.plan.lectures, eaModules0.sections0.topics0.plan.lectures
  */
 function calcTotal(e) {
+
     var idAsArray = e.target.id.split('.')
     var rowNameTemplate = idAsArray.slice(0, idAsArray.length -1).join('.')
     var columnNameTemplate = idAsArray[idAsArray.length - 1]
 
-    if(!isIntegerField(columnNameTemplate)) {
-        calcTotalRow(rowNameTemplate)
-    }
+    calcTotalHours(rowNameTemplate)
+    calcHourPerOneLerner(rowNameTemplate)
     calcTotalColumn(columnNameTemplate)
 }
 
@@ -64,20 +70,39 @@ function calcTotal(e) {
  *
  * @param rowName
  */
-function calcTotalRow(rowName) {
+function calcTotalHours(rowName) {
     var rowSelector = getSearchSelectorTemplate(rowName)
 
     var total = 0.0
     $(rowSelector).each(function (i, e) {
-        e.name
-        if(!isIntegerField(e.name) && !/totalHours/.test(e.name)) {
+        if(isMainHoursField(e.name) && e.value) {
             total += parseFloat(e.value)
         }
     })
 
-    $("input[id='" + rowName + ".totalHours']").val(total)
+    var standard = $("input[id='" + rowName + ".standard']").val()
+    var lernerCount = $("input[id='" + rowName + ".lernerCount']").val()
+    var totalHours = total + standard * lernerCount
+
+    $("input[id='" + rowName + ".totalHours']").val(totalHours)
 
     calcTotalColumn('totalHours')
+}
+
+function calcHourPerOneLerner(rowName) {
+    var rowSelector = getSearchSelectorTemplate(rowName)
+
+    var hoursPerOneLerner = 0.0
+
+    $(rowSelector).each(function (i, e) {
+        if(isMainHoursField(e.name) && e.value) {
+            hoursPerOneLerner += parseFloat(e.value)
+        }
+    })
+
+    $("input[id='" + rowName + ".hoursPerOneListener']").val(hoursPerOneLerner)
+
+    calcTotalColumn('hoursPerOneListener')
 }
 
 /**
@@ -93,6 +118,10 @@ function calcTotalColumn(colName) {
         eaTotal = 0.0
 
     $(colSelector).each(function (i, e) {
+        if(!e.value) {
+            return
+        }
+
         var emaModule = /emaModules/,
             omaModule = /omaModules/,
             eaModule = /eaModules/
@@ -105,11 +134,10 @@ function calcTotalColumn(colName) {
                 omaTotal += parseFloat(e.value)
                 break
             case eaModule.test(e.name):
-                if(e.value) {
-                    eaTotal += parseFloat(e.value)
-                }
+                eaTotal += parseFloat(e.value)
                 break
-            default: break
+            default:
+                break
         }
     })
 
@@ -117,6 +145,25 @@ function calcTotalColumn(colName) {
     $('#omaModuleTotalRow\\.' + colName).val(omaTotal)
     $('#eaModuleTotalRow\\.' + colName).val(eaTotal)
     $('#etpTotalRow\\.' + colName).val((emaTotal + omaTotal + eaTotal))
+}
+
+function isTotalHoursDependOnField(cellName) {
+    return isMainHoursField(cellName) || /standard/.test(cellName) || /lernerCount/.test(cellName)
+}
+
+function isMainHoursField(cellName) {
+    return/lectures/.test(cellName) ||
+        /practices/.test(cellName) ||
+        /independentWorks/.test(cellName) ||
+        /consultations/.test(cellName) ||
+        /peerReviews/.test(cellName) ||
+        /credits/.test(cellName) ||
+        /others/.test(cellName)
+}
+
+function isReadonlyField(cellName) {
+    return/hoursPerOneListener/.test(cellName) ||
+        /totalHours/.test(cellName)
 }
 
 /**
