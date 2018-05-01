@@ -15,7 +15,7 @@ public class EtpPivotFiller extends EtpFiller {
     private final ETPTemplateCoordinates tsr;
 
     public EtpPivotFiller(ETPDto etp, ETPTemplateCoordinates tsr, DefaultCellStyle defaultCellStyle) {
-        super(defaultCellStyle);
+        super(defaultCellStyle, tsr);
         this.etp = etp;
         this.tsr = tsr;
     }

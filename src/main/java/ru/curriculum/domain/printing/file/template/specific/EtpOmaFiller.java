@@ -14,7 +14,7 @@ public class EtpOmaFiller extends EtpFiller {
     private final DefaultCellStyle defaultCellStyle;
 
     public EtpOmaFiller(ETPDto etp, ETPTemplateCoordinates tsr, DefaultCellStyle defaultCellStyle) {
-        super(defaultCellStyle);
+        super(defaultCellStyle, tsr);
         this.etp = etp;
         this.tsr = tsr;
         this.defaultCellStyle = defaultCellStyle;
@@ -50,10 +50,10 @@ public class EtpOmaFiller extends EtpFiller {
         createTableCell(row, tsr.consultations(), plan.getConsultations());
         createTableCell(row, tsr.peerReviews(), plan.getPeerReviews());
         createTableCell(row, tsr.credits(), plan.getCredits());
-        createTableCell(row, tsr.hoursPerOneListener(), plan.getHoursPerOneListener());
         createTableCell(row, tsr.others(), plan.getOthers());
+        createHoursPerOneListenerFormula(row);
         createTableCell(row, tsr.standard(), plan.getStandard());
-        createTableCell(row, tsr.totalHours(), plan.getTotalHours());
+        createTotalHoursCell(row);
         createTableCell(row, tsr.lernerCount(), plan.getLernerCount());
         createTableCell(row, tsr.groupCount(), plan.getGroupCount());
         createTableCell(row, tsr.conditionalPagesCount(), plan.getConditionalPagesCount());

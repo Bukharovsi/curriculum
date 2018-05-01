@@ -19,9 +19,9 @@ public class ETPTemplateCoordinates {
     private final Integer others = 8;
     private final Integer hoursPerOneListener = 9;
     private final Integer standard = 10;
-    private final Integer conditionalPagesCount = 11;
-    private final Integer lernerCount = 12;
-    private final Integer groupCount = 13;
+    private final Integer lernerCount = 11;
+    private final Integer groupCount = 12;
+    private final Integer conditionalPagesCount = 13;
     private final Integer totalHours = 14;
     private final Integer teacher = 15;
 
