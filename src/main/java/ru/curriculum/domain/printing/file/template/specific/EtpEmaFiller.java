@@ -1,8 +1,12 @@
 package ru.curriculum.domain.printing.file.template.specific;
 
+import org.apache.poi.hssf.util.CellReference;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import ru.curriculum.domain.printing.file.excel.DefaultCellStyle;
+import ru.curriculum.domain.printing.file.excel.SUM;
 import ru.curriculum.service.etp.dto.EMAModuleDto;
 import ru.curriculum.service.etp.dto.ETPDto;
 import ru.curriculum.service.etp.dto.PlanDto;
@@ -49,15 +53,14 @@ public class EtpEmaFiller extends EtpFiller {
         createTableCell(row, tsr.consultations(), plan.getConsultations());
         createTableCell(row, tsr.peerReviews(), plan.getPeerReviews());
         createTableCell(row, tsr.credits(), plan.getCredits());
+        createTableCell(row, tsr.hoursPerOneListener(), plan.getHoursPerOneListener());
         createTableCell(row, tsr.others(), plan.getOthers());
         createTableCell(row, tsr.standard(), plan.getStandard());
-        createTableCell(row, tsr.totalHours(), plan.getTotalHours());
         createTableCell(row, tsr.lernerCount(), plan.getLernerCount());
         createTableCell(row, tsr.groupCount(), plan.getGroupCount());
         createTableCell(row, tsr.conditionalPagesCount(), plan.getConditionalPagesCount());
+        createTableCell(row, tsr.totalHours(), plan.getTotalHours());
         String teacher = plan.hasTeacher() ? plan.getTeacher().getFullName() : "";
         createTableCell(row, tsr.teacher(), teacher);
     }
-
-
 }

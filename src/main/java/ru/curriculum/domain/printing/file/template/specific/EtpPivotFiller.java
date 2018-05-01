@@ -34,6 +34,7 @@ public class EtpPivotFiller extends EtpFiller {
         createCellFormula(row, beginRow, endRow, tsr.consultations());
         createCellFormula(row, beginRow, endRow, tsr.peerReviews());
         createCellFormula(row, beginRow, endRow, tsr.credits());
+        createCellFormula(row, beginRow, endRow, tsr.hoursPerOneListener());
         createCellFormula(row, beginRow, endRow, tsr.others());
         createCellFormula(row, beginRow, endRow, tsr.standard());
         createCellFormula(row, beginRow, endRow, tsr.totalHours());

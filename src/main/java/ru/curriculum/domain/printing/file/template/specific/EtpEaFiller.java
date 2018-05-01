@@ -83,6 +83,7 @@ public class EtpEaFiller extends EtpFiller {
         createTableCell(row, tsr.consultations(), plan.getConsultations());
         createTableCell(row, tsr.peerReviews(), plan.getPeerReviews());
         createTableCell(row, tsr.credits(), plan.getCredits());
+        createTableCell(row, tsr.hoursPerOneListener(), plan.getHoursPerOneListener());
         createTableCell(row, tsr.others(), plan.getOthers());
         createTableCell(row, tsr.standard(), plan.getStandard());
         createTableCell(row, tsr.totalHours(), plan.getTotalHours());
