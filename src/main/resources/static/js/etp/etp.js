@@ -33,7 +33,7 @@ function getFloatMask() {
     return new Inputmask('decimal', {
         digits: 2,
         allowMinus: false,
-        placeholder: '0.0',
+        placeholder: "0.0",
     })
 }
 
@@ -43,7 +43,7 @@ function getFloatMask() {
 function getIntegerMask() {
     return new Inputmask('integer', {
         allowMinus: false,
-        placeholder: '0'
+        placeholder: "0"
     })
 }
 
@@ -55,22 +55,12 @@ function getIntegerMask() {
  */
 function calcTotal(e) {
 
-    if(!e.target.value) {
-        return
-    }
-
     var idAsArray = e.target.id.split('.')
     var rowNameTemplate = idAsArray.slice(0, idAsArray.length -1).join('.')
     var columnNameTemplate = idAsArray[idAsArray.length - 1]
 
-    calcTotalRow(rowNameTemplate)
+    calcTotalHours(rowNameTemplate)
     calcHourPerOneLerner(rowNameTemplate)
-
-    // if(!isIntegerField(columnNameTemplate)) {
-    //     calcTotalRow(rowNameTemplate)
-    //     calcHourPerOneLerner(rowNameTemplate)
-    // }
-
     calcTotalColumn(columnNameTemplate)
 }
 
@@ -80,12 +70,12 @@ function calcTotal(e) {
  *
  * @param rowName
  */
-function calcTotalRow(rowName) {
+function calcTotalHours(rowName) {
     var rowSelector = getSearchSelectorTemplate(rowName)
 
     var total = 0.0
     $(rowSelector).each(function (i, e) {
-        if(isMainHoursField(e.name)) {
+        if(isMainHoursField(e.name) && e.value) {
             total += parseFloat(e.value)
         }
     })
@@ -105,7 +95,7 @@ function calcHourPerOneLerner(rowName) {
     var hoursPerOneLerner = 0.0
 
     $(rowSelector).each(function (i, e) {
-        if(isMainHoursField(e.name)) {
+        if(isMainHoursField(e.name) && e.value) {
             hoursPerOneLerner += parseFloat(e.value)
         }
     })
@@ -123,13 +113,15 @@ function calcHourPerOneLerner(rowName) {
 function calcTotalColumn(colName) {
     var colSelector = getSearchSelectorTemplate(colName)
 
-    // console.log(colName)
-
     var emaTotal = 0.0,
         omaTotal = 0.0,
         eaTotal = 0.0
 
     $(colSelector).each(function (i, e) {
+        if(!e.value) {
+            return
+        }
+
         var emaModule = /emaModules/,
             omaModule = /omaModules/,
             eaModule = /eaModules/
@@ -142,11 +134,10 @@ function calcTotalColumn(colName) {
                 omaTotal += parseFloat(e.value)
                 break
             case eaModule.test(e.name):
-                if(e.value) {
-                    eaTotal += parseFloat(e.value)
-                }
+                eaTotal += parseFloat(e.value)
                 break
-            default: break
+            default:
+                break
         }
     })
 
