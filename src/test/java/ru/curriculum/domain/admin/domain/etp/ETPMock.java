@@ -41,7 +41,7 @@ public class ETPMock {
                 50,
                 70,
                 FinancingSource.BUDGET,
-                new VolumeInHours(),
+                getVolumeInHours(),
                 getEAModules(),
                 getEMAModules(),
                 getOMAModules()
@@ -68,6 +68,28 @@ public class ETPMock {
                 3.0,
                 getTeacher()
         );
+    }
+
+    public VolumeInHours getVolumeInHours() {
+        return VolumeInHours.builder()
+                .total(11.0)
+                .perOneListener(1.0)
+                .fullTimePerOneListener(2.0)
+                .distancePerOneListener(3.0)
+                .totalStudyWork(4.0)
+                .fullTimeStudyWork(5.0)
+                .distanceStudyWork(null)
+                .paymentStudyWork(7.0)
+                .fullTimePaymentForStudyWork(8.0)
+                .distancePaymentForStudyWork(9.0)
+                .emaPaymentForStudyWork(10.0)
+                .omaPaymentForStudyWork(11.0)
+                .inLoad(12.0)
+                .fullTimeInLoad(1.0)
+                .distanceInLoad(1.0)
+                .emaInLoad(12.0)
+                .omaInLoad(13.0)
+                .build();
     }
 
     public void applyNewPlanForModules(Plan plan) {
