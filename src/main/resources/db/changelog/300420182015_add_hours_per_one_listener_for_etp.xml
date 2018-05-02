@@ -7,7 +7,7 @@
     <changeSet id="300420182015" author="Vlad">
 
         <addColumn tableName="etp_plan">
-            <column name="hours_per_one_listener" type="double">
+            <column name="hours_per_one_listener" type="double" defaultValue="0.0">
                 <constraints nullable="false"></constraints>
             </column>
         </addColumn>
