@@ -38,4 +38,5 @@
     <include file="/db/changelog/090420182319_create_school_days_table.xml"/>
     <include file="/db/changelog/250420182048_change_laboratory_work_to_seminars_in_lesson_form.xml"/>
     <include file="/db/changelog/300420182015_add_hours_per_one_listener_for_etp.xml"/>
+    <include file="/db/changelog/020520181400_add_volume_in_hours_to_etp.xml"/>
 </databaseChangeLog>

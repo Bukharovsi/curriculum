@@ -1,0 +1,62 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="020520181400" author="Vlad">
+
+        <addColumn tableName="etp">
+            <column name="total_hours" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="hours_per_one_listener" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="full_time_hours_per_one_listener" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="distance_hours_per_one_listener" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="total_hours_study_work" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="full_time_hours_study_work" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="distance_hours_study_work" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="payment_hours_study_work" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="full_time_payment_hours_study_work" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="distance_payment_hours_study_work" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="ema_payment_hours_study_work" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="oma_payment_hours_study_work" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="in_load_hours" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="full_time_in_load_hours" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="distance_in_load_hours" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="ema_in_load_hours" type="double"></column>
+        </addColumn>
+        <addColumn tableName="etp">
+            <column name="oma_in_load_hours" type="double"></column>
+        </addColumn>
+
+    </changeSet>
+</databaseChangeLog>
