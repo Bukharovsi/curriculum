@@ -3,6 +3,7 @@ package ru.curriculum.domain.admin.domain.etp;
 import ru.curriculum.domain.directories.academicDegree.AcademicDegree;
 import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.domain.etp.entity.Plan;
+import ru.curriculum.domain.etp.entity.VolumeInHours;
 import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
 import ru.curriculum.domain.etp.entity.educationActivity.EASection;
 import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
@@ -40,6 +41,7 @@ public class ETPMock {
                 50,
                 70,
                 FinancingSource.BUDGET,
+                new VolumeInHours(),
                 getEAModules(),
                 getEMAModules(),
                 getOMAModules()

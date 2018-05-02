@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="input(label, name, value, isDisabled)">
+    <div class="form-group">
+        <label class="control-label col-sm-2" th:text="${label} + ':'"></label>
+        <div class="col-sm-6">
+            <input class="form-control"
+                   th:name="${name}"
+                   th:value="${value}"
+                   th:readonly="${isDisabled}"
+                   type="number"
+                   step="any"
+                   min="0"
+            />
+        </div>
+    </div>
+</div>
+</body>
+</html>

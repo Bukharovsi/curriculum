@@ -64,6 +64,7 @@ public class ETPControllerTest extends IntegrationWebBoot {
     public void getEptByStateProgramIdCreatedBy_mustReturnEtpForm() throws Exception {
         StateProgram program = stateProgramHelper.createAndSaveStateProgram();
         ETP etp = getETP();
+        etp.volumeInHours().distanceInLoad(11.0);
         etp.stateProgramId(program.id());
         etpRepository.save(etp);
 
