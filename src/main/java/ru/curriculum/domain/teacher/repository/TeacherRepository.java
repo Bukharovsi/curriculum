@@ -61,7 +61,9 @@ public interface TeacherRepository extends PagingAndSortingRepository<Teacher, I
             "  t.* " +
             "FROM school_day sd " +
             "  JOIN lesson l ON sd.id = l.school_day_id AND sd.timetable_id <> :timetable_id " +
-            "  JOIN teacher t ON l.teacher_id = t.id AND sd.date = :school_date ",
+            "  JOIN teacher t ON l.teacher_id = t.id AND sd.date = :school_date " +
+            "  JOIN timetable tt ON tt.id = sd.timetable_id " +
+            "  JOIN etp e ON e.id = tt.etp_id AND e.financing_source = 'NOT_BUDGET' ",
             nativeQuery = true
     )
     List<Teacher> findAllHavingLessonOnDate(
