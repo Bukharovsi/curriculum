@@ -8,6 +8,7 @@ import ru.curriculum.domain.timetable.entity.Lesson;
 import ru.curriculum.domain.timetable.entity.SchoolDay;
 import ru.curriculum.domain.timetable.entity.Timetable;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -63,6 +64,9 @@ public class TeachersNoNeedMoneySpecification extends CompositeSpecification<Tim
     }
 
     private String createErrorMessage(SchoolDay day, Teacher teacher) {
-        return String.format("%s преподователь %s работает больше 4 часов", day.date(), teacher.fullName());
+        return String.format("%s преподователь %s работает больше 4 часов",
+                day.date().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                teacher.fullName()
+        );
     }
 }

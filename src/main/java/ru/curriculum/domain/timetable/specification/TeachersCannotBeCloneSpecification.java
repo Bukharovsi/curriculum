@@ -5,6 +5,8 @@ import ru.curriculum.domain.timetable.entity.SchoolDay;
 import ru.curriculum.domain.timetable.entity.Timetable;
 import ru.curriculum.domain.timetable.repository.LessonRepository;
 
+import java.time.format.DateTimeFormatter;
+
 /**
  * In one moment teacher hasn't more than one lesson
  */
@@ -35,7 +37,7 @@ public class TeachersCannotBeCloneSpecification extends CompositeSpecification<T
 
     private String createErrorMessage(SchoolDay day, Lesson lesson) {
         return String.format("%s в %s преподователь %s одновременно ведет две пары",
-                day.date(),
+                day.date().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 lesson.time(),
                 lesson.teacher().fullName()
         );
