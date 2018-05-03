@@ -75,6 +75,8 @@ public class ETPDto {
 
     private Integer timetableId;
 
+    private VolumeInHoursDto volumeInHours;
+
     @Valid
     private List<EAModuleDto> eaModules;
 
@@ -101,6 +103,7 @@ public class ETPDto {
         this.emaModules = new ArrayList<>();
         this.omaModules = new ArrayList<>();
         this.comments = new ArrayList<>();
+        this.volumeInHours = new VolumeInHoursDto();
         this.emaModuleTotalRow = new TotalRow();
         this.omaModuleTotalRow = new TotalRow();
         this.eaModuleTotalRow = new TotalRow();
@@ -123,6 +126,7 @@ public class ETPDto {
         this.newStatus = etp.status();
         this.financingSource = etp.financingSource();
         this.timetableId = null != etp.timetable() ? etp.timetable().id() : null;
+        this.volumeInHours = null != etp.volumeInHours() ? new VolumeInHoursDto(etp.volumeInHours()) : null;
         this.eaModules =
                 etp.eaModules()
                         .stream()

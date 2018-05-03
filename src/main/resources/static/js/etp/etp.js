@@ -82,11 +82,13 @@ function calcTotalHours(rowName) {
 
     var standard = $("input[id='" + rowName + ".standard']").val()
     var lernerCount = $("input[id='" + rowName + ".lernerCount']").val()
-    var totalHours = total + standard * lernerCount
+    var totalHoursRow = total + standard * lernerCount
 
-    $("input[id='" + rowName + ".totalHours']").val(totalHours)
+    $("input[id='" + rowName + ".totalHours']").val(totalHoursRow)
 
-    calcTotalColumn('totalHours')
+    var totalHours = calcTotalColumn('totalHours')
+
+    $('input[name="volumeInHours.total"]').val(totalHours)
 }
 
 function calcHourPerOneLerner(rowName) {
@@ -141,14 +143,13 @@ function calcTotalColumn(colName) {
         }
     })
 
+    var total = emaTotal + omaTotal + eaTotal;
     $('#emaModuleTotalRow\\.' + colName).val(emaTotal)
     $('#omaModuleTotalRow\\.' + colName).val(omaTotal)
     $('#eaModuleTotalRow\\.' + colName).val(eaTotal)
-    $('#etpTotalRow\\.' + colName).val((emaTotal + omaTotal + eaTotal))
-}
+    $('#etpTotalRow\\.' + colName).val(total)
 
-function isTotalHoursDependOnField(cellName) {
-    return isMainHoursField(cellName) || /standard/.test(cellName) || /lernerCount/.test(cellName)
+    return total
 }
 
 function isMainHoursField(cellName) {

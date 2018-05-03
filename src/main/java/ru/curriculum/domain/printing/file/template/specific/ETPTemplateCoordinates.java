@@ -8,7 +8,7 @@ import ru.curriculum.domain.printing.file.excel.CellAddress;
 @Getter()
 @Accessors(fluent = true)
 public class ETPTemplateCoordinates {
-    private final Integer tableStartRow = 29;
+    private final Integer tableStartRow = 45;
     private final Integer topicName = 1;
     private final Integer lectures = 2;
     private final Integer practices = 3;
@@ -24,6 +24,24 @@ public class ETPTemplateCoordinates {
     private final Integer conditionalPagesCount = 13;
     private final Integer totalHours = 14;
     private final Integer teacher = 15;
+
+    private final CellAddress vihTotal;
+    private final CellAddress vihPerOneListener;
+    private final CellAddress vihFullTimePerOneListener;
+    private final CellAddress vihDistancePerOneListener;
+    private final CellAddress vihTotalStudyWork;
+    private final CellAddress vihFullTimeStudyWork;
+    private final CellAddress vihDistanceStudyWork;
+    private final CellAddress vihPaymentStudyWork;
+    private final CellAddress vihFullTimePaymentForStudyWork;
+    private final CellAddress vihDistancePaymentForStudyWork;
+    private final CellAddress vihEmaPaymentForStudyWork;
+    private final CellAddress vihOmaPaymentForStudyWork;
+    private final CellAddress vihInLoad;
+    private final CellAddress vihFullTimeInLoad;
+    private final CellAddress vihDistanceInLoad;
+    private final CellAddress vihEmaInLoad;
+    private final CellAddress vihOmaInLoad;
 
     /**
      * Offset after "Education Activity module" in excel file template
@@ -52,5 +70,22 @@ public class ETPTemplateCoordinates {
         this.etpLernerCount = new CellAddress(23, 2);
         this.etpFinancingSource = new CellAddress(24, 2);
 
+        this.vihTotal = new CellAddress(25, 2);
+        this.vihPerOneListener = new CellAddress(26, 2);
+        this.vihDistancePerOneListener = new CellAddress(27, 2);
+        this.vihFullTimePerOneListener = new CellAddress(28, 2);
+        this.vihTotalStudyWork = new CellAddress(29, 2);
+        this.vihDistanceStudyWork = new CellAddress(30, 2);
+        this.vihFullTimeStudyWork = new CellAddress(31, 2);
+        this.vihPaymentStudyWork = new CellAddress(32, 2);
+        this.vihDistancePaymentForStudyWork = new CellAddress(33, 2);
+        this.vihFullTimePaymentForStudyWork = new CellAddress(34, 2);
+        this.vihEmaPaymentForStudyWork = new CellAddress(35, 2);
+        this.vihOmaPaymentForStudyWork = new CellAddress(36, 2);
+        this.vihInLoad = new CellAddress(37, 2);
+        this.vihDistanceInLoad = new CellAddress(38, 2);
+        this.vihFullTimeInLoad = new CellAddress(39, 2);
+        this.vihEmaInLoad = new CellAddress(40, 2);
+        this.vihOmaInLoad = new CellAddress(41, 2);
     }
 }

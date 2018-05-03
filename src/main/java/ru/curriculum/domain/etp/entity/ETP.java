@@ -50,6 +50,8 @@ public class ETP {
     @Setter
     @Enumerated(EnumType.STRING)
     private FinancingSource financingSource;
+    @Embedded @Setter
+    private VolumeInHours volumeInHours;
     @Setter
     @Enumerated(EnumType.STRING)
     private ETPStatus status;
@@ -86,6 +88,7 @@ public class ETP {
         this.emaModules = new HashSet<>();
         this.omaModules = new HashSet<>();
         this.status = DRAFT;
+        this.volumeInHours = new VolumeInHours();
     }
 
     public ETP(
@@ -145,6 +148,7 @@ public class ETP {
             Integer lernerCount,
             Integer schoolDaysCount,
             FinancingSource financingSource,
+            VolumeInHours volumeInHours,
             Set<EAModule> eaModules,
             Set<EMAModule> emaModules,
             Set<OMAModule> omaModules
@@ -160,6 +164,7 @@ public class ETP {
         this.schoolDaysCount = schoolDaysCount;
         this.financingSource = financingSource;
         this.status = null != status ? status : DRAFT;
+        this.volumeInHours = volumeInHours;
         this.addEAModules(eaModules);
         this.addEMAModules(emaModules);
         this.addOMAModules(omaModules);

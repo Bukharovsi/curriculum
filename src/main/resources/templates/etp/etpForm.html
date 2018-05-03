@@ -123,6 +123,26 @@
             </div>
         </div>
 
+
+        <div th:include="etp/etpHeaderInput :: input('Всего часов', 'volumeInHours.total', ${etp.volumeInHours.total}, true)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Кол-во часов на 1 слушателя', 'volumeInHours.perOneListener', ${etp.volumeInHours.perOneListener}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Очное обучение', 'volumeInHours.fullTimePerOneListener', ${etp.volumeInHours.fullTimePerOneListener}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Дистанционное обучение', 'volumeInHours.distancePerOneListener', ${etp.volumeInHours.distancePerOneListener}, false)"></div>
+
+        <div th:include="etp/etpHeaderInput :: input('Всего часов на учебную работу', 'volumeInHours.totalStudyWork', ${etp.volumeInHours.totalStudyWork}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Дистанционное обучение', 'volumeInHours.distanceStudyWork', ${etp.volumeInHours.distanceStudyWork}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Очное обучение', 'volumeInHours.fullTimeStudyWork', ${etp.volumeInHours.fullTimeStudyWork}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Из них: на оплату', 'volumeInHours.paymentStudyWork', ${etp.volumeInHours.paymentStudyWork}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Дистанционное обучение', 'volumeInHours.distancePaymentForStudyWork', ${etp.volumeInHours.distancePaymentForStudyWork}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Очное обучение', 'volumeInHours.fullTimePaymentForStudyWork', ${etp.volumeInHours.fullTimePaymentForStudyWork}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Учебно-методическая работа', 'volumeInHours.emaPaymentForStudyWork', ${etp.volumeInHours.emaPaymentForStudyWork}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Организационно-методическая работа', 'volumeInHours.omaPaymentForStudyWork', ${etp.volumeInHours.omaPaymentForStudyWork}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('В нагрузку', 'volumeInHours.inLoad', ${etp.volumeInHours.inLoad}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Дистанционное обучение', 'volumeInHours.distanceInLoad', ${etp.volumeInHours.distanceInLoad}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Очное обучение', 'volumeInHours.fullTimeInLoad', ${etp.volumeInHours.fullTimeInLoad}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Учебно-методическая работа', 'volumeInHours.emaInLoad', ${etp.volumeInHours.emaInLoad}, false)"></div>
+        <div th:include="etp/etpHeaderInput :: input('Организационно-методическая работа', 'volumeInHours.omaInLoad', ${etp.volumeInHours.omaInLoad}, false)"></div>
+
         <div class="form-group">
             <label class="control-label col-sm-2">Источник финансирования</label>
             <div class="col-sm-8">

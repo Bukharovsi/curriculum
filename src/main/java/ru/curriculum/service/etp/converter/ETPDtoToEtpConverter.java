@@ -3,6 +3,7 @@ package ru.curriculum.service.etp.converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.curriculum.domain.etp.entity.ETP;
+import ru.curriculum.domain.etp.entity.VolumeInHours;
 import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
 import ru.curriculum.domain.etp.entity.educationActivity.EASection;
 import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
@@ -33,6 +34,7 @@ public class ETPDtoToEtpConverter {
                 etpDto.getLernerCount(),
                 etpDto.getSchoolDaysCount(),
                 etpDto.getFinancingSource(),
+                toVolumeInHours(etpDto.getVolumeInHours()),
                 createEAModules(etpDto.getEaModules()),
                 createEMAModules(etpDto.getEmaModules()),
                 createOMAModules(etpDto.getOmaModules())
@@ -40,6 +42,28 @@ public class ETPDtoToEtpConverter {
         etp.stateProgramId(etpDto.getStateProgramId());
 
         return etp;
+    }
+
+    private VolumeInHours toVolumeInHours(VolumeInHoursDto dto) {
+        return VolumeInHours.builder()
+                .total(dto.getTotal())
+                .perOneListener(dto.getPerOneListener())
+                .fullTimePerOneListener(dto.getFullTimePerOneListener())
+                .distancePerOneListener(dto.getDistancePerOneListener())
+                .totalStudyWork(dto.getTotalStudyWork())
+                .fullTimeStudyWork(dto.getFullTimeStudyWork())
+                .distanceStudyWork(dto.getDistanceStudyWork())
+                .paymentStudyWork(dto.getPaymentStudyWork())
+                .fullTimePaymentForStudyWork(dto.getFullTimePaymentForStudyWork())
+                .distancePaymentForStudyWork(dto.getDistancePaymentForStudyWork())
+                .emaPaymentForStudyWork(dto.getEmaPaymentForStudyWork())
+                .omaPaymentForStudyWork(dto.getOmaPaymentForStudyWork())
+                .inLoad(dto.getInLoad())
+                .fullTimeInLoad(dto.getFullTimeInLoad())
+                .distanceInLoad(dto.getDistanceInLoad())
+                .emaInLoad(dto.getEmaInLoad())
+                .omaInLoad(dto.getOmaInLoad())
+                .build();
     }
 
     private Set<EAModule> createEAModules(List<EAModuleDto> dtos) {
