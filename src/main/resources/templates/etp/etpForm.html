@@ -181,8 +181,10 @@
                             <input hidden="true" th:field="*{emaModules[__${rowModuleStat.index}__].id}">
                         </div>
                         <td>
-                            <input type="text" class="form-control" th:field="*{emaModules[__${rowModuleStat.index}__].name}" placeholder="Название темы">
+                            <input type="text" class="form-control" th:field="*{emaModules[__${rowModuleStat.index}__].name}"
+                                   th:style="${true == #fields.errors() ? 'border-color: red;' : ''}" placeholder="Название темы">
                         </td>
+
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.lectures}" type="text" class="form-control"></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.practices}" type="text" class="form-control"></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.independentWorks}" type="text" class="form-control"></td>
