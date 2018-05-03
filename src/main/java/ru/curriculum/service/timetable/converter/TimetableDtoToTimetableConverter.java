@@ -85,7 +85,7 @@ public class TimetableDtoToTimetableConverter {
                 timetableDto.getEndDate(),
                 timetableDto.getTheme(),
                 weeksToSchoolDays(timetableDto.getWeeks()),
-                etpRepository.findOne(timetableDto.getId())
+                etpRepository.findOne(timetableDto.getCreateFromEtpId())
         );
     }
 

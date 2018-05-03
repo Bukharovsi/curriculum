@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 import ru.curriculum.domain.timetable.entity.Timetable;
 import ru.curriculum.domain.timetable.entity.WeeklyTimetable;
 import ru.curriculum.domain.timetable.repository.TimetableRepository;
+import ru.curriculum.domain.timetable.specification.ISpecification;
+import ru.curriculum.domain.timetable.specification.ResultOfApplySpecification;
+import ru.curriculum.domain.timetable.specification.builder.ITimetableSpecificationBuilder;
 import ru.curriculum.service.etp.dto.ETPDto;
 import ru.curriculum.service.timetable.converter.TimetableDtoToTimetableConverter;
 import ru.curriculum.service.timetable.dto.WeeklyTimetableDto;
@@ -25,6 +28,8 @@ public class TimetableCRUDService {
     private CreationTimetableFromEtpService creationTimetableFromEtpService;
     @Autowired
     private TimetableDtoToTimetableConverter timetableDtoToTimetableConverter;
+    @Autowired
+    private ITimetableSpecificationBuilder specificationBuilder;
 
     public WeeklyTimetableDto get(Integer id) {
         Timetable timetable = timetableRepository.findOne(id);
@@ -54,11 +59,22 @@ public class TimetableCRUDService {
         timetableRepository.delete(id);
     }
 
-    public void update(WeeklyTimetableDto timetableDto) {
+    public WeeklyTimetableDto update(WeeklyTimetableDto timetableDto) {
         if(null == timetableRepository.findOne(timetableDto.getId())) {
             throw new EntityNotFoundException(String.format("Расписание с id=%s не найдено", timetableDto.getId()));
         }
+
         Timetable timetable = timetableDtoToTimetableConverter.convert(timetableDto);
-        timetableRepository.save(timetable);
+
+        ISpecification<Timetable> specification = specificationBuilder.buildSpecification();
+        ResultOfApplySpecification result = specification.isSatisfiedBy(timetable);
+        if(!result.isSuccess()) {
+            timetableDto.setErrors(result.getErrorMessages());
+            return timetableDto;
+        }
+
+        Timetable updateTimetable = timetableRepository.save(timetable);
+
+        return new WeeklyTimetableDto(new WeeklyTimetable(updateTimetable));
     }
 }
