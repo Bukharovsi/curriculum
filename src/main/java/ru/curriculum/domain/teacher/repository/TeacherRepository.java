@@ -5,6 +5,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import ru.curriculum.domain.teacher.entity.Teacher;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public interface TeacherRepository extends PagingAndSortingRepository<Teacher, Integer> {
 
     Teacher findByCuratorId(Integer curatorId);
@@ -52,4 +55,19 @@ public interface TeacherRepository extends PagingAndSortingRepository<Teacher, I
             nativeQuery = true
     )
     Teacher findTeacherDefineInEtpTheme(@Param("etp_id") Integer etpId, @Param("theme_name") String themeName);
+
+    @Query(value = "" +
+            "SELECT " +
+            "  t.* " +
+            "FROM school_day sd " +
+            "  JOIN lesson l ON sd.id = l.school_day_id AND sd.timetable_id <> :timetable_id " +
+            "  JOIN teacher t ON l.teacher_id = t.id AND sd.date = :school_date " +
+            "  JOIN timetable tt ON tt.id = sd.timetable_id " +
+            "  JOIN etp e ON e.id = tt.etp_id AND e.financing_source = 'NOT_BUDGET' ",
+            nativeQuery = true
+    )
+    List<Teacher> findAllHavingLessonOnDate(
+            @Param("timetable_id") Integer timetableId,
+            @Param("school_date") LocalDate date
+    );
 }

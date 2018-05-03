@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.timetable.entity.WeeklyTimetable;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -30,6 +31,8 @@ public class WeeklyTimetableDto {
 
     private List<WeekDto> weeks;
 
+    private List<String> errors;
+
     public WeeklyTimetableDto(WeeklyTimetable weeklyTimetable) {
         this.id = weeklyTimetable.timetable().id();
         this.beginDate = weeklyTimetable.timetable().beginDate();
@@ -37,5 +40,15 @@ public class WeeklyTimetableDto {
         this.theme = weeklyTimetable.timetable().theme();
         this.createFromEtpId = weeklyTimetable.timetable().createdFrom().id();
         this.weeks = weeklyTimetable.weeks().stream().map(WeekDto::new).collect(toList());
+        this.errors = new ArrayList<>();
+    }
+
+    public WeeklyTimetableDto(WeeklyTimetable weeklyTimetable, List<String> errors) {
+        this(weeklyTimetable);
+        this.errors = errors;
+    }
+
+    public boolean hasErrors() {
+        return 0 != errors.size();
     }
 }

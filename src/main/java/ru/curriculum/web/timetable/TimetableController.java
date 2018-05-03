@@ -46,10 +46,7 @@ public class TimetableController {
     public String getEditForm(@PathVariable("id") Integer id, Model model) {
         WeeklyTimetableDto timetableDto = timetableCRUDService.get(id);
         model.addAttribute("timetable", timetableDto);
-        model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
-        model.addAttribute("addressList", addressFindingService.getAddresses());
-        model.addAttribute("lessonThemes", timetableSearchService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
-        model.addAttribute("teachers", teacherCRUDService.findAll());
+        prepareViewModel(model, timetableDto);
         return TIMETABLE_FORM;
     }
 
@@ -60,13 +57,17 @@ public class TimetableController {
             Model model
     ) {
         if(bindingResult.hasErrors()) {
-            model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
-            model.addAttribute("addressList", addressFindingService.getAddresses());
-            model.addAttribute("lessonThemes", timetableSearchService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
-            model.addAttribute("teachers", teacherCRUDService.findAll());
+            prepareViewModel(model, timetableDto);
             return TIMETABLE_FORM;
         }
-        timetableCRUDService.update(timetableDto);
+
+        WeeklyTimetableDto updatedTimetable = timetableCRUDService.update(timetableDto);
+        if(updatedTimetable.hasErrors()) {
+            model.addAttribute("timetable", updatedTimetable);
+            prepareViewModel(model, updatedTimetable);
+            return TIMETABLE_FORM;
+        }
+
         return redirectTo(Routes.timetable);
     }
 
@@ -80,6 +81,7 @@ public class TimetableController {
             model.addAttribute("teachers", teacherCRUDService.findAll());
             return ETP_FORM;
         }
+
         WeeklyTimetableDto timetableDto = timetableCRUDService.makeTimetable(etpDto);
         return redirectTo(Routes.timetable + "/edit/" + timetableDto.getId());
     }
@@ -88,5 +90,12 @@ public class TimetableController {
     public String delete(@PathVariable("id") Integer id) {
         timetableCRUDService.delete(id);
         return redirectTo(Routes.timetable);
+    }
+
+    private void prepareViewModel(Model model, WeeklyTimetableDto timetableDto) {
+        model.addAttribute("lessonFormList", lessonFormFindingService.findAll());
+        model.addAttribute("addressList", addressFindingService.getAddresses());
+        model.addAttribute("lessonThemes", timetableSearchService.findLessonThemesAllByEtpId(timetableDto.getCreateFromEtpId()));
+        model.addAttribute("teachers", teacherCRUDService.findAll());
     }
 }

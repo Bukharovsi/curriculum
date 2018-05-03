@@ -126,7 +126,7 @@ public class ETPDto {
         this.newStatus = etp.status();
         this.financingSource = etp.financingSource();
         this.timetableId = null != etp.timetable() ? etp.timetable().id() : null;
-        this.volumeInHours = null != etp.volumeInHours() ? new VolumeInHoursDto(etp.volumeInHours()) : null;
+        this.volumeInHours = null != etp.volumeInHours() ? new VolumeInHoursDto(etp.volumeInHours()) : new VolumeInHoursDto();
         this.eaModules =
                 etp.eaModules()
                         .stream()

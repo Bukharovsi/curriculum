@@ -18,6 +18,7 @@
         </div>
     </div>
     <form class="form-horizontal"
+          id="timetableForm"
           th:action="@{/timetable/edit}"
           th:object="${timetable}"
           modelAttribute="timetable"
@@ -28,6 +29,15 @@
                 <input class="btn btn-default" type="submit" th:value="Сохранить"/>
                 <a class="btn btn-default" th:href="@{/etp/edit/{id}(id=${timetable.createFromEtpId})}">Перейти к УТП</a>
                 <a class="btn btn-default" th:href="@{/timetable}">Назад</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div th:if="${0 != timetable.errors.size()}"  class="alert alert-danger col-sm-offset-2 col-sm-8">
+                <div>Необходимо исправить следующие ошибки: </div>
+                <ul>
+                    <li th:each="err : ${timetable.errors}" th:text="${err}" />
+                </ul>
             </div>
         </div>
 
