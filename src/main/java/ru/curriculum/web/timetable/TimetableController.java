@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.thymeleaf.spring4.util.DetailedError;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.etp.dto.ETPDto;
 import ru.curriculum.service.teacher.TeacherCRUDService;
@@ -56,6 +58,11 @@ public class TimetableController {
             BindingResult bindingResult,
             Model model
     ) {
+        ObjectError error = new ObjectError("weeks[0].schoolDays[0].lessons[0].time", "Ошибка епта");
+        bindingResult.addError(error);
+
+        bindingResult.rejectValue("weeks[0].schoolDays[0].lessons[0].time", "test_error_code", "Ошибка епта бля есть");
+
         if(bindingResult.hasErrors()) {
             prepareViewModel(model, timetableDto);
             return TIMETABLE_FORM;

@@ -33,7 +33,7 @@
         </div>
 
         <div class="row">
-            <div th:if="${0 != timetable.errors.size()}"  class="alert alert-danger col-sm-offset-2 col-sm-8">
+            <div th:if="${null != timetable.errors && 0 != timetable.errors.size()}"  class="alert alert-danger col-sm-offset-2 col-sm-8">
                 <div>Необходимо исправить следующие ошибки: </div>
                 <ul>
                     <li th:each="err : ${timetable.errors}" th:text="${err}" />
@@ -87,6 +87,11 @@
                         <tr style="text-align: center">
                             <td>
                                 <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].time}" class="form-control" readonly>
+                                <div th:if="${#fields.hasErrors()}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].time}')}" th:text="${err}" />
+                                    </ul>
+                                </div>
                             </td>
 
                             <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].theme}"

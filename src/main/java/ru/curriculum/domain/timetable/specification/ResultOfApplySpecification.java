@@ -3,7 +3,7 @@ package ru.curriculum.domain.timetable.specification;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultOfApplySpecification {
+public class ResultOfApplySpecification implements IResultOfApplySpecification {
     private List<String> errorMessages;
 
     public ResultOfApplySpecification() {
