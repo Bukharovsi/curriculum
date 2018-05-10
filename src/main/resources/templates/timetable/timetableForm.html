@@ -41,8 +41,17 @@
             </div>
         </div>
 
+        <div class="row">
+            <div th:if="${null != timetable.warnings && 0 != timetable.warnings.size()}"  class="alert alert-warning col-sm-offset-2 col-sm-8">
+                <div>Стоит обратить внимание: </div>
+                <ul>
+                    <li th:each="war : ${timetable.warnings}" th:text="${war}" />
+                </ul>
+            </div>
+        </div>
+
         <div class="form-group">
-            <div th:include="fragments/formValidationError"></div>
+            <!--<div th:include="fragments/formValidationError"></div>-->
             <div>
                 <input th:hidden="true" type="number" th:field="*{id}"/>
             </div>

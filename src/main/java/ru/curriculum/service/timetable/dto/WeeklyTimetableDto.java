@@ -33,6 +33,8 @@ public class WeeklyTimetableDto {
 
     private List<String> errors;
 
+    private List<String> warnings;
+
     public WeeklyTimetableDto(WeeklyTimetable weeklyTimetable) {
         this.id = weeklyTimetable.timetable().id();
         this.beginDate = weeklyTimetable.timetable().beginDate();
@@ -41,6 +43,7 @@ public class WeeklyTimetableDto {
         this.createFromEtpId = weeklyTimetable.timetable().createdFrom().id();
         this.weeks = weeklyTimetable.weeks().stream().map(WeekDto::new).collect(toList());
         this.errors = new ArrayList<>();
+        this.warnings = new ArrayList<>();
     }
 
     public WeeklyTimetableDto(WeeklyTimetable weeklyTimetable, List<String> errors) {
@@ -50,5 +53,14 @@ public class WeeklyTimetableDto {
 
     public boolean hasErrors() {
         return 0 != errors.size();
+    }
+
+
+    public boolean hasWarnings() {
+        return 0 != warnings.size();
+    }
+
+    public boolean isValid() {
+        return !(hasErrors() || hasWarnings());
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import ru.curriculum.domain.timetable.entity.Lesson;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface LessonRepository extends CrudRepository<Lesson, Integer> {
 
@@ -14,7 +15,10 @@ public interface LessonRepository extends CrudRepository<Lesson, Integer> {
             "  l.* " +
             "FROM lesson l " +
             "  JOIN school_day sd ON l.school_day_id = sd.id " +
-            "WHERE sd.timetable_id <> :timetable_id AND sd.date = :d AND l.time = :t AND l.teacher_id = :teacher_id " +
+            "WHERE sd.timetable_id <> :timetable_id " +
+            "       AND sd.date = :d " +
+            "       AND l.time = :t " +
+            "       AND l.teacher_id = :teacher_id " +
             "LIMIT 1;",
             nativeQuery = true
     )
@@ -23,5 +27,22 @@ public interface LessonRepository extends CrudRepository<Lesson, Integer> {
             @Param("timetable_id") Integer timetableId,
             @Param("d") LocalDate date,
             @Param("t") String time
+    );
+
+    @Query(value = "" +
+            "SELECT " +
+            "  l.* " +
+            "FROM school_day sd " +
+            "  JOIN lesson l ON sd.id = l.school_day_id " +
+            "  JOIN teacher t ON l.teacher_id = t.id " +
+            "WHERE sd.timetable_id <> :timetable_id " +
+            "      AND sd.date = :d " +
+            "      AND l.address IS NOT NULL " +
+            "      AND l.address <> '';",
+            nativeQuery = true
+    )
+    List<Lesson> findLessonsOnDateWithTeacher(
+            @Param("timetable_id") Integer timetableId,
+            @Param("d") LocalDate date
     );
 }

@@ -69,7 +69,8 @@ public class TimetableCRUDService {
         ISpecification<Timetable> specification = specificationBuilder.buildSpecification();
         ResultOfApplySpecification result = specification.isSatisfiedBy(timetable);
         if(!result.isSuccess()) {
-            timetableDto.setErrors(result.getErrorMessages());
+            timetableDto.setErrors(result.getErrors());
+            timetableDto.setWarnings(result.getWarnings());
             return timetableDto;
         }
 

@@ -58,18 +58,13 @@ public class TimetableController {
             BindingResult bindingResult,
             Model model
     ) {
-        ObjectError error = new ObjectError("weeks[0].schoolDays[0].lessons[0].time", "Ошибка епта");
-        bindingResult.addError(error);
-
-        bindingResult.rejectValue("weeks[0].schoolDays[0].lessons[0].time", "test_error_code", "Ошибка епта бля есть");
-
         if(bindingResult.hasErrors()) {
             prepareViewModel(model, timetableDto);
             return TIMETABLE_FORM;
         }
 
         WeeklyTimetableDto updatedTimetable = timetableCRUDService.update(timetableDto);
-        if(updatedTimetable.hasErrors()) {
+        if(!updatedTimetable.isValid()) {
             model.addAttribute("timetable", updatedTimetable);
             prepareViewModel(model, updatedTimetable);
             return TIMETABLE_FORM;
