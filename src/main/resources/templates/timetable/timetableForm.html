@@ -26,7 +26,6 @@
     >
         <div class="form-group">
             <div class="col-sm-12">
-                <!--<input class="btn btn-default" type="submit" th:value="Сохранить"/>-->
                 <button class="btn btn-default" type="submit" th:value="false" name="ignoreWarning" th:formaction="@{/timetable/edit}">Сохранить</button>
                 <a class="btn btn-default" th:href="@{/etp/edit/{id}(id=${timetable.createFromEtpId})}">Перейти к УТП</a>
                 <a class="btn btn-default" th:href="@{/timetable}">Назад</a>
@@ -55,11 +54,6 @@
                 </div>
             </div>
         </div>
-        <!--<div class="row">-->
-            <!--<div class="col-sm-offset-2 col-sm-8">-->
-                <!--<button class="btn btn-success" type="submit" th:value="true" name="ignoreWarning" th:formaction="@{/timetable/edit}">Сохранить</button>-->
-            <!--</div>-->
-        <!--</div>-->
 
         <div class="form-group">
             <div>

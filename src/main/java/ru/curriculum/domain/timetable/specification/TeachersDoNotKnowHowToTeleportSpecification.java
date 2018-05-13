@@ -9,58 +9,47 @@ import ru.curriculum.service.timetable.dto.LessonDto;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-
+/**
+ * If break between two sequence lessons is short and these lessons in different buildings
+ */
 public class TeachersDoNotKnowHowToTeleportSpecification extends CompositeSpecification<Timetable> {
-
     private LessonRepository lessonRepository;
+    private List<String> timeList;
 
     public TeachersDoNotKnowHowToTeleportSpecification(LessonRepository lessonRepository) {
         this.lessonRepository = lessonRepository;
+        this.timeList = LessonDto.timesList.stream().sorted().collect(Collectors.toList());
     }
 
     @Override
     public ResultOfApplySpecification isSatisfiedBy(Timetable timetable) {
         ResultOfApplySpecification resultOfApplySpecification = new ResultOfApplySpecification();
         for (SchoolDay day : timetable.schoolDays()) {
-            List<Lesson> lessons = lessonRepository.findLessonsOnDateWithTeacher(timetable.id(), day.date());
-            lessons.addAll(day.lessons());
-//            checkIfTeachersHaveSequenceLessonsInDifferentBuildings(resultOfApplySpecification, lessons);
-            test(resultOfApplySpecification, lessons);
+            List<Lesson> currentTimetableLessons = excludeLessonsWithoutTeachersAndAddresses(day.lessons());
+            if(0 < currentTimetableLessons.size()) {
+                List<Lesson> anotherLessons = lessonRepository.findLessonsOnDateWithTeacher(timetable.id(), day.date());
+                currentTimetableLessons.addAll(anotherLessons);
+                checkIfTeachersHaveSequenceLessonsInDifferentBuildings(resultOfApplySpecification, currentTimetableLessons);
+            }
         }
         return resultOfApplySpecification;
+    }
+
+    private List<Lesson> excludeLessonsWithoutTeachersAndAddresses(Set<Lesson> lessons) {
+        return lessons.stream()
+                .filter(l -> null != l.teacher() && null != l.address() && !l.address().isEmpty())
+                .collect(Collectors.toList());
     }
 
     private void checkIfTeachersHaveSequenceLessonsInDifferentBuildings(
             ResultOfApplySpecification resultOfApplySpecification,
             List<Lesson> lessonsNeedToCheck
     ) {
-//        List<Lesson> lessons = sortByTimeAndTeacher(lessonsNeedToCheck);
-        List<Lesson> lessons = null;
-        for (int curLesson = 0; curLesson < lessons.size(); curLesson++) {
-            int nextLesson = curLesson + 1;
-            if(nextLesson < lessons.size()) {
-                if(oneTeacherInDifferentBuildings(lessons.get(curLesson), lessons.get(nextLesson))) {
-                    resultOfApplySpecification.addWarning(
-                            createWarningMessage(lessons.get(curLesson), lessons.get(nextLesson))
-                    );
-                }
-            }
-        }
-    }
-
-    //TODO: make pretty
-    private void test(
-            ResultOfApplySpecification resultOfApplySpecification,
-            List<Lesson> lessonsNeedToCheck
-    ) {
-        List<String> timeList = LessonDto.timesList;
-        Map<String, List<Lesson>> lessonMap = sortByTimeAndTeacher(lessonsNeedToCheck);
-        for (int i = 0; i < timeList.size(); i++) {
-            if(i + 1 >= timeList.size())  {
-                return;
-            }
+        Map<String, List<Lesson>> lessonMap = groupLessonsByTime(lessonsNeedToCheck);
+        for (int i = 0; i + 1 < timeList.size(); i++) {
             String curTime = timeList.get(i);
             String nextTime = timeList.get(i + 1);
             if(lessonMap.containsKey(curTime) && lessonMap.containsKey(nextTime)) {
@@ -77,23 +66,8 @@ public class TeachersDoNotKnowHowToTeleportSpecification extends CompositeSpecif
         }
     }
 
-    /**
-     * Exclude lessons without teacher and address then sort by time, teacher.id
-     */
-    private Map<String, List<Lesson>> sortByTimeAndTeacher(List<Lesson> lessons) {
-        Map<String, List<Lesson>> lesson = lessons
-                .stream()
-                .filter(l -> null != l.teacher() && null != l.address() && !l.address().isEmpty())
-                .collect(Collectors.groupingBy(Lesson::time));
-
-        return lesson;
-//        return lessons
-//                .stream()
-//                .filter(l -> null != l.teacher() && null != l.address() && !l.address().isEmpty())
-//                .sorted(Comparator
-//                        .comparing((Lesson l) -> l.time())
-//                        .thenComparing(l -> l.teacher().id()))
-//                .collect(toList());
+    private Map<String, List<Lesson>> groupLessonsByTime(List<Lesson> lessons) {
+        return lessons.stream().collect(Collectors.groupingBy(Lesson::time));
     }
 
     private boolean oneTeacherInDifferentBuildings(Lesson curLesson, Lesson nextLesson) {
