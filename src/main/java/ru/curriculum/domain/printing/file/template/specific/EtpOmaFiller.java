@@ -57,7 +57,7 @@ public class EtpOmaFiller extends EtpFiller {
         createTableCell(row, tsr.lernerCount(), plan.getLernerCount());
         createTableCell(row, tsr.groupCount(), plan.getGroupCount());
         createTableCell(row, tsr.conditionalPagesCount(), plan.getConditionalPagesCount());
-        String teacher = plan.hasTeacher() ? plan.getTeacher().getFullName() : "";
+        String teacher = joinTeachers(plan.getTeachers());
         createTableCell(row, tsr.teacher(), teacher);
     }
 }

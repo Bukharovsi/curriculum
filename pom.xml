@@ -176,9 +176,13 @@
             <artifactId>inputmask</artifactId>
             <version>3.3.11</version>
         </dependency>
+        <!--MULTI SELECT INPUT-->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>chosen</artifactId>
+            <version>1.8.3</version>
+        </dependency>
 
-
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

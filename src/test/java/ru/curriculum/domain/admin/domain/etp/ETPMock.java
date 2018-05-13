@@ -66,7 +66,7 @@ public class ETPMock {
                 new Integer(3),
                 1.6,
                 3.0,
-                getTeacher()
+                getTeachers()
         );
     }
 
@@ -96,6 +96,12 @@ public class ETPMock {
         this.plan = plan;
     }
 
+    public Set<Teacher> getTeachers() {
+        Set<Teacher> teachers = new HashSet<>();
+        teachers.add(getTeacher());
+        return teachers;
+    }
+
     public Teacher getTeacher() {
         return new Teacher(
                 1,
@@ -103,7 +109,7 @@ public class ETPMock {
                 "Иван",
                 "Иванович",
                 new AcademicDegree("ph_d", "Доктор наук"),
-                "Ирорт" ,
+                "Ирорт",
                 "Преподователь",
                 TeacherType.INVITED
         );

@@ -6,9 +6,11 @@
     <title>Учебно-тематический план</title>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/etp/etp.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/chosen/1.8.3/chosen.min.css}">
 
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <script type="text/javascript" th:src="@{/js/etp/etp.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/chosen/1.8.3/chosen.jquery.min.js}"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
@@ -128,7 +130,6 @@
         <div th:include="etp/etpHeaderInput :: input('Кол-во часов на 1 слушателя', 'volumeInHours.perOneListener', ${etp.volumeInHours.perOneListener}, false)"></div>
         <div th:include="etp/etpHeaderInput :: input('Очное обучение', 'volumeInHours.fullTimePerOneListener', ${etp.volumeInHours.fullTimePerOneListener}, false)"></div>
         <div th:include="etp/etpHeaderInput :: input('Дистанционное обучение', 'volumeInHours.distancePerOneListener', ${etp.volumeInHours.distancePerOneListener}, false)"></div>
-
         <div th:include="etp/etpHeaderInput :: input('Всего часов на учебную работу', 'volumeInHours.totalStudyWork', ${etp.volumeInHours.totalStudyWork}, false)"></div>
         <div th:include="etp/etpHeaderInput :: input('Дистанционное обучение', 'volumeInHours.distanceStudyWork', ${etp.volumeInHours.distanceStudyWork}, false)"></div>
         <div th:include="etp/etpHeaderInput :: input('Очное обучение', 'volumeInHours.fullTimeStudyWork', ${etp.volumeInHours.fullTimeStudyWork}, false)"></div>
@@ -218,13 +219,13 @@
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.groupCount}" type="text" class="form-control" required></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.conditionalPagesCount}" type="text" class="form-control"></td>
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.totalHours}" type="text" class="form-control" readonly></td>
-                        <td><select th:field="*{emaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
-                            <option value=""></option>
+                        <td><select th:field="*{emaModules[__${rowModuleStat.index}__].plan.teacherIds}" multiple data-placeholder="Преподователь..." class="t_ms form-control">
                             <option th:each="teacher : ${teachers}"
                                     th:value="${teacher.id}"
                                     th:text="${teacher.fullName}">
                             </option>
                         </select></td>
+
                         <td>
                             <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index}" name="removeEMAModule" th:formaction="@{/etp#emaModule}">
                                 <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Удалить Раздел"></span>
@@ -264,8 +265,7 @@
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.groupCount}" type="text" class="form-control"></td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.conditionalPagesCount}" type="text" class="form-control"></td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.totalHours}" type="text" class="form-control" readonly></td>
-                        <td><select th:field="*{omaModules[__${rowModuleStat.index}__].plan.teacherId}" class="form-control">
-                            <option value=""></option>
+                        <td><select th:field="*{omaModules[__${rowModuleStat.index}__].plan.teacherIds}" data-placeholder="Преподователь..." multiple class="t_ms form-control">
                             <option th:each="teacher : ${teachers}"
                                     th:value="${teacher.id}"
                                     th:text="${teacher.fullName}">
@@ -352,8 +352,10 @@
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.groupCount}" type="text" class="form-control"></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.conditionalPagesCount}" type="text" class="form-control"></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.totalHours}" type="text" class="form-control" readonly></td>
-                                <td><select th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.teacherId}" class="form-control">
-                                    <option value=""></option>
+                                <td><select th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.teacherIds}"
+                                            data-placeholder="Преподователь..."
+                                            multiple
+                                            class="t_ms form-control">
                                     <option th:each="teacher : ${teachers}"
                                             th:value="${teacher.id}"
                                             th:text="${teacher.fullName}">

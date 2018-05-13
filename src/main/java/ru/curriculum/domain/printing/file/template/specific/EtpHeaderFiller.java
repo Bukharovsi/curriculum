@@ -59,7 +59,9 @@ public class EtpHeaderFiller {
         Cell cell = sheet
             .getRow(address.rowNumber())
             .createCell(address.cellNumber());
-        cell.setCellValue(value);
+        if(null != value) {
+            cell.setCellValue(value);
+        }
         cell.setCellStyle(defaultCellStyle.titleStyle());
     }
 
@@ -67,7 +69,9 @@ public class EtpHeaderFiller {
         Cell cell = sheet
             .getRow(address.rowNumber())
             .createCell(address.cellNumber());
-        cell.setCellValue(value);
+        if(null != value) {
+            cell.setCellValue(value);
+        }
         cell.setCellStyle(defaultCellStyle.titleStyle());
     }
 

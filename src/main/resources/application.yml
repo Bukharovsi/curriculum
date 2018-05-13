@@ -3,7 +3,11 @@ server:
 
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
+#    driver-class-name: org.h2.Driver
+    driver-class-name: org.postgresql.Driver
+    password: postgres
+    username: postgres
+    url: jdbc:postgresql://127.0.0.1:15432/curriculum_test
   jpa:
     hibernate:
       ddl-auto: validate

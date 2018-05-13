@@ -5,6 +5,11 @@ import lombok.Setter;
 import ru.curriculum.domain.etp.entity.Plan;
 import ru.curriculum.service.teacher.dto.TeacherDto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+
 @Getter
 @Setter
 public class PlanDto {
@@ -22,10 +27,13 @@ public class PlanDto {
     private Integer lernerCount = 0;
     private Integer groupCount = 0;
     private Integer conditionalPagesCount = 0;
-    private TeacherDto teacher;
-    private Integer teacherId;
+    private List<TeacherDto> teachers;
+    private List<Integer> teacherIds;
 
-    public PlanDto() {}
+    public PlanDto() {
+        this.teachers = new ArrayList<>();
+        this.teacherIds = new ArrayList<>();
+    }
 
     public PlanDto(Plan plan) {
         this.id = plan.id();
@@ -42,11 +50,11 @@ public class PlanDto {
         this.lernerCount = plan.lernerCount();
         this.groupCount = plan.groupCount();
         this.conditionalPagesCount = plan.conditionalPagesCount();
-        this.teacher = null != plan.teacher() ? new TeacherDto(plan.teacher()) : null;
-        this.teacherId = null != plan.teacher() ? plan.teacher().id() : null;
+        this.teachers = plan.teachers().stream().map(TeacherDto::new).collect(toList());
+        this.teacherIds = plan.teachers().stream().map(t -> t.id()).collect(toList());
     }
 
     public boolean hasTeacher() {
-        return null != teacherId;
+        return 0 != teacherIds.size();
     }
 }

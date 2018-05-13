@@ -26,6 +26,6 @@ public class PlanTest {
         assertEquals(new Integer(0), plan.lernerCount());
         assertEquals(new Integer(0), plan.groupCount());
         assertEquals(new Integer(0), plan.conditionalPagesCount());
-        assertNull(plan.teacher());
+        assertNotNull(plan.teachers());
     }
 }

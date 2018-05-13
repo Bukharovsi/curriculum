@@ -7,17 +7,23 @@ import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
 import ru.curriculum.service.etp.dto.PlanDto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
 public class PlanFactory {
     @Autowired
     private TeacherRepository teacherRepository;
 
     public Plan create(PlanDto planDto) {
-        Teacher teacher = null;
-        if(null != planDto.getTeacherId()) {
-            teacher = teacherRepository.findOne(planDto.getTeacherId());
+        Set<Teacher> teachers = new HashSet<>();
+        if(planDto.hasTeacher()) {
+            for (Teacher teacher : teacherRepository.findAll(planDto.getTeacherIds())) {
+                teachers.add(teacher);
+            }
         }
-        Plan plan = Plan.builder()
+
+        return Plan.builder()
                 .id(planDto.getId())
                 .lectures(planDto.getLectures())
                 .practices(planDto.getPractices())
@@ -32,9 +38,7 @@ public class PlanFactory {
                 .lernerCount(planDto.getLernerCount())
                 .groupCount(planDto.getGroupCount())
                 .conditionalPagesCount(planDto.getConditionalPagesCount())
-                .teacher(teacher)
+                .teachers(teachers)
                 .build();
-
-        return plan;
     }
 }

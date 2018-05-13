@@ -40,4 +40,5 @@
     <include file="/db/changelog/300420182015_add_hours_per_one_listener_for_etp.xml"/>
     <include file="/db/changelog/020520181400_add_volume_in_hours_to_etp.xml"/>
     <include file="/db/changelog/030520182054_change_lesson_form_value.xml"/>
+    <include file="/db/changelog/130520182240_create_plan_teacher_table.xml"/>
 </databaseChangeLog>

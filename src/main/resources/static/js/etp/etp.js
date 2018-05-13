@@ -1,10 +1,19 @@
 $(function () {
+    addMultiSelectToTeacherInput()
+    bindOnChangesToCalculateEtpTotalHours()
+})
+
+function addMultiSelectToTeacherInput() {
+    $(".t_ms").chosen();
+}
+
+function bindOnChangesToCalculateEtpTotalHours() {
     $("input[id*='plan']").each(function (index, element) {
         element.onchange = calcTotal
         attachMask(element)
     })
     updateTotalAfterRenderPage()
-})
+}
 
 /**
  *   Pass row which has cells with total sum.
