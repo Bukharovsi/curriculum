@@ -1,3 +1,7 @@
+$(function () {
+    $('.t_ms').chosen();
+})
+
 function themeSelection(element) {
     var etpId = $('#id').val()
     var themeName = element.value

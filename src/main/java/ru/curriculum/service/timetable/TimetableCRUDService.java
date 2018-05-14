@@ -66,12 +66,12 @@ public class TimetableCRUDService {
 
         Timetable timetable = timetableDtoToTimetableConverter.convert(timetableDto);
 
-        ISpecification<Timetable> specification = specificationBuilder.buildSpecification();
-        ResultOfApplySpecification result = specification.isSatisfiedBy(timetable);
-        if(!result.isSuccess()) {
-            timetableDto.setErrors(result.getErrorMessages());
-            return timetableDto;
-        }
+//        ISpecification<Timetable> specification = specificationBuilder.buildSpecification();
+//        ResultOfApplySpecification result = specification.isSatisfiedBy(timetable);
+//        if(!result.isSuccess()) {
+//            timetableDto.setErrors(result.getErrorMessages());
+//            return timetableDto;
+//        }
 
         Timetable updateTimetable = timetableRepository.save(timetable);
 

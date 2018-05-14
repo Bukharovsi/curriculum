@@ -6,6 +6,9 @@ import ru.curriculum.domain.timetable.entity.Timetable;
 import ru.curriculum.domain.timetable.repository.LessonRepository;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * In one moment teacher hasn't more than one lesson
@@ -23,11 +26,15 @@ public class TeachersCannotBeCloneSpecification extends CompositeSpecification<T
         ResultOfApplySpecification resultOfApplySpecification = new ResultOfApplySpecification();
         for (SchoolDay day : timetable.schoolDays()) {
             for (Lesson lesson : day.lessons()) {
-                if(null != lesson.teacher()) {
-                    Lesson lessonTeacherAlreadyHas = lessonRepository
-                            .findLessonForTeacherOnDate(lesson.teacher().id(), timetable.id(), day.date(), lesson.time());
-                    if(null != lessonTeacherAlreadyHas) {
-                        resultOfApplySpecification.addError(createErrorMessage(day, lessonTeacherAlreadyHas));
+                //TODO: пределать
+                if(0 < lesson.teachers().size()) {
+                    List<Integer> teacherIds = lesson.teachers().stream().map(t -> t.id()).collect(toList());
+                    for(int id : teacherIds) {
+                        Lesson lessonTeacherAlreadyHas = lessonRepository
+                                .findLessonForTeacherOnDate(id, timetable.id(), day.date(), lesson.time());
+                        if (null != lessonTeacherAlreadyHas) {
+                            resultOfApplySpecification.addError(createErrorMessage(day, lessonTeacherAlreadyHas));
+                        }
                     }
                 }
             }
@@ -39,7 +46,7 @@ public class TeachersCannotBeCloneSpecification extends CompositeSpecification<T
         return String.format("%s в %s преподователь %s одновременно ведет две пары",
                 day.date().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 lesson.time(),
-                lesson.teacher().fullName()
+                "Какой-то Уважаемый Преподователь"
         );
     }
 }

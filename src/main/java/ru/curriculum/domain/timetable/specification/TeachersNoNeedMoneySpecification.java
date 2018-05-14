@@ -34,8 +34,8 @@ public class TeachersNoNeedMoneySpecification extends CompositeSpecification<Tim
         for (SchoolDay day : timetable.schoolDays()) {
             List<Teacher> teachers = teacherRepository.findAllHavingLessonOnDate(timetable.id(), day.date());
             for (Lesson lesson : day.lessons()) {
-                if(null != lesson.teacher()) {
-                    teachers.add(lesson.teacher());
+                if(0 < lesson.teachers().size()) {
+                    teachers.addAll(lesson.teachers());
                 }
             }
 

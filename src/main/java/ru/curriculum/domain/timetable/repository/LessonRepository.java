@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 public interface LessonRepository extends CrudRepository<Lesson, Integer> {
 
+    //TODO: переделываем запрос
     @Query(value = "" +
             "SELECT " +
             "  l.* " +

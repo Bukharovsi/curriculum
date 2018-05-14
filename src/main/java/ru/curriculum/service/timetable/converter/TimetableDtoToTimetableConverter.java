@@ -58,9 +58,9 @@ public class TimetableDtoToTimetableConverter {
                 lessonForm = lessonFormRepository.findOne(lessonDto.getLessonFormId());
             }
 
-            Teacher teacher = null;
-            if(null != lessonDto.getTeacherId()) {
-                teacher = teacherRepository.findOne(lessonDto.getTeacherId());
+            Set<Teacher> teachers = new HashSet<>();
+            for (Teacher teacher : teacherRepository.findAll(lessonDto.getTeacherIds())) {
+                teachers.add(teacher);
             }
 
             Lesson lesson = Lesson.builder()
@@ -68,7 +68,7 @@ public class TimetableDtoToTimetableConverter {
                     .theme(lessonDto.getTheme())
                     .lessonForm(lessonForm)
                     .time(lessonDto.getTime())
-                    .teacher(teacher)
+                    .teachers(teachers)
                     .audienceNumber(lessonDto.getAudienceNumber())
                     .lernerCount(lessonDto.getLernerCount())
                     .address(lessonDto.getAddress())

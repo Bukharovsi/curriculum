@@ -3,7 +3,9 @@
       layout:decorate="~{fragments/layout}">
 <head>
     <title>Расписание</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/chosen/1.8.3/chosen.min.css}">
     <script type="text/javascript" th:src="@{/js/timetable/themeSelection.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/chosen/1.8.3/chosen.jquery.min.js}"></script>
 </head>
 <body>
 <!--/*@thymesVar id="timetable" type="ru.curriculum.service.timetable.dto.WeeklyTimetableDto"*/-->
@@ -102,8 +104,10 @@
 
                             <td><input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].lernerCount}" type="number" class="form-control"></td>
 
-                            <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].teacherId}" class="form-control">
-                                <option value=""></option>
+                            <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].teacherIds}"
+                                        multiple
+                                        data-placeholder="Преподователь..."
+                                        class="t_ms form-control">
                                 <option th:each="teacher : ${teachers}"
                                         th:value="${teacher.id}"
                                         th:text="${teacher.fullName}">

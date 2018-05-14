@@ -1,0 +1,58 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="140520182127" author="Vlad">
+
+        <createTable tableName="lesson_teacher">
+            <column name="lesson_id" type="int">
+                <constraints foreignKeyName="lesson_teacher_lesson_fk" references="lesson(id)" nullable="false"/>
+            </column>
+            <column name="teacher_id" type="int">
+                <constraints foreignKeyName="lesson_teacher_teacher_fk" references="teacher(id)" nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="lesson_teacher" columnNames="lesson_id, teacher_id" constraintName="lesson_teacher_pk"/>
+
+        <sql>
+            INSERT INTO lesson_teacher (lesson_id, teacher_id)
+                SELECT id, teacher_id
+                FROM lesson
+                WHERE teacher_id IS NOT NULL AND teacher_id IN (SELECT id FROM teacher);
+        </sql>
+
+        <dropForeignKeyConstraint baseTableName="lesson" constraintName="lesson_teacher_fk"></dropForeignKeyConstraint>
+
+        <dropColumn tableName="lesson" columnName="teacher_id"></dropColumn>
+
+        <!---->
+        <rollback>
+
+            <addColumn tableName="lesson">
+                <column name="teacher_id" type="int"></column>
+            </addColumn>
+
+            <addForeignKeyConstraint baseTableName="lesson"
+                                     baseColumnNames="teacher_id"
+                                     constraintName="lesson_teacher_fk"
+                                     referencedTableName="teacher"
+                                     referencedColumnNames="id"
+            />
+
+            <sql>
+                UPDATE
+                lesson
+                SET teacher_id = lesson_teacher.teacher_id
+                FROM (SELECT teacher_id, lesson_id FROM lesson_teacher) AS lesson_teacher
+                WHERE lesson.id = lesson_teacher.lesson_id;
+            </sql>
+
+            <dropTable tableName="lesson_teacher"></dropTable>
+
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>
