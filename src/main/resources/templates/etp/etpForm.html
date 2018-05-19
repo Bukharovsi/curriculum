@@ -41,8 +41,7 @@
                 <a class="btn btn-default" th:href="@{/etp}">Назад</a>
                 <a th:if="${null != etp.id}"
                    th:href="@{/etp/{id}/download(id=${etp.id})}"
-                   style="background-color: #7dcc4d"
-                   class="btn btn-default pull-right"
+                   class="btn btn-default pull-right btn-success"
                 >
                     Excel
                 </a>

@@ -6,6 +6,7 @@ import ru.curriculum.domain.teacher.repository.TeacherRepository;
 import ru.curriculum.domain.timetable.entity.Timetable;
 import ru.curriculum.domain.timetable.repository.LessonRepository;
 import ru.curriculum.domain.timetable.specification.ISpecification;
+import ru.curriculum.domain.timetable.specification.TeachersDoNotKnowHowToTeleportSpecification;
 import ru.curriculum.domain.timetable.specification.TeachersNoNeedMoneySpecification;
 import ru.curriculum.domain.timetable.specification.TeachersCannotBeCloneSpecification;
 
@@ -22,7 +23,13 @@ public class TimetableSpecificationBuilder implements ITimetableSpecificationBui
 
     @Override
     public ISpecification<Timetable> buildSpecification() {
+        return buildSpecificationIgnoreWarnings()
+                .and(new TeachersDoNotKnowHowToTeleportSpecification(lessonRepository));
+    }
+
+    @Override
+    public ISpecification<Timetable> buildSpecificationIgnoreWarnings() {
         return new TeachersNoNeedMoneySpecification(teacherRepository)
-                .and(new TeachersCannotBeCloneSpecification(lessonRepository));
+                .and(new TeachersCannotBeCloneSpecification(teacherRepository));
     }
 }

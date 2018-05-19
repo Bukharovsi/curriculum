@@ -61,7 +61,8 @@ public interface TeacherRepository extends PagingAndSortingRepository<Teacher, I
             "  t.* " +
             "FROM school_day sd " +
             "  JOIN lesson l ON sd.id = l.school_day_id AND sd.timetable_id <> :timetable_id " +
-            "  JOIN teacher t ON l.teacher_id = t.id AND sd.date = :school_date " +
+            "  JOIN lesson_teacher lt ON l.id = lt.lesson_id " +
+            "  JOIN teacher t ON lt.teacher_id = t.id AND sd.date = :school_date " +
             "  JOIN timetable tt ON tt.id = sd.timetable_id " +
             "  JOIN etp e ON e.id = tt.etp_id AND e.financing_source = 'NOT_BUDGET' ",
             nativeQuery = true
@@ -70,4 +71,23 @@ public interface TeacherRepository extends PagingAndSortingRepository<Teacher, I
             @Param("timetable_id") Integer timetableId,
             @Param("school_date") LocalDate date
     );
+
+    @Query(value = "" +
+            "SELECT " +
+            "  t.* " +
+            "FROM teacher t " +
+            "  JOIN lesson_teacher lt ON t.id = lt.teacher_id AND t.id in (:teacher_ids)" +
+            "  JOIN lesson l ON lt.lesson_id = l.id AND l.time = :t " +
+            "  JOIN school_day sd ON l.school_day_id = sd.id " +
+            "    AND sd.timetable_id <> :timetable_id" +
+            "    AND sd.date = :d ;",
+            nativeQuery = true
+    )
+    List<Teacher> findAllHavingLessonOnDateAndTime(
+            @Param("teacher_ids") List<Integer> teacherId,
+            @Param("timetable_id") Integer timetableId,
+            @Param("d") LocalDate date,
+            @Param("t") String time
+    );
+
 }
