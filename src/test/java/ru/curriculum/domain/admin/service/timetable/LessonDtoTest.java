@@ -15,6 +15,7 @@ import ru.curriculum.service.timetable.dto.LessonDto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 
 @RunWith(DataProviderRunner.class)
 public class LessonDtoTest {
@@ -32,7 +33,7 @@ public class LessonDtoTest {
         Assert.assertEquals(lesson.lessonForm().code(), dto.getLessonFormId());
         Assert.assertEquals(lesson.lessonForm().name(), dto.getLessonFormName());
         Assert.assertEquals(lesson.lernerCount(), dto.getLernerCount());
-        Assert.assertEquals(lesson.teacher().id(), dto.getTeacher().getId());
+        Assert.assertEquals(lesson.teachers().size(), dto.getTeachers().size());
     }
 
     @DataProvider
@@ -47,7 +48,7 @@ public class LessonDtoTest {
                             .audienceNumber(10)
                             .time("14:40-16:10")
                             .lessonForm(new LessonForm())
-                            .teacher(new Teacher())
+                            .teachers(new HashSet<>())
                             .build()
                 },
                 {
@@ -58,7 +59,7 @@ public class LessonDtoTest {
                                 .audienceNumber(10)
                                 .time("14:40 - 16:10")
                                 .lessonForm(new LessonForm("Пракика"))
-                                .teacher(new TeacherHelper().getTeacher())
+                                .teachers(new HashSet<>())
                                 .build()
                 },
                 {
@@ -68,7 +69,7 @@ public class LessonDtoTest {
                                 .address("Street 204")
                                 .audienceNumber(10)
                                 .lessonForm(new LessonForm("Пракика"))
-                                .teacher(new TeacherHelper().getTeacher())
+                                .teachers(new HashSet<>())
                                 .build()
                 },
         };

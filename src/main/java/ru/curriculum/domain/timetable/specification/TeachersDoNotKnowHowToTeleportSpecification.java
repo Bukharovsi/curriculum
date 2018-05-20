@@ -1,5 +1,7 @@
 package ru.curriculum.domain.timetable.specification;
 
+import org.apache.commons.collections4.CollectionUtils;
+import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.timetable.entity.Lesson;
 import ru.curriculum.domain.timetable.entity.SchoolDay;
 import ru.curriculum.domain.timetable.entity.Timetable;
@@ -7,9 +9,7 @@ import ru.curriculum.domain.timetable.repository.LessonRepository;
 import ru.curriculum.service.timetable.dto.LessonDto;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -26,27 +26,32 @@ public class TeachersDoNotKnowHowToTeleportSpecification extends CompositeSpecif
 
     @Override
     public ResultOfApplySpecification isSatisfiedBy(Timetable timetable) {
-        ResultOfApplySpecification resultOfApplySpecification = new ResultOfApplySpecification();
+        ResultOfApplySpecification result = new ResultOfApplySpecification();
         for (SchoolDay day : timetable.schoolDays()) {
-            List<Lesson> currentTimetableLessons = excludeLessonsWithoutTeachersAndAddresses(day.lessons());
-            if(0 < currentTimetableLessons.size()) {
-                List<Lesson> anotherLessons = lessonRepository.findLessonsOnDateWithTeacher(timetable.id(), day.date());
-                currentTimetableLessons.addAll(anotherLessons);
-                checkIfTeachersHaveSequenceLessonsInDifferentBuildings(resultOfApplySpecification, currentTimetableLessons);
+            List<Lesson> lessons = excludeLessonsWithoutTeachersAndAddresses(day.lessons());
+            if(0 < lessons.size()) {
+                List<Lesson> anotherLessons = lessonRepository.findLessonsOnDateWithTeacher(
+                        timetable.id(), day.date()
+                );
+                lessons.addAll(anotherLessons);
+                checkIfTeachersHaveSequenceLessonsInDifferentBuildings(
+                        lessons, timetable, result
+                );
             }
         }
-        return resultOfApplySpecification;
+        return result;
     }
 
     private List<Lesson> excludeLessonsWithoutTeachersAndAddresses(Set<Lesson> lessons) {
         return lessons.stream()
-                .filter(l -> null != l.teacher() && null != l.address() && !l.address().isEmpty())
+                .filter(l -> 0 != l.teachers().size() && null != l.address() && !l.address().equals(""))
                 .collect(Collectors.toList());
     }
 
     private void checkIfTeachersHaveSequenceLessonsInDifferentBuildings(
-            ResultOfApplySpecification resultOfApplySpecification,
-            List<Lesson> lessonsNeedToCheck
+            List<Lesson> lessonsNeedToCheck,
+            Timetable timetable,
+            ResultOfApplySpecification result
     ) {
         Map<String, List<Lesson>> lessonMap = groupLessonsByTime(lessonsNeedToCheck);
         for (int i = 0; i + 1 < timeList.size(); i++) {
@@ -55,11 +60,10 @@ public class TeachersDoNotKnowHowToTeleportSpecification extends CompositeSpecif
             if(lessonMap.containsKey(curTime) && lessonMap.containsKey(nextTime)) {
                 for (Lesson curLesson : lessonMap.get(curTime)) {
                     for (Lesson nextLesson : lessonMap.get(nextTime)) {
-                        if(oneTeacherInDifferentBuildings(curLesson, nextLesson)) {
-                            resultOfApplySpecification.addWarning(
-                                    createWarningMessage(curLesson, nextLesson)
-                            );
-                        }
+                        Collection<Teacher> teachers = findTeachersInDifferentBuildings(
+                                curLesson, nextLesson, timetable
+                        );
+                        createWarnings(curLesson, nextLesson, teachers, result);
                     }
                 }
             }
@@ -70,42 +74,53 @@ public class TeachersDoNotKnowHowToTeleportSpecification extends CompositeSpecif
         return lessons.stream().collect(Collectors.groupingBy(Lesson::time));
     }
 
-    private boolean oneTeacherInDifferentBuildings(Lesson curLesson, Lesson nextLesson) {
-        return null != curLesson.teacher() &&
-                null != nextLesson.teacher() &&
-                notSameTeacherAtTheSameTime(curLesson, nextLesson) &&
-                isShortBreak(curLesson, nextLesson) &&
+    private Collection<Teacher> findTeachersInDifferentBuildings(
+            Lesson curLesson,
+            Lesson nextLesson,
+            Timetable timetable
+    ) {
+        boolean needToFindIntersection = isShortBreak(curLesson, nextLesson) &&
+                anyLessonBelongToTimetable(curLesson, nextLesson, timetable) &&
                 isTeacherInDifferentBuildings(curLesson, nextLesson);
+
+        return needToFindIntersection ?
+                CollectionUtils.intersection(curLesson.teachers(), nextLesson.teachers()) :
+                new ArrayList<>();
     }
 
-    /**
-     * If teacher at the same time lead the lesson then ignore this case
-     * because it checked in another specification
-     */
-    private boolean notSameTeacherAtTheSameTime(Lesson curLesson, Lesson nextLesson) {
-        return !(curLesson.teacher().equals(nextLesson.teacher()) &&
-                curLesson.time().equals(nextLesson.time()));
-    }
-
-    /**
-     * Break between lesson
-     */
     private boolean isShortBreak(Lesson curLesson, Lesson nextLesson) {
         return (curLesson.time().equals("09:00-10:30") && nextLesson.time().equals("10:40-12:10")) ||
                 (curLesson.time().equals("13:00-14:30") && nextLesson.time().equals("14:40-16:10")) ||
                 (curLesson.time().equals("14:40-16:10") && nextLesson.time().equals("16:20-17:50"));
     }
 
-    private boolean isTeacherInDifferentBuildings(Lesson curLesson, Lesson nextLesson) {
-        return curLesson.teacher().equals(nextLesson.teacher()) &&
-                !curLesson.address().equals(nextLesson.address());
+    private boolean anyLessonBelongToTimetable(Lesson curLesson, Lesson nextLesson, Timetable timetable) {
+        return nextLesson.schoolDay().timetable().equals(timetable) ||
+                curLesson.schoolDay().timetable().equals(timetable);
     }
 
-    private String createWarningMessage(Lesson curLesson, Lesson nextLesson) {
+    private boolean isTeacherInDifferentBuildings(Lesson curLesson, Lesson nextLesson) {
+        return !curLesson.address().equals(nextLesson.address());
+    }
+
+    private void createWarnings(
+            Lesson curLesson,
+            Lesson nextLesson,
+            Collection<Teacher> teachers,
+            ResultOfApplySpecification resultOfApplySpecification
+    ) {
+        for (Teacher teacher : teachers) {
+            resultOfApplySpecification.addWarning(
+                    createMessage(curLesson, nextLesson, teacher)
+            );
+        }
+    }
+
+    private String createMessage(Lesson curLesson, Lesson nextLesson, Teacher teacher) {
         return String.format(
                 "%s %s ведет два занятия подряд в разных зданиях: \"%s %s\" и \"%s %s\"",
                 curLesson.schoolDay().date().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                curLesson.teacher().fullName(),
+                teacher.fullName(),
                 curLesson.time(),
                 curLesson.address(),
                 nextLesson.time(),

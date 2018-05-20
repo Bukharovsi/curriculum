@@ -5,14 +5,13 @@ import lombok.experimental.Accessors;
 import ru.curriculum.domain.teacher.entity.Teacher;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "lesson")
 @Accessors(fluent = true)
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Lesson {
@@ -28,8 +27,14 @@ public class Lesson {
 
     private Integer lernerCount;
 
-    @ManyToOne(targetEntity = Teacher.class)
-    private Teacher teacher;
+    @Singular
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "lesson_teacher",
+            joinColumns = @JoinColumn(name = "lesson_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id")
+    )
+    private Set<Teacher> teachers;
 
     @Setter
     private String address;
@@ -45,4 +50,8 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "school_day_id")
     private SchoolDay schoolDay;
+
+    public Lesson() {
+        this.teachers = new HashSet<>();
+    }
 }

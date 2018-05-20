@@ -1,45 +1,64 @@
 package ru.curriculum.domain.timetable.specification;
 
+import ru.curriculum.domain.teacher.entity.Teacher;
+import ru.curriculum.domain.teacher.repository.TeacherRepository;
 import ru.curriculum.domain.timetable.entity.Lesson;
 import ru.curriculum.domain.timetable.entity.SchoolDay;
 import ru.curriculum.domain.timetable.entity.Timetable;
-import ru.curriculum.domain.timetable.repository.LessonRepository;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * In one moment teacher hasn't more than one lesson
  */
 public class TeachersCannotBeCloneSpecification extends CompositeSpecification<Timetable> {
 
-    private LessonRepository lessonRepository;
+    private TeacherRepository teacherRepository;
 
-    public TeachersCannotBeCloneSpecification(LessonRepository lessonRepository) {
-        this.lessonRepository = lessonRepository;
+    public TeachersCannotBeCloneSpecification(TeacherRepository lessonRepository) {
+        this.teacherRepository = lessonRepository;
     }
 
     @Override
     public ResultOfApplySpecification isSatisfiedBy(Timetable timetable) {
-        ResultOfApplySpecification resultOfApplySpecification = new ResultOfApplySpecification();
+        ResultOfApplySpecification result = new ResultOfApplySpecification();
         for (SchoolDay day : timetable.schoolDays()) {
             for (Lesson lesson : day.lessons()) {
-                if(null != lesson.teacher()) {
-                    Lesson lessonTeacherAlreadyHas = lessonRepository
-                            .findLessonForTeacherOnDate(lesson.teacher().id(), timetable.id(), day.date(), lesson.time());
-                    if(null != lessonTeacherAlreadyHas) {
-                        resultOfApplySpecification.addError(createErrorMessage(day, lessonTeacherAlreadyHas));
-                    }
+                if(0 < lesson.teachers().size()) {
+                    List<Integer> teacherIds = lesson.teachers()
+                            .stream()
+                            .map(t -> t.id())
+                            .collect(toList());
+                    List<Teacher> teachers = teacherRepository.findAllHavingLessonOnDateAndTime(
+                            teacherIds, timetable.id(), day.date(), lesson.time()
+                    );
+                    createErrors(day, lesson, teachers, result);
                 }
             }
         }
-        return resultOfApplySpecification;
+        return result;
     }
 
-    private String createErrorMessage(SchoolDay day, Lesson lesson) {
-        return String.format("%s в %s преподователь %s одновременно ведет две пары",
+    private void createErrors(
+            SchoolDay day,
+            Lesson lesson,
+            List<Teacher> teachers,
+            ResultOfApplySpecification result
+    ) {
+        for (Teacher teacher : teachers) {
+            result.addError(createMessage(day, lesson, teacher));
+        }
+    }
+
+    private String createMessage(SchoolDay day, Lesson lesson, Teacher teacher) {
+        return String.format(
+                "%s в %s преподователь %s одновременно ведет две пары",
                 day.date().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 lesson.time(),
-                lesson.teacher().fullName()
+                teacher.fullName()
         );
     }
 }

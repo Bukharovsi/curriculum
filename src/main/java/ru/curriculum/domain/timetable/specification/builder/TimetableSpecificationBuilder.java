@@ -30,6 +30,6 @@ public class TimetableSpecificationBuilder implements ITimetableSpecificationBui
     @Override
     public ISpecification<Timetable> buildSpecificationIgnoreWarnings() {
         return new TeachersNoNeedMoneySpecification(teacherRepository)
-                .and(new TeachersCannotBeCloneSpecification(lessonRepository));
+                .and(new TeachersCannotBeCloneSpecification(teacherRepository));
     }
 }

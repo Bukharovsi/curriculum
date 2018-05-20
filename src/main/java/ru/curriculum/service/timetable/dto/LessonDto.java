@@ -1,28 +1,24 @@
 package ru.curriculum.service.timetable.dto;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 import ru.curriculum.domain.timetable.entity.Lesson;
 import ru.curriculum.service.teacher.dto.TeacherDto;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class LessonDto {
     private Integer id;
     private String theme;
     private String time;
     private Integer lernerCount;
-    private TeacherDto teacher;
-    private Integer teacherId;
+    private List<TeacherDto> teachers;
+    private List<Integer> teacherIds;
     private String address;
     private Integer audienceNumber;
     private String lessonFormId;
@@ -36,15 +32,19 @@ public class LessonDto {
         add("16:20-17:50");
     }};
 
+    public LessonDto() {
+        this.teachers = new ArrayList<>();
+        this.teacherIds = new ArrayList<>();
+    }
+
     public LessonDto(Lesson lesson) {
         this.id = lesson.id();
         this.theme = lesson.theme();
         this.time = lesson.time();
         this.lernerCount = lesson.lernerCount();
-        if(null != lesson.teacher()) {
-            this.teacher =  new TeacherDto(lesson.teacher());
-            this.teacherId = lesson.teacher().id();
-        }
+        //TODO: NPE
+        this.teachers = lesson.teachers().stream().map(TeacherDto::new).collect(Collectors.toList());
+        this.teacherIds = lesson.teachers().stream().map(t -> t.id()).collect(Collectors.toList());
         this.address = lesson.address();
         this.audienceNumber = lesson.audienceNumber();
         if(null != lesson.lessonForm()) {

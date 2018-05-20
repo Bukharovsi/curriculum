@@ -5,7 +5,6 @@ import java.util.List;
 
 public class ResultOfApplySpecification implements IResultOfApplySpecification {
     private List<String> errors;
-
     private List<String> warnings;
 
     public ResultOfApplySpecification(List<String> errors, List<String> warnings) {
@@ -18,28 +17,28 @@ public class ResultOfApplySpecification implements IResultOfApplySpecification {
         this.warnings = new ArrayList<>();
     }
 
+    public ResultOfApplySpecification merge(ResultOfApplySpecification anotherResult) {
+        List<String> allErrors = anotherResult.getErrors();
+        List<String> allWarnings = anotherResult.getWarnings();
+        allErrors.addAll(this.getErrors());
+        allWarnings.addAll(this.getWarnings());
+        return new ResultOfApplySpecification(allErrors, allWarnings);
+    }
+
     public List<String> getErrors() {
         return errors;
     }
 
-    public void addErrors(List<String> errorMessages) {
-        this.errors.addAll(errorMessages);
-    }
-
-    public void addError(String errorMessage) {
-        this.errors.add(errorMessage);
+    public void addError(String error) {
+        this.errors.add(error);
     }
 
     public List<String> getWarnings() {
         return warnings;
     }
 
-    public void addWarning(String warningMessage) {
-        this.warnings.add(warningMessage);
-    }
-
-    public void addWarnings(List<String> warningMessages) {
-        this.warnings.addAll(warningMessages);
+    public void addWarning(String warning) {
+        this.warnings.add(warning);
     }
 
     public boolean isSuccess() {

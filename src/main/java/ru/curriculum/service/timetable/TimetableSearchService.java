@@ -11,26 +11,27 @@ import ru.curriculum.service.timetable.dto.TeacherDto;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 public class TimetableSearchService {
-    //TODO: переделать на обычный запрос
     @Autowired
     private ETPRepository etpRepository;
 
     @Autowired
     private TeacherRepository teacherRepository;
 
-    public TeacherDto getTeacherDefineInEtpTheme(Integer etpId, String themeInTimetable) {
-        Teacher teacher = teacherRepository.findTeacherDefineInEtpTheme(etpId, themeInTimetable);
-        return null != teacher ? new TeacherDto(teacher) : null;
+    public List<TeacherDto> getTeacherDefineInEtpTheme(Integer etpId, String themeInTimetable) {
+        List<Teacher> teachers = teacherRepository.findTeacherDefineInEtpTheme(etpId, themeInTimetable);
+        return teachers.stream().map(TeacherDto::new).collect(toList());
     }
 
     public List<String> findLessonThemesAllByEtpId(Integer etpId) {
         ETP etp = etpRepository.findOne(etpId);
-        return makeLessonThemesFromEtp(etp);
+        return createLessonThemesFromEtp(etp);
     }
 
-    private List<String> makeLessonThemesFromEtp(ETP etp) {
+    private List<String> createLessonThemesFromEtp(ETP etp) {
         List<String> themes = new ArrayList<>();
         etp.emaModules().forEach(module -> themes.add(module.name()));
         etp.omaModules().forEach(module -> themes.add(module.name()));

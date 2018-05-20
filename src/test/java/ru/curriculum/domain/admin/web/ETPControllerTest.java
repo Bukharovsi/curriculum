@@ -11,6 +11,7 @@ import ru.curriculum.domain.etp.entity.ETP;
 import ru.curriculum.domain.etp.entity.financingSource.FinancingSource;
 import ru.curriculum.domain.etp.repository.ETPRepository;
 import ru.curriculum.domain.helper.StateProgramTestHelper;
+import ru.curriculum.domain.organization.repository.DivisionRepository;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 import ru.curriculum.web.View;
 
