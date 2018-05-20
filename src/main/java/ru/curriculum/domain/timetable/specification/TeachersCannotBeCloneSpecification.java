@@ -24,35 +24,41 @@ public class TeachersCannotBeCloneSpecification extends CompositeSpecification<T
 
     @Override
     public ResultOfApplySpecification isSatisfiedBy(Timetable timetable) {
-        ResultOfApplySpecification resultOfApplySpecification = new ResultOfApplySpecification();
+        ResultOfApplySpecification result = new ResultOfApplySpecification();
         for (SchoolDay day : timetable.schoolDays()) {
             for (Lesson lesson : day.lessons()) {
                 if(0 < lesson.teachers().size()) {
-                    List<Integer> teacherIds = lesson.teachers().stream().map(t -> t.id()).collect(toList());
-                    List<Teacher> teachers = teacherRepository
-                            .findAllHavingLessonOnDateAndTime(teacherIds, timetable.id(), day.date(), lesson.time());
-                    if (0 != teachers.size()) {
-                        resultOfApplySpecification.addError(
-                                createErrorMessage(day, lesson, teachers)
-                        );
-                    }
+                    List<Integer> teacherIds = lesson.teachers()
+                            .stream()
+                            .map(t -> t.id())
+                            .collect(toList());
+                    List<Teacher> teachers = teacherRepository.findAllHavingLessonOnDateAndTime(
+                            teacherIds, timetable.id(), day.date(), lesson.time()
+                    );
+                    createErrors(day, lesson, teachers, result);
                 }
             }
         }
-        return resultOfApplySpecification;
+        return result;
     }
 
-    private String createErrorMessage(SchoolDay day, Lesson lesson, List<Teacher> teachers) {
-        StringBuilder teacherNames = new StringBuilder();
+    private void createErrors(
+            SchoolDay day,
+            Lesson lesson,
+            List<Teacher> teachers,
+            ResultOfApplySpecification result
+    ) {
         for (Teacher teacher : teachers) {
-            teacherNames.append(teacher.fullName()).append("; ");
+            result.addError(createMessage(day, lesson, teacher));
         }
+    }
 
+    private String createMessage(SchoolDay day, Lesson lesson, Teacher teacher) {
         return String.format(
-                "%s в %s преподователи %s одновременно ведет две пары",
+                "%s в %s преподователь %s одновременно ведет две пары",
                 day.date().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 lesson.time(),
-                teacherNames
+                teacher.fullName()
         );
     }
 }

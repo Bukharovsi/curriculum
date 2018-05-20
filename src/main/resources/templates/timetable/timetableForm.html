@@ -43,14 +43,14 @@
             </div>
         </div>
 
-        <div class="row" th:if="${!timetable.validation.hasErrors()}">
+        <div class="row">
             <div th:if="${timetable.validation.hasWarnings()}"  class="alert alert-warning col-sm-offset-2 col-sm-8">
                 <div><span class="glyphicon glyphicon-exclamation-sign"></span><b> Внимание:</b></div>
                 <ul>
                     <li th:each="war : ${timetable.validation.warnings}" th:text="${war}" />
                 </ul>
                 &nbsp;
-                <div align="right">
+                <div align="right" th:if="${!timetable.validation.hasErrors()}">
                     <span><b>Вы можете сохранить игнорируя данные предупреждения</b></span>
                     <button class="btn btn-warning" type="submit" th:value="true" name="ignoreWarning" th:formaction="@{/timetable/edit}">Сохранить</button>
                 </div>

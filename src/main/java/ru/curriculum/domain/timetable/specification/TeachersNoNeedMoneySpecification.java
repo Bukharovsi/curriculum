@@ -26,11 +26,10 @@ public class TeachersNoNeedMoneySpecification extends CompositeSpecification<Tim
 
     @Override
     public ResultOfApplySpecification isSatisfiedBy(Timetable timetable) {
-        ResultOfApplySpecification resultOfApplySpecification = new ResultOfApplySpecification();
+        ResultOfApplySpecification result = new ResultOfApplySpecification();
         if(timetable.createdFrom().financingSource().equals(FinancingSource.BUDGET)) {
-            return resultOfApplySpecification;
+            return result;
         }
-
         for (SchoolDay day : timetable.schoolDays()) {
             List<Teacher> teachers = teacherRepository.findAllHavingLessonOnDate(timetable.id(), day.date());
             for (Lesson lesson : day.lessons()) {
@@ -38,21 +37,19 @@ public class TeachersNoNeedMoneySpecification extends CompositeSpecification<Tim
                     teachers.addAll(lesson.teachers());
                 }
             }
-
-            checkIfTeacherHasMoreThan4HoursInOneDay(day, groupTeacher(teachers), resultOfApplySpecification);
+            checkIfTeacherHasMoreThan4HoursInOneDay(day, groupTeacher(teachers), result);
         }
-
-        return resultOfApplySpecification;
+        return result;
     }
 
     private void checkIfTeacherHasMoreThan4HoursInOneDay(
             SchoolDay day,
             Map<Teacher, Long> groupingTeachers,
-            ResultOfApplySpecification resultOfApplySpecification
+            ResultOfApplySpecification result
     ) {
         groupingTeachers.forEach((teacher, lessonCount) -> {
             if (4 < lessonCount) {
-                resultOfApplySpecification.addError(createErrorMessage(day, teacher));
+                result.addError(createError(day, teacher));
             }
         });
     }
@@ -63,7 +60,7 @@ public class TeachersNoNeedMoneySpecification extends CompositeSpecification<Tim
                 .collect(Collectors.groupingBy(t -> t, Collectors.counting()));
     }
 
-    private String createErrorMessage(SchoolDay day, Teacher teacher) {
+    private String createError(SchoolDay day, Teacher teacher) {
         return String.format("%s преподователь %s работает больше 4 часов",
                 day.date().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 teacher.fullName()
