@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.curriculum.service.timetable.TimetableSearchService;
-import ru.curriculum.service.timetable.dto.TeacherDto;
-
 
 
 @PreAuthorize("permitAll()")
@@ -22,10 +20,8 @@ public class TimetableApiController {
             @RequestParam("etp_id") Integer eptId,
             @RequestParam("theme") String themeName
     ) {
-        TeacherDto dto = timetableSearchService.getTeacherDefineInEtpTheme(eptId, themeName);
-        if(null == dto) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(
+                timetableSearchService.getTeacherDefineInEtpTheme(eptId, themeName)
+        );
     }
 }

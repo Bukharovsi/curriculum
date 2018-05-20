@@ -3,7 +3,7 @@ $(function () {
 })
 
 function themeSelection(element) {
-    var etpId = $('#id').val()
+    var etpId = $('#createFromEtpId').val()
     var themeName = element.value
     var teacherElement = getTeacherElementByTheme(element)
 
@@ -18,18 +18,19 @@ function themeSelection(element) {
         dataType: 'json',
         cache: false,
         success: function (data) {
-            teacherElement.val(data.teacherId).change()
+            var teacherIds = data.map((t) => {return t.teacherId});
+            teacherElement.val(teacherIds).change()
+            teacherElement.trigger("chosen:updated");
         },
         error: function (e) {
             console.log(e)
-            teacherElement.val("").change()
         }
     });
 }
 
 function getTeacherElementByTheme(themeElement) {
     var idAsArray = themeElement.id.split('.')
-    idAsArray[idAsArray.length - 1] = 'teacherId'
+    idAsArray[idAsArray.length - 1] = 'teacherIds'
     var teacherId = idAsArray.join('\\.')
 
     return $('#' + teacherId)

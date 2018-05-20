@@ -19,26 +19,29 @@ public interface TeacherRepository extends PagingAndSortingRepository<Teacher, I
             "      :etp_id AS etp_id " +
             "), ea_module AS ( " +
             "    SELECT " +
-            "      ep.teacher_id, " +
+            "      pt.teacher_id, " +
             "      et.name " +
             "    FROM param, education_module em " +
             "      JOIN education_section es ON em.id = es.education_module_id " +
             "      JOIN education_topic et ON es.id = et.education_section_id " +
-            "      JOIN etp_plan ep ON et.etp_plan_id = ep.id\n" +
+            "      JOIN etp_plan ep ON et.etp_plan_id = ep.id " +
+            "      JOIN plan_teacher pt ON ep.id = pt.plan_id " +
             "    WHERE em.etp_id = param.etp_id AND et.name = param.theme_name " +
             "), ema_module AS ( " +
             "    SELECT " +
-            "      ep.teacher_id, " +
+            "      pt.teacher_id, " +
             "      emm.name " +
             "    FROM param, education_methodical_module emm " +
             "      JOIN etp_plan ep ON emm.etp_plan_id = ep.id " +
+            "      JOIN plan_teacher pt ON ep.id = pt.plan_id " +
             "    WHERE emm.etp_id = param.etp_id AND emm.name = param.theme_name " +
             "), oma_module AS ( " +
             "    SELECT " +
-            "      ep.teacher_id, " +
+            "      pt.teacher_id, " +
             "      omm.name " +
             "    FROM param, organization_methodical_module omm " +
             "      JOIN etp_plan ep ON omm.etp_plan_id = ep.id " +
+            "      JOIN plan_teacher pt ON ep.id = pt.plan_id " +
             "    WHERE omm.etp_id = param.etp_id AND omm.name = param.theme_name " +
             "), teacher_ids AS ( " +
             "  SELECT teacher_id FROM ea_module " +
@@ -50,11 +53,13 @@ public interface TeacherRepository extends PagingAndSortingRepository<Teacher, I
             "SELECT " +
             "  t.* " +
             "FROM teacher t, teacher_ids ti " +
-            "WHERE t.id IN (ti.teacher_id) " +
-            "LIMIT 1",
+            "WHERE t.id IN (ti.teacher_id) ",
             nativeQuery = true
     )
-    Teacher findTeacherDefineInEtpTheme(@Param("etp_id") Integer etpId, @Param("theme_name") String themeName);
+    List<Teacher> findTeacherDefineInEtpTheme(
+            @Param("etp_id") Integer etpId,
+            @Param("theme_name") String themeName
+    );
 
     @Query(value = "" +
             "SELECT " +
