@@ -12,6 +12,8 @@ import ru.curriculum.domain.teacher.repository.TeacherRepository;
 import ru.curriculum.service.etp.converter.PlanFactory;
 import ru.curriculum.service.etp.dto.PlanDto;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
@@ -29,8 +31,8 @@ public class PlanAndPlanDtoCreationTest {
     @Before
     public void setUp() {
         etpMock = new ETPMock();
-        when(teacherRepository.findOne(etpMock.getTeacher().id()))
-                .thenReturn(etpMock.getTeacher());
+        when(teacherRepository.findAll(Arrays.asList(etpMock.getTeacher().id())))
+                .thenReturn(Arrays.asList(etpMock.getTeacher()));
     }
 
     @Test
@@ -64,6 +66,6 @@ public class PlanAndPlanDtoCreationTest {
         assertEquals(dto.getHoursPerOneListener(), plan.hoursPerOneListener());
         assertEquals(dto.getGroupCount(), plan.groupCount());
         assertEquals(dto.getConditionalPagesCount(), plan.conditionalPagesCount());
-        assertNotNull(plan.teacher());
+        assertNotNull(plan.teachers());
     }
 }

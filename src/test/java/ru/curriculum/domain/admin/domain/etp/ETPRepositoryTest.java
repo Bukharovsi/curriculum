@@ -37,7 +37,8 @@ public class ETPRepositoryTest extends IntegrationBoot {
                 etpMock.getTeacher().type()
         );
         Plan plan = etpMock.getPlan();
-        plan.teacher(teacherRepository.save(teacher));
+        plan.teachers().clear();
+        plan.teachers().add(teacherRepository.save(teacher));
         etpMock.applyNewPlanForModules(plan);
     }
 

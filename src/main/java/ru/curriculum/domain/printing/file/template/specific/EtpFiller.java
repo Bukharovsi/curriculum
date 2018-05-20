@@ -5,6 +5,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import ru.curriculum.domain.printing.file.excel.DefaultCellStyle;
+import ru.curriculum.service.teacher.dto.TeacherDto;
+
+import java.util.List;
 
 abstract class EtpFiller {
 
@@ -66,6 +69,14 @@ abstract class EtpFiller {
         String endCellAddress = toCellAddress(row.getRowNum(), tsr.others());
         String formula = String.format(this.hoursPerOneListener, startCellAddress, endCellAddress);
         createCellFormula(row, tsr.hoursPerOneListener(), formula);
+    }
+
+    protected String joinTeachers(List<TeacherDto> teachers) {
+        StringBuilder sb = new StringBuilder();
+        for (TeacherDto teacher : teachers) {
+            sb.append(teacher.getFullName()).append(" ");
+        }
+        return sb.toString();
     }
 
     protected void createCellFormula(Row row, Integer cellNum, String formula) {

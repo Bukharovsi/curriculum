@@ -67,7 +67,7 @@ public class CuratorCRUDService {
     public void delete(Integer curatorId) {
         Teacher teacher = teacherRepository.findByCuratorId(curatorId);
         if(null != teacher) {
-            teacher.deleteCuratorProfile(); // TODO: придумать название
+            teacher.deleteCuratorProfile();
             teacherRepository.save(teacher);
         }
         curatorRepository.delete(curatorId);

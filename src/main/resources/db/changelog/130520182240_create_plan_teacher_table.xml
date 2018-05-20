@@ -1,0 +1,61 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="130520182240" author="Vlad">
+
+        <createTable tableName="plan_teacher">
+            <column name="plan_id" type="int">
+                <constraints foreignKeyName="plan_teacher_plan_fk" references="etp_plan(id)" nullable="false"></constraints>
+            </column>
+            <column name="teacher_id" type="int">
+                <constraints foreignKeyName="plan_teacher_teacher_fk" references="teacher(id)" nullable="false"></constraints>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="plan_teacher"
+                       columnNames="plan_id, teacher_id"
+                       constraintName="plan_teacher_pk"
+        />
+
+        <sql>
+            INSERT INTO plan_teacher (plan_id, teacher_id)
+                SELECT id, teacher_id
+                FROM etp_plan
+                WHERE teacher_id IS NOT NULL AND teacher_id IN (SELECT id FROM teacher);
+        </sql>
+
+        <dropForeignKeyConstraint baseTableName="etp_plan" constraintName="etp_plan_teacher_fk"></dropForeignKeyConstraint>
+
+        <dropColumn tableName="etp_plan" columnName="teacher_id"></dropColumn>
+
+        <!---->
+        <rollback>
+
+            <addColumn tableName="etp_plan">
+                <column name="teacher_id" type="int"></column>
+            </addColumn>
+
+            <addForeignKeyConstraint baseTableName="etp_plan"
+                                     baseColumnNames="teacher_id"
+                                     constraintName="etp_plan_teacher_fk"
+                                     referencedTableName="teacher"
+                                     referencedColumnNames="id"
+            />
+
+            <sql>
+                UPDATE
+                    etp_plan
+                SET teacher_id = plan_teacher.teacher_id
+                FROM (SELECT teacher_id, plan_id FROM plan_teacher) AS plan_teacher
+                WHERE etp_plan.id = plan_teacher.plan_id;
+            </sql>
+
+            <dropTable tableName="plan_teacher"></dropTable>
+
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

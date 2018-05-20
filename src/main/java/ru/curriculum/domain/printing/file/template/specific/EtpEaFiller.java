@@ -90,8 +90,8 @@ public class EtpEaFiller extends EtpFiller {
         createTableCell(row, tsr.groupCount(), plan.getGroupCount());
         createTableCell(row, tsr.conditionalPagesCount(), plan.getConditionalPagesCount());
         createTotalHoursCell(row);
-        String teacher = plan.hasTeacher() ? plan.getTeacher().getFullName() : "";
-        createTableCell(row, tsr.teacher(), teacher);
+        String teachers = joinTeachers(plan.getTeachers());
+        createTableCell(row, tsr.teacher(), teachers);
     }
 
     private Integer getEaModuleTotalCountRows() {
