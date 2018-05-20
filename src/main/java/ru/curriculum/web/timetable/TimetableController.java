@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.thymeleaf.spring4.util.DetailedError;
 import ru.curriculum.application.route.Routes;
 import ru.curriculum.service.etp.dto.ETPDto;
 import ru.curriculum.service.teacher.TeacherCRUDService;
@@ -17,6 +19,7 @@ import ru.curriculum.service.timetable.TimetableCRUDService;
 import ru.curriculum.service.timetable.TimetableSearchService;
 import ru.curriculum.service.timetable.dto.WeeklyTimetableDto;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import static ru.curriculum.web.Redirect.*;
@@ -50,19 +53,22 @@ public class TimetableController {
         return TIMETABLE_FORM;
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(value = "/edit", params = "ignoreWarning", method = RequestMethod.PUT)
     public String editTimetable(
             @ModelAttribute("timetable") @Valid WeeklyTimetableDto timetableDto,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            HttpServletRequest req
     ) {
+        timetableDto.setIgnoreWarnings(Boolean.valueOf(req.getParameter("ignoreWarning")));
         if(bindingResult.hasErrors()) {
             prepareViewModel(model, timetableDto);
             return TIMETABLE_FORM;
         }
 
+        //TODO: передавать параметр чтоль
         WeeklyTimetableDto updatedTimetable = timetableCRUDService.update(timetableDto);
-        if(updatedTimetable.hasErrors()) {
+        if(!updatedTimetable.getValidation().isSuccess()) {
             model.addAttribute("timetable", updatedTimetable);
             prepareViewModel(model, updatedTimetable);
             return TIMETABLE_FORM;

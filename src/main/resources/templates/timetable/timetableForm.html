@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div th:if="${timetable.id}" style="align-items: center;">
-                <div th:include="fragments/pageHeader :: pageHeader('Редактирование', ${timetable.theme})"></div>
+                <div th:include="fragments/pageHeader :: pageHeader('Редактирование', '')"></div>
             </div>
             <hr/>
         </div>
@@ -26,23 +26,36 @@
     >
         <div class="form-group">
             <div class="col-sm-12">
-                <input class="btn btn-default" type="submit" th:value="Сохранить"/>
+                <button class="btn btn-default" type="submit" th:value="false" name="ignoreWarning" th:formaction="@{/timetable/edit}">Сохранить</button>
                 <a class="btn btn-default" th:href="@{/etp/edit/{id}(id=${timetable.createFromEtpId})}">Перейти к УТП</a>
                 <a class="btn btn-default" th:href="@{/timetable}">Назад</a>
             </div>
         </div>
 
         <div class="row">
-            <div th:if="${0 != timetable.errors.size()}"  class="alert alert-danger col-sm-offset-2 col-sm-8">
-                <div>Необходимо исправить следующие ошибки: </div>
+            <div th:if="${timetable.validation.hasErrors()}"  class="alert alert-danger col-sm-offset-2 col-sm-8">
+                <div><span class="glyphicon glyphicon-remove"></span><b> Необходимо исправить следующие ошибки: </b></div>
                 <ul>
-                    <li th:each="err : ${timetable.errors}" th:text="${err}" />
+                    <li th:each="err : ${timetable.validation.errors}" th:text="${err}" />
                 </ul>
             </div>
         </div>
 
+        <div class="row" th:if="${!timetable.validation.hasErrors()}">
+            <div th:if="${timetable.validation.hasWarnings()}"  class="alert alert-warning col-sm-offset-2 col-sm-8">
+                <div><span class="glyphicon glyphicon-exclamation-sign"></span><b> Внимание:</b></div>
+                <ul>
+                    <li th:each="war : ${timetable.validation.warnings}" th:text="${war}" />
+                </ul>
+                &nbsp;
+                <div align="right">
+                    <span><b>Вы можете сохранить игнорируя данные предупреждения</b></span>
+                    <button class="btn btn-warning" type="submit" th:value="true" name="ignoreWarning" th:formaction="@{/timetable/edit}">Сохранить</button>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
-            <div th:include="fragments/formValidationError"></div>
             <div>
                 <input th:hidden="true" type="number" th:field="*{id}"/>
             </div>
@@ -87,6 +100,11 @@
                         <tr style="text-align: center">
                             <td>
                                 <input th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].time}" class="form-control" readonly>
+                                <div th:if="${#fields.hasErrors()}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].time}')}" th:text="${err}" />
+                                    </ul>
+                                </div>
                             </td>
 
                             <td><select th:field="*{weeks[__${weekStat.index}__].schoolDays[__${dayStat.index}__].lessons[__${lessonStat.index}__].theme}"

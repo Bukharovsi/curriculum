@@ -7,9 +7,9 @@ import ru.curriculum.domain.timetable.entity.WeeklyTimetable;
 import ru.curriculum.domain.timetable.repository.TimetableRepository;
 import ru.curriculum.domain.timetable.specification.ISpecification;
 import ru.curriculum.domain.timetable.specification.ResultOfApplySpecification;
-import ru.curriculum.domain.timetable.specification.builder.ITimetableSpecificationBuilder;
 import ru.curriculum.service.etp.dto.ETPDto;
 import ru.curriculum.service.timetable.converter.TimetableDtoToTimetableConverter;
+import ru.curriculum.service.timetable.dto.TimetableDtoValidation;
 import ru.curriculum.service.timetable.dto.WeeklyTimetableDto;
 
 import javax.persistence.EntityNotFoundException;
@@ -29,7 +29,7 @@ public class TimetableCRUDService {
     @Autowired
     private TimetableDtoToTimetableConverter timetableDtoToTimetableConverter;
     @Autowired
-    private ITimetableSpecificationBuilder specificationBuilder;
+    private TimetableSpecificationResolver specificationResolver;
 
     public WeeklyTimetableDto get(Integer id) {
         Timetable timetable = timetableRepository.findOne(id);
@@ -66,10 +66,10 @@ public class TimetableCRUDService {
 
         Timetable timetable = timetableDtoToTimetableConverter.convert(timetableDto);
 
-        ISpecification<Timetable> specification = specificationBuilder.buildSpecification();
+        ISpecification<Timetable> specification = specificationResolver.getSpecification(timetableDto);
         ResultOfApplySpecification result = specification.isSatisfiedBy(timetable);
         if(!result.isSuccess()) {
-            timetableDto.setErrors(result.getErrorMessages());
+            timetableDto.setValidation(new TimetableDtoValidation(result));
             return timetableDto;
         }
 
