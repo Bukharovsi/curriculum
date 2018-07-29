@@ -47,9 +47,11 @@
                 </a>
             </td>
             <td align="right">
-                <a th:href="@{/admin/curators/delete/{id}(id=${curator.id})}" data-toggle="tooltip" title="Удалить">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </a>
+                <div th:unless="${curator.isAdmin}">
+                    <a th:href="@{/admin/curators/delete/{id}(id=${curator.id})}" data-toggle="tooltip" title="Удалить">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
             </td>
         </tr>
         </tbody>

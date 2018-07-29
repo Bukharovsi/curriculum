@@ -101,8 +101,11 @@ public class Curator {
         return null != teacher;
     }
 
-
     public void changePassword(String password) {
         this.password = new Password(password);
+    }
+
+    public boolean isAdmin() {
+        return login.equals("admin");
     }
 }

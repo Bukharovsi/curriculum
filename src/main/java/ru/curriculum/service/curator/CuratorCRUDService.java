@@ -8,6 +8,7 @@ import ru.curriculum.domain.teacher.entity.Teacher;
 import ru.curriculum.domain.teacher.repository.TeacherRepository;
 import ru.curriculum.service.curator.converter.DtoToCuratorConverter;
 import ru.curriculum.service.curator.dto.CuratorDto;
+import ru.curriculum.service.curator.exception.CrudOperationException;
 import ru.curriculum.service.curator.exception.CuratorNotFoundException;
 
 import java.util.ArrayList;
@@ -16,17 +17,26 @@ import java.util.Collection;
 
 @Component
 public class CuratorCRUDService {
-    @Autowired
     private CuratorRepository curatorRepository;
-    @Autowired
     private TeacherRepository teacherRepository;
-    @Autowired
     private DtoToCuratorConverter dtoToCuratorConverter;
+
+    @Autowired
+    public CuratorCRUDService(
+            CuratorRepository curatorRepository,
+            TeacherRepository teacherRepository,
+            DtoToCuratorConverter dtoToCuratorConverter
+    ) {
+        this.curatorRepository = curatorRepository;
+        this.teacherRepository = teacherRepository;
+        this.dtoToCuratorConverter = dtoToCuratorConverter;
+    }
 
     public Collection<CuratorDto> findAllCurators() {
         Collection<CuratorDto> curatorDtos = new ArrayList<>();
         curatorRepository.findAll().forEach(curator ->
-                curatorDtos.add(new CuratorDto(curator)));
+                curatorDtos.add(new CuratorDto(curator))
+        );
 
         return curatorDtos;
     }
@@ -64,12 +74,25 @@ public class CuratorCRUDService {
         curatorRepository.save(curator);
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void delete(Integer curatorId) {
+        Curator  curator = curatorRepository.findOne(curatorId);
+        if (null == curator) {
+            throw new CrudOperationException(
+                    String.format("Попытка удалить несуществующего куратора, id=%s", curatorId)
+            );
+        }
+
+        if (curator.isAdmin()) {
+            throw new CrudOperationException("Куратора с логином \"admin\" нельзя удалить, является системным");
+        }
+
         Teacher teacher = teacherRepository.findByCuratorId(curatorId);
         if(null != teacher) {
             teacher.deleteCuratorProfile();
             teacherRepository.save(teacher);
         }
+
         curatorRepository.delete(curatorId);
     }
 }
