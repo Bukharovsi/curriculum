@@ -149,3 +149,10 @@
     padding: 5px 15px;
     margin-top: 15px;
 }
+
+@media (min-width: 768px) {
+    .container-fluid {
+        padding-right: 5px;
+        padding-left: 0;
+    }
+}
