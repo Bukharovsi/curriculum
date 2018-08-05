@@ -21,29 +21,33 @@ import static ru.curriculum.web.Redirect.redirectTo;
 @Controller
 @RequestMapping(path = Routes.curator)
 public class CuratorManagementController {
-    @Autowired
     private CuratorCRUDService curatorCRUDService;
-    @Autowired
     private UniqueLoginValidator uniqueLoginValidator;
+
+    @Autowired
+    public CuratorManagementController(
+            CuratorCRUDService curatorCRUDService,
+            UniqueLoginValidator uniqueLoginValidator
+    ) {
+        this.curatorCRUDService = curatorCRUDService;
+        this.uniqueLoginValidator = uniqueLoginValidator;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String curatorList(Model model) {
         model.addAttribute("curators", curatorCRUDService.findAllCurators());
-
         return View.CURATOR_LIST;
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String getNewCuratorForm(Model model) {
         model.addAttribute("curator", new CuratorDto());
-
         return View.CURATOR_FORM;
     }
 
     @RequestMapping(value = "/edit/{id}")
     public String getEditCuratorForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("curator", curatorCRUDService.getCurator(id));
-
         return View.CURATOR_FORM;
     }
 
@@ -54,7 +58,6 @@ public class CuratorManagementController {
             return View.CURATOR_FORM;
         }
         curatorCRUDService.create(curatorDto);
-
         return redirectTo(Routes.curator);
     }
 
@@ -64,14 +67,12 @@ public class CuratorManagementController {
             return View.CURATOR_FORM;
         }
         curatorCRUDService.update(curatorDto);
-
         return redirectTo(Routes.curator);
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteCurator(@PathVariable("id") Integer id) {
         curatorCRUDService.delete(id);
-
         return redirectTo(Routes.curator);
     }
 }

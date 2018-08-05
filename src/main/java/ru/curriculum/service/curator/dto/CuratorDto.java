@@ -35,6 +35,8 @@ public class CuratorDto implements Serializable {
 
     private Boolean isTeacher;
 
+    private Boolean isAdmin;
+
     public CuratorDto() {
         this.isTeacher = false;
     }
@@ -47,10 +49,7 @@ public class CuratorDto implements Serializable {
         this.patronymic = curator.patronymic();
         this.fullName = curator.fullName();
         this.isTeacher = curator.isTeacher();
-    }
-
-    public boolean passwordIsPresent() {
-        return null != password && !password.isEmpty();
+        this.isAdmin = curator.isAdmin();
     }
 
     public String fio() {

@@ -18,7 +18,6 @@ public class CuratorPrincipalService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<Curator> curators = (List<Curator>) curatorRepository.findAll();
         Curator curator = curatorRepository.findByLogin(username);
         if(null == curator) {
             throw new UsernameNotFoundException(String.format("Curator with login \"%s\" not found", username));

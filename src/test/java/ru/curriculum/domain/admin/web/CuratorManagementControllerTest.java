@@ -156,5 +156,23 @@ public class CuratorManagementControllerTest extends IntegrationWebBoot {
 
         assertNull("Curator deleted", curator);
     }
+
+    @Test
+    public void tryToDeleteAdmin_mustBeErrorAndCuratorAdminNotDelete() throws Exception {
+        String url = "/admin/curators/delete/1";
+        mockMvc.perform(get(url)).andDo(print())
+                .andExpect(view().name("error/errorPage"));
+
+        Curator curator = curatorRepository.findOne(curators.get(1).id());
+
+        assertNotNull(curator);
+    }
+
+    @Test
+    public void tryToDeleteNonExistenceCurator_mustBeError() throws Exception {
+        String url = "/admin/curators/delete/999999";
+        mockMvc.perform(get(url)).andDo(print())
+                .andExpect(view().name("error/errorPage"));
+    }
 }
 
