@@ -4,7 +4,9 @@ $(function () {
 })
 
 function addMultiSelectToTeacherInput() {
-    $(".t_ms").chosen();
+    $(".t_ms").chosen({
+        width: "100%"
+    });
 }
 
 function bindOnChangesToCalculateEtpTotalHours() {

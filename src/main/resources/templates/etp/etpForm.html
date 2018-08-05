@@ -5,8 +5,8 @@
 <head>
     <title>Учебно-тематический план</title>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/etp/etp.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/chosen/1.8.3/chosen.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/etp/etp.css}">
 
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <script type="text/javascript" th:src="@{/js/etp/etp.js}"></script>
@@ -202,10 +202,9 @@
                         </div>
                         <td>
                             <input type="text" class="form-control" th:field="*{emaModules[__${rowModuleStat.index}__].name}"
-                                   th:style="${true == #fields.errors()
-                                   ? 'border-color: red; padding-left: 10px; padding-right: 5px; text-align: left;'
-                                   : 'padding-left: 10px; padding-right: 5px; text-align: left;'}"
-                                   placeholder="Название темы">
+                                   style="padding-left: 10px; padding-right: 5px; text-align: left;"
+                                   placeholder="Название темы"
+                            >
                         </td>
 
                         <td><input th:field="*{emaModules[__${rowModuleStat.index}__].plan.lectures}" type="text" class="form-control"></td>
@@ -322,7 +321,8 @@
                         </div>
                         <tr>
                             <td style="background-color: #ddddddcc" colspan="14">
-                                <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].name}" placeholder="Название раздела"
+                                <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].name}"
+                                       placeholder="Название раздела"
                                        style="padding-left: 10px; padding-right: 5px; text-align: left;"
                                 >
                             </td>
@@ -345,7 +345,10 @@
                                     <input hidden="true" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].id}">
                                 </div>
                                 <td>
-                                    <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].name}" placeholder="Название темы">
+                                    <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].name}"
+                                           placeholder="Название темы"
+                                           style="padding-left: 10px; padding-right: 5px; text-align: left;"
+                                    >
                                 </td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.lectures}" type="text" class="form-control" ></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.practices}" type="text" class="form-control"></td>
@@ -360,7 +363,7 @@
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.groupCount}" type="text" class="form-control"></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.conditionalPagesCount}" type="text" class="form-control"></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.totalHours}" type="text" class="form-control" readonly></td>
-                                <td><select th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.teacherIds}"
+                                <td class="multi_teacher"><select th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.teacherIds}"
                                             data-placeholder="Преподователь..."
                                             multiple
                                             class="t_ms form-control">
