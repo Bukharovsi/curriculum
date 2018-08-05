@@ -4,7 +4,9 @@ $(function () {
 })
 
 function addMultiSelectToTeacherInput() {
-    $(".t_ms").chosen();
+    $(".t_ms").chosen({
+        width: "100%"
+    });
 }
 
 function bindOnChangesToCalculateEtpTotalHours() {
@@ -41,8 +43,9 @@ function attachMask(element) {
 function getFloatMask() {
     return new Inputmask('decimal', {
         digits: 2,
+        integerDigits: 2,
         allowMinus: false,
-        placeholder: "0.0",
+        placeholder: "0.0"
     })
 }
 
@@ -93,7 +96,7 @@ function calcTotalHours(rowName) {
     var lernerCount = $("input[id='" + rowName + ".lernerCount']").val()
     var totalHoursRow = total + standard * lernerCount
 
-    $("input[id='" + rowName + ".totalHours']").val(totalHoursRow)
+    $("input[id='" + rowName + ".totalHours']").val(totalHoursRow.toFixed(2))
 
     var totalHours = calcTotalColumn('totalHours')
 
@@ -111,7 +114,7 @@ function calcHourPerOneLerner(rowName) {
         }
     })
 
-    $("input[id='" + rowName + ".hoursPerOneListener']").val(hoursPerOneLerner)
+    $("input[id='" + rowName + ".hoursPerOneListener']").val(hoursPerOneLerner.toFixed(2))
 
     calcTotalColumn('hoursPerOneListener')
 }
@@ -152,7 +155,17 @@ function calcTotalColumn(colName) {
         }
     })
 
-    var total = emaTotal + omaTotal + eaTotal;
+    var total;
+    if (isIntegerField(colName)) {
+        total = emaTotal + omaTotal + eaTotal;
+    } else {
+        total = (emaTotal + omaTotal + eaTotal).toFixed(2)
+        emaTotal = emaTotal.toFixed(2)
+        omaTotal = omaTotal.toFixed(2)
+        eaTotal = eaTotal.toFixed(2)
+    }
+
+    // var total = emaTotal + omaTotal + eaTotal;
     $('#emaModuleTotalRow\\.' + colName).val(emaTotal)
     $('#omaModuleTotalRow\\.' + colName).val(omaTotal)
     $('#eaModuleTotalRow\\.' + colName).val(eaTotal)

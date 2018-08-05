@@ -3,6 +3,22 @@
     vertical-align: middle;
 }
 
+#table_etp > tbody > tr > td {
+    padding: 0;
+}
+
+#table_etp > tbody > tr > td > input {
+    padding-left: 5%;
+    padding-right: 5%;
+    font-size: 13px;
+    text-align: right;
+}
+
+#table_etp > tbody > tr > td > label {
+    padding-left: 2%;
+    display: inline;
+}
+
 #lecture, #practice, #independent, #consultation, #review, #credit, #other, #standard  {
     width: 4%;
 }
@@ -18,7 +34,7 @@
 }
 
 #manage {
-    width: 3%;
+    width: 2%;
 }
 
 #teacher {
@@ -29,11 +45,15 @@
     background-color: #9d9d9d;
 }
 
-[name~=plan] {
-    padding-left: 0%;
-    padding-right: 0%;
+#ea_row, #ema_row, #oma_row > h4 {
+    text-align: center;
 }
 
-/*[name~=standard] {*/
-    /*background-color: #ccfdfd;*/
-/*}*/
+#table_etp > tbody > tr > td {
+    vertical-align: middle;
+}
+
+[name~=plan] {
+    padding-left: 0;
+    padding-right: 0;
+}
