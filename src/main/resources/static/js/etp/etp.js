@@ -109,7 +109,14 @@ function calcHourPerOneLerner(rowName) {
     var hoursPerOneLerner = 0.0
 
     $(rowSelector).each(function (i, e) {
-        if(isMainHoursField(e.name) && e.value) {
+
+        var isFieldNeedToCalcHoursForPerLerner =
+            /lectures/.test(e.name) ||
+            /practices/.test(e.name) ||
+            /independentWorks/.test(e.name) ||
+            /credits/.test(e.name)
+
+        if (isFieldNeedToCalcHoursForPerLerner && e.value) {
             hoursPerOneLerner += parseFloat(e.value)
         }
     })
