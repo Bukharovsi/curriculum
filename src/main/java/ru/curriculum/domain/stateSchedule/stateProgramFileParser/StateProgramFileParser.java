@@ -47,13 +47,12 @@ public class StateProgramFileParser {
             return result;
         } catch (IOException e) {
             throw new RuntimeException(
-                    String.format("Во время формирования плана-графика возникла ошибка. \n", e.toString()));
+                    String.format("Во время формирования плана-графика возникла ошибка. %s \n", e.toString()));
         }
     }
 
     private List<StateProgramTemplate> parseDoc(XWPFDocument doc) {
         List<StateProgramTemplate> stateProgramList = new ArrayList<>();
-        Integer programYear = stateProgramDateParser.getStateProgramYear(doc);
         XWPFTable table = getTable(doc);
         if(null == table) {
             return stateProgramList;
@@ -62,9 +61,11 @@ public class StateProgramFileParser {
         List<XWPFTableRow> rows = getRows(table);
         ColumnIndexToFieldMap fieldMap = columnIndexToFieldMapper.tryToIdentifyFieldsAndMapToColumnIndex(table);
 
+        Integer programYear = stateProgramDateParser.getStateProgramYear(doc);
         Date stateProgramBeginDate = stateProgramDateParser.makeStartDate(programYear, 1);
         Date stateProgramEndDate = stateProgramDateParser.makeEndDate(programYear, 1);
         for(XWPFTableRow row: rows) {
+            //TODO: это непонятно! надо было сделать метод с говорящим названием
             if(1 == row.getTableCells().size()) {
                 stateProgramBeginDate = stateProgramDateParser
                         .makeStartDate(programYear, stateProgramDateParser.getMonth(row.getCell(0).getText()));

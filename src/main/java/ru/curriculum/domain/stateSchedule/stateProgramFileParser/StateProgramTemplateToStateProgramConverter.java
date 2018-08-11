@@ -4,9 +4,8 @@ import org.springframework.stereotype.Component;
 import ru.curriculum.domain.stateSchedule.entity.StateProgram;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
-import static java.util.stream.Collectors.toSet;
 
 @Component
 public class StateProgramTemplateToStateProgramConverter {
@@ -25,7 +24,7 @@ public class StateProgramTemplateToStateProgramConverter {
                     .address(template.address())
                     .mode(template.mode())
                     .implementationForm(template.implementationForm())
-                    .internships(template.internships().stream().collect(toSet()))
+                    .internships(new HashSet<>(template.internships()))
                     .build();
             statePrograms.add(program);
         }

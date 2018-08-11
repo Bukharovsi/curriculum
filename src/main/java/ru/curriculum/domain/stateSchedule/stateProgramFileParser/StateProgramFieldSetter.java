@@ -8,16 +8,16 @@ import java.util.Date;
 
 import static ru.curriculum.domain.stateSchedule.stateProgramFileParser.StateProgramFieldsStorage.*;
 
-public class StateProgramFieldSetter {
+class StateProgramFieldSetter {
     private IDictionaryValuesFinder dictionaryValuesFinder;
     private InternshipParser internshipParser;
 
-    public StateProgramFieldSetter(IDictionaryValuesFinder dictionaryValuesFinder) {
+    StateProgramFieldSetter(IDictionaryValuesFinder dictionaryValuesFinder) {
         this.dictionaryValuesFinder = dictionaryValuesFinder;
         this.internshipParser = new InternshipParser();
     }
 
-    public void setFieldToStateProgram(String fieldName, Object value, StateProgramTemplate stateProgram) {
+    void setFieldToStateProgram(String fieldName, Object value, StateProgramTemplate stateProgram) {
         if (null == value) {
             return;
         }
@@ -51,7 +51,8 @@ public class StateProgramFieldSetter {
         }
     }
 
-    public void setFieldToInternship(String fieldName, Object value, Internship internship) {
+
+    void setFieldToInternship(String fieldName, Object value, Internship internship) {
         if(null == value) {
             return;
         }

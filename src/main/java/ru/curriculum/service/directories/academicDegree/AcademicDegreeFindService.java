@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Component
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 public class AcademicDegreeFindService {
     @Autowired
     private AcademicDegreeRepository repository;
 
     public Collection<AcademicDegreeDto> findAll() {
-        Collection dtos = new ArrayList();
+        Collection<AcademicDegreeDto> dtos = new ArrayList<>();
         repository.findAll().forEach(academicDegree ->
                 dtos.add(new AcademicDegreeDto(academicDegree))
         );
-
         return dtos;
     }
 }

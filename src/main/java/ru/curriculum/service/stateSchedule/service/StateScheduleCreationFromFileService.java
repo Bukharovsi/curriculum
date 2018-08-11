@@ -11,6 +11,7 @@ import ru.curriculum.domain.stateSchedule.stateProgramFileParser.StateProgramTem
 import java.util.List;
 
 @Component
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 public class StateScheduleCreationFromFileService {
     @Autowired
     private StateProgramFileParser stateProgramFileParser;

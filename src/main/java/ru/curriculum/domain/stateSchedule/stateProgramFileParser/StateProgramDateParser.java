@@ -30,7 +30,7 @@ public class StateProgramDateParser {
                 { put("декабрь", 12); }
             };
 
-    public Integer getStateProgramYear(XWPFDocument doc) {
+    Integer getStateProgramYear(XWPFDocument doc) {
         Integer year = Calendar.getInstance().get(Calendar.YEAR);
         Pattern yearPattern = Pattern.compile("[0-9]+");
         for(XWPFParagraph paragraph : doc.getParagraphs()) {
@@ -41,24 +41,21 @@ public class StateProgramDateParser {
                 }
             }
         }
-
         return year;
     }
 
     public Date makeStartDate(Integer year, Integer month) {
         LocalDate date = LocalDate.of(year, month, 1);
-
         return Date.from(date.with(firstDayOfMonth()).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public Date makeEndDate(Integer year, Integer month) {
         LocalDate date = LocalDate.of(year, month, 1);
-
         return Date.from(date.with(lastDayOfMonth()).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
     }
 
-    public Integer getMonth(String month) {
-        return monthMap.containsKey(month.toLowerCase()) ? monthMap.get(month.toLowerCase()) : 1;
+    Integer getMonth(String month) {
+        return monthMap.getOrDefault(month.toLowerCase(), 1);
     }
 }
 

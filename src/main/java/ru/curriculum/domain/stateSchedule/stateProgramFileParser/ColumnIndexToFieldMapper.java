@@ -6,14 +6,14 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import java.util.List;
 import java.util.Optional;
 
-public class ColumnIndexToFieldMapper {
+class ColumnIndexToFieldMapper {
     private StateProgramFieldsStorage stateProgramFieldsStorage;
 
-    public ColumnIndexToFieldMapper(StateProgramFieldsStorage stateProgramFieldsStorage) {
+    ColumnIndexToFieldMapper(StateProgramFieldsStorage stateProgramFieldsStorage) {
         this.stateProgramFieldsStorage = stateProgramFieldsStorage;
     }
 
-    public ColumnIndexToFieldMap tryToIdentifyFieldsAndMapToColumnIndex(XWPFTable table) {
+    ColumnIndexToFieldMap tryToIdentifyFieldsAndMapToColumnIndex(XWPFTable table) {
         ColumnIndexToFieldMap map = new ColumnIndexToFieldMap();
         if(0 == table.getRows().size()) {
             return map;

@@ -21,6 +21,7 @@ import static ru.curriculum.web.Redirect.redirectTo;
 
 @Controller
 @RequestMapping(path = Routes.stateSchedule)
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 public class StateScheduleController {
 
     @Autowired
@@ -166,3 +167,4 @@ public class StateScheduleController {
         return View.STATE_SCHEDULE_FORM;
     }
 }
+

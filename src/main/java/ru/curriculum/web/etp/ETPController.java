@@ -21,6 +21,7 @@ import static ru.curriculum.web.View.*;
 
 @Controller
 @RequestMapping(path = Routes.etp)
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 public class ETPController {
     @Autowired
     private ETP_CRUDService etpCRUDService;
