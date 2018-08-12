@@ -1,7 +1,8 @@
 $(function () {
+    fillLernerCountForAllRow()
     addMultiSelectToTeacherInput()
     bindOnChangesToCalculateEtpTotalHours()
-    bindOdChangeOnCountPerLerner()
+    bindOnChangeOnLernerCount()
 })
 
 function addMultiSelectToTeacherInput() {
@@ -14,15 +15,26 @@ function bindOnChangesToCalculateEtpTotalHours() {
     $("input[id*='plan']").each(function (index, element) {
         element.onchange = calcTotal
         attachMask(element)
-    })
-    updateTotalAfterRenderPage()
+    }).change()
 }
 
-function  bindOdChangeOnCountPerLerner() {
+function bindOnChangeOnLernerCount() {
     $("input[name='lernerCount']").change(function () {
         calcTotalLernerCount($(this).val())
     })
     calcTotalLernerCount()
+}
+
+function fillLernerCountForAllRow() {
+    var lernerCount = $("input[name='lernerCount']").val()
+    if (!lernerCount) {
+        return
+    }
+    $("input[name*='plan.lernerCount']").each(function (index, element) {
+        if (!element.value || element.value === "0") {
+            element.value = lernerCount
+        }
+    })
 }
 
 function calcTotalLernerCount(value) {
