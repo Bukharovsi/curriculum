@@ -1,6 +1,7 @@
 $(function () {
     addMultiSelectToTeacherInput()
     bindOnChangesToCalculateEtpTotalHours()
+    bindOdChangeOnCountPerLerner()
 })
 
 function addMultiSelectToTeacherInput() {
@@ -15,6 +16,18 @@ function bindOnChangesToCalculateEtpTotalHours() {
         attachMask(element)
     })
     updateTotalAfterRenderPage()
+}
+
+function  bindOdChangeOnCountPerLerner() {
+    $("input[name='lernerCount']").change(function () {
+        calcTotalLernerCount($(this).val())
+    })
+    calcTotalLernerCount()
+}
+
+function calcTotalLernerCount(value) {
+    var lernerCount = value ? value : $("input[name='lernerCount']").val()
+    $("input[name='etpTotalRow.lernerCount']").val(lernerCount)
 }
 
 /**
@@ -125,6 +138,10 @@ function calcHourPerOneLerner(rowName) {
  * @param colName
  */
 function calcTotalColumn(colName) {
+    if (isNotNeedCalcTotalColumn(colName)) {
+        return
+    }
+
     var colSelector = getSearchSelectorTemplate(colName)
 
     var emaTotal = 0.0,
@@ -169,9 +186,16 @@ function calcTotalColumn(colName) {
     $('#emaModuleTotalRow\\.' + colName).val(emaTotal)
     $('#omaModuleTotalRow\\.' + colName).val(omaTotal)
     $('#eaModuleTotalRow\\.' + colName).val(eaTotal)
-    $('#etpTotalRow\\.' + colName).val(total)
+
+    if (!/lernerCount/.test(colName)) {
+        $('#etpTotalRow\\.' + colName).val(total)
+    }
 
     return total
+}
+
+function isNotNeedCalcTotalColumn(cellName) {
+    return /standard/.test(cellName) || /groupCount/.test(cellName)
 }
 
 function isMainHoursField(cellName) {
