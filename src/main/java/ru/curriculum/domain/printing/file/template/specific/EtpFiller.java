@@ -13,7 +13,11 @@ abstract class EtpFiller {
 
     protected String totalHoursFormula = "SUM(%s:%s)+%s*%s";
 
-    protected String hoursPerOneListener = "SUM(%s:%s)";
+    /**
+     * Формула расчета часов на одного слушателя:
+     * "лекции" + "практики" + "самостоятельные" + "зачет"
+     */
+    protected String hoursPerOneListener = "SUM(%s:%s)+%s";
 
     protected final DefaultCellStyle defaultCellStyle;
 
@@ -66,8 +70,9 @@ abstract class EtpFiller {
 
     protected void createHoursPerOneListenerFormula(Row row) {
         String startCellAddress = toCellAddress(row.getRowNum(), tsr.lectures());
-        String endCellAddress = toCellAddress(row.getRowNum(), tsr.others());
-        String formula = String.format(this.hoursPerOneListener, startCellAddress, endCellAddress);
+        String endCellAddress = toCellAddress(row.getRowNum(), tsr.independentWorks());
+        String creditCellAddress = toCellAddress(row.getRowNum(), tsr.credits());
+        String formula = String.format(hoursPerOneListener, startCellAddress, endCellAddress, creditCellAddress);
         createCellFormula(row, tsr.hoursPerOneListener(), formula);
     }
 

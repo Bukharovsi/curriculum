@@ -18,6 +18,7 @@ public class EtpEmaFiller extends EtpFiller {
         this.tsr = tsr;
     }
 
+    @SuppressWarnings("Duplicates")
     public Integer fillEmaModule(Sheet sheet) {
         sheet.shiftRows(
             tsr.tableStartRow(),
@@ -42,6 +43,7 @@ public class EtpEmaFiller extends EtpFiller {
     }
 
 
+    @SuppressWarnings("Duplicates")
     private void fillTableCellPlansValue(Row row, PlanDto plan) {
         createTableCell(row, tsr.lectures(), plan.getLectures());
         createTableCell(row, tsr.practices(), plan.getPractices());
