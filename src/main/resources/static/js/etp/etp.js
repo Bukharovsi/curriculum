@@ -1,6 +1,8 @@
 $(function () {
+    fillLernerCountForAllRow()
     addMultiSelectToTeacherInput()
     bindOnChangesToCalculateEtpTotalHours()
+    bindOnChangeOnLernerCount()
 })
 
 function addMultiSelectToTeacherInput() {
@@ -13,8 +15,31 @@ function bindOnChangesToCalculateEtpTotalHours() {
     $("input[id*='plan']").each(function (index, element) {
         element.onchange = calcTotal
         attachMask(element)
+    }).change()
+}
+
+function bindOnChangeOnLernerCount() {
+    $("input[name='lernerCount']").change(function () {
+        calcTotalLernerCount($(this).val())
     })
-    updateTotalAfterRenderPage()
+    calcTotalLernerCount()
+}
+
+function fillLernerCountForAllRow() {
+    var lernerCount = $("input[name='lernerCount']").val()
+    if (!lernerCount) {
+        return
+    }
+    $("input[name*='plan.lernerCount']").each(function (index, element) {
+        if (!element.value || element.value === "0") {
+            element.value = lernerCount
+        }
+    })
+}
+
+function calcTotalLernerCount(value) {
+    var lernerCount = value ? value : $("input[name='lernerCount']").val()
+    $("input[name='etpTotalRow.lernerCount']").val(lernerCount)
 }
 
 /**
@@ -132,6 +157,10 @@ function calcHourPerOneLerner(rowName) {
  * @param colName
  */
 function calcTotalColumn(colName) {
+    if (isNotNeedCalcTotalColumn(colName)) {
+        return
+    }
+
     var colSelector = getSearchSelectorTemplate(colName)
 
     var emaTotal = 0.0,
@@ -176,9 +205,16 @@ function calcTotalColumn(colName) {
     $('#emaModuleTotalRow\\.' + colName).val(emaTotal)
     $('#omaModuleTotalRow\\.' + colName).val(omaTotal)
     $('#eaModuleTotalRow\\.' + colName).val(eaTotal)
-    $('#etpTotalRow\\.' + colName).val(total)
+
+    if (!/lernerCount/.test(colName)) {
+        $('#etpTotalRow\\.' + colName).val(total)
+    }
 
     return total
+}
+
+function isNotNeedCalcTotalColumn(cellName) {
+    return /standard/.test(cellName) || /groupCount/.test(cellName)
 }
 
 function isMainHoursField(cellName) {
