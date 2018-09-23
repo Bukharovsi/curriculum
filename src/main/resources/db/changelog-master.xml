@@ -43,4 +43,5 @@
     <include file="/db/changelog/130520182240_create_plan_teacher_table.xml"/>
     <include file="/db/changelog/140520182127_create_lesson_teacher_table.xml"/>
     <include file="/db/changelog/040820181946_remove_aspirant.xml"/>
+    <include file="/db/changelog/231020181510_add_timing_of_to_etp.xml"/>
 </databaseChangeLog>

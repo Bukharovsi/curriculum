@@ -26,6 +26,8 @@ public class ETPDtoToEtpConverter {
                 etpDto.getId(),
                 etpDto.getTitle(),
                 etpDto.getTarget(),
+                etpDto.getBeginDate(),
+                etpDto.getEndDate(),
                 etpDto.getDistanceLearningBeginDate(),
                 etpDto.getDistanceLearningEndDate(),
                 etpDto.getFullTimeLearningBeginDate(),

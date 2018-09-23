@@ -25,6 +25,8 @@ public class EtpHeaderFiller {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         fillHeaderCell(sheet, tsr.etpTheme(), etp.getTitle());
         fillHeaderCell(sheet, tsr.etpTarget(), etp.getTarget());
+        fillHeaderCell(sheet, tsr.etpBeginDate(), dateFormat.format(etp.getBeginDate()));
+        fillHeaderCell(sheet, tsr.etpEndDate(), dateFormat.format(etp.getEndDate()));
         fillHeaderCell(sheet, tsr.etpDistanceBeginDate(), dateFormat.format(etp.getDistanceLearningBeginDate()));
         fillHeaderCell(sheet, tsr.etpDistanceEndDate(), dateFormat.format(etp.getDistanceLearningEndDate()));
         fillHeaderCell(sheet, tsr.etpFullTimeBeginDate(), dateFormat.format(etp.getFullTimeLearningBeginDate()));
