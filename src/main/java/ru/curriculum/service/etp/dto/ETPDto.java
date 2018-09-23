@@ -14,7 +14,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -39,6 +42,16 @@ public class ETPDto {
 
     @NotEmpty(message = "Необходими заполнить поле \"Цель\"")
     private String target;
+
+    @NotNull(message = "Необходими заполнить поле \"Сроки проведения\"")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date beginDate;
+
+    @NotNull(message = "Необходими заполнить поле \"Сроки проведения\"")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endDate;
 
     @NotNull(message = "Необходими заполнить поле \"Дата начала дистанционного обучения\"")
     @Temporal(TemporalType.DATE)
@@ -115,6 +128,8 @@ public class ETPDto {
         this.id = etp.id();
         this.title = etp.title();
         this.target = etp.target();
+        this.beginDate = etp.beginDate();
+        this.endDate = etp.endDate();
         this.distanceLearningBeginDate = etp.distanceLearningBeginDate();
         this.distanceLearningEndDate = etp.distanceLearningEndDate();
         this.fullTimeLearningBeginDate = etp.fullTimeLearningBeginDate();

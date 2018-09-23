@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import static ru.curriculum.service.etp.statusManager.ETPStatus.*;
+import static ru.curriculum.service.etp.statusManager.ETPStatus.DRAFT;
 
 /*
  * ETP - education thematic plan (УПТ - учебно-тематический план)
@@ -23,36 +23,45 @@ import static ru.curriculum.service.etp.statusManager.ETPStatus.*;
 @Entity
 @Table(name = "etp")
 @Getter
+@Setter
 @Accessors(fluent = true)
 public class ETP {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter
     private Integer id;
-    @Setter
     private String title;
-    @Setter
     private String target;
-    @Setter
+
+    /** Сроки проведения от ...*/
+    private Date beginDate;
+
+    /** Сроки проведения до ... */
+    private Date endDate;
+
+    /** Дата начала дистанционного обучения */
     private Date distanceLearningBeginDate;
-    @Setter
+
+    /** Дата окончания дистанционного обучения */
     private Date distanceLearningEndDate;
-    @Setter
+
+    /** Дата начала очного обучения */
     private Date fullTimeLearningBeginDate;
-    @Setter
+
+    /** Дата окончания очного обучения */
     private Date fullTimeLearningEndDate;
-    @Setter
+
     private Integer lernerCount;
-    @Setter
+
     private Integer schoolDaysCount;
-    @Setter
+
     private Integer stateProgramId;
-    @Setter
+
     @Enumerated(EnumType.STRING)
     private FinancingSource financingSource;
-    @Embedded @Setter
+
+    @Embedded
     private VolumeInHours volumeInHours;
-    @Setter
+
     @Enumerated(EnumType.STRING)
     private ETPStatus status;
 
@@ -61,6 +70,7 @@ public class ETP {
             targetEntity = Timetable.class,
             fetch = FetchType.EAGER)
     private Timetable timetable;
+
     @OneToMany(
             mappedBy = "etp",
             targetEntity = EAModule.class,
@@ -68,6 +78,7 @@ public class ETP {
             orphanRemoval = true,
             cascade = CascadeType.ALL)
     private Set<EAModule> eaModules;
+
     @OneToMany(
             mappedBy = "etp",
             targetEntity = EMAModule.class,
@@ -75,6 +86,7 @@ public class ETP {
             orphanRemoval = true,
             cascade = CascadeType.ALL)
     private Set<EMAModule> emaModules;
+
     @OneToMany(
             mappedBy = "etp",
             targetEntity = OMAModule.class,
@@ -111,35 +123,11 @@ public class ETP {
     }
 
     public ETP(
-            String title,
-            String target,
-            Date distanceLearningBeginDate,
-            Date distanceLearningEndDate,
-            Date fullTimeLearningBeginDate,
-            Date fullTimeLearningEndDate,
-            FinancingSource financingSource,
-            Set<EAModule> eaModules,
-            Set<EMAModule> emaModules,
-            Set<OMAModule> omaModules
-    ) {
-        this(
-                title,
-                target,
-                distanceLearningBeginDate,
-                distanceLearningEndDate,
-                fullTimeLearningBeginDate,
-                fullTimeLearningEndDate,
-                financingSource
-        );
-        this.addEAModules(eaModules);
-        this.addEMAModules(emaModules);
-        this.addOMAModules(omaModules);
-    }
-
-    public ETP(
             Integer id,
             String title,
             String target,
+            Date beginDate,
+            Date endDate,
             Date distanceLearningBeginDate,
             Date distanceLearningEndDate,
             Date fullTimeLearningBeginDate,
@@ -156,6 +144,8 @@ public class ETP {
         this.id = id;
         this.title = title;
         this.target = target;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
         this.distanceLearningBeginDate = distanceLearningBeginDate;
         this.distanceLearningEndDate = distanceLearningEndDate;
         this.fullTimeLearningBeginDate = fullTimeLearningBeginDate;

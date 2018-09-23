@@ -100,6 +100,8 @@ public class ETPDtoTest extends Assert {
         assertEquals(etp.id(), etpDTO.getId());
         assertEquals(etp.title(), etpDTO.getTitle());
         assertEquals(etp.target(), etpDTO.getTarget());
+        assertEquals(etp.beginDate(), etpDTO.getBeginDate());
+        assertEquals(etp.endDate(), etpDTO.getEndDate());
         assertEquals(etp.distanceLearningBeginDate(), etpDTO.getDistanceLearningBeginDate());
         assertEquals(etp.distanceLearningEndDate(), etpDTO.getDistanceLearningEndDate());
         assertEquals(etp.fullTimeLearningBeginDate(), etpDTO.getFullTimeLearningBeginDate());

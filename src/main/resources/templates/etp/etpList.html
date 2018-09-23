@@ -20,6 +20,7 @@
         <tr>
             <th>Название</th>
             <th>Цель</th>
+            <th>Сроки проведения</th>
             <th>Даты дистанционного обучения</th>
             <th>Даты очного обучения</th>
             <th style="width: 2%;"></th>
@@ -30,6 +31,7 @@
         <tr th:each="etp : ${etps}">
             <td th:text="${etp.title}"></td>
             <td th:text="${etp.target}"></td>
+            <td th:text="${#dates.format(etp.beginDate, 'dd/MM/yyyy') + ' - ' + #dates.format(etp.endDate, 'dd/MM/yyyy')}"></td>
             <td th:text="${#dates.format(etp.distanceLearningBeginDate, 'dd/MM/yyyy') + ' - ' + #dates.format(etp.distanceLearningEndDate, 'dd/MM/yyyy')}"></td>
             <td th:text="${#dates.format(etp.fullTimeLearningBeginDate, 'dd/MM/yyyy') + ' - ' + #dates.format(etp.fullTimeLearningEndDate, 'dd/MM/yyyy')}"></td>
             <td>

@@ -1,6 +1,5 @@
 package ru.curriculum.domain.printing.file.template;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import ru.curriculum.domain.printing.exception.CreationTemplateException;

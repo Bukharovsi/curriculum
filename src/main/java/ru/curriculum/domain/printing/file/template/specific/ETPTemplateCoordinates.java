@@ -51,6 +51,8 @@ public class ETPTemplateCoordinates {
 
     private CellAddress etpTheme;
     private CellAddress etpTarget;
+    private CellAddress etpBeginDate;
+    private CellAddress etpEndDate;
     private CellAddress etpDistanceBeginDate;
     private CellAddress etpDistanceEndDate;
     private CellAddress etpFullTimeBeginDate;
@@ -62,6 +64,8 @@ public class ETPTemplateCoordinates {
     public ETPTemplateCoordinates() {
         this.etpTheme = new CellAddress(14, 0);
         this.etpTarget = new CellAddress(17, 0);
+        this.etpBeginDate = new CellAddress(19,2);
+        this.etpEndDate = new CellAddress(19,8);
         this.etpDistanceBeginDate = new CellAddress(20,2);
         this.etpDistanceEndDate = new CellAddress(20,8);
         this.etpFullTimeBeginDate = new CellAddress(21,2);
