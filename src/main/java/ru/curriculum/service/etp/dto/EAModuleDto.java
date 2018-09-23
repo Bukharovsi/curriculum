@@ -16,9 +16,14 @@ import static java.util.stream.Collectors.toList;
 @Setter
 @Getter
 public class EAModuleDto {
+
     private Integer id;
+
     @NotEmpty(message = "\"Учебная деятельность\" необходимо заполнить поле \"Название модуля\"")
     private String name;
+
+    private EAModule.LearningType learningType;
+
     @Valid
     private List<EASectionDto> sections;
 
@@ -29,12 +34,12 @@ public class EAModuleDto {
     public EAModuleDto(EAModule module) {
         this.id = module.id();
         this.name = module.name();
-        this.sections =
-                module
-                        .sections()
-                        .stream()
-                        .sorted(Comparator.comparing(EASection::id))
-                        .map(EASectionDto::new)
-                        .collect(toList());
+        this.learningType = module.learningType();
+        this.sections = module
+                .sections()
+                .stream()
+                .sorted(Comparator.comparing(EASection::id))
+                .map(EASectionDto::new)
+                .collect(toList());
     }
 }

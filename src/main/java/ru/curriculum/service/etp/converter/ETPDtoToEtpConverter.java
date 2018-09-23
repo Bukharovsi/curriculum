@@ -70,7 +70,7 @@ public class ETPDtoToEtpConverter {
         Set<EAModule> eaModules = new HashSet<>();
         dtos.forEach(dto -> {
             EAModule module = new EAModule(
-                    dto.getId(), dto.getName(), createEASections(dto.getSections())
+                    dto.getId(), dto.getName(), dto.getLearningType(), createEASections(dto.getSections())
             );
             eaModules.add(module);
         });

@@ -307,6 +307,13 @@
                             <button class="btn btn-success" type="submit" th:value="${rowModuleStat.index}" name="addEASection" th:formaction="@{/etp#eaModule}">
                                 <span class="glyphicon glyphicon-plus" data-toggle="tooltip" title="Добавить раздел"></span>
                             </button>
+                            <select th:field="*{eaModules[__${rowModuleStat.index}__].learningType}">
+                                <option th:each="type : ${T(ru.curriculum.domain.etp.entity.educationActivity.EAModule.LearningType).values()}"
+                                        th:value="${type}"
+                                        th:text="${type.value}">
+                                </option>
+                            </select>
+
                         </td>
                         <td>
                             <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index}" name="removeEAModule" th:formaction="@{/etp#eaModule}">

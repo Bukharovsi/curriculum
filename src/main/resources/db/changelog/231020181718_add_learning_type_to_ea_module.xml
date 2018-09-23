@@ -1,0 +1,20 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="231020181718" author="Vlad">
+
+        <addColumn tableName="education_module">
+            <column name="learning_type" type="varchar(255)" defaultValue="FULLTIME"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="education_module">
+                <column name="learning_type" type="varchar(255)" defaultValue="FULLTIME"/>
+            </dropColumn>
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>
