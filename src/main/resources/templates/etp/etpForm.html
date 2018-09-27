@@ -190,15 +190,18 @@
                     <td id="ema_row" colspan="15"><h4>Учебно-методическая деятельность</h4></td>
                     <td>
                         <a name="emaModule"></a>
-                        <button class="btn btn-success" type="submit" name="addEMAModule" th:formaction="@{/etp#emaModule}">
+                        <button class="btn btn-success" type="submit" th:value="${0}" name="addEMAModule" th:formaction="@{/etp#emaModule}">
                             <span class="glyphicon glyphicon-plus" data-toggle="tooltip" title="Добавить Тему"></span>
                         </button>
                     </td>
                 </tr>
-                <div th:each="module, rowModuleStat : *{emaModules}">
+                <!--<div th:each="module, rowModuleStat : *{emaModules}">-->
+                <div th:each="module, rowModuleStat : ${#lists.sort(etp.emaModules)}">
                     <tr>
                         <div>
                             <input hidden="true" th:field="*{emaModules[__${rowModuleStat.index}__].id}">
+                            <!-- Порядковый номер модуля -->
+                            <input hidden="true" th:field="*{emaModules[__${rowModuleStat.index}__].number}">
                         </div>
                         <td>
                             <input type="text" class="form-control" th:field="*{emaModules[__${rowModuleStat.index}__].name}"
@@ -230,6 +233,9 @@
                         <td>
                             <button class="btn btn-danger" type="submit" th:value="${rowModuleStat.index}" name="removeEMAModule" th:formaction="@{/etp#emaModule}">
                                 <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Удалить Раздел"></span>
+                            </button>
+                            <button class="btn btn-success" type="submit" th:value="${rowModuleStat.index + 1}" name="addEMAModule" th:formaction="@{/etp#emaModule}">
+                                <span class="glyphicon glyphicon-plus" data-toggle="tooltip" title="Добавить Тему"></span>
                             </button>
                         </td>
                     </tr>

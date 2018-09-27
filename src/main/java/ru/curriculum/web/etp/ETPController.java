@@ -4,23 +4,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.curriculum.application.route.Routes;
+import ru.curriculum.service.etp.dto.*;
 import ru.curriculum.service.etp.service.ETPCommentCRUDService;
 import ru.curriculum.service.etp.service.ETPFromStateProgramFormationService;
 import ru.curriculum.service.etp.service.ETP_CRUDService;
-import ru.curriculum.service.etp.dto.*;
 import ru.curriculum.service.etp.statusManager.ETPStatusManager;
 import ru.curriculum.service.teacher.TeacherCRUDService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Collections;
 
-import static ru.curriculum.web.Redirect.*;
-import static ru.curriculum.web.View.*;
+import static ru.curriculum.web.Redirect.redirectTo;
+import static ru.curriculum.web.View.ETP_FORM;
+import static ru.curriculum.web.View.ETP_LIST;
 
 @Controller
 @RequestMapping(path = Routes.etp)
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 public class ETPController {
     @Autowired
     private ETP_CRUDService etpCRUDService;
@@ -147,11 +153,25 @@ public class ETPController {
     public String addEMAModule(
             final @ModelAttribute("etp") @Valid ETPDto etp,
             final BindingResult bindingResult,
-            Model model
+            Model model,
+            final HttpServletRequest req
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
         model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
-        etp.getEmaModules().add(new EMAModuleDto());
+
+        Integer rowNumber = Integer.valueOf(req.getParameter("addEMAModule"));
+        if (etp.getEmaModules().size() >= rowNumber) {
+            for (EMAModuleDto dto : etp.getEmaModules()) {
+                if (dto.getNumber() >= rowNumber) {
+                    dto.setNumber(dto.getNumber() + 1);
+                }
+            }
+        }
+
+        EMAModuleDto moduleDto = new EMAModuleDto().setNumber(rowNumber);
+        etp.getEmaModules().add(moduleDto);
+
+        Collections.sort(etp.getEmaModules());
 
         return ETP_FORM;
     }
@@ -165,8 +185,15 @@ public class ETPController {
     ) {
         model.addAttribute("teachers", teacherCRUDService.findAll());
         model.addAttribute("availableStatuses", etpStatusManager.getAvailableStatuses(etp.getActualStatus()));
-        Integer moduleIndex = Integer.valueOf(req.getParameter("removeEMAModule"));
-        etp.getEmaModules().remove(moduleIndex.intValue());
+        Integer rowNumber = Integer.valueOf(req.getParameter("removeEMAModule"));
+
+        etp.getEmaModules().removeIf(module -> module.getNumber().equals(rowNumber));
+
+        for (EMAModuleDto moduleDto : etp.getEmaModules()) {
+            if (moduleDto.getNumber() > rowNumber) {
+                moduleDto.setNumber(moduleDto.getNumber() - 1);
+            }
+        }
 
         return ETP_FORM;
     }
