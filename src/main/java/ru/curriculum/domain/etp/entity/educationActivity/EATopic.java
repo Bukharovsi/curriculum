@@ -30,7 +30,7 @@ public class EATopic {
     @JoinColumn(name = "education_section_id")
     private EASection eaSection;
 
-    private Integer number;
+    private Integer number = 0;
 
     public EATopic() {
         this.plan = new Plan();

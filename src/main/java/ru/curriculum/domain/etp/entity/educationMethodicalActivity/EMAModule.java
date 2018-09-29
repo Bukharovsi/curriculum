@@ -33,7 +33,7 @@ public class EMAModule {
     @JoinColumn(name = "etp_id")
     private ETP etp;
 
-    private Integer number;
+    private Integer number = 0;
 
     public EMAModule() {
         this.plan = new Plan();

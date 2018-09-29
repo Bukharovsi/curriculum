@@ -36,7 +36,7 @@ public class EASection {
     @JoinColumn(name = "education_module_id")
     private EAModule eaModule;
 
-    private Integer number;
+    private Integer number = 0;
 
     public EASection() {
         this.topics = new HashSet<>();

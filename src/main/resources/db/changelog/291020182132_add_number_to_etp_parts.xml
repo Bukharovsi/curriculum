@@ -26,5 +26,32 @@
             <column name="number" type="int"/>
         </addColumn>
 
+
+
+        <update tableName="education_methodical_module">
+            <column name="number" type="int" value="0"/>
+            <where>number is null</where>
+        </update>
+
+        <update tableName="organization_methodical_module">
+            <column name="number" type="int" value="0"/>
+            <where>number is null</where>
+        </update>
+
+        <update tableName="education_module">
+            <column name="number" type="int" value="0"/>
+            <where>number is null</where>
+        </update>
+
+        <update tableName="education_section">
+            <column name="number" type="int" value="0"/>
+            <where>number is null</where>
+        </update>
+
+        <update tableName="education_topic">
+            <column name="number" type="int" value="0"/>
+            <where>number is null</where>
+        </update>
+
     </changeSet>
 </databaseChangeLog>

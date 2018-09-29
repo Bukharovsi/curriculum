@@ -258,8 +258,7 @@
                         </div>
                         <td>
                             <input type="text" class="form-control" th:field="*{omaModules[__${rowModuleStat.index}__].name}" placeholder="Название темы"
-                                   style="padding-left: 10px; padding-right: 5px; text-align: left;"
-                            >
+                                   style="padding-left: 10px; padding-right: 5px; text-align: left;" required>
                         </td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.lectures}" type="text" class="form-control"></td>
                         <td><input th:field="*{omaModules[__${rowModuleStat.index}__].plan.practices}" type="text" class="form-control"></td>
@@ -316,8 +315,7 @@
                     <tr>
                         <td style="background-color: #9d9d9d94;" colspan="14">
                             <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].name}" placeholder="Название модуля"
-                                   style="padding-left: 10px; padding-right: 5px; text-align: left;"
-                            >
+                                   style="padding-left: 10px; padding-right: 5px; text-align: left;" required>
                         </td>
                         <td style="background-color: #9d9d9d94;">
                             <a name="eaModule"></a>
@@ -351,8 +349,7 @@
                             <td style="background-color: #ddddddcc" colspan="14">
                                 <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].name}"
                                        placeholder="Название раздела"
-                                       style="padding-left: 10px; padding-right: 5px; text-align: left;"
-                                >
+                                       style="padding-left: 10px; padding-right: 5px; text-align: left;" required>
                             </td>
                             <td style="background-color: #ddddddcc">
                                 <button type="submit" th:value="${rowModuleStat.index + '.' + rowSectionStat.index + '.0'}" name="addEATopic" th:formaction="@{/etp#eaTopic}">
@@ -382,8 +379,7 @@
                                 <td>
                                     <input type="text" class="form-control" th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].name}"
                                            placeholder="Название темы"
-                                           style="padding-left: 10px; padding-right: 5px; text-align: left;"
-                                    >
+                                           style="padding-left: 10px; padding-right: 5px; text-align: left;" required>
                                 </td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.lectures}" type="text" class="form-control" ></td>
                                 <td><input th:field="*{eaModules[__${rowModuleStat.index}__].sections[__${rowSectionStat.index}__].topics[__${rowTopicStat.index}__].plan.practices}" type="text" class="form-control"></td>

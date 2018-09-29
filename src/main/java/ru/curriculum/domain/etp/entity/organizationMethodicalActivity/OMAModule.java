@@ -33,7 +33,7 @@ public class OMAModule {
     @JoinColumn(name = "etp_id")
     private ETP etp;
 
-    private Integer number;
+    private Integer number = 0;
 
     public OMAModule() {
         this.plan = new Plan();

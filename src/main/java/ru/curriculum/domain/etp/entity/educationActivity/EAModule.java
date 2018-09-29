@@ -40,7 +40,7 @@ public class EAModule {
     @JoinColumn(name = "etp_id")
     private ETP etp;
 
-    private Integer number;
+    private Integer number = 0;
 
     public EAModule() {
         this.sections = new HashSet<>();
