@@ -118,6 +118,7 @@ public class ETPMock {
     public Set<EAModule> getEAModules() {
         Set<EAModule> modules = new HashSet<>();
         EAModule eaModule = new EAModule("Модуль учебной деятельности", getEASections());
+        eaModule.number(3);
         modules.add(eaModule);
 
         return modules;
@@ -126,6 +127,7 @@ public class ETPMock {
     public Set<EMAModule> getEMAModules() {
         Set<EMAModule> modules = new HashSet<>();
         EMAModule emaModule = new EMAModule("Модуль учебно-методической деятельности деятельности", plan);
+        emaModule.number(1);
         modules.add(emaModule);
 
         return modules;
@@ -134,6 +136,7 @@ public class ETPMock {
     public Set<OMAModule> getOMAModules() {
         Set<OMAModule> modules = new HashSet<>();
         OMAModule omaModule = new OMAModule("Модуль орагнизационно-методической деятельности", plan);
+        omaModule.number(2);
         modules.add(omaModule);
 
         return modules;
@@ -142,6 +145,7 @@ public class ETPMock {
     public Set<EASection> getEASections() {
         Set<EASection> sections = new HashSet<>();
         EASection section = new EASection("Раздел учебной деятельности", getEATopics());
+        section.number(4);
         sections.add(section);
 
         return sections;
@@ -150,6 +154,7 @@ public class ETPMock {
     public Set<EATopic> getEATopics() {
         Set<EATopic> topics = new HashSet<>();
         EATopic eaTopic = new EATopic("Тема раздела учебной деятельности", plan);
+        eaTopic.number(5);
         topics.add(eaTopic);
 
         return topics;

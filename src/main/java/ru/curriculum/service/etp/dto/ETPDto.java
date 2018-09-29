@@ -14,7 +14,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -131,19 +134,19 @@ public class ETPDto {
                 etp.eaModules()
                         .stream()
                         .map(EAModuleDto::new)
-                        .sorted(Comparator.comparing(EAModuleDto::getId).reversed())
+                        .sorted(Comparator.comparing(EAModuleDto::getNumber))
                         .collect(toList());
         this.emaModules =
                 etp.emaModules()
                         .stream()
                         .map(EMAModuleDto::new)
-                        .sorted(Comparator.comparing(EMAModuleDto::getId).reversed())
+                        .sorted(Comparator.comparing(EMAModuleDto::getNumber))
                         .collect(toList());
         this.omaModules =
                 etp.omaModules()
                         .stream()
                         .map(OMAModuleDto::new)
-                        .sorted(Comparator.comparing(OMAModuleDto::getId).reversed())
+                        .sorted(Comparator.comparing(OMAModuleDto::getNumber))
                         .collect(toList());
         this.comments = new ArrayList<>();
     }

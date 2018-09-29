@@ -9,23 +9,28 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "education_topic")
-@Getter
+@Getter @Setter
 @Accessors(fluent = true)
 public class EATopic {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
+
     @ManyToOne(
             targetEntity = Plan.class,
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "etp_plan_id")
     private Plan plan;
-    @Setter
+
     @ManyToOne
     @JoinColumn(name = "education_section_id")
     private EASection eaSection;
+
+    private Integer number;
 
     public EATopic() {
         this.plan = new Plan();
@@ -36,8 +41,9 @@ public class EATopic {
         this.plan = plan;
     }
 
-    public EATopic(Integer id, String name, Plan plan) {
+    public EATopic(Integer id, String name, Plan plan, Integer number) {
         this(name, plan);
         this.id = id;
+        this.number = number;
     }
 }

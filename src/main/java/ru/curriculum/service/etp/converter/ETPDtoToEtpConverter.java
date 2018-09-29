@@ -70,7 +70,10 @@ public class ETPDtoToEtpConverter {
         Set<EAModule> eaModules = new HashSet<>();
         dtos.forEach(dto -> {
             EAModule module = new EAModule(
-                    dto.getId(), dto.getName(), createEASections(dto.getSections())
+                    dto.getId(),
+                    dto.getName(),
+                    createEASections(dto.getSections()),
+                    dto.getNumber()
             );
             eaModules.add(module);
         });
@@ -82,7 +85,10 @@ public class ETPDtoToEtpConverter {
         Set<EASection> eaSections = new HashSet<>();
         dtos.forEach(dto -> {
             EASection section = new EASection(
-                    dto.getId(), dto.getName(), createTopics(dto.getTopics())
+                    dto.getId(),
+                    dto.getName(),
+                    createTopics(dto.getTopics()),
+                    dto.getNumber()
             );
             eaSections.add(section);
         });
@@ -94,7 +100,10 @@ public class ETPDtoToEtpConverter {
         Set<EATopic> topics = new HashSet<>();
         dtos.forEach(dto -> {
             EATopic topic = new EATopic(
-                    dto.getId(), dto.getName(), planFactory.create(dto.getPlan())
+                    dto.getId(),
+                    dto.getName(),
+                    planFactory.create(dto.getPlan()),
+                    dto.getNumber()
             );
             topics.add(topic);
         });
@@ -106,7 +115,10 @@ public class ETPDtoToEtpConverter {
         Set<OMAModule> omaModules = new HashSet<>();
         dtos.forEach(dto -> {
             OMAModule module = new OMAModule(
-                    dto.getId(), dto.getName(), planFactory.create(dto.getPlan())
+                    dto.getId(),
+                    dto.getName(),
+                    planFactory.create(dto.getPlan()),
+                    dto.getNumber()
             );
             omaModules.add(module);
         });
@@ -118,7 +130,10 @@ public class ETPDtoToEtpConverter {
         Set<EMAModule> emaSections = new HashSet<>();
         dtos.forEach(dto -> {
             EMAModule module = new EMAModule(
-                    dto.getId(), dto.getName(), planFactory.create(dto.getPlan())
+                    dto.getId(),
+                    dto.getName(),
+                    planFactory.create(dto.getPlan()),
+                    dto.getNumber()
             );
             emaSections.add(module);
         });

@@ -14,8 +14,6 @@ import ru.curriculum.service.etp.dto.*;
 import ru.curriculum.service.etp.statusManager.ETPStatus;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 public class ETPDtoTest extends Assert {
@@ -55,22 +53,6 @@ public class ETPDtoTest extends Assert {
         assertEquals(eaModule.name(), eaModuleDTO.getName());
         assertEquals(eaModule.id(), eaModuleDTO.getId());
         assertEquals(eaModule.sections().size(), eaModuleDTO.getSections().size());
-    }
-
-    @Test
-    public void sortTest() {
-        EMAModuleDto dto1 = new EMAModuleDto().setNumber(1);
-        EMAModuleDto dto2 = new EMAModuleDto().setNumber(2);
-        EMAModuleDto dto3 = new EMAModuleDto().setNumber(3);
-
-        List<EMAModuleDto> list = new ArrayList<>();
-        list.add(dto1);
-        list.add(dto2);
-        list.add(dto3);
-
-        Collections.sort(list);
-
-        System.out.println(list);
     }
 
     @Test
