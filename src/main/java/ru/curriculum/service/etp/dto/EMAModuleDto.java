@@ -2,18 +2,28 @@ package ru.curriculum.service.etp.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
+import lombok.experimental.Accessors;
 import ru.curriculum.domain.etp.entity.educationMethodicalActivity.EMAModule;
+import ru.curriculum.service.etp.controller.Row;
+
 
 @Getter
 @Setter
-public class EMAModuleDto {
+@Accessors(chain = true)
+public class EMAModuleDto extends Row {
+
     private Integer id;
-    @NotEmpty(message = "\"Учебная-методическая деятельность\" необходимо заполнить поле \"Название модуля\"")
+
     private String name;
+
     private PlanDto plan;
 
     public EMAModuleDto() {
+        this.plan = new PlanDto();
+    }
+
+    public EMAModuleDto(Integer number) {
+        super(number);
         this.plan = new PlanDto();
     }
 
@@ -21,5 +31,6 @@ public class EMAModuleDto {
         this.id = module.id();
         this.name = module.name();
         this.plan = new PlanDto(module.plan());
+        this.number = module.number();
     }
 }

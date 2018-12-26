@@ -12,22 +12,28 @@ import javax.persistence.*;
 @Entity
 @Table(name = "education_methodical_module")
 @Getter
+@Setter
 @Accessors(fluent = true)
 public class EMAModule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
+
     @ManyToOne(
             targetEntity = Plan.class,
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "etp_plan_id")
     private Plan plan;
+
     @ManyToOne
     @JoinColumn(name = "etp_id")
-    @Setter
     private ETP etp;
+
+    private Integer number = 0;
 
     public EMAModule() {
         this.plan = new Plan();
@@ -38,8 +44,9 @@ public class EMAModule {
         this.plan = plan;
     }
 
-    public EMAModule(Integer id, String name, Plan plan) {
+    public EMAModule(Integer id, String name, Plan plan, Integer number) {
         this(name, plan);
         this.id = id;
+        this.number = number;
     }
 }

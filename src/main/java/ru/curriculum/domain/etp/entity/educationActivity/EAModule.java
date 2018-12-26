@@ -17,14 +17,17 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "education_module")
-@Getter
+@Getter @Setter
 @Accessors(fluent = true)
 @EqualsAndHashCode(exclude = {"sections"})
 public class EAModule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
+
     @OneToMany(
             mappedBy = "eaModule",
             targetEntity = EASection.class,
@@ -32,10 +35,12 @@ public class EAModule {
             orphanRemoval = true,
             cascade = CascadeType.ALL)
     private Set<EASection> sections;
+
     @ManyToOne
     @JoinColumn(name = "etp_id")
-    @Setter
     private ETP etp;
+
+    private Integer number = 0;
 
     public EAModule() {
         this.sections = new HashSet<>();
@@ -47,9 +52,10 @@ public class EAModule {
         this.addSections(sections);
     }
 
-    public EAModule(Integer id, String name, Set<EASection> sections) {
+    public EAModule(Integer id, String name, Set<EASection> sections, Integer number) {
         this(name, sections);
         this.id = id;
+        this.number = number;
     }
 
     private void addSections(@NonNull Set<EASection> sections) {

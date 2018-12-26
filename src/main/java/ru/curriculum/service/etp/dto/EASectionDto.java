@@ -1,35 +1,39 @@
 package ru.curriculum.service.etp.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.domain.etp.entity.educationActivity.EASection;
 import ru.curriculum.domain.etp.entity.educationActivity.EATopic;
+import ru.curriculum.service.etp.controller.Row;
 
-import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class EASectionDto {
-    private Integer id;
-    @NotEmpty(message = "\"Учебно деятельность\" необходимо заполнить поле \"Название раздела\"")
-    private String name;
-    @Valid
-    private List<EATopicDto> topics;
+@NoArgsConstructor
+public class EASectionDto extends Row {
 
-    public EASectionDto() {
-        this.topics = new ArrayList<>();
+    private Integer id;
+
+    private String name;
+
+    private List<EATopicDto> topics = new ArrayList<>();
+
+    public EASectionDto(Integer number) {
+        super(number);
     }
 
     public EASectionDto(EASection section) {
-        this();
         this.id = section.id();
         this.name = section.name();
+        this.number = section.number();
         this.topics = section.topics()
                 .stream()
-                .sorted(Comparator.comparing(EATopic::id))
+                .sorted(Comparator.comparing(EATopic::number))
                 .map(EATopicDto::new)
                 .collect(Collectors.toList());
     }

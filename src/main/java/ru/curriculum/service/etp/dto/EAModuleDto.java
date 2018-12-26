@@ -1,12 +1,12 @@
 package ru.curriculum.service.etp.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
 import ru.curriculum.domain.etp.entity.educationActivity.EAModule;
 import ru.curriculum.domain.etp.entity.educationActivity.EASection;
+import ru.curriculum.service.etp.controller.Row;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -15,25 +15,28 @@ import static java.util.stream.Collectors.toList;
 
 @Setter
 @Getter
-public class EAModuleDto {
-    private Integer id;
-    @NotEmpty(message = "\"Учебная деятельность\" необходимо заполнить поле \"Название модуля\"")
-    private String name;
-    @Valid
-    private List<EASectionDto> sections;
+@NoArgsConstructor
+public class EAModuleDto extends Row {
 
-    public EAModuleDto() {
-        sections = new ArrayList<>();
+    private Integer id;
+
+    private String name;
+
+    private List<EASectionDto> sections = new ArrayList<>();
+
+    public EAModuleDto(Integer number) {
+        super(number);
     }
 
     public EAModuleDto(EAModule module) {
         this.id = module.id();
         this.name = module.name();
+        this.number = module.number();
         this.sections =
                 module
                         .sections()
                         .stream()
-                        .sorted(Comparator.comparing(EASection::id))
+                        .sorted(Comparator.comparing(EASection::number))
                         .map(EASectionDto::new)
                         .collect(toList());
     }
