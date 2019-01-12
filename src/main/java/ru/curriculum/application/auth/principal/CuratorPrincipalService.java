@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import ru.curriculum.domain.admin.curator.entity.Curator;
 import ru.curriculum.domain.admin.curator.repository.CuratorRepository;
 
-import java.util.List;
-
 
 @Component
 public class CuratorPrincipalService implements UserDetailsService {

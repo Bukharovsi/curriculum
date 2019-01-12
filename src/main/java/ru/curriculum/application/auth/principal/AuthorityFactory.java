@@ -11,7 +11,7 @@ public class AuthorityFactory {
 
     public GrantedAuthority create(Role role) {
         String roleAsAuthorityFormat =
-                AUTHORITY_ROLE_PREFIX.concat(role.code().toString().toUpperCase());
+                AUTHORITY_ROLE_PREFIX.concat(role.code().toUpperCase());
 
         return new SimpleGrantedAuthority(roleAsAuthorityFormat);
     }
