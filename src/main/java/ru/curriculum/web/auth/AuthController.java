@@ -11,7 +11,7 @@ public class AuthController {
 
     @RequestMapping(Routes.index)
     public String index() {
-        return Redirect.redirectTo(Routes.curator);
+        return Redirect.redirectTo(Routes.timetable);
     }
 
     @RequestMapping(Routes.login)
