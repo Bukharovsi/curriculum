@@ -27,10 +27,10 @@ thymeleaf:
 
 logging:
   level:
-    org.hibernate.tool.hbm2ddl: debug
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type: TRACE
-    org.springframework.web: trace
+    org.hibernate.tool.hbm2ddl: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.type: INFO
+    org.springframework.web: INFO
 
 liquibase:
   change-log: classpath:/db/changelog-master.xml
